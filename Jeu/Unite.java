@@ -5,11 +5,11 @@ public abstract class Unite {
     protected int porteeDeplacement;
     protected int porteeAttaque;
     protected int pointAction;
-    //rajouter plus tard protected Joueur joueur;
+    protected Joueur joueur;
     //rajouter plus tard protected Case positionUnite;
     //rajouter plus tard protected AlterationEtat etat;
-    public Unite(){//prend en argument Joueur joueur plus tard
-        //this.joueur = joueur;
+    public Unite(Joueur joueur){
+        this.joueur = joueur;
     }
     
     public int getSanteMax(){
@@ -36,27 +36,31 @@ public abstract class Unite {
         return pointAction;
     }
     
-    public int setSanteMax(int santeMax){
+    public Joueur getJoueur(){
+        return joueur;
+    }
+    
+    public void setSanteMax(int santeMax){
         this.santeMax = santeMax;
     }
     
-    public int setAttaque(int attaque){
+    public void setAttaque(int attaque){
         this.attaque = attaque;
     }
     
-    public int setCoutUnite(int coutUnite){
+    public void setCoutUnite(int coutUnite){
         this.coutUnite = coutUnite;
     }
     
-    public int setPorteeDeplacement(int porteeDeplacement){
+    public void setPorteeDeplacement(int porteeDeplacement){
         this.porteeDeplacement = porteeDeplacement;
     }
     
-    public int setPorteeAttaque(int porteeAttaque){
+    public void setPorteeAttaque(int porteeAttaque){
         this.porteeAttaque = porteeAttaque;
     }
     
-    public int setPointAction(int pointAction){
+    public void setPointAction(int pointAction){
         this.pointAction = pointAction;
     }
 
