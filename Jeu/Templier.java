@@ -9,4 +9,8 @@ public class Templier extends Unite{
         porteeAttaque = 5; //discussion en cours
         pointAction = 2; //discussion en cours
     }
+    
+    public String toString(){
+        return "templier";
+    }
 }
