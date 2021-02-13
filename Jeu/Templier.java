@@ -13,4 +13,8 @@ public class Templier extends Unite{
     public String toString(){
         return "templier";
     }
+    
+    public final boolean isHero(){
+        return false;
+    }
 }
