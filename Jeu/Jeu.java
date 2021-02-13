@@ -1,5 +1,6 @@
 public class Jeu {
 
+
     protected Joueur joueur1;
     protected Joueur joueur2;
     protected Terrain terrain;
@@ -52,12 +53,29 @@ public class Jeu {
     public void setTerrain(Terrain terrain) {
         this.terrain = terrain;
     }
-    
+
+    public boolean gameIsOver(){
+        if(joueur1.getHero().getPv() >= 0 || joueur2.getHero().getPv()) 
+            return true;
+        
+        return false;
+    }
+
+    public void startNewGame(Joueur joueur1 ,Joueur joueur2, Terrain terrain){
+        setJoueur1(joueur1);
+        setJoueur2(joueur2);
+        setTerrain(terrain);
+    }
+
+    public void joueur1Play(){
+
+    }
+
+
+
     
     public static void main(String[] args) {
-        Model m = new Model("Jeu/plaine.png");
-    	Vue v = new Vue(m);
-    	v.setVisible(true);
+
     }
 
 }
