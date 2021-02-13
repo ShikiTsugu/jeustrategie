@@ -65,5 +65,6 @@ public abstract class Unite {
     }
     
     public abstract String toString();
+    public abstract boolean isHero();
 
 }
