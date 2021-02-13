@@ -1,7 +1,7 @@
 public class Templier extends Unite{
     
-    public Templier(){//prend en argument Joueur joueur
-        //super(joueur);
+    public Templier(Joueur joueur){
+        super(joueur);
         santeMax = 100; //discussion en cours
         attaque = 10; //discussion en cours
         coutUnite = 200; //discussion en cours
