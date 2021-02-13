@@ -55,7 +55,7 @@ public class Jeu {
     }
 
     public boolean gameIsOver(){
-        if(joueur1.getHero().getPv() >= 0 || joueur2.getHero().getPv()) 
+        if(joueur1.getHero().getPv() <= 0 || joueur2.getHero().getPv() <=0) 
             return true;
         
         return false;
