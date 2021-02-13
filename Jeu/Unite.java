@@ -35,5 +35,29 @@ public abstract class Unite {
     public int getPointAction(){
         return pointAction;
     }
+    
+    public int setSanteMax(int santeMax){
+        this.santeMax = santeMax;
+    }
+    
+    public int setAttaque(int attaque){
+        this.attaque = attaque;
+    }
+    
+    public int setCoutUnite(int coutUnite){
+        this.coutUnite = coutUnite;
+    }
+    
+    public int setPorteeDeplacement(int porteeDeplacement){
+        this.porteeDeplacement = porteeDeplacement;
+    }
+    
+    public int setPorteeAttaque(int porteeAttaque){
+        this.porteeAttaque = porteeAttaque;
+    }
+    
+    public int setPointAction(int pointAction){
+        this.pointAction = pointAction;
+    }
 
 }
