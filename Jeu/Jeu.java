@@ -26,7 +26,7 @@ public class Jeu {
      * @return le Terrain
      */
     public Terrain getTerrain() {
-        return plateau;
+        return terrain;
     }
 
     /**
@@ -55,7 +55,9 @@ public class Jeu {
     
     
     public static void main(String[] args) {
-
+        Model m = new Model("Jeu/plaine.png");
+    	Vue v = new Vue(m);
+    	v.setVisible(true);
     }
 
 }
