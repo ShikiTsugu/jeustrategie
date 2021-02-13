@@ -63,5 +63,7 @@ public abstract class Unite {
     public void setPointAction(int pointAction){
         this.pointAction = pointAction;
     }
+    
+    public abstract String toString();
 
 }
