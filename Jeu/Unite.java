@@ -35,6 +35,5 @@ public abstract class Unite {
     public int getPointAction(){
         return pointAction;
     }
-    
 
 }
