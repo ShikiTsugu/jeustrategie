@@ -1,5 +1,5 @@
 public abstract class Unite {
-    protected int sante;
+    protected int santeMax;
     protected int attaque;
     protected int coutUnite;
     protected int porteeDeplacement;
@@ -12,8 +12,8 @@ public abstract class Unite {
         //this.joueur = joueur;
     }
     
-    public int getSante(){
-        return sante;
+    public int getSanteMax(){
+        return santeMax;
     }
     
     public int getAttaque(){
