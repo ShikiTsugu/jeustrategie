@@ -1,5 +1,6 @@
 public abstract class Unite {
     protected int santeMax;
+    protected int santeCourante;
     protected int attaque;
     protected int coutUnite;
     protected int porteeDeplacement;
@@ -14,6 +15,10 @@ public abstract class Unite {
     
     public int getSanteMax(){
         return santeMax;
+    }
+    
+    public int getSanteCourante(){
+	    return santeCourante;
     }
     
     public int getAttaque(){
@@ -44,6 +49,10 @@ public abstract class Unite {
         this.santeMax = santeMax;
     }
     
+    public void setSanteCourante(int santeCourante){
+	    this.santeCourante = santeCourante;
+    }
+    
     public void setAttaque(int attaque){
         this.attaque = attaque;
     }
@@ -62,6 +71,10 @@ public abstract class Unite {
     
     public void setPointAction(int pointAction){
         this.pointAction = pointAction;
+    }
+    
+    public void setJoueur(Joueur joueur){
+	    this.joueur = joueur;
     }
     
     public abstract String toString();
