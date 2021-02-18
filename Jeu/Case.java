@@ -24,4 +24,8 @@ public class Case {
         if(estVide()) return "vide";
         return obstacle==false?unit.toString():"obstacle";
     }
+
+    public void addUnit(Unite unite){
+        unit = unite;
+    }
 }
