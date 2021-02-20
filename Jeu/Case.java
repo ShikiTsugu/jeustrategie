@@ -17,7 +17,7 @@ public class Case {
     }
 
     public boolean estVide(){
-        return !estObstacle() && !estUnite();
+        return !estObstacle() && !estUnit();
     }
     
     public Unite getUnite(){
@@ -45,9 +45,5 @@ public class Case {
     public String toString(){
         if(estVide()) return "vide";
         return obstacle==false?unit.toString():"obstacle";
-    }
-
-    public void addUnit(Unite unite){
-        unit = unite;
     }
 }
