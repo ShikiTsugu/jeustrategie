@@ -13,10 +13,12 @@ public class Terrain {
     }
     
     public void deplaceUnite(Unite unit, Case destination){
-        Case positionInitial = unit.getPositionUnite();
-        destination.setUnite(unit);
-        unit.setPositionUnite(destination);
-        positionInitial.supprimerUniteCase();
+        if (destination.estVide()){
+            Case positionInitial = unit.getPositionUnite();
+            destination.setUnite(unit);
+            unit.setPositionUnite(destination);
+            positionInitial.supprimerUniteCase();
+        } 
     }
 
     public int getMaxUnits(){return maxUnits;}
