@@ -147,7 +147,7 @@ public class Jeu {
      * @return le boolean indiquant la réussite de la requête
      * A MODIFIER
      */
-  /*  public boolean acheteUnite(Joueur joueur ,Unite unite, int x , int y){
+    public boolean acheteUnite(Joueur joueur ,Unite unite, int x , int y){
         //verifie si le joueur possède assez d'argent
         if(joueur.getArgent()< unite.getCout())
             return false;
@@ -157,15 +157,14 @@ public class Jeu {
         }
         //fait appele à la fonction d'ajout dans l'armée du joueur
         return joueur.ajouteUnite(unite);
-    }*/
+    }
 
 
     /**
      * fonction qui prend en charge les requête de deplacement d'unite
      * @param joueur le joueur qui a effectué la requête
      * @param unite l'unite à place sur le terrain
-     * @param x la coordonné x où place l'unite
-     * @param y la coordonné y où place l'unite
+     * @param destination la case de destination
      * @return le boolean indiquant la réussite de la requête
      */
     public boolean deplaceUnite(Joueur joueur ,Unite unite, Case destination){
@@ -173,28 +172,29 @@ public class Jeu {
         if(joueur == unite.getJoueur())
             return terrain.deplaceUnite(unite , destination );
         return false;
-    }*/
+    }
 
     /**
      * fonction qui prend en charge les requête d'attaque d'unite
      * @param joueur le joueur qui a effectué la requête
      * @param unite l'unite à place sur le terrain
-     * @param x la coordonné x où place l'unite
-     * @param y la coordonné y où place l'unite
+     * @param depart case de depart
+     * @param cible la case cible
      * @return le boolean indiquant la réussite de la requête
      */
     public boolean attaqueUnite(Joueur joueur,Case depart,Case cible){
-        if(depart.getUnite == null){
+        if(depart.getUnite() == null){
             return false;
         }
         //verifie si l'unite appartient au joueur
         if(joueur != depart.getUnite().getJoueur())
             return false;
         //verifie si l'emplacement à une unité puis si cette dernière est du camp opposé
-        if(terrain.getPlateau()[y][x].getUnite == null || terrain.getPlateau()[y][x].getUnite().getJoueur() == joueur)
+        if(cible.getUnite() == null || cible.getUnite().getJoueur() == joueur)
             return false;
         
-        return unite.attaqueUnite(x,y);
+        depart.getUnite().attaqueUnite(depart, cible);
+        return true
     }
 
     
