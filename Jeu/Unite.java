@@ -98,9 +98,9 @@ public abstract class Unite {
     }
     
     public void attaqueUnite(Case positionA, Case positionD){
-        Unite attaquant = positionA.getUnit();
-        Unite defenseur = positionD.getUnit();
-        if (positionD.estUnit() && !positionD.estObstable()){
+        Unite attaquant = positionA.getUnite();
+        Unite defenseur = positionD.getUnite();
+        if (positionD.estUnit() && !positionD.estObstacle()){
             attaquant.setPointAction(attaquant.getPointAction() -1);
             defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
         }
