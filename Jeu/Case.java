@@ -21,7 +21,7 @@ public class Case {
     }
     
     public Unite getUnite(){
-        return unit
+        return unit;
     }
     
     public void setUnite(Unite unit){
