@@ -101,12 +101,12 @@ public class Jeu {
      * @return le boolean disant si la partie est finie
      * A MODIFIER
      */
-    public boolean gameIsOver(){
+   /* public boolean gameIsOver(){
         if(joueur1.getHero().getPv() <= 0 || joueur2.getHero().getPv() <=0) 
             return true;
         
         return false;
-    }
+    }*/
 
     /**
      * fonction d'initialisation de debut de partie
@@ -147,7 +147,7 @@ public class Jeu {
      * @return le boolean indiquant la réussite de la requête
      * A MODIFIER
      */
-    public boolean acheteUnite(Joueur joueur ,Unite unite, int x , int y){
+  /*  public boolean acheteUnite(Joueur joueur ,Unite unite, int x , int y){
         //verifie si le joueur possède assez d'argent
         if(joueur.getArgent()< unite.getCout())
             return false;
@@ -157,7 +157,7 @@ public class Jeu {
         }
         //fait appele à la fonction d'ajout dans l'armée du joueur
         return joueur.ajouteUnite(unite);
-    }
+    }*/
 
 
     /**
@@ -173,7 +173,7 @@ public class Jeu {
         if(joueur == unite.getJoueur())
             return terrain.deplaceUnite(unite , destination );
         return false;
-    }
+    }*/
 
     /**
      * fonction qui prend en charge les requête d'attaque d'unite
@@ -207,7 +207,13 @@ public class Jeu {
 
     
     public static void main(String[] args) {
-
+        Terrain terrain = new Terrain(5,5,2);
+        Joueur joueur = new Joueur(2);
+        Templier templier = new Templier(joueur);
+        System.out.println(terrain.ajouteUnite(templier,0,0));
+        Model m = new Model("Jeu/plaine.png");
+        Vue v = new Vue(m, terrain);
+        v.AfficheTerrain();
     }
 
 }
