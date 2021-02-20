@@ -16,7 +16,7 @@ public class Joueur {
         unites = new Unite[t.getMaxUnits()];
     }
 
-    public boolean ajoutUnite(Unite u){
+    public boolean ajouteUnite(Unite u){
         //si la liste d'unite est vide, ajoute l'unite en première position
         if(unites[0]==null){
             unites[0]=u;
