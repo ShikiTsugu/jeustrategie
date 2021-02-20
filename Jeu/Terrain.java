@@ -24,5 +24,9 @@ public class Terrain {
         return false;
     }
 
+    public Case[][] getPlateau(){
+        return plateau;
+    }
+
     public int getMaxUnits(){return maxUnits;}
 }
