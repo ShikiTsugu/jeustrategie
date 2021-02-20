@@ -7,7 +7,7 @@ public abstract class Unite {
     protected int porteeAttaque;
     protected int pointAction;
     protected Joueur joueur;
-    //rajouter plus tard protected Case positionUnite;
+    protected Case positionUnite;
     //rajouter plus tard protected AlterationEtat etat;
     public Unite(Joueur joueur){
         this.joueur = joueur;
@@ -45,6 +45,10 @@ public abstract class Unite {
         return joueur;
     }
     
+    public Case positionUnite(){
+        return positionUnite;
+    }
+    
     public void setSanteMax(int santeMax){
         this.santeMax = santeMax;
     }
@@ -75,6 +79,10 @@ public abstract class Unite {
     
     public void setJoueur(Joueur joueur){
 	    this.joueur = joueur;
+    }
+    
+    public void setPositionUnite(Case positionUnite){
+        this.positionUnite = positionUnite;
     }
     
     public abstract String toString();
