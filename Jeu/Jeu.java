@@ -4,6 +4,14 @@ public class Jeu {
     protected Joueur joueur1;
     protected Joueur joueur2;
     protected Terrain terrain;
+    protected Joueur tourDuJoueur;
+    protected String requeteCourante;
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Getters\Setters
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     /**
@@ -28,6 +36,22 @@ public class Jeu {
      */
     public Terrain getTerrain() {
         return terrain;
+    }
+
+    /**
+     * getter pour le joueur auqeul c'est à qui de jouer
+     * @return le joueur a qui est le tour
+     */
+    public Joueur getTourDuJoueur() {
+        return tourDuJoueur;
+    }
+
+    /**
+     * getter de la requete courante
+     * @return la requete courante
+     */
+    public String getRequeteCourante() {
+        return requeteCourante;
     }
 
     /**
@@ -56,6 +80,23 @@ public class Jeu {
 
 
     /**
+     * setter du joueur à qui est le tour de jouer
+     * @param tourDuJoueur le nouveau joueur a qui est le tour
+     */
+    public void setTourDuJoueur(Joueur tourDuJoueur) {
+        this.tourDuJoueur = tourDuJoueur;
+    }
+
+    /**
+     * setter pour changer la requete courante
+     * @param requeteCourante la nouvelle requete
+     */
+    public void setRequeteCourante(String requeteCourante) {
+        this.requeteCourante = requeteCourante;
+    }
+
+
+    /**
      * fonction qui verifie si la partie est finie
      * @return le boolean disant si la partie est finie
      * A MODIFIER
@@ -78,8 +119,20 @@ public class Jeu {
         setJoueur1(joueur1);
         setJoueur2(joueur2);
         setTerrain(terrain);
+        setTourDuJoueur(joueur1);
     }
 
+    
+    /*
+    public void playGame(){
+        startNewGame();
+        while(!gameIsOver()){
+
+
+        }
+    }
+    */
+    
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Fonction de requètes joueur
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,11 +168,10 @@ public class Jeu {
      * @param y la coordonné y où place l'unite
      * @return le boolean indiquant la réussite de la requête
      */
-    /*
-    public boolean deplaceUnite(Joueur joueur ,Unite unite, int x, int y){
+    public boolean deplaceUnite(Joueur joueur ,Unite unite, Case destination){
         //verifie si l'unite appartient au joueur
         if(joueur == unite.getJoueur())
-            return terrain.deplaceUnite(unite , x ,y);
+            return terrain.deplaceUnite(unite , destination );
         return false;
     }*/
 
@@ -131,16 +183,28 @@ public class Jeu {
      * @param y la coordonné y où place l'unite
      * @return le boolean indiquant la réussite de la requête
      */
-   /* public boolean attaqueUnite(Joueur joueur,Unite unite,int x, int y){
+    public boolean attaqueUnite(Joueur joueur,Case depart,Case cible){
+        if(depart.getUnite == null){
+            return false;
+        }
         //verifie si l'unite appartient au joueur
-        if(joueur != unite.getJoueur())
+        if(joueur != depart.getUnite().getJoueur())
             return false;
         //verifie si l'emplacement à une unité puis si cette dernière est du camp opposé
-        if(terrain.getUnite(x,y) == null || terrain.getUnite(x,y).getJoueur() == joueur )
+        if(terrain.getPlateau()[y][x].getUnite == null || terrain.getPlateau()[y][x].getUnite().getJoueur() == joueur)
             return false;
         
-        return terrain.attaqueUnite(unite, terrain.getUnite(x,y));
-    }*/
+        return unite.attaqueUnite(x,y);
+    }
+
+    
+
+
+
+
+
+
+
     
     public static void main(String[] args) {
         Terrain terrain = new Terrain(5,5,2);
