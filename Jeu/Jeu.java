@@ -149,7 +149,7 @@ public class Jeu {
      */
     public boolean acheteUnite(Joueur joueur ,Unite unite, int x , int y){
         //verifie si le joueur possède assez d'argent
-        if(joueur.getArgent()< unite.getCout())
+        if(joueur.getArgent()< unite.getCoutUnite())
             return false;
         //fait appele à la fonction d'ajout d'unite sur le terrain
         if(!terrain.ajouteUnite( unite, x,y)){
@@ -169,8 +169,10 @@ public class Jeu {
      */
     public boolean deplaceUnite(Joueur joueur ,Unite unite, Case destination){
         //verifie si l'unite appartient au joueur
-        if(joueur == unite.getJoueur())
-            return terrain.deplaceUnite(unite , destination );
+        if(joueur == unite.getJoueur()){
+            unite.deplaceUnite(unite , destination);
+            return true ;
+        }
         return false;
     }
 
@@ -194,7 +196,7 @@ public class Jeu {
             return false;
         
         depart.getUnite().attaqueUnite(depart, cible);
-        return true
+        return true;
     }
 
     
