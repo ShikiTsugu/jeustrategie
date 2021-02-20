@@ -7,7 +7,7 @@ public abstract class Unite {
     protected int porteeAttaque;
     protected int pointAction;
     protected Joueur joueur;
-    //rajouter plus tard protected Case positionUnite;
+    protected Case positionUnite;
     //rajouter plus tard protected AlterationEtat etat;
     public Unite(Joueur joueur){
         this.joueur = joueur;
@@ -45,6 +45,10 @@ public abstract class Unite {
         return joueur;
     }
     
+    public Case positionUnite(){
+        return positionUnite;
+    }
+    
     public void setSanteMax(int santeMax){
         this.santeMax = santeMax;
     }
@@ -77,7 +81,30 @@ public abstract class Unite {
 	    this.joueur = joueur;
     }
     
+    public void setPositionUnite(Case positionUnite){
+        this.positionUnite = positionUnite;
+    }
+    
     public abstract String toString();
     public abstract boolean isHero();
+    
+    public void deplaceUnite(Unite unit, Case destination){
+        if (destination.estVide()){
+            Case positionInitial = unit.getPositionUnite();
+            destination.setUnite(unit);
+            unit.setPositionUnite(destination);
+            positionInitial.supprimerUniteCase();
+        } 
+    }
+    
+    public void attaqueUnite(Case positionA, Case positionD){
+        Unite attaquant = positionA.getUnit();
+        Unite defenseur = positionD.getUnit();
+        if (positionD.estUnit() && !positionD.estObstable()){
+            attaquant.setPointAction(attaquant.getPointAction() -1);
+            defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
+        }
+        else if (positionD.estObstacle() || positionD.estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
+    }
 
 }
