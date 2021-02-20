@@ -8,6 +8,10 @@ public class Joueur {
         isHuman = true;
     }
 
+    public Unite getHero(){
+        return unites[0];
+    }
+
     public int getArgent(){return argent;}
 
     public boolean getIsHuman(){return isHuman;}
@@ -18,14 +22,14 @@ public class Joueur {
 
     public boolean ajouteUnite(Unite u){
         //si la liste d'unite est vide, ajoute l'unite en première position
-        if(unites[0]==null){
+        if(unites[0]==null&&(u instanceof Hero)){
             unites[0]=u;
             return true;
         }
         //sinon parcourt le tableau et cherche une position vide pour y ajouter l'unite
-        for (Unite un : unites) {
-            if (un == null) {
-                un = u;
+        for (int i = 1; i<unites.length; i++) {
+            if (unites[i]==null) {
+                unites[i] = u;
                 return true;
             }
         }
