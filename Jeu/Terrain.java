@@ -11,6 +11,13 @@ public class Terrain {
         plateau = p;
         maxUnits = max;
     }
+    
+    public void deplaceUnite(Unite unit, Case destination){
+        Case positionInitial = unit.getPositionUnite();
+        destination.setUnite(unit);
+        unit.setPositionUnite(destination);
+        positionInitial.supprimerUniteCase();
+    }
 
     public int getMaxUnits(){return maxUnits;}
 }
