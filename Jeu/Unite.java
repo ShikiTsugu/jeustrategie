@@ -45,7 +45,7 @@ public abstract class Unite {
         return joueur;
     }
     
-    public Case positionUnite(){
+    public Case getPositionUnite(){
         return positionUnite;
     }
     
