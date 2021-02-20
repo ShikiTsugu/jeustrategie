@@ -17,7 +17,7 @@ public class Case {
     }
 
     public boolean estVide(){
-        return obstacle==false&&unit==null;
+        return !estObstable() && !estUnit();
     }
     
     public Unite getUnite(){
@@ -26,6 +26,14 @@ public class Case {
     
     public void setUnite(Unite unit){
         this.unit = unit;
+    }
+    
+    public boolean estObstacle(){
+        return obstacle == true;
+    }
+    
+    public boolean estUnit(){
+        return unit != null;
     }
     
     public Unite supprimerUniteCase(){
