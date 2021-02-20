@@ -141,22 +141,15 @@ public class Jeu {
         
         return terrain.attaqueUnite(unite, terrain.getUnite(x,y));
     }*/
-
-
-
-
-
-
-
     
     public static void main(String[] args) {
-        Terrain terrain = new Terrain(5,5,1);
+        Terrain terrain = new Terrain(5,5,2);
+        Joueur joueur = new Joueur(2);
+        Templier templier = new Templier(joueur);
+        System.out.println(terrain.ajouteUnite(templier,0,0));
         Model m = new Model("Jeu/plaine.png");
         Vue v = new Vue(m, terrain);
-        v.setVisible(true);
-        Joueur joueur = new Joueur(1);
-        Templier templier = new Templier(joueur);
-        terrain.PlaceUnit(0,0,templier);
+        v.AfficheTerrain();
     }
 
 }

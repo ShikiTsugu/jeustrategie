@@ -6,6 +6,8 @@ public class Terrain {
     public Terrain(int largeur, int hauteur, int max){
         plateau = new Case[hauteur][largeur];
         maxUnits = max;
+        nbUnits = 0;
+        initialiseTerrain();
     }
 
     public Terrain(Case[][] p, int max){
@@ -13,12 +15,24 @@ public class Terrain {
         maxUnits = max;
     }
 
-    public void PlaceUnit(int x, int y, Unite unite){
-        if(maxUnits <= nbUnits){
-            plateau[x][y].addUnit(unite);
-            nbUnits++;
-        } else {
-            System.out.println("Vous avez trop d'unité");
+    public boolean ajouteUnite(Unite u, int x, int y){
+        try{
+            if(plateau[y][x].unit==null){
+                plateau[y][x]=new Case(u);
+                return true;
+            }
+        }catch(ArrayIndexOutOfBoundsException e){
+            return false;
+        }
+        return false;
+    }
+
+
+    public void initialiseTerrain(){
+        for (int x = 0; x < plateau.length; x++){
+            for (int y = 0; y < plateau[x].length; y++){
+                plateau[x][y] = new Case();
+            }
         }
     }
 
