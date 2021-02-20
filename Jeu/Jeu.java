@@ -179,7 +179,6 @@ public class Jeu {
     /**
      * fonction qui prend en charge les requête d'attaque d'unite
      * @param joueur le joueur qui a effectué la requête
-     * @param unite l'unite à place sur le terrain
      * @param depart case de depart
      * @param cible la case cible
      * @return le boolean indiquant la réussite de la requête
