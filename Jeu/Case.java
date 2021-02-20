@@ -17,7 +17,7 @@ public class Case {
     }
 
     public boolean estVide(){
-        return !estObstable() && !estUnit();
+        return !estObstacle() && !estUnite();
     }
     
     public Unite getUnite(){
