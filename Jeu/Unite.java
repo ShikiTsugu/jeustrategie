@@ -87,5 +87,24 @@ public abstract class Unite {
     
     public abstract String toString();
     public abstract boolean isHero();
+    
+    public void deplaceUnite(Unite unit, Case destination){
+        if (destination.estVide()){
+            Case positionInitial = unit.getPositionUnite();
+            destination.setUnite(unit);
+            unit.setPositionUnite(destination);
+            positionInitial.supprimerUniteCase();
+        } 
+    }
+    
+    public void attaqueUnite(Case positionA, Case positionD){
+        Unite attaquant = positionA.getUnit();
+        Unite defenseur = positionD.getUnit();
+        if (positionD.estUnit() && !positionD.estObstable()){
+            attaquant.setPointAction(attaquant.getPointAction() -1);
+            defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
+        }
+        else if (positionD.estObstacle() || positionD.estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
+    }
 
 }
