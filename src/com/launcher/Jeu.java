@@ -1,3 +1,15 @@
+package com.launcher;
+
+import com.plateau.Case;
+import com.plateau.Model;
+import com.plateau.Terrain;
+import com.plateau.Vue;
+import com.player.Joueur;
+import com.unite.Templier;
+import com.unite.Unite;
+
+import java.io.File;
+
 public class Jeu {
 
 
@@ -31,8 +43,8 @@ public class Jeu {
     }
 
     /**
-     * getter pour le Terrain
-     * @return le Terrain
+     * getter pour le com.plateau.Terrain
+     * @return le com.plateau.Terrain
      */
     public Terrain getTerrain() {
         return terrain;
@@ -147,7 +159,7 @@ public class Jeu {
      * @return le boolean indiquant la réussite de la requête
      * A MODIFIER
      */
-    public boolean acheteUnite(Joueur joueur ,Unite unite, int x , int y){
+    public boolean acheteUnite(Joueur joueur , Unite unite, int x , int y){
         //verifie si le joueur possède assez d'argent
         if(joueur.getArgent()< unite.getCoutUnite())
             return false;
@@ -198,7 +210,30 @@ public class Jeu {
         return true;
     }
 
-    
+    private static String selectGoodPath(){
+        String path = System.getProperty("user.dir");
+        File checkPath = new File(path);
+        if(path.endsWith("jeu-de-start") || hasAGoodChild(checkPath,"src")){
+            path+="/src/com";
+        }else if(path.endsWith("src") || hasAGoodChild(checkPath,"com")){
+            path+="/com";
+        }
+        return path;
+    }
+
+
+
+
+    private static boolean hasAGoodChild(File checkPath,String wanted){
+        File[] listOfChildren = checkPath.listFiles();
+        if (listOfChildren==null)return false;
+        for(File child:listOfChildren){
+            if(child.toString().endsWith(wanted)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
@@ -206,13 +241,16 @@ public class Jeu {
 
 
 
-    
-    public static void main(String[] args) {
+
+
+
+
+        public static void main(String[] args) {
         Terrain terrain = new Terrain(5,5,2);
         Joueur joueur = new Joueur(2);
         Templier templier = new Templier(joueur);
         System.out.println(terrain.ajouteUnite(templier,0,0));
-        Model m = new Model("Jeu/plaine.png");
+        Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
         Vue v = new Vue(m, terrain);
         v.AfficheTerrain();
     }

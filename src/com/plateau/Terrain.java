@@ -1,3 +1,7 @@
+package com.plateau;
+
+import com.unite.Unite;
+
 public class Terrain {
     protected Case[][] plateau;
     protected int maxUnits;

@@ -1,3 +1,9 @@
+package com.player;
+
+import com.unite.Hero;
+import com.unite.Unite;
+import com.plateau.Terrain;
+
 public class Joueur {
     protected int argent;
     protected boolean isHuman;

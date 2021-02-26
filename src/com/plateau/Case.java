@@ -1,3 +1,7 @@
+package com.plateau;
+
+import com.unite.Unite;
+
 public class Case {
     protected boolean obstacle;
     protected Unite unit;
