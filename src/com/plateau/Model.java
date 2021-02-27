@@ -1,3 +1,5 @@
+package com.plateau;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,7 +12,7 @@ public class Model {
         try{
             image = ImageIO.read(new File(chemin));
         } catch (IOException e) {
-            System.out.println("Fichier non trouvé, chemin incorrecte.");
+            System.out.println("Fichier non trouvï¿½, chemin incorrecte.");
             System.exit(1);
         }
     }

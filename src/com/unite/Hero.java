@@ -1,3 +1,7 @@
+package com.unite;
+
+import com.player.Joueur;
+
 public class Hero extends Unite{
     
     public Hero(Joueur joueur){

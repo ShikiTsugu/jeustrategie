@@ -1,3 +1,8 @@
+package com.unite;
+
+import com.plateau.Case;
+import com.player.Joueur;
+
 public abstract class Unite {
     protected int santeMax;
     protected int santeCourante;

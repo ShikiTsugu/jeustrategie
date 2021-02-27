@@ -1,3 +1,7 @@
+package com.unite;
+
+import com.player.Joueur;
+
 public class Templier extends Unite{
     
     public Templier(Joueur joueur){

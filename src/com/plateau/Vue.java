@@ -1,8 +1,8 @@
+package com.plateau;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.util.ArrayList;
 
 public class Vue extends JFrame{
 
