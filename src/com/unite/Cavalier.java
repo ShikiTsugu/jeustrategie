@@ -4,7 +4,7 @@ import com.player.Joueur;
 
 public class Cavalier extends Unite{
     
-    public Templier(Joueur joueur){
+    public Cavalier(Joueur joueur){
         super(joueur);
         santeMax = 200; //discussion en cours
         santeCourante = 200;
