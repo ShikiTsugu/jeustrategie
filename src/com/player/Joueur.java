@@ -18,6 +18,10 @@ public class Joueur {
         return unites[0];
     }
 
+    public Unite[] getUnites() {
+        return unites;
+    }
+
     public int getArgent(){return argent;}
 
     public void setArgent(int a){argent = a;}

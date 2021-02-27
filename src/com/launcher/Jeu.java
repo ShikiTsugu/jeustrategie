@@ -6,9 +6,8 @@ import com.plateau.Terrain;
 import com.plateau.Vue;
 import com.player.ActionJoueur;
 import com.player.Joueur;
-import com.unite.Hero;
+import com.unite.*;
 import com.unite.Templier;
-import com.unite.Unite;
 
 import java.io.File;
 
@@ -16,7 +15,9 @@ public class Jeu {
 
 
     protected Joueur joueur1;
+    protected ActionJoueur actionjoueur1;
     protected Joueur joueur2;
+    protected ActionJoueur actionjoueur2;
     protected Terrain terrain;
     protected Joueur tourDuJoueur;
     protected String requeteCourante;
@@ -76,6 +77,10 @@ public class Jeu {
         this.joueur1 = joueur1;
     }
 
+    public void setActionjoueur1(ActionJoueur actionjoueur1) {this.actionjoueur1 = actionjoueur1;}
+
+    public void setActionjoueur2(ActionJoueur actionjoueur2) {this.actionjoueur2 = actionjoueur2;}
+
     /**
      * setter pour le nouveau joueur 2
      * @param joueur2 le nouveau joueur 2
@@ -115,12 +120,12 @@ public class Jeu {
      * @return le boolean disant si la partie est finie
      * A MODIFIER
      */
-   /* public boolean gameIsOver(){
-        if(joueur1.getHero().getPv() <= 0 || joueur2.getHero().getPv() <=0) 
+    public boolean gameIsOver(){
+        if(joueur1.getHero().getSanteCourante() <= 0 || joueur2.getHero().getSanteCourante() <=0)
             return true;
-        
+
         return false;
-    }*/
+    }
 
     /**
      * fonction d'initialisation de debut de partie
@@ -135,15 +140,78 @@ public class Jeu {
         setTerrain(terrain);
         setTourDuJoueur(joueur1);
     }
+
+    public boolean RequestFinished(String requete){
+        for(int i=0;i<requete.length();i++){
+            if(requete.substring(i).equals("X")){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void requestReader(){
+        if(requeteCourante.substring(0,1).equals("B")){
+            Unite unite;
+            unite = new Templier(tourDuJoueur);
+            if(requeteCourante.substring(5,6).equals("A")){
+                unite = new Archer(tourDuJoueur);
+                System.out.println("archer check");
+            }
+            if(requeteCourante.substring(5,6).equals("C")){
+                unite = new Cavalier(tourDuJoueur);
+            }
+            if(requeteCourante.substring(5,6).equals("M")){
+                unite = new Mage(tourDuJoueur);
+            }
+
+
+            //CAS D'ERREUR A FAIRE
+
+            if(tourDuJoueur == joueur1) {
+                actionjoueur1.placeUnite(terrain, unite, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)));
+            }else {
+                actionjoueur2.placeUnite(terrain, unite, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)));
+            }
+
+
+        }
+        if(requeteCourante.substring(0,1)== "D"){
+            if(tourDuJoueur == joueur1) {
+                actionjoueur1.deplaceUnite(terrain ,Integer.parseInt(requeteCourante.substring(1, 3)),  Integer.parseInt(requeteCourante.substring(3, 5))  ,
+                        Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9))) ;
+            }else {
+                actionjoueur2.deplaceUnite(terrain ,Integer.parseInt(requeteCourante.substring(1, 3)),  Integer.parseInt(requeteCourante.substring(3, 5))  ,
+                        Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9)));
+            }
+        }
+        if(requeteCourante.substring(0,1) == "A"){
+            if(tourDuJoueur == joueur1) {
+                actionjoueur1.attaqueUnite(terrain ,Integer.parseInt(requeteCourante.substring(1, 3)),  Integer.parseInt(requeteCourante.substring(3, 5))  ,
+                        Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9))) ;
+            }else {
+                actionjoueur2.attaqueUnite(terrain ,Integer.parseInt(requeteCourante.substring(1, 3)),  Integer.parseInt(requeteCourante.substring(3, 5))  ,
+                        Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9)));
+            }
+        }
+    }
+
     /*
     public void playGame(){
         startNewGame();
         while(!gameIsOver()){
+            while(requeteCourante != "finDuTour"){
+                if(RequestFinished(requeteCourante)){
+                    if(){
+
+                    }
+                }
+            }
 
 
         }
-    }
-    */
+    }*/
+
     private static String selectGoodPath(){
         String path = System.getProperty("user.dir");
         File checkPath = new File(path);
@@ -167,16 +235,26 @@ public class Jeu {
     }
 
     public static void main(String[] args) {
+        Jeu jeu = new Jeu();
         Terrain terrain = new Terrain(5,5,2);
-        Joueur joueur = new Joueur(200);
+        jeu.setTerrain(terrain);
+        Joueur joueur = new Joueur(20000);
+        jeu.setJoueur1(joueur);
         joueur.initialiseListeUnites(terrain);
         Hero h = new Hero(joueur);
         ActionJoueur act = new ActionJoueur(joueur);
+        jeu.setActionjoueur1(act);
         Templier templier = new Templier(joueur);
+        jeu.setTourDuJoueur(joueur);
+
         System.out.println(joueur.ajouteUnite(h));
-        System.out.println(act.placeUnite(terrain,templier,0,0));
+        jeu.setRequeteCourante("B0101A");
+
+        jeu.requestReader();
+        System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1));
         Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
         Vue v = new Vue(m, terrain);
         v.AfficheTerrain();
+        System.out.println(joueur.getArgent());
     }
 }
