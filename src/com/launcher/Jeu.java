@@ -133,8 +133,6 @@ public class Jeu {
         setTerrain(terrain);
         setTourDuJoueur(joueur1);
     }
-
-    
     /*
     public void playGame(){
         startNewGame();
@@ -144,72 +142,6 @@ public class Jeu {
         }
     }
     */
-    
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Fonction de requètes joueur
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    /**
-     * fonction qui prend en charge les requête d'achats d'unite
-     * @param joueur le joueur qui a effectué la requête
-     * @param unite l'unite à place sur le terrain
-     * @param x la coordonné x où place l'unite
-     * @param y la coordonné y où place l'unite
-     * @return le boolean indiquant la réussite de la requête
-     * A MODIFIER
-     */
-    public boolean acheteUnite(Joueur joueur , Unite unite, int x , int y){
-        //verifie si le joueur possède assez d'argent
-        if(joueur.getArgent()< unite.getCoutUnite())
-            return false;
-        //fait appele à la fonction d'ajout d'unite sur le terrain
-        if(!terrain.ajouteUnite( unite, x,y)){
-            return false;
-        }
-        //fait appele à la fonction d'ajout dans l'armée du joueur
-        return joueur.ajouteUnite(unite);
-    }
-
-
-    /**
-     * fonction qui prend en charge les requête de deplacement d'unite
-     * @param joueur le joueur qui a effectué la requête
-     * @param unite l'unite à place sur le terrain
-     * @param destination la case de destination
-     * @return le boolean indiquant la réussite de la requête
-     */
-    public boolean deplaceUnite(Joueur joueur ,Unite unite, Case destination){
-        //verifie si l'unite appartient au joueur
-        if(joueur == unite.getJoueur()){
-            unite.deplaceUnite(unite , destination);
-            return true ;
-        }
-        return false;
-    }
-
-    /**
-     * fonction qui prend en charge les requête d'attaque d'unite
-     * @param joueur le joueur qui a effectué la requête
-     * @param depart case de depart
-     * @param cible la case cible
-     * @return le boolean indiquant la réussite de la requête
-     */
-    public boolean attaqueUnite(Joueur joueur,Case depart,Case cible){
-        if(depart.getUnite() == null){
-            return false;
-        }
-        //verifie si l'unite appartient au joueur
-        if(joueur != depart.getUnite().getJoueur())
-            return false;
-        //verifie si l'emplacement à une unité puis si cette dernière est du camp opposé
-        if(cible.getUnite() == null || cible.getUnite().getJoueur() == joueur)
-            return false;
-        
-        depart.getUnite().attaqueUnite(depart, cible);
-        return true;
-    }
-
     private static String selectGoodPath(){
         String path = System.getProperty("user.dir");
         File checkPath = new File(path);
@@ -220,9 +152,6 @@ public class Jeu {
         }
         return path;
     }
-
-
-
 
     private static boolean hasAGoodChild(File checkPath,String wanted){
         File[] listOfChildren = checkPath.listFiles();
@@ -235,17 +164,7 @@ public class Jeu {
         return false;
     }
 
-
-
-
-
-
-
-
-
-
-
-        public static void main(String[] args) {
+    public static void main(String[] args) {
         Terrain terrain = new Terrain(5,5,2);
         Joueur joueur = new Joueur(2);
         Templier templier = new Templier(joueur);
@@ -254,5 +173,4 @@ public class Jeu {
         Vue v = new Vue(m, terrain);
         v.AfficheTerrain();
     }
-
 }
