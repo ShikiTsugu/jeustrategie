@@ -22,6 +22,14 @@ public class ActionJoueur {
         }
     }
 
+    public boolean placeUnite(Terrain t, Unite unite, int x, int y){
+        //si l'unité est bien acheté, on place l'unité dans le terrain à la position souhaité par le joueur.
+        if(acheteUnite(unite)){
+            return t.ajouteUnite(unite,x,y);
+        }
+        return false;
+    }
+
     public boolean deplaceUnite(Unite unite, Case destination){
         //verifie si l'unite appartient au joueur
         if(joueur == unite.getJoueur()){
