@@ -37,7 +37,7 @@ public class ActionJoueur {
         Unite unite = t.getPlateau()[yAvant][xAvant].getUnite();
         Case destination = t.getPlateau()[yDestination][xDestination];
         if(joueur == unite.getJoueur()){
-            unite.deplaceUnite(xAvant, yAvant, xDestination, yDestination);
+            unite.deplaceUnite(t, xAvant, yAvant, xDestination, yDestination);
             return true ;
         }
         return false;
@@ -54,7 +54,7 @@ public class ActionJoueur {
         //verifie si l'emplacement à une unité puis si cette dernière est du camp opposé
         if(cible.getUnite() == null || cible.getUnite().getJoueur() == joueur) return false;
 
-        depart.getUnite().attaqueUnite(xA, yA, xD, yD);
+        depart.getUnite().attaqueUnite(t, xA, yA, xD, yD);
         return true;
     }
 }
