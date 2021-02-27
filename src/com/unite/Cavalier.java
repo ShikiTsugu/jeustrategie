@@ -16,7 +16,7 @@ public class Cavalier extends Unite{
     }
     
     public String toString(){
-        return "templier";
+        return "cavalier";
     }
     
     public final boolean isHero(){
