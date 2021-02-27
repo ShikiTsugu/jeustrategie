@@ -11,6 +11,8 @@ public class ActionJoueur {
         joueur = j;
     }
 
+    public Joueur getJoueur(){return joueur;}
+
     //Action du joueur pour acheter une unité.
     public boolean acheteUnite(Unite unite){
         //si le joueur n'a pas assez d'argent pour acheter l'unité, on retourne false.

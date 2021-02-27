@@ -4,7 +4,9 @@ import com.plateau.Case;
 import com.plateau.Model;
 import com.plateau.Terrain;
 import com.plateau.Vue;
+import com.player.ActionJoueur;
 import com.player.Joueur;
+import com.unite.Hero;
 import com.unite.Templier;
 import com.unite.Unite;
 
@@ -166,9 +168,13 @@ public class Jeu {
 
     public static void main(String[] args) {
         Terrain terrain = new Terrain(5,5,2);
-        Joueur joueur = new Joueur(2);
+        Joueur joueur = new Joueur(200);
+        joueur.initialiseListeUnites(terrain);
+        Hero h = new Hero(joueur);
+        ActionJoueur act = new ActionJoueur(joueur);
         Templier templier = new Templier(joueur);
-        System.out.println(terrain.ajouteUnite(templier,0,0));
+        System.out.println(joueur.ajouteUnite(h));
+        System.out.println(act.placeUnite(terrain,templier,0,0));
         Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
         Vue v = new Vue(m, terrain);
         v.AfficheTerrain();
