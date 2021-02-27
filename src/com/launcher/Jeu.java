@@ -147,7 +147,7 @@ public class Jeu {
     private static String selectGoodPath(){
         String path = System.getProperty("user.dir");
         File checkPath = new File(path);
-        if(path.endsWith("jeu-de-start") || hasAGoodChild(checkPath,"src")){
+        if(path.endsWith("jeu-de-strat") || hasAGoodChild(checkPath,"src")){
             path+="/src/com";
         }else if(path.endsWith("src") || hasAGoodChild(checkPath,"com")){
             path+="/com";
