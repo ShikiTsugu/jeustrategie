@@ -6,6 +6,7 @@ import com.unite.Unite;
 
 public class ActionJoueur {
     private Joueur joueur;
+    protected Case[][] plateau;
 
     public ActionJoueur(Joueur j){
         joueur = j;
@@ -32,16 +33,20 @@ public class ActionJoueur {
         return false;
     }
 
-    public boolean deplaceUnite(Unite unite, Case destination){
+    public boolean deplaceUnite(int xAvant, int yAvant, int xDestination, int yDestination){
         //verifie si l'unite appartient au joueur
+        Unite unite = plateau[yAvant][xAvant].getUnite();
+        Case destination = plateau[yDestination][xDestination];
         if(joueur == unite.getJoueur()){
-            unite.deplaceUnite(unite , destination);
+            unite.deplaceUnite(xAvant, yAvant, xDestination, yDestination);
             return true ;
         }
         return false;
     }
 
-    public boolean attaqueUnite(Case depart,Case cible){
+    public boolean attaqueUnite(int xA, int yA, int xD, int yD){
+        Case depart = plateau[yA][xA];
+        Case cible = plateau[yD][xD];
         if(depart.getUnite() == null) return false;
 
         //verifie si l'unite appartient au joueur
@@ -50,7 +55,7 @@ public class ActionJoueur {
         //verifie si l'emplacement à une unité puis si cette dernière est du camp opposé
         if(cible.getUnite() == null || cible.getUnite().getJoueur() == joueur) return false;
 
-        depart.getUnite().attaqueUnite(depart, cible);
+        depart.getUnite().attaqueUnite(xA, yA, xD, yD);
         return true;
     }
 }
