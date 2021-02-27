@@ -20,10 +20,20 @@ public class Joueur {
 
     public int getArgent(){return argent;}
 
+    public void setArgent(int a){argent = a;}
+
     public boolean getIsHuman(){return isHuman;}
 
     public void initialiseListeUnites(Terrain t){
         unites = new Unite[t.getMaxUnits()];
+    }
+
+    public int achat(int cout){
+        if(argent==0 || argent<cout){
+            return argent;
+        }else{
+            return argent-=cout;
+        }
     }
 
     public boolean ajouteUnite(Unite u){
