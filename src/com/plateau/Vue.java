@@ -1,5 +1,6 @@
 package com.plateau;
 
+import javax.sound.sampled.BooleanControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,13 +9,15 @@ public class Vue extends JFrame{
 
     private ImagePane imagePane;
     private Model model;
-    private JPanel panel = new JPanel();
+    private JPanel TerrainPanel = new JPanel();
+    private JPanel TaskBar = new JPanel();
     Terrain terrain;
     
     public Vue(Model m, Terrain t){
     	model = m;
+        imagePane = new ImagePane();
         setTitle("Jeu de Strategie");
-        setSize(1000,1000);
+        setSize(1680,1050);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         terrain = t;
@@ -29,14 +32,14 @@ public class Vue extends JFrame{
     /*Affichage d'un terrain*/
     public void AfficheTerrain(){
 
-        imagePane = new ImagePane();
-
-        GridLayout grid = new GridLayout(5,5);
-        imagePane.setLayout(grid);
+        BoxLayout box = new BoxLayout(imagePane,BoxLayout.Y_AXIS);
+        imagePane.setLayout(box);
         generateTerrain();
+        generateTaskBar();
 
         setContentPane(imagePane);
     }
+
     /* Ajout d'image de fond */
     public class ImagePane extends JPanel{
         public ImagePane(){
@@ -50,26 +53,44 @@ public class Vue extends JFrame{
 
     public void generateTerrain(){
         Case[][] terraintmp = terrain.plateau;
+        imagePane.add(TerrainPanel);
+        GridLayout grid = new GridLayout(5,5);
+        TerrainPanel.setLayout(grid);
         for (int x = 0; x < terraintmp.length; x++){
             for (int y = 0; y < terraintmp[x].length; y++){
                 if (terraintmp[x][y].unit != null) {
                     JButton bt = new JButton(terraintmp[x][y].unit.toString());
-                    imagePane.add(bt);
+                    TerrainPanel.add(bt);
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(bt.getX());
                         System.out.println(bt.getY());
                     });
+                    bt.setPreferredSize(new Dimension(150,150));
                 } else {
                     JButton bt = new JButton();
-                    imagePane.add(bt);
+                    TerrainPanel.add(bt);
+                    bt.setOpaque(false);
                     bt.setContentAreaFilled(false);
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(bt.getX());
                         System.out.println(bt.getY());
                     });
+                    bt.setPreferredSize(new Dimension(150,150));
                 }
             }
         }
+        TerrainPanel.setOpaque(false);
+    }
+
+    public void generateTaskBar(){
+        FlowLayout flow = new FlowLayout();
+        TaskBar.setLayout(flow);
+        for (int i = 0; i < 4; i++){
+            JButton bt = new JButton("test");
+            bt.setPreferredSize(new Dimension(300,150));
+            TaskBar.add(bt);
+        }
+        imagePane.add(TaskBar);
     }
 
 }

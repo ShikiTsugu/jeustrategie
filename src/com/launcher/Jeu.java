@@ -177,6 +177,5 @@ public class Jeu {
         System.out.println(act.placeUnite(terrain,templier,0,0));
         Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
         Vue v = new Vue(m, terrain);
-        v.AfficheTerrain();
     }
 }
