@@ -14,6 +14,15 @@ public class Terrain {
         initialiseTerrain();
     }
 
+    public void Print(){
+        for(int i=0;i<plateau.length;i++){
+            for(int j=0;j<plateau.length;j++){
+                System.out.print(plateau[j][i].toString());
+            }
+            System.out.println("");
+        }
+    }
+
     public Terrain(Case[][] p, int max){
         plateau = p;
         maxUnits = max;
@@ -23,6 +32,7 @@ public class Terrain {
         try{
             if(plateau[y][x].unit==null){
                 plateau[y][x]=new Case(u);
+                u.setPositionUnite(plateau[y][x]);
                 return true;
             }
         }catch(ArrayIndexOutOfBoundsException e){

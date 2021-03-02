@@ -156,7 +156,7 @@ public class Jeu {
             unite = new Templier(tourDuJoueur);
             if(requeteCourante.substring(5,6).equals("A")){
                 unite = new Archer(tourDuJoueur);
-                System.out.println("archer check");
+
             }
             if(requeteCourante.substring(5,6).equals("C")){
                 unite = new Cavalier(tourDuJoueur);
@@ -170,22 +170,29 @@ public class Jeu {
 
             if(tourDuJoueur == joueur1) {
                 actionjoueur1.placeUnite(terrain, unite, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)));
+
+
             }else {
                 actionjoueur2.placeUnite(terrain, unite, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)));
             }
 
 
         }
-        if(requeteCourante.substring(0,1)== "D"){
+        if(requeteCourante.substring(0,1).equals("D")){
+
+
             if(tourDuJoueur == joueur1) {
                 actionjoueur1.deplaceUnite(terrain ,Integer.parseInt(requeteCourante.substring(1, 3)),  Integer.parseInt(requeteCourante.substring(3, 5))  ,
                         Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9))) ;
+
             }else {
                 actionjoueur2.deplaceUnite(terrain ,Integer.parseInt(requeteCourante.substring(1, 3)),  Integer.parseInt(requeteCourante.substring(3, 5))  ,
                         Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9)));
+
+
             }
         }
-        if(requeteCourante.substring(0,1) == "A"){
+        if(requeteCourante.substring(0,1).equals("A")){
             if(tourDuJoueur == joueur1) {
                 actionjoueur1.attaqueUnite(terrain ,Integer.parseInt(requeteCourante.substring(1, 3)),  Integer.parseInt(requeteCourante.substring(3, 5))  ,
                         Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9))) ;
@@ -196,21 +203,26 @@ public class Jeu {
         }
     }
 
-    /*
+
     public void playGame(){
-        startNewGame();
+        //startNewGame();
         while(!gameIsOver()){
             while(requeteCourante != "finDuTour"){
                 if(RequestFinished(requeteCourante)){
-                    if(){
+                    requestReader();
+                    requeteCourante = "XXXXXXXXX";
 
-                    }
                 }
+            }
+            if(tourDuJoueur == joueur1){
+                tourDuJoueur = joueur2;
+            }else{
+                tourDuJoueur = joueur1;
             }
 
 
         }
-    }*/
+    }
 
     private static String selectGoodPath(){
         String path = System.getProperty("user.dir");
@@ -249,8 +261,17 @@ public class Jeu {
 
         System.out.println(joueur.ajouteUnite(h));
         jeu.setRequeteCourante("B0101A");
-
         jeu.requestReader();
+        jeu.terrain.Print();
+        System.out.println(jeu.terrain.getPlateau()[1][1].getUnite().getPositionUnite());
+
+        System.out.println(jeu.requeteCourante);
+        jeu.setRequeteCourante("D01010203");
+        System.out.println(jeu.requeteCourante);
+        jeu.requestReader();
+        jeu.terrain.Print();
+
+
         System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1));
         Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
         Vue v = new Vue(m, terrain);

@@ -48,6 +48,7 @@ public class Case {
 
     public String toString(){
         if(estVide()) return "vide";
+        if(estUnit()) return  "U";
         return obstacle==false?unit.toString():"obstacle";
     }
 }
