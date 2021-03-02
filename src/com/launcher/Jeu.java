@@ -248,7 +248,7 @@ public class Jeu {
 
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
-        Terrain terrain = new Terrain(5,5,2);
+        Terrain terrain = new Terrain(5,5,5);
         jeu.setTerrain(terrain);
         Joueur joueur = new Joueur(20000);
         jeu.setJoueur1(joueur);
@@ -269,13 +269,37 @@ public class Jeu {
         jeu.setRequeteCourante("D01010203");
         System.out.println(jeu.requeteCourante);
         jeu.requestReader();
+        //jeu.terrain.Print();
+
+        Joueur joueur2 = new Joueur(20000);
+        jeu.setJoueur2(joueur2);
+        joueur2.initialiseListeUnites(terrain);
+        Hero h2 = new Hero(joueur2);
+        ActionJoueur act2 = new ActionJoueur(joueur2);
+        jeu.setActionjoueur2(act2);
+        jeu.setTourDuJoueur(joueur2);
+        jeu.setRequeteCourante("B0204A");
+        jeu.requestReader();
         jeu.terrain.Print();
+        System.out.println(jeu.joueur1);
+        System.out.println(jeu.joueur2);
+        System.out.println(jeu.tourDuJoueur);
+        System.out.println(terrain.getPlateau()[03][02].getUnite().getSanteCourante());
+        System.out.println(terrain.getPlateau()[04][02].getUnite().getSanteCourante());
+
+        jeu.setRequeteCourante("A02030204");
+        jeu.requestReader();
+        System.out.println(terrain.getPlateau()[03][02].getUnite().getSanteCourante());
+        System.out.println(terrain.getPlateau()[04][02].getUnite().getSanteCourante());
 
 
+        /*
         System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1));
         Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
         Vue v = new Vue(m, terrain);
         v.AfficheTerrain();
-        System.out.println(joueur.getArgent());
+        System.out.println(joueur2.getArgent());
+        */
+
     }
 }
