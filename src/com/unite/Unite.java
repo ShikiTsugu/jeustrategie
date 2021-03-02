@@ -100,7 +100,9 @@ public abstract class Unite {
             if (destination.estVide()) {
                 Case positionInitial = avant.getUnite().getPositionUnite();
                 destination.setUnite(avant.getUnite());
+                System.out.println(positionInitial);
                 avant.getUnite().setPositionUnite(destination);
+                System.out.println(positionInitial);
                 positionInitial.supprimerUniteCase();
             }
         }
