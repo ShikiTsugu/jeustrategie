@@ -129,16 +129,24 @@ public class Jeu {
 
     /**
      * fonction d'initialisation de debut de partie
-     * @param joueur1 le joueur 1
-     * @param joueur2 le joueur 2
-     * @param terrain le terrain choisi
+     * @param terrain le terrain choisit
      * A MODIFIER
      */
-    public void startNewGame(Joueur joueur1 ,Joueur joueur2, Terrain terrain){
-        setJoueur1(joueur1);
-        setJoueur2(joueur2);
+    public void startNewGame(Terrain terrain){
+        setJoueur1(new Joueur(1000));
+        setActionjoueur1(new ActionJoueur(joueur1));
+        joueur1.initialiseListeUnites(terrain);
+        setJoueur2(new Joueur(1000));
+        setActionjoueur2(new ActionJoueur(joueur2));
+        joueur2.initialiseListeUnites(terrain);
         setTerrain(terrain);
         setTourDuJoueur(joueur1);
+        setRequeteCourante("B"+ terrain.getXH1AsString() + terrain.getYH1AsString() + "H");
+        requestReader();
+        setTourDuJoueur(joueur2);
+        setRequeteCourante("B"+ terrain.getXH2AsString() + terrain.getYH2AsString() + "H");
+        requestReader();
+        setRequeteCourante("XXXXXXX");
     }
 
     public boolean RequestFinished(String requete){
@@ -163,6 +171,9 @@ public class Jeu {
             }
             if(requeteCourante.substring(5,6).equals("M")){
                 unite = new Mage(tourDuJoueur);
+            }
+            if(requeteCourante.substring(5,6).equals("H")){
+                unite = new Hero(tourDuJoueur);
             }
 
 
@@ -201,6 +212,7 @@ public class Jeu {
                         Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9)));
             }
         }
+
     }
 
 
@@ -248,18 +260,14 @@ public class Jeu {
 
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
-        Terrain terrain = new Terrain(5,5,5);
-        jeu.setTerrain(terrain);
-        Joueur joueur = new Joueur(20000);
-        jeu.setJoueur1(joueur);
-        joueur.initialiseListeUnites(terrain);
-        Hero h = new Hero(joueur);
-        ActionJoueur act = new ActionJoueur(joueur);
-        jeu.setActionjoueur1(act);
-        Templier templier = new Templier(joueur);
-        jeu.setTourDuJoueur(joueur);
+        Terrain terrain = new Terrain(5,5,5,3,0,3,4);
+        jeu.startNewGame(terrain);
+        System.out.println(jeu.joueur1.getUnites()[0]!=null);
+        System.out.println(jeu.joueur2.getUnites()[0]!=null);
+        //Hero h = new Hero(jeu.getJoueur1());
+        Templier templier = new Templier(jeu.getJoueur1());
+        //System.out.println(jeu.getJoueur1().ajouteUnite(h));
 
-        System.out.println(joueur.ajouteUnite(h));
         jeu.setRequeteCourante("B0101A");
         jeu.requestReader();
         jeu.terrain.Print();
@@ -271,13 +279,8 @@ public class Jeu {
         jeu.requestReader();
         //jeu.terrain.Print();
 
-        Joueur joueur2 = new Joueur(20000);
-        jeu.setJoueur2(joueur2);
-        joueur2.initialiseListeUnites(terrain);
-        Hero h2 = new Hero(joueur2);
-        ActionJoueur act2 = new ActionJoueur(joueur2);
-        jeu.setActionjoueur2(act2);
-        jeu.setTourDuJoueur(joueur2);
+        Hero h2 = new Hero(jeu.getJoueur2());
+        jeu.setTourDuJoueur(jeu.getJoueur2());
         jeu.setRequeteCourante("B0204A");
         jeu.requestReader();
         jeu.terrain.Print();
@@ -287,7 +290,7 @@ public class Jeu {
         System.out.println(terrain.getPlateau()[03][02].getUnite().getSanteCourante());
         System.out.println(terrain.getPlateau()[04][02].getUnite().getSanteCourante());
 
-        jeu.setRequeteCourante("A02030204");
+        jeu.setRequeteCourante("A02040203");
         jeu.requestReader();
         System.out.println(terrain.getPlateau()[03][02].getUnite().getSanteCourante());
         System.out.println(terrain.getPlateau()[04][02].getUnite().getSanteCourante());
