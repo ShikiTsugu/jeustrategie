@@ -260,7 +260,7 @@ public class Jeu {
 
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
-        Terrain terrain = new Terrain(5,5,5,3,0,3,4);
+        Terrain terrain = new Terrain(5,5,5,0,3,4,3);
         jeu.startNewGame(terrain);
         System.out.println(jeu.joueur1.getUnites()[0]!=null);
         System.out.println(jeu.joueur2.getUnites()[0]!=null);
