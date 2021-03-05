@@ -10,6 +10,7 @@ import com.unite.*;
 import com.unite.Templier;
 
 import java.io.File;
+import java.util.Scanner;
 
 public class Jeu {
 
@@ -146,6 +147,7 @@ public class Jeu {
         setTourDuJoueur(joueur2);
         setRequeteCourante("B"+ terrain.getXH2AsString() + terrain.getYH2AsString() + "H");
         requestReader();
+        setTourDuJoueur(joueur1);
         setRequeteCourante("XXXXXXX");
     }
 
@@ -177,7 +179,7 @@ public class Jeu {
             }
 
 
-            //CAS D'ERREUR A FAIRE
+
 
             if(tourDuJoueur == joueur1) {
                 actionjoueur1.placeUnite(terrain, unite, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)));
@@ -212,28 +214,32 @@ public class Jeu {
                         Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9)));
             }
         }
-
-    }
-
-
-    public void playGame(){
-        //startNewGame();
-        while(!gameIsOver()){
-            while(requeteCourante != "finDuTour"){
-                if(RequestFinished(requeteCourante)){
-                    requestReader();
-                    requeteCourante = "XXXXXXXXX";
-
-                }
-            }
+        if(requeteCourante.equals("finDuTour")){
             if(tourDuJoueur == joueur1){
                 tourDuJoueur = joueur2;
             }else{
                 tourDuJoueur = joueur1;
             }
+        }
+        //CAS D'ERREUR A FAIRE
 
+    }
+
+
+    public void playGame(Terrain terrain){
+        startNewGame(terrain);
+        Scanner scanner = new Scanner(System.in);
+        String playerRequest;
+        while(!gameIsOver()){
+            terrain.Print();
+            playerRequest = scanner.nextLine();
+            requeteCourante = playerRequest;
+            requestReader();
+            System.out.println(joueur1.getUnites()[0].getSanteCourante());
+            System.out.println(joueur2.getUnites()[0].getSanteCourante());
 
         }
+        scanner.close();
     }
 
     private static String selectGoodPath(){
@@ -261,39 +267,7 @@ public class Jeu {
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
         Terrain terrain = new Terrain(5,5,5,0,3,4,3);
-        jeu.startNewGame(terrain);
-        System.out.println(jeu.joueur1.getUnites()[0]!=null);
-        System.out.println(jeu.joueur2.getUnites()[0]!=null);
-        //Hero h = new Hero(jeu.getJoueur1());
-        Templier templier = new Templier(jeu.getJoueur1());
-        //System.out.println(jeu.getJoueur1().ajouteUnite(h));
-
-        jeu.setRequeteCourante("B0101A");
-        jeu.requestReader();
-        jeu.terrain.Print();
-        System.out.println(jeu.terrain.getPlateau()[1][1].getUnite().getPositionUnite());
-
-        System.out.println(jeu.requeteCourante);
-        jeu.setRequeteCourante("D01010203");
-        System.out.println(jeu.requeteCourante);
-        jeu.requestReader();
-        //jeu.terrain.Print();
-
-        Hero h2 = new Hero(jeu.getJoueur2());
-        jeu.setTourDuJoueur(jeu.getJoueur2());
-        jeu.setRequeteCourante("B0204A");
-        jeu.requestReader();
-        jeu.terrain.Print();
-        System.out.println(jeu.joueur1);
-        System.out.println(jeu.joueur2);
-        System.out.println(jeu.tourDuJoueur);
-        System.out.println(terrain.getPlateau()[03][02].getUnite().getSanteCourante());
-        System.out.println(terrain.getPlateau()[04][02].getUnite().getSanteCourante());
-
-        jeu.setRequeteCourante("A02040203");
-        jeu.requestReader();
-        System.out.println(terrain.getPlateau()[03][02].getUnite().getSanteCourante());
-        System.out.println(terrain.getPlateau()[04][02].getUnite().getSanteCourante());
+        jeu.playGame(terrain);
 
 
         /*
