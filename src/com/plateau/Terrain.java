@@ -23,9 +23,16 @@ public class Terrain {
 
 
     public void Print(){
+        System.out.print("  ");
+        for(int i=0;i< plateau[0].length;i++){
+            System.out.print(i+" ");
+        }
+        System.out.println("");
+
         for(int i=0;i<plateau.length;i++){
-            for(int j=0;j<plateau.length;j++){
-                System.out.print(plateau[i][j].toString());
+            System.out.print(i+" ");
+            for(int j=0;j<plateau[i].length;j++){
+                System.out.print(plateau[i][j].toString() +" ");
             }
             System.out.println("");
         }
