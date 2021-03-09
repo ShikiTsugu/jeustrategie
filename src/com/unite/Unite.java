@@ -1,6 +1,6 @@
 package com.unite;
 
-import com.plateau.Case;
+import com.plateau.*;
 import com.player.Joueur;
 
 public abstract class Unite {
@@ -93,23 +93,31 @@ public abstract class Unite {
     public abstract String toString();
     public abstract boolean isHero();
     
-    public void deplaceUnite(Unite unit, Case destination){
-        if (destination.estVide()){
-            Case positionInitial = unit.getPositionUnite();
-            destination.setUnite(unit);
-            unit.setPositionUnite(destination);
-            positionInitial.supprimerUniteCase();
-        } 
+    public void deplaceUnite(Terrain t, int xPast, int yPast, int xApres, int yApres){
+        Case avant = t.getPlateau()[yPast][xPast];
+        if (t.getPlateau()[yPast][xPast].estUnit()) {
+            Case destination = t.getPlateau()[yApres][xApres];
+            if (destination.estVide()) {
+                Case positionInitial = avant.getUnite().getPositionUnite();
+                destination.setUnite(avant.getUnite());
+                System.out.println(positionInitial);
+                avant.getUnite().setPositionUnite(destination);
+                System.out.println(positionInitial);
+                positionInitial.supprimerUniteCase();
+            }
+        }
     }
     
-    public void attaqueUnite(Case positionA, Case positionD){
-        Unite attaquant = positionA.getUnite();
-        Unite defenseur = positionD.getUnite();
-        if (positionD.estUnit() && !positionD.estObstacle()){
-            attaquant.setPointAction(attaquant.getPointAction() -1);
-            defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
+    public void attaqueUnite(Terrain t, int xA, int yA, int xD, int yD){
+        Unite attaquant = t.getPlateau()[yA][xA].getUnite();
+        Unite defenseur = t.getPlateau()[yD][xD].getUnite();
+        if (t.getPlateau()[yA][xA].estUnit()) {
+            if (t.getPlateau()[yD][xD].estUnit()){
+                attaquant.setPointAction(attaquant.getPointAction() -1);
+                defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
+                if (defenseur.getSanteCourante() <= 0) t.getPlateau()[yD][xD].supprimerUniteCase();
+                else if (t.getPlateau()[yD][xD].estObstacle() || t.getPlateau()[yD][xD].estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
+            }
         }
-        else if (positionD.estObstacle() || positionD.estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
     }
-
 }

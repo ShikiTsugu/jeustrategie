@@ -1,6 +1,6 @@
 package com.plateau;
 
-import com.unite.Unite;
+import com.unite.*;
 
 public class Case {
     protected boolean obstacle;
@@ -46,8 +46,28 @@ public class Case {
         return newUnit;
     }
 
+    public String afficheContenu(){
+        if(unit instanceof Hero){
+            return "H";
+        }
+        if(unit instanceof Archer){
+            return "A";
+        }
+        if(unit instanceof Cavalier){
+            return "C";
+        }
+        if(unit instanceof Mage){
+            return "M";
+        }
+        if(unit instanceof Templier){
+            return "T";
+        }
+        return ".";
+    }
+
     public String toString(){
-        if(estVide()) return "vide";
+        if(estVide()) return ".";
+        if(estUnit()) return  afficheContenu();
         return obstacle==false?unit.toString():"obstacle";
     }
 }

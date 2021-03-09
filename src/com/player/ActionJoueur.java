@@ -32,16 +32,20 @@ public class ActionJoueur {
         return false;
     }
 
-    public boolean deplaceUnite(Unite unite, Case destination){
+    public boolean deplaceUnite(Terrain t, int xAvant, int yAvant, int xDestination, int yDestination){
         //verifie si l'unite appartient au joueur
+        Unite unite = t.getPlateau()[yAvant][xAvant].getUnite();
+        Case destination = t.getPlateau()[yDestination][xDestination];
         if(joueur == unite.getJoueur()){
-            unite.deplaceUnite(unite , destination);
+            unite.deplaceUnite(t, xAvant, yAvant, xDestination, yDestination);
             return true ;
         }
         return false;
     }
 
-    public boolean attaqueUnite(Case depart,Case cible){
+    public boolean attaqueUnite(Terrain t, int xA, int yA, int xD, int yD){
+        Case depart = t.getPlateau()[yA][xA];
+        Case cible = t.getPlateau()[yD][xD];
         if(depart.getUnite() == null) return false;
 
         //verifie si l'unite appartient au joueur
@@ -50,7 +54,7 @@ public class ActionJoueur {
         //verifie si l'emplacement à une unité puis si cette dernière est du camp opposé
         if(cible.getUnite() == null || cible.getUnite().getJoueur() == joueur) return false;
 
-        depart.getUnite().attaqueUnite(depart, cible);
+        depart.getUnite().attaqueUnite(t, xA, yA, xD, yD);
         return true;
     }
 }
