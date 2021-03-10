@@ -20,10 +20,10 @@ public class Controlleur {
         return false;
     }
 
-    public void placeUniteApresAchat(Unite u, ActionJoueur j){
+    public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
         if(uniteAchete(u,j.getJoueur())){
             for(JButton b : vue.terrainBt){
-                b.addActionListener((ActionEvent e) -> j.placeUnite(vue.terrain,u,b.getX(),b.getX()));
+                b.addActionListener((ActionEvent e) -> j.placeUnite(vue.terrain,u,b.getX(),b.getX(),J1));
             }
         }
     }
