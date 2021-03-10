@@ -2,6 +2,8 @@ package com.unite;
 
 import com.plateau.*;
 import com.player.Joueur;
+import java.lang.*;
+import java.util.*;
 
 public abstract class Unite {
     protected int santeMax;
@@ -97,7 +99,9 @@ public abstract class Unite {
         Case avant = t.getPlateau()[yPast][xPast];
         if (t.getPlateau()[yPast][xPast].estUnit()) {
             Case destination = t.getPlateau()[yApres][xApres];
-            if (destination.estVide()) {
+            if (((Math.abs(yApres - yPast)+Math.abs(xApres - xPast)) <= avant.getUnite().getPorteeDeplacement()) && destination.estVide()
+            && (casesDisponibleDeplacement(t, xPast, yPast).contains(t.getPlateau()[yApres][xApres])) && avant.getUnite().getPointAction() > 0) {
+                avant.getUnite().setPointAction(avant.getUnite().getPointAction() -1);
                 Case positionInitial = avant.getUnite().getPositionUnite();
                 destination.setUnite(avant.getUnite());
                 System.out.println(positionInitial);
@@ -111,13 +115,41 @@ public abstract class Unite {
     public void attaqueUnite(Terrain t, int xA, int yA, int xD, int yD){
         Unite attaquant = t.getPlateau()[yA][xA].getUnite();
         Unite defenseur = t.getPlateau()[yD][xD].getUnite();
-        if (t.getPlateau()[yA][xA].estUnit()) {
-            if (t.getPlateau()[yD][xD].estUnit()){
+        if (t.getPlateau()[yA][xA].estUnit() && attaquant.getPointAction() > 0) {
+            if (t.getPlateau()[yD][xD].estUnit() && ((Math.abs(yD - yA)+Math.abs(xD - xA)) <= attaquant.getPorteeAttaque())){
                 attaquant.setPointAction(attaquant.getPointAction() -1);
                 defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
                 if (defenseur.getSanteCourante() <= 0) t.getPlateau()[yD][xD].supprimerUniteCase();
                 else if (t.getPlateau()[yD][xD].estObstacle() || t.getPlateau()[yD][xD].estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
             }
         }
+    }
+
+    public Collection<Case> casesDisponibleDeplacement (Terrain t, int xPast, int yPast){
+        Unite unite = t.getPlateau()[yPast][xPast].getUnite();
+        int portee = unite.getPorteeDeplacement();
+        HashSet<Case> test = new HashSet<>();
+        return casesDisponiblePortee(test, t, portee, xPast, yPast);
+    }
+
+    private Collection<Case> casesDisponiblePortee(HashSet<Case> test, Terrain t, int portee, int xPast, int yPast){
+        if (portee <= 0) return test;
+        if (yPast+1 < t.getPlateau().length && t.getPlateau()[yPast+1][xPast].estVide()){
+            test.add(t.getPlateau()[yPast+1][xPast]);
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast+1, xPast));
+        }
+        if (xPast+1 < t.getPlateau()[0].length && t.getPlateau()[yPast][xPast+1].estVide()){
+            test.add(t.getPlateau()[yPast][xPast+1]);
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast+1));
+        }
+        if (yPast-1 >= 0 && t.getPlateau()[yPast-1][xPast].estVide()){
+            test.add(t.getPlateau()[yPast-1][xPast]);
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast-1, xPast));
+        }
+        if (xPast-1 >= 0 && t.getPlateau()[yPast][xPast-1].estVide()){
+            test.add(t.getPlateau()[yPast][xPast-1]);
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast-1));
+        }
+        return test;
     }
 }
