@@ -4,6 +4,7 @@ import javax.sound.sampled.BooleanControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class Vue extends JFrame{
 
@@ -12,9 +13,10 @@ public class Vue extends JFrame{
     private JPanel TerrainPanel = new JPanel();
     private JPanel TaskBar = new JPanel();
     Terrain terrain;
-    
+    ArrayList<JButton> terrainBt = new ArrayList<>();
+
     public Vue(Model m, Terrain t){
-    	model = m;
+        model = m;
         imagePane = new ImagePane();
         setTitle("Jeu de Strategie");
         setSize(1680,1050);
@@ -66,6 +68,7 @@ public class Vue extends JFrame{
                         System.out.println(bt.getY());
                     });
                     bt.setPreferredSize(new Dimension(150,150));
+                    terrainBt.add(bt);
                 } else {
                     JButton bt = new JButton();
                     TerrainPanel.add(bt);
@@ -76,6 +79,7 @@ public class Vue extends JFrame{
                         System.out.println(bt.getY());
                     });
                     bt.setPreferredSize(new Dimension(150,150));
+                    terrainBt.add(bt);
                 }
             }
         }
@@ -91,6 +95,10 @@ public class Vue extends JFrame{
             TaskBar.add(bt);
         }
         imagePane.add(TaskBar);
+    }
+    
+    public ArrayList<JButton> getTerrainBt(){
+        return terrainBt;
     }
 
 }
