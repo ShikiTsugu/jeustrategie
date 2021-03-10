@@ -100,7 +100,8 @@ public abstract class Unite {
         if (t.getPlateau()[yPast][xPast].estUnit()) {
             Case destination = t.getPlateau()[yApres][xApres];
             if (((Math.abs(yApres - yPast)+Math.abs(xApres - xPast)) <= avant.getUnite().getPorteeDeplacement()) && destination.estVide()
-            && (casesDisponibleDeplacement(t, xPast, yPast).contains(t.getPlateau()[yApres][xApres]))) {
+            && (casesDisponibleDeplacement(t, xPast, yPast).contains(t.getPlateau()[yApres][xApres])) && avant.getUnite().getPointAction() > 0) {
+                avant.getUnite().setPointAction(avant.getUnite().getPointAction() -1);
                 Case positionInitial = avant.getUnite().getPositionUnite();
                 destination.setUnite(avant.getUnite());
                 System.out.println(positionInitial);
@@ -114,7 +115,7 @@ public abstract class Unite {
     public void attaqueUnite(Terrain t, int xA, int yA, int xD, int yD){
         Unite attaquant = t.getPlateau()[yA][xA].getUnite();
         Unite defenseur = t.getPlateau()[yD][xD].getUnite();
-        if (t.getPlateau()[yA][xA].estUnit()) {
+        if (t.getPlateau()[yA][xA].estUnit() && attaquant.getPointAction() > 0) {
             if (t.getPlateau()[yD][xD].estUnit()){
                 attaquant.setPointAction(attaquant.getPointAction() -1);
                 defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
