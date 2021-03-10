@@ -2,6 +2,7 @@ package com.unite;
 
 import com.plateau.*;
 import com.player.Joueur;
+import java.lang.*;
 
 public abstract class Unite {
     protected int santeMax;
@@ -97,7 +98,7 @@ public abstract class Unite {
         Case avant = t.getPlateau()[yPast][xPast];
         if (t.getPlateau()[yPast][xPast].estUnit()) {
             Case destination = t.getPlateau()[yApres][xApres];
-            if (destination.estVide()) {
+            if (((Math.abs(yApres - yPast)+Math.abs(xApres - xPast)) <= avant.getUnite().getPorteeDeplacement()) && destination.estVide()) {
                 Case positionInitial = avant.getUnite().getPositionUnite();
                 destination.setUnite(avant.getUnite());
                 System.out.println(positionInitial);
