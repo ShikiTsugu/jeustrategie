@@ -160,68 +160,70 @@ public class Jeu {
         return true;
     }
 
-    public void requestReader(){
-        if(requeteCourante.substring(0,1).equals("B")){
-            Unite unite;
-            unite = new Templier(tourDuJoueur);
-            if(requeteCourante.substring(5,6).equals("A")){
-                unite = new Archer(tourDuJoueur);
+    public void requestReader() {
+        try {
+            if (requeteCourante.substring(0, 1).equals("B")) {
+                Unite unite;
+                unite = new Templier(tourDuJoueur);
+                if (requeteCourante.substring(5, 6).equals("A")) {
+                    unite = new Archer(tourDuJoueur);
+
+                }
+                if (requeteCourante.substring(5, 6).equals("C")) {
+                    unite = new Cavalier(tourDuJoueur);
+                }
+                if (requeteCourante.substring(5, 6).equals("M")) {
+                    unite = new Mage(tourDuJoueur);
+                }
+                if (requeteCourante.substring(5, 6).equals("H")) {
+                    unite = new Hero(tourDuJoueur);
+                }
+
+
+                if (tourDuJoueur == joueur1) {
+                    actionjoueur1.placeUnite(terrain, unite, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)), true);
+
+
+                } else {
+                    actionjoueur2.placeUnite(terrain, unite, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)), false);
+                }
+
 
             }
-            if(requeteCourante.substring(5,6).equals("C")){
-                unite = new Cavalier(tourDuJoueur);
+            if (requeteCourante.substring(0, 1).equals("D")) {
+
+
+                if (tourDuJoueur == joueur1) {
+                    actionjoueur1.deplaceUnite(terrain, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)),
+                            Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9)));
+
+                } else {
+                    actionjoueur2.deplaceUnite(terrain, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)),
+                            Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9)));
+
+
+                }
             }
-            if(requeteCourante.substring(5,6).equals("M")){
-                unite = new Mage(tourDuJoueur);
+            if (requeteCourante.substring(0, 1).equals("A")) {
+                if (tourDuJoueur == joueur1) {
+                    actionjoueur1.attaqueUnite(terrain, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)),
+                            Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9)));
+                } else {
+                    actionjoueur2.attaqueUnite(terrain, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)),
+                            Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9)));
+                }
             }
-            if(requeteCourante.substring(5,6).equals("H")){
-                unite = new Hero(tourDuJoueur);
+            if (requeteCourante.equals("finDuTour")) {
+                if (tourDuJoueur == joueur1) {
+                    tourDuJoueur = joueur2;
+                } else {
+                    tourDuJoueur = joueur1;
+                }
             }
-
-
-
-
-            if(tourDuJoueur == joueur1) {
-                actionjoueur1.placeUnite(terrain, unite, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)));
-
-
-            }else {
-                actionjoueur2.placeUnite(terrain, unite, Integer.parseInt(requeteCourante.substring(1, 3)), Integer.parseInt(requeteCourante.substring(3, 5)));
-            }
-
-
+        }catch (Exception e){
+            System.out.println("Requete non reconnue");
         }
-        if(requeteCourante.substring(0,1).equals("D")){
 
-
-            if(tourDuJoueur == joueur1) {
-                actionjoueur1.deplaceUnite(terrain ,Integer.parseInt(requeteCourante.substring(1, 3)),  Integer.parseInt(requeteCourante.substring(3, 5))  ,
-                        Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9))) ;
-
-            }else {
-                actionjoueur2.deplaceUnite(terrain ,Integer.parseInt(requeteCourante.substring(1, 3)),  Integer.parseInt(requeteCourante.substring(3, 5))  ,
-                        Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9)));
-
-
-            }
-        }
-        if(requeteCourante.substring(0,1).equals("A")){
-            if(tourDuJoueur == joueur1) {
-                actionjoueur1.attaqueUnite(terrain ,Integer.parseInt(requeteCourante.substring(1, 3)),  Integer.parseInt(requeteCourante.substring(3, 5))  ,
-                        Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9))) ;
-            }else {
-                actionjoueur2.attaqueUnite(terrain ,Integer.parseInt(requeteCourante.substring(1, 3)),  Integer.parseInt(requeteCourante.substring(3, 5))  ,
-                        Integer.parseInt(requeteCourante.substring(5, 7)), Integer.parseInt(requeteCourante.substring(7, 9)));
-            }
-        }
-        if(requeteCourante.equals("finDuTour")){
-            if(tourDuJoueur == joueur1){
-                tourDuJoueur = joueur2;
-            }else{
-                tourDuJoueur = joueur1;
-            }
-        }
-        //CAS D'ERREUR A FAIRE
 
     }
 
@@ -266,7 +268,19 @@ public class Jeu {
 
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
-        Terrain terrain = new Terrain(5,5,5,0,3,4,3);
+        boolean[][] b1 = {{true,true,false,false,false},
+                {true,true,false,false,false},
+                {true,true,false,false,false},
+                {true,true,false,false,false},
+                {true,true,false,false,false}};
+
+        boolean[][] b2 = {{false,false,false,true,true},
+                {false,false,false,true,true},
+                {false,false,false,true,true},
+                {false,false,false,true,true},
+                {false,false,false,true,true}};
+
+        Terrain terrain = new Terrain(5,5,5,0,3,4,3,b1,b2);
         jeu.playGame(terrain);
 
 

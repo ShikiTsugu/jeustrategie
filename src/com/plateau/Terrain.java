@@ -9,7 +9,7 @@ public class Terrain {
     protected int xH1,yH1;
     protected int xH2,yH2;
 
-    public Terrain(int largeur, int hauteur, int max,int x1,int y1, int x2, int y2){
+    public Terrain(int largeur, int hauteur, int max,int x1,int y1, int x2, int y2, boolean[][] b1, boolean[][] b2){
         plateau = new Case[hauteur][largeur];
         maxUnits = max;
         nbUnits = 0;
@@ -18,6 +18,16 @@ public class Terrain {
         xH2 = x2;
         yH2 = y2;
         initialiseTerrain();
+        setBuyableArea(b1,b2);
+    }
+
+    public void setBuyableArea(boolean[][] b1,boolean[][] b2){
+        for(int i=0;i<b1.length;i++){
+            for(int j=0;j<b1[i].length;j++){
+                plateau[i][j].setJ1Buyable(b1[i][j]);
+                plateau[i][j].setJ2Buyable(b2[i][j]);
+            }
+        }
     }
 
 

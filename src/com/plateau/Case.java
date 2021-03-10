@@ -5,6 +5,8 @@ import com.unite.*;
 public class Case {
     protected boolean obstacle;
     protected Unite unit;
+    protected boolean J1Buyable ;
+    protected boolean J2Buyable ;
 
     public Case(){
         unit = null;
@@ -31,6 +33,25 @@ public class Case {
     public void setUnite(Unite unit){
         this.unit = unit;
     }
+
+    public void setJ1Buyable(boolean j1Buyable) {
+        J1Buyable = j1Buyable;
+    }
+
+    public void setJ2Buyable(boolean j2Buyable) {
+        J2Buyable = j2Buyable;
+    }
+
+    public boolean J1CanBuy(){
+        return J1Buyable;
+    }
+
+    public boolean J2CanBuy(){
+        return J2Buyable;
+    }
+
+
+
     
     public boolean estObstacle(){
         return obstacle == true;
