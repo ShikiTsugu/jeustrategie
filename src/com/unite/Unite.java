@@ -116,7 +116,7 @@ public abstract class Unite {
         Unite attaquant = t.getPlateau()[yA][xA].getUnite();
         Unite defenseur = t.getPlateau()[yD][xD].getUnite();
         if (t.getPlateau()[yA][xA].estUnit() && attaquant.getPointAction() > 0) {
-            if (t.getPlateau()[yD][xD].estUnit()){
+            if (t.getPlateau()[yD][xD].estUnit() && ((Math.abs(yD - yA)+Math.abs(xD - xA)) <= attaquant.getPorteeAttaque())){
                 attaquant.setPointAction(attaquant.getPointAction() -1);
                 defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
                 if (defenseur.getSanteCourante() <= 0) t.getPlateau()[yD][xD].supprimerUniteCase();
