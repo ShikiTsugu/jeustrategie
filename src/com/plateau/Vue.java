@@ -16,7 +16,7 @@ public class Vue extends JFrame{
     private JPanel TaskBar = new JPanel();
     Terrain terrain;
     ArrayList<JButton> terrainBt = new ArrayList<>();
-    private Reader reader = new Reader(this);
+    private Controlleur controlleur = new Controlleur(this);
 
     public Vue(Model m, Terrain t){
         model = m;
@@ -115,10 +115,18 @@ public class Vue extends JFrame{
         String[] listeUnit = {"Templier","Cavalier","Mage","Archer"};
         for (int i = 0; i < 4; i++){
             JButton bt = new JButton(listeUnit[i]);
+            bt.addActionListener((ActionEvent e) -> {
+                boutonAchat();
+            });
             bt.setPreferredSize(new Dimension(100,150));
             TaskBar.add(bt);
         }
         TaskBar.updateUI();
+    }
+
+    public void boutonAchat(){
+        TaskBar.removeAll();
+
     }
     
     public ArrayList<JButton> getTerrainBt(){

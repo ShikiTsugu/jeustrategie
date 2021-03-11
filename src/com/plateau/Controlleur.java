@@ -28,4 +28,11 @@ public class Controlleur {
         }
     }
 
+    public void acheteUnite(Joueur j, Unite u){
+        if (!j.ajouteUnite(u)) {
+            System.out.println("Achat impossible");
+        };
+
+    }
+
 }
