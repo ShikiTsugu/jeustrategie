@@ -1,5 +1,7 @@
 package com.plateau;
 
+import com.launcher.Reader;
+
 import javax.sound.sampled.BooleanControl;
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +16,7 @@ public class Vue extends JFrame{
     private JPanel TaskBar = new JPanel();
     Terrain terrain;
     ArrayList<JButton> terrainBt = new ArrayList<>();
+    private Reader reader = new Reader(this);
 
     public Vue(Model m, Terrain t){
         model = m;
@@ -89,16 +92,36 @@ public class Vue extends JFrame{
     public void generateTaskBar(){
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
-        for (int i = 0; i < 4; i++){
-            JButton bt = new JButton("test");
-            bt.setPreferredSize(new Dimension(300,150));
-            TaskBar.add(bt);
+        JButton bt = new JButton("Acheter une unité");
+        bt.setPreferredSize(new Dimension(300,150));
+        bt.addActionListener((ActionEvent e) -> {
+            generateAchat();
+        });
+        TaskBar.add(bt);
+        for (int i = 0; i < 3; i++){
+            JButton bt2 = new JButton("autre fonction");
+            bt2.setPreferredSize(new Dimension(300,150));
+            TaskBar.add(bt2);
         }
         imagePane.add(TaskBar);
+    }
+
+    public void generateAchat(){
+        TaskBar.removeAll();
+        FlowLayout flow = new FlowLayout();
+        TaskBar.setLayout(flow);
+        for (int i = 0; i < 5; i++){
+            JButton bt = new JButton("test");
+            bt.setPreferredSize(new Dimension(100,150));
+            TaskBar.add(bt);
+        }
+        TaskBar.updateUI();
     }
     
     public ArrayList<JButton> getTerrainBt(){
         return terrainBt;
     }
+
+
 
 }

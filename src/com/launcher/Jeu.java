@@ -281,16 +281,16 @@ public class Jeu {
                 {false,false,false,true,true}};
 
         Terrain terrain = new Terrain(5,5,5,0,3,4,3,b1,b2);
-        jeu.playGame(terrain);
+        //jeu.playGame(terrain);
 
-
-        /*
-        System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1));
+        Joueur joueur = new Joueur(100);
+        ActionJoueur act = new ActionJoueur(joueur);
+        //System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1, true));
         Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
         Vue v = new Vue(m, terrain);
-        v.AfficheTerrain();
-        System.out.println(joueur2.getArgent());
-        */
+
+        //System.out.println(joueur2.getArgent());
+
 
     }
 }
