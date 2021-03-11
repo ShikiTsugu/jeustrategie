@@ -267,16 +267,15 @@ public class Jeu {
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
         Terrain terrain = new Terrain(5,5,5,0,3,4,3);
-        jeu.playGame(terrain);
-
-
         /*
-        System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1));
+        jeu.playGame(terrain);
+        */
+        Joueur joueur = new Joueur(100);
+        ActionJoueur act = new ActionJoueur(joueur);
+        //System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1));
         Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
         Vue v = new Vue(m, terrain);
-        v.AfficheTerrain();
-        System.out.println(joueur2.getArgent());
-        */
+
 
     }
 }
