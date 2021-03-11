@@ -57,6 +57,7 @@ public class Vue extends JFrame{
     }
 
     public void generateTerrain(){
+        TerrainPanel.removeAll();
         Case[][] terraintmp = terrain.plateau;
         imagePane.add(TerrainPanel);
         GridLayout grid = new GridLayout(5,5);
@@ -87,6 +88,7 @@ public class Vue extends JFrame{
             }
         }
         TerrainPanel.setOpaque(false);
+        TerrainPanel.updateUI();
     }
 
     public void generateTaskBar(){
@@ -110,8 +112,9 @@ public class Vue extends JFrame{
         TaskBar.removeAll();
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
-        for (int i = 0; i < 5; i++){
-            JButton bt = new JButton("test");
+        String[] listeUnit = {"Templier","Cavalier","Mage","Archer"};
+        for (int i = 0; i < 4; i++){
+            JButton bt = new JButton(listeUnit[i]);
             bt.setPreferredSize(new Dimension(100,150));
             TaskBar.add(bt);
         }
