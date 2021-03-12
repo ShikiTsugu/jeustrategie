@@ -282,8 +282,9 @@ public class Jeu {
         Terrain terrain = new Terrain(5,5,5,0,3,4,3,b1,b2);
         //jeu.playGame(terrain);
 
-        Joueur joueur = new Joueur(100);
+        Joueur joueur = new Joueur(1000000);
         ActionJoueur act = new ActionJoueur(joueur);
+        joueur.initialiseListeUnites(terrain);
         //System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1, true));
         Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
         Vue v = new Vue(m, terrain);
