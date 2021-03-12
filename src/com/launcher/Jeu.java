@@ -227,7 +227,6 @@ public class Jeu {
 
     }
 
-
     public void playGame(Terrain terrain){
         startNewGame(terrain);
         Scanner scanner = new Scanner(System.in);
@@ -288,6 +287,7 @@ public class Jeu {
         //System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1, true));
         Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
         Vue v = new Vue(m, terrain);
+        v.setTourJoueur(joueur);
 
         //System.out.println(joueur2.getArgent());
 

@@ -1,6 +1,7 @@
 package com.plateau;
 
 import com.launcher.Reader;
+import com.player.Joueur;
 
 import javax.sound.sampled.BooleanControl;
 import javax.swing.*;
@@ -17,6 +18,7 @@ public class Vue extends JFrame{
     Terrain terrain;
     ArrayList<JButton> terrainBt = new ArrayList<>();
     private Controlleur controlleur = new Controlleur(this);
+    private Joueur tourJoueur;
 
     public Vue(Model m, Terrain t){
         model = m;
@@ -92,6 +94,7 @@ public class Vue extends JFrame{
     }
 
     public void generateTaskBar(){
+        TaskBar.removeAll();
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
         JButton bt = new JButton("Acheter une unité");
@@ -106,6 +109,7 @@ public class Vue extends JFrame{
             TaskBar.add(bt2);
         }
         imagePane.add(TaskBar);
+        TaskBar.updateUI();
     }
 
     public void generateAchat(){
@@ -116,23 +120,31 @@ public class Vue extends JFrame{
         for (int i = 0; i < 4; i++){
             JButton bt = new JButton(listeUnit[i]);
             bt.addActionListener((ActionEvent e) -> {
-                boutonAchat();
+                //controlleur.acheteUnite(tourJoueur,);
             });
             bt.setPreferredSize(new Dimension(100,150));
             TaskBar.add(bt);
         }
+        JButton retour = new JButton("retour");
+        retour.addActionListener((ActionEvent e) -> {
+            generateTaskBar();
+        });
+        retour.setPreferredSize(new Dimension(100,150));
+        TaskBar.add(retour);
         TaskBar.updateUI();
     }
 
-    public void boutonAchat(){
-        TaskBar.removeAll();
-
-    }
     
     public ArrayList<JButton> getTerrainBt(){
         return terrainBt;
     }
 
+    public Joueur getTourJoueur(){
+        return tourJoueur;
+    }
 
+    public void setTourJoueur(Joueur j){
+        tourJoueur = j;
+    }
 
 }
