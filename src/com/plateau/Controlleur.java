@@ -32,7 +32,7 @@ public class Controlleur {
         if (!j.ajouteUnite(u)) {
             System.out.println("Achat impossible");
         } else {
-
+            placeUniteApresAchat(u, new ActionJoueur(j),true);
         }
     }
 
