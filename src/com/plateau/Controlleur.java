@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 
 public class Controlleur {
     private Vue vue;
+    private boolean placed=false;
 
     public Controlleur(Vue v){
         vue = v;
@@ -23,16 +24,22 @@ public class Controlleur {
     public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
         if(uniteAchete(u,j.getJoueur())){
             for(JButton b : vue.terrainBt){
-                b.addActionListener((ActionEvent e) -> j.placeUnite(vue.terrain,u,b.getX(),b.getY(),J1));
+                b.addActionListener((ActionEvent e) -> {
+                    j.placeUnite(vue.terrain,u,b.getX()/150,b.getY()/150,J1);
+                    vue.generateTerrain();
+                    vue.generateTaskBar();
+                });
             }
         }
     }
 
-    public void acheteUnite(Joueur j, Unite u){
+    public boolean acheteUnite(Joueur j, Unite u){
         if (!j.ajouteUnite(u)) {
             System.out.println("Achat impossible");
+            return false;
         } else {
             placeUniteApresAchat(u, new ActionJoueur(j),true);
+            return true;
         }
     }
 
