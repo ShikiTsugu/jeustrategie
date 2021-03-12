@@ -22,6 +22,8 @@ public class Jeu {
     protected Terrain terrain;
     protected Joueur tourDuJoueur;
     protected String requeteCourante;
+    protected Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
+    protected Vue v;
 
 
 
@@ -265,6 +267,21 @@ public class Jeu {
         return false;
     }
 
+    public void startGraphique(){
+        v = new Vue(m,terrain);
+        setJoueur1(new Joueur(1000));
+        setActionjoueur1(new ActionJoueur(joueur1));
+        joueur1.initialiseListeUnites(terrain);
+        setJoueur2(new Joueur(1000));
+        setActionjoueur2(new ActionJoueur(joueur2));
+        joueur2.initialiseListeUnites(terrain);
+        setTerrain(terrain);
+        v.setTourJoueur(joueur1);
+        terrain.ajouteUnite(new Hero(joueur1),0,2);
+        terrain.ajouteUnite(new Hero(joueur2),4,2);
+        v.AfficheTerrain();
+    }
+
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
         boolean[][] b1 = {{true,true,false,false,false},
@@ -281,17 +298,10 @@ public class Jeu {
 
         Terrain terrain = new Terrain(5,5,5,0,3,4,3,b1,b2);
         //jeu.playGame(terrain);
-
-        Joueur joueur = new Joueur(1000000);
-        ActionJoueur act = new ActionJoueur(joueur);
-        joueur.initialiseListeUnites(terrain);
         //System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1, true));
-        Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
-        Vue v = new Vue(m, terrain);
-        v.setTourJoueur(joueur);
-
+        jeu.setTerrain(terrain);
+        jeu.startGraphique();
         //System.out.println(joueur2.getArgent());
-
 
     }
 }

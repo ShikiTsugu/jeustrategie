@@ -165,4 +165,12 @@ public class Vue extends JFrame{
         tourJoueur = j;
     }
 
+    public Terrain getTerrain(){
+        return terrain;
+    }
+
+    public void setTerrain(Terrain t){
+        terrain = t;
+    }
+
 }
