@@ -72,8 +72,8 @@ public class Vue extends JFrame{
                     JButton bt = new JButton(terraintmp[x][y].unit.toString());
                     TerrainPanel.add(bt);
                     bt.addActionListener((ActionEvent e) -> {
-                        System.out.println(bt.getX()/150);
-                        System.out.println(bt.getY()/150);
+                        System.out.println(bt.getX()/308);
+                        System.out.println(bt.getY()/139);
                     });
                     bt.setPreferredSize(new Dimension(150,150));
                     terrainBt.add(bt);
@@ -83,8 +83,8 @@ public class Vue extends JFrame{
                     bt.setOpaque(false);
                     bt.setContentAreaFilled(false);
                     bt.addActionListener((ActionEvent e) -> {
-                        System.out.println(bt.getX()/150);
-                        System.out.println(bt.getY()/150);
+                        System.out.println(bt.getX()/308);
+                        System.out.println(bt.getY()/138);
                     });
                     bt.setPreferredSize(new Dimension(150,150));
                     terrainBt.add(bt);
