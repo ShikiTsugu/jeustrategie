@@ -23,7 +23,7 @@ public class Controlleur {
     public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
         if(uniteAchete(u,j.getJoueur())){
             for(JButton b : vue.terrainBt){
-                b.addActionListener((ActionEvent e) -> j.placeUnite(vue.terrain,u,b.getX(),b.getX(),J1));
+                b.addActionListener((ActionEvent e) -> j.placeUnite(vue.terrain,u,b.getX(),b.getY(),J1));
             }
         }
     }
