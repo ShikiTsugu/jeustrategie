@@ -2,6 +2,7 @@ package com.plateau;
 
 import com.launcher.Reader;
 import com.player.Joueur;
+import com.unite.*;
 
 import javax.sound.sampled.BooleanControl;
 import javax.swing.*;
@@ -19,6 +20,7 @@ public class Vue extends JFrame{
     ArrayList<JButton> terrainBt = new ArrayList<>();
     private Controlleur controlleur = new Controlleur(this);
     private Joueur tourJoueur;
+    private String[] listeUnit = {"Templier","Cavalier","Mage","Archer"};
 
     public Vue(Model m, Terrain t){
         model = m;
@@ -112,15 +114,31 @@ public class Vue extends JFrame{
         TaskBar.updateUI();
     }
 
+    public Unite createUnite(JButton b){
+        Unite u=null;
+        if(b.getText().equals("Templier")){
+            u = new Templier(tourJoueur);
+        }
+        if(b.getText().equals("Cavalier")){
+            u = new Cavalier(tourJoueur);
+        }
+        if(b.getText().equals("Mage")){
+            u = new Mage(tourJoueur);
+        }
+        if(b.getText().equals("Archer")){
+            u = new Archer(tourJoueur);
+        }
+        return u;
+    }
+
     public void generateAchat(){
         TaskBar.removeAll();
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
-        String[] listeUnit = {"Templier","Cavalier","Mage","Archer"};
         for (int i = 0; i < 4; i++){
             JButton bt = new JButton(listeUnit[i]);
             bt.addActionListener((ActionEvent e) -> {
-                //controlleur.acheteUnite(tourJoueur,);
+                controlleur.acheteUnite(tourJoueur, createUnite(bt));
             });
             bt.setPreferredSize(new Dimension(100,150));
             TaskBar.add(bt);
