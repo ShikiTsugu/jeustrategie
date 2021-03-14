@@ -4,9 +4,11 @@ import com.plateau.Case;
 import com.plateau.Terrain;
 import com.unite.Unite;
 
+import javax.swing.*;
+
 public class ActionJoueur {
     private Joueur joueur;
-    private boolean bought=true;
+    private boolean bought;
 
     public ActionJoueur(Joueur j){
         joueur = j;
@@ -19,10 +21,11 @@ public class ActionJoueur {
     public void setBought(boolean b){bought = b;}
 
     //Action du joueur pour acheter une unité.
-    public boolean acheteUnite(Unite unite){
+    public boolean acheteUnite(Unite unite, JPanel p){
         //si le joueur n'a pas assez d'argent pour acheter l'unité, on retourne false.
         if(joueur.getArgent()< unite.getCoutUnite()) {
             System.out.println("Pas assez d'argent");
+            JOptionPane.showMessageDialog(p, "Pas assez d'argent.", "", JOptionPane.INFORMATION_MESSAGE);
             return bought=false;
             //sinon on soustrait l'argent du joueur par le cout de l'unité, et on ajoute cette unité dans sa liste d'unité.
         }else{
