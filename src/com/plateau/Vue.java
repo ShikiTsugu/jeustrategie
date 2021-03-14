@@ -139,6 +139,7 @@ public class Vue extends JFrame{
             JButton bt = new JButton(listeUnit[i]);
             bt.addActionListener((ActionEvent e) -> {
                 controlleur.acheteUnite(tourJoueur, createUnite(bt));
+                generateTaskBar();
             });
             bt.setPreferredSize(new Dimension(100,150));
             TaskBar.add(bt);
