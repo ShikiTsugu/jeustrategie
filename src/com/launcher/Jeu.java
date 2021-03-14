@@ -296,7 +296,7 @@ public class Jeu {
                 {false,false,false,true,true},
                 {false,false,false,true,true}};
 
-        Terrain terrain = new Terrain(5,5,5,0,3,4,3,b1,b2);
+        Terrain terrain = new Terrain(5,5,10,0,3,4,3,b1,b2);
         //jeu.playGame(terrain);
         //System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1, true));
         jeu.setTerrain(terrain);
