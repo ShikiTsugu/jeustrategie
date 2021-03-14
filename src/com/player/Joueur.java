@@ -30,7 +30,7 @@ public class Joueur {
     public boolean getIsHuman(){return isHuman;}
 
     public void initialiseListeUnites(Terrain t){
-        unites = new Unite[t.getMaxUnits()];
+        unites = new Unite[t.getMaxUnits()/2];
     }
 
     public boolean getAdded(){return added;}
