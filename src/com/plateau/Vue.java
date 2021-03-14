@@ -1,6 +1,7 @@
 package com.plateau;
 
 import com.launcher.Reader;
+import com.player.ActionJoueur;
 import com.player.Joueur;
 import com.unite.*;
 
@@ -138,7 +139,9 @@ public class Vue extends JFrame{
         for (int i = 0; i < 4; i++){
             JButton bt = new JButton(listeUnit[i]);
             bt.addActionListener((ActionEvent e) -> {
-                controlleur.acheteUnite(tourJoueur, createUnite(bt));
+                if(new ActionJoueur((tourJoueur)).acheteUnite(createUnite(bt))) {
+                    controlleur.acheteUnite(tourJoueur, createUnite(bt));
+                }
                 generateTaskBar();
             });
             bt.setPreferredSize(new Dimension(100,150));

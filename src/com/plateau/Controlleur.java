@@ -14,12 +14,14 @@ public class Controlleur {
     }
 
     public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
-        for(JButton b : vue.terrainBt){
-            b.addActionListener((ActionEvent e) -> {
-                j.placeUnite(vue.terrain,u,b.getX()/b.getWidth(),b.getY()/b.getHeight(),J1);
-                vue.generateTerrain();
-                vue.generateTaskBar();
-            });
+        if(j.getBought()) {
+            for (JButton b : vue.terrainBt) {
+                b.addActionListener((ActionEvent e) -> {
+                    j.placeUnite(vue.terrain, u, b.getX() / b.getWidth(), b.getY() / b.getHeight(), J1);
+                    vue.generateTerrain();
+                    vue.generateTaskBar();
+                });
+            }
         }
     }
 

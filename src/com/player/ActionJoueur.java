@@ -6,6 +6,7 @@ import com.unite.Unite;
 
 public class ActionJoueur {
     private Joueur joueur;
+    private boolean bought=true;
 
     public ActionJoueur(Joueur j){
         joueur = j;
@@ -13,18 +14,22 @@ public class ActionJoueur {
 
     public Joueur getJoueur(){return joueur;}
 
+    public boolean getBought(){return bought;}
+
+    public void setBought(boolean b){bought = b;}
+
     //Action du joueur pour acheter une unité.
     public boolean acheteUnite(Unite unite){
         //si le joueur n'a pas assez d'argent pour acheter l'unité, on retourne false.
         if(joueur.getArgent()< unite.getCoutUnite()) {
             System.out.println("Pas assez d'argent");
-            return false;
+            return bought=false;
             //sinon on soustrait l'argent du joueur par le cout de l'unité, et on ajoute cette unité dans sa liste d'unité.
         }else{
             System.out.println(joueur.getArgent());
             joueur.setArgent(joueur.achat(unite.getCoutUnite()));
             System.out.println(joueur.getArgent());
-            return true;
+            return bought=true;
         }
     }
 
@@ -39,7 +44,7 @@ public class ActionJoueur {
             }
         }
         //si l'unité est bien acheté, on place l'unité dans le terrain à la position souhaité par le joueur.
-        if(acheteUnite(unite)){
+        if(bought){
             return t.ajouteUnite(unite,x,y);
         }
         return false;
