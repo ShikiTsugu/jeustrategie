@@ -25,7 +25,7 @@ public class ActionJoueur {
         //si le joueur n'a pas assez d'argent pour acheter l'unité, on retourne false.
         if(joueur.getArgent()< unite.getCoutUnite()) {
             System.out.println("Pas assez d'argent");
-            JOptionPane.showMessageDialog(p, "Pas assez d'argent.", "", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(p, "Pas assez d'argent.", "", JOptionPane.PLAIN_MESSAGE);
             return bought=false;
             //sinon on soustrait l'argent du joueur par le cout de l'unité, et on ajoute cette unité dans sa liste d'unité.
         }else{

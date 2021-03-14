@@ -25,7 +25,7 @@ public class Controlleur {
 
     public boolean acheteUnite(Joueur j, Unite u){
         if (!j.ajouteUnite(u)) {
-            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le max d'unité a été atteint.", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le max d'unité a été atteint.", "", JOptionPane.PLAIN_MESSAGE);
             System.out.println("Achat impossible");
             return false;
         } else {
