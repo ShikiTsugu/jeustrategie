@@ -58,11 +58,13 @@ public class Terrain {
             if(plateau[y][x].unit==null){
                 plateau[y][x]=new Case(u);
                 u.setPositionUnite(plateau[y][x]);
+                System.out.println("unite placé");
                 return true;
             }
         }catch(ArrayIndexOutOfBoundsException e){
             return false;
         }
+        System.out.println("impossible");
         return false;
     }
 
