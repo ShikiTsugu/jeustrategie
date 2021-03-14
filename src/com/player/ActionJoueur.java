@@ -16,11 +16,15 @@ public class ActionJoueur {
     //Action du joueur pour acheter une unité.
     public boolean acheteUnite(Unite unite){
         //si le joueur n'a pas assez d'argent pour acheter l'unité, on retourne false.
-        if(joueur.getArgent()< unite.getCoutUnite()) return false;
-        //sinon on soustrait l'argent du joueur par le cout de l'unité, et on ajoute cette unité dans sa liste d'unité.
-        else{
+        if(joueur.getArgent()< unite.getCoutUnite()) {
+            System.out.println("Pas assez d'argent");
+            return false;
+            //sinon on soustrait l'argent du joueur par le cout de l'unité, et on ajoute cette unité dans sa liste d'unité.
+        }else{
+            System.out.println(joueur.getArgent());
             joueur.setArgent(joueur.achat(unite.getCoutUnite()));
-            return joueur.ajouteUnite(unite);
+            System.out.println(joueur.getArgent());
+            return true;
         }
     }
 

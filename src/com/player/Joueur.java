@@ -8,6 +8,7 @@ public class Joueur {
     protected int argent;
     protected boolean isHuman;
     protected Unite[] unites;
+    private boolean added=false;
 
     public Joueur(int a){
         argent = a;
@@ -32,6 +33,8 @@ public class Joueur {
         unites = new Unite[t.getMaxUnits()];
     }
 
+    public boolean getAdded(){return added;}
+
     public int achat(int cout){
         if(argent==0 || argent<cout){
             return argent;
@@ -44,16 +47,21 @@ public class Joueur {
         //si la liste d'unite est vide, ajoute l'unite en première position
         if(unites[0]==null&&(u instanceof Hero)){
             unites[0]=u;
+            System.out.println("Hero ajouté");
             return true;
         }
         //sinon parcourt le tableau et cherche une position vide pour y ajouter l'unite
         for (int i = 1; i<unites.length; i++) {
             if (unites[i]==null) {
                 unites[i] = u;
+                System.out.println(u+" Ajouté");
+                added = true;
                 return true;
             }
         }
         //s'il n'y a plus de place, retourne faux
+        System.out.println("Plus de place");
+        added = false;
         return false;
     }
 }
