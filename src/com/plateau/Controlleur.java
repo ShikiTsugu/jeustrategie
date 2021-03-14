@@ -14,23 +14,24 @@ public class Controlleur {
     }
 
     public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
-        if(j.getBought()) {
-            for (JButton b : vue.terrainBt) {
-                b.addActionListener((ActionEvent e) -> {
-                    j.placeUnite(vue.terrain, u, b.getX() / b.getWidth(), b.getY() / b.getHeight(), J1);
-                    vue.generateTerrain();
-                    vue.generateTaskBar();
-                });
-            }
+        for (JButton b : vue.terrainBt) {
+            b.addActionListener((ActionEvent e) -> {
+                j.placeUnite(vue.terrain, u, b.getX() / b.getWidth(), b.getY() / b.getHeight(), J1);
+                vue.generateTerrain();
+                vue.generateTaskBar();
+            });
         }
     }
 
     public boolean acheteUnite(Joueur j, Unite u){
         if (!j.ajouteUnite(u)) {
+            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le max d'unité a été atteint.", "", JOptionPane.WARNING_MESSAGE);
             System.out.println("Achat impossible");
             return false;
         } else {
-            placeUniteApresAchat(u, new ActionJoueur(j),true);
+            ActionJoueur aj = new ActionJoueur(j);
+            aj.setBought(true);
+            placeUniteApresAchat(u, aj,true);
             return true;
         }
     }
