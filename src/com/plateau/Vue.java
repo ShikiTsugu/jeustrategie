@@ -139,7 +139,7 @@ public class Vue extends JFrame{
         for (int i = 0; i < 4; i++){
             JButton bt = new JButton(listeUnit[i]);
             bt.addActionListener((ActionEvent e) -> {
-                if(new ActionJoueur((tourJoueur)).acheteUnite(createUnite(bt))) {
+                if(new ActionJoueur((tourJoueur)).acheteUnite(createUnite(bt),TerrainPanel)) {
                     controlleur.acheteUnite(tourJoueur, createUnite(bt));
                 }
                 generateTaskBar();
@@ -168,6 +168,8 @@ public class Vue extends JFrame{
     public void setTourJoueur(Joueur j){
         tourJoueur = j;
     }
+
+    public JPanel getTerrainPanel(){return TerrainPanel;}
 
     public Terrain getTerrain(){
         return terrain;
