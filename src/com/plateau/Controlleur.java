@@ -25,7 +25,7 @@ public class Controlleur {
         if(uniteAchete(u,j.getJoueur())){
             for(JButton b : vue.terrainBt){
                 b.addActionListener((ActionEvent e) -> {
-                    j.placeUnite(vue.terrain,u,b.getX()/308,b.getY()/138,J1);
+                    j.placeUnite(vue.terrain,u,b.getX()/b.getWidth(),b.getY()/b.getHeight(),J1);
                     vue.generateTerrain();
                     vue.generateTaskBar();
                 });
