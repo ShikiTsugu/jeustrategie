@@ -72,6 +72,7 @@ public class Vue extends JFrame{
                 if (terraintmp[x][y].unit != null) {
                     JButton bt = new JButton(terraintmp[x][y].unit.toString());
                     TerrainPanel.add(bt);
+                    bt.setBackground(Color.BLACK);
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(bt.getX()/bt.getWidth());
                         System.out.println(bt.getY()/bt.getHeight());
@@ -82,6 +83,7 @@ public class Vue extends JFrame{
                     JButton bt = new JButton();
                     TerrainPanel.add(bt);
                     bt.setOpaque(false);
+                    bt.setBackground(Color.BLACK);
                     bt.setContentAreaFilled(false);
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(bt.getX()/bt.getWidth());
@@ -100,17 +102,30 @@ public class Vue extends JFrame{
         TaskBar.removeAll();
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
-        JButton bt = new JButton("Acheter une unité");
-        bt.setPreferredSize(new Dimension(300,150));
-        bt.addActionListener((ActionEvent e) -> {
+        JButton btBuy = new JButton("Acheter une unité");
+        btBuy.setPreferredSize(new Dimension(300,150));
+        btBuy.addActionListener((ActionEvent e) -> {
             generateAchat();
         });
+        TaskBar.add(btBuy);
+        JButton btAtk = new JButton("Attaquer");
+        btAtk.setPreferredSize(new Dimension(300,150));
+        btAtk.addActionListener((ActionEvent e) -> {
+            //
+        });
+        TaskBar.add(btAtk);
+        JButton bt = new JButton("Déplacement");
+        bt.setPreferredSize(new Dimension(300,150));
+        bt.addActionListener((ActionEvent e) -> {
+            //
+        });
         TaskBar.add(bt);
-        for (int i = 0; i < 3; i++){
-            JButton bt2 = new JButton("autre fonction");
-            bt2.setPreferredSize(new Dimension(300,150));
-            TaskBar.add(bt2);
-        }
+        JButton btFdt = new JButton("Fin de tour");
+        btFdt.setPreferredSize(new Dimension(300,150));
+        btFdt.addActionListener((ActionEvent e) -> {
+            //
+        });
+        TaskBar.add(btFdt);
         imagePane.add(TaskBar);
         TaskBar.updateUI();
     }

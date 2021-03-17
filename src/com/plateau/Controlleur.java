@@ -1,5 +1,6 @@
 package com.plateau;
 
+import com.launcher.Jeu;
 import com.player.*;
 import com.unite.Unite;
 
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 
 public class Controlleur {
     private Vue vue;
+    private Jeu jeu;
 
     public Controlleur(Vue v){
         vue = v;
