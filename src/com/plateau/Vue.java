@@ -87,6 +87,7 @@ public class Vue extends JFrame{
                         btDep.addActionListener((ActionEvent dep) -> {
                             controlleur.deplaceUnite(bt);
                         });
+                        if(terrain.getPlateau()[bt.getY()/bt.getHeight()][bt.getX()/bt.getWidth()].getUnite().getPointAction()>0)
                         generateAction();
                     });
                     bt.setPreferredSize(new Dimension(150,150));

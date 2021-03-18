@@ -45,9 +45,12 @@ public class Controlleur {
         int yAtq = attaquant.getY()/attaquant.getHeight();
         for (JButton b : vue.terrainBt) {
             b.addActionListener((ActionEvent e) -> {
-                atq.attaqueUnite(vue.getTerrain(),xAtq,yAtq,b.getX()/b.getWidth(),b.getY()/b.getHeight());
-                vue.generateTerrain();
-                vue.generateTaskBar();
+                while(atq.getPointAction()>0) {
+                    atq.attaqueUnite(vue.terrain, xAtq, yAtq, b.getX() / b.getWidth(), b.getY() / b.getHeight());
+                    System.out.println("PA courant : " + atq.getPointAction());
+                    vue.generateTerrain();
+                    vue.generateTaskBar();
+                }
             });
         }
     }
@@ -62,7 +65,8 @@ public class Controlleur {
         System.out.println("l'unité : "+act);
         for (JButton b : vue.terrainBt) {
             b.addActionListener((ActionEvent e) -> {
-                act.deplaceUnite(vue.getTerrain(),posAct.getX()/posAct.getWidth(),posAct.getY()/posAct.getHeight(),b.getX()/b.getWidth(),b.getY()/b.getHeight());
+                act.deplaceUnite(vue.terrain,posAct.getX()/posAct.getWidth(),posAct.getY()/posAct.getHeight(),b.getX()/b.getWidth(),b.getY()/b.getHeight());
+                System.out.println("PA : "+act.getPointAction());
                 vue.generateTerrain();
                 vue.generateTaskBar();
             });
