@@ -39,13 +39,34 @@ public class Controlleur {
         }
     }
 
+    public void attaque(JButton attaquant){
+        Unite atq = vue.getTerrain().getPlateau()[attaquant.getY()/attaquant.getHeight()][attaquant.getX()/attaquant.getWidth()].getUnite();
+        int xAtq = attaquant.getX()/attaquant.getWidth();
+        int yAtq = attaquant.getY()/attaquant.getHeight();
+        for (JButton b : vue.terrainBt) {
+            b.addActionListener((ActionEvent e) -> {
+                atq.attaqueUnite(vue.getTerrain(),xAtq,yAtq,b.getX()/b.getWidth(),b.getY()/b.getHeight());
+                vue.generateTerrain();
+                vue.generateTaskBar();
+            });
+        }
+    }
+
     public void finDeTour(){
         jeu.finDeTour();
         vue.setTourJoueur(jeu.getTourDuJoueur());
     }
 
-    public void deplaceUnite(){
-
+    public void deplaceUnite(JButton posAct){
+        Unite act = vue.getTerrain().getPlateau()[posAct.getY()/posAct.getHeight()][posAct.getX()/posAct.getWidth()].getUnite();
+        System.out.println("l'unité : "+act);
+        for (JButton b : vue.terrainBt) {
+            b.addActionListener((ActionEvent e) -> {
+                act.deplaceUnite(vue.getTerrain(),posAct.getX()/posAct.getWidth(),posAct.getY()/posAct.getHeight(),b.getX()/b.getWidth(),b.getY()/b.getHeight());
+                vue.generateTerrain();
+                vue.generateTaskBar();
+            });
+        }
     }
 
     public void setJeu(Jeu j){

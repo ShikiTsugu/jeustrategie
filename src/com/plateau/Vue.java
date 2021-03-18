@@ -22,6 +22,8 @@ public class Vue extends JFrame{
     private Controlleur controlleur = new Controlleur(this);
     private Joueur tourJoueur;
     private String[] listeUnit = {"Templier","Cavalier","Mage","Archer"};
+    private JButton btAtk = new JButton("Attaquer");
+    private JButton btDep = new JButton("Déplacer");
 
     public Vue(Model m, Terrain t, Joueur j){
         model = m;
@@ -79,6 +81,12 @@ public class Vue extends JFrame{
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(bt.getX()/bt.getWidth());
                         System.out.println(bt.getY()/bt.getHeight());
+                        btAtk.addActionListener((ActionEvent atk) -> {
+                            controlleur.attaque(bt);
+                        });
+                        btDep.addActionListener((ActionEvent dep) -> {
+                            controlleur.deplaceUnite(bt);
+                        });
                         generateAction();
                     });
                     bt.setPreferredSize(new Dimension(150,150));
@@ -126,18 +134,10 @@ public class Vue extends JFrame{
         TaskBar.removeAll();
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
-        JButton btAtk = new JButton("Attaquer");
         btAtk.setPreferredSize(new Dimension(300,150));
-        btAtk.addActionListener((ActionEvent e) -> {
-            //
-        });
         TaskBar.add(btAtk);
-        JButton bt = new JButton("Déplacement");
-        bt.setPreferredSize(new Dimension(300,150));
-        bt.addActionListener((ActionEvent e) -> {
-            controlleur.deplaceUnite();
-        });
-        TaskBar.add(bt);
+        btDep.setPreferredSize(new Dimension(300,150));
+        TaskBar.add(btDep);
         JButton retour = new JButton("retour");
         retour.setPreferredSize(new Dimension(300,150));
         retour.addActionListener((ActionEvent e) -> {
