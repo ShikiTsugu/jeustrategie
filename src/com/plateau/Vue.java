@@ -23,9 +23,12 @@ public class Vue extends JFrame{
     private Joueur tourJoueur;
     private String[] listeUnit = {"Templier","Cavalier","Mage","Archer"};
 
-    public Vue(Model m, Terrain t){
+    public Vue(Model m, Terrain t, Joueur j){
         model = m;
         imagePane = new ImagePane();
+        tourJoueur = j;
+        imagePane.add(TerrainPanel);
+        imagePane.add(TaskBar);
         setTitle("Jeu de Strategie");
         setSize(1680,1050);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -63,15 +66,16 @@ public class Vue extends JFrame{
 
     public void generateTerrain(){
         TerrainPanel.removeAll();
-        Case[][] terraintmp = terrain.plateau;
-        imagePane.add(TerrainPanel);
         GridLayout grid = new GridLayout(5,5);
         TerrainPanel.setLayout(grid);
-        for (int x = 0; x < terraintmp.length; x++){
-            for (int y = 0; y < terraintmp[x].length; y++){
-                if (terraintmp[x][y].unit != null) {
-                    JButton bt = new JButton(terraintmp[x][y].unit.toString());
+        for (int x = 0; x < terrain.plateau.length; x++){
+            for (int y = 0; y < terrain.plateau[x].length; y++){
+                if (terrain.plateau[x][y].unit != null) {
+                    JButton bt = new JButton(terrain.plateau[x][y].unit.toString());
                     TerrainPanel.add(bt);
+                    if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
+                        bt.setBackground(Color.BLACK);
+                    }
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(bt.getX()/bt.getWidth());
                         System.out.println(bt.getY()/bt.getHeight());
@@ -100,18 +104,32 @@ public class Vue extends JFrame{
         TaskBar.removeAll();
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
-        JButton bt = new JButton("Acheter une unité");
-        bt.setPreferredSize(new Dimension(300,150));
-        bt.addActionListener((ActionEvent e) -> {
+        JButton btBuy = new JButton("Acheter une unité");
+        btBuy.setPreferredSize(new Dimension(300,150));
+        btBuy.addActionListener((ActionEvent e) -> {
             generateAchat();
         });
+        TaskBar.add(btBuy);
+        JButton btAtk = new JButton("Attaquer");
+        btAtk.setPreferredSize(new Dimension(300,150));
+        btAtk.addActionListener((ActionEvent e) -> {
+            //
+        });
+        TaskBar.add(btAtk);
+        JButton bt = new JButton("Déplacement");
+        bt.setPreferredSize(new Dimension(300,150));
+        bt.addActionListener((ActionEvent e) -> {
+            controlleur.deplaceUnite();
+        });
         TaskBar.add(bt);
-        for (int i = 0; i < 3; i++){
-            JButton bt2 = new JButton("autre fonction");
-            bt2.setPreferredSize(new Dimension(300,150));
-            TaskBar.add(bt2);
-        }
-        imagePane.add(TaskBar);
+        JButton btFdt = new JButton("Fin de tour");
+        btFdt.setPreferredSize(new Dimension(300,150));
+        btFdt.addActionListener((ActionEvent e) -> {
+            controlleur.finDeTour();
+            generateTerrain();
+            TerrainPanel.updateUI();
+        });
+        TaskBar.add(btFdt);
         TaskBar.updateUI();
     }
 
@@ -140,8 +158,10 @@ public class Vue extends JFrame{
             JButton bt = new JButton(listeUnit[i]);
             bt.addActionListener((ActionEvent e) -> {
                 if(new ActionJoueur((tourJoueur)).acheteUnite(createUnite(bt),TerrainPanel)) {
-                    controlleur.acheteUnite(tourJoueur, createUnite(bt));
+                    Unite unit = createUnite(bt);
+                    controlleur.acheteUnite(tourJoueur, unit);
                 }
+                //boutonAnnul();
                 generateTaskBar();
             });
             bt.setPreferredSize(new Dimension(100,150));
@@ -154,6 +174,18 @@ public class Vue extends JFrame{
         retour.setPreferredSize(new Dimension(100,150));
         TaskBar.add(retour);
         TaskBar.updateUI();
+    }
+
+    // bouton pour annuler l'achat d'unité (ne marche pas encore)
+    public void boutonAnnul(Unite u){
+        TaskBar.removeAll();
+        JButton Annul = new JButton("retour");
+        Annul.addActionListener((ActionEvent e) -> {
+            generateTaskBar();
+            tourJoueur.annuleAjout(u);
+        });
+        Annul.setPreferredSize(new Dimension(800,150));
+        TaskBar.add(Annul);
     }
 
     
@@ -177,6 +209,10 @@ public class Vue extends JFrame{
 
     public void setTerrain(Terrain t){
         terrain = t;
+    }
+
+    public Controlleur getControlleur(){
+        return controlleur;
     }
 
 }

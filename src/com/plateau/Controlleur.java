@@ -1,5 +1,6 @@
 package com.plateau;
 
+import com.launcher.Jeu;
 import com.player.*;
 import com.unite.Unite;
 
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 
 public class Controlleur {
     private Vue vue;
+    private Jeu jeu;
 
     public Controlleur(Vue v){
         vue = v;
@@ -31,9 +33,27 @@ public class Controlleur {
         } else {
             ActionJoueur aj = new ActionJoueur(j);
             aj.setBought(true);
-            placeUniteApresAchat(u, aj,true);
+            boolean b = jeu.getJoueur1() == jeu.getJoueur1();
+            placeUniteApresAchat(u, aj,b);
             return true;
         }
+    }
+
+    public void finDeTour(){
+        jeu.finDeTour();
+        vue.setTourJoueur(jeu.getTourDuJoueur());
+    }
+
+    public void deplaceUnite(){
+
+    }
+
+    public void setJeu(Jeu j){
+        jeu = j;
+    }
+
+    public Jeu getJeu(){
+        return jeu;
     }
 
 }
