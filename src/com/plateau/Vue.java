@@ -119,7 +119,7 @@ public class Vue extends JFrame{
         JButton bt = new JButton("Déplacement");
         bt.setPreferredSize(new Dimension(300,150));
         bt.addActionListener((ActionEvent e) -> {
-            //
+            controlleur.deplaceUnite();
         });
         TaskBar.add(bt);
         JButton btFdt = new JButton("Fin de tour");

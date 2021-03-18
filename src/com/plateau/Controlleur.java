@@ -44,6 +44,10 @@ public class Controlleur {
         vue.setTourJoueur(jeu.getTourDuJoueur());
     }
 
+    public void deplaceUnite(){
+
+    }
+
     public void setJeu(Jeu j){
         jeu = j;
     }
