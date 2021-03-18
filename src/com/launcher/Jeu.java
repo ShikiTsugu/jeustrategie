@@ -169,7 +169,6 @@ public class Jeu {
                 unite = new Templier(tourDuJoueur);
                 if (requeteCourante.substring(5, 6).equals("A")) {
                     unite = new Archer(tourDuJoueur);
-
                 }
                 if (requeteCourante.substring(5, 6).equals("C")) {
                     unite = new Cavalier(tourDuJoueur);
@@ -268,7 +267,6 @@ public class Jeu {
     }
 
     public void startGraphique(){
-        v = new Vue(m,terrain);
         setJoueur1(new Joueur(1000));
         setActionjoueur1(new ActionJoueur(joueur1));
         joueur1.initialiseListeUnites(terrain);
@@ -276,10 +274,19 @@ public class Jeu {
         setActionjoueur2(new ActionJoueur(joueur2));
         joueur2.initialiseListeUnites(terrain);
         setTerrain(terrain);
-        v.setTourJoueur(joueur1);
+        v = new Vue(m,terrain,joueur1);
+        v.getControlleur().setJeu(this);
         terrain.ajouteUnite(new Hero(joueur1),0,2);
         terrain.ajouteUnite(new Hero(joueur2),4,2);
         v.AfficheTerrain();
+    }
+
+    public void finDeTour(){
+        if (tourDuJoueur == joueur1) {
+            tourDuJoueur = joueur2;
+        } else {
+            tourDuJoueur = joueur1;
+        }
     }
 
     public static void main(String[] args) {

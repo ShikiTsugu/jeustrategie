@@ -64,4 +64,12 @@ public class Joueur {
         added = false;
         return false;
     }
+
+    public void annuleAjout(Unite u){
+        for (int i = 1; i<unites.length; i++) {
+            if (unites[i] == u) {
+                unites[i] = null;
+            }
+        }
+    }
 }
