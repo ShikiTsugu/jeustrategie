@@ -97,14 +97,12 @@ public abstract class Unite {
     
     public void deplaceUnite(Terrain t, int xPast, int yPast, int xApres, int yApres){
         Case avant = t.getPlateau()[yPast][xPast];
-        Case test = new Case(xApres, yApres);
         if (t.getPlateau()[yPast][xPast].estUnit()) {
             Case destination = t.getPlateau()[yApres][xApres];
-            if (((Math.abs(yApres - yPast)+Math.abs(xApres - xPast)) <= avant.getUnite().getPorteeDeplacement()) && destination.estVide()
-            && (casesDisponibleDeplacement(t, avant.getUnite(), xPast, yPast, xApres, yApres).contains(test)) && avant.getUnite().getPointAction() > 0) {
+            if (destination.estVide() && (casesDisponibleDeplacement(t, avant.getUnite(), xPast, yPast, xApres, yApres).contains(t.getPlateau()[yApres][xApres])) && avant.getUnite().getPointAction() > 0) {
                 avant.getUnite().setPointAction(avant.getUnite().getPointAction() -1);
                 Case positionInitial = avant.getUnite().getPositionUnite();
-                destination.setUnite(avant.getUnite());;
+                destination.setUnite(avant.getUnite());
                 avant.getUnite().setPositionUnite(destination);
                 positionInitial.supprimerUniteCase();
             }
@@ -127,47 +125,45 @@ public abstract class Unite {
     public Collection<Case> casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){
         int portee = unite.getPorteeDeplacement();
         HashSet<Case> test = new HashSet<>();
-        return casesDisponiblePortee(test, t, unite, portee, xPast, yPast, xApres, yApres);
+        return casesDisponiblePortee(test, t, portee, xPast, yPast, xApres, yApres);
     }
 
-    private Collection<Case> casesDisponiblePortee(HashSet<Case> test, Terrain t, Unite unite, int portee, int xPast, int yPast, int xApres, int yApres){
-        if (portee <= 0) return test;
-        if (yPast+1 < t.getPlateau().length && t.getPlateau()[yPast+1][xPast].estVide()){
-            Case c1 = new Case(xPast, yPast+1);
-            test.add(c1);
-            test.addAll(casesDisponiblePortee(test, t, unite, portee-1, yPast+1, xPast, xApres, yApres));
+    private Collection<Case> casesDisponiblePortee(HashSet<Case> test, Terrain t, int portee, int xPast, int yPast, int xApres, int yApres){
+        if (portee <= 0) {
+            return calculPlusCourtChemin(test, t, xPast, yPast, xApres, yApres);
         }
-        if (xPast+1 < t.getPlateau()[0].length && t.getPlateau()[yPast][xPast+1].estVide()){
-            Case c2 = new Case(xPast+1, yPast);
-            test.add(c2);
-            test.addAll(casesDisponiblePortee(test, t, unite,portee-1, yPast, xPast+1, xApres, yApres));
+        if (yPast+1 < t.getPlateau().length){
+            test.add(t.getPlateau()[yPast+1][xPast]);
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast+1, xPast, xApres, yApres));
         }
-        if (yPast-1 >= 0 && t.getPlateau()[yPast-1][xPast].estVide()){
-            Case c3 = new Case(xPast, yPast-1);
-            test.add(c3);
-            test.addAll(casesDisponiblePortee(test, t, unite,portee-1, yPast-1, xPast, xApres, yApres));
+        if (xPast+1 < t.getPlateau()[0].length){
+            test.add(t.getPlateau()[yPast][xPast+1]);
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast+1, xApres, yApres));
         }
-        if (xPast-1 >= 0 && t.getPlateau()[yPast][xPast-1].estVide()){
-            Case c4 = new Case(xPast-1, yPast);
-            test.add(c4);
-            test.addAll(casesDisponiblePortee(test, t, unite, portee-1, yPast, xPast-1, xApres, yApres));
+        if (yPast-1 >= 0){
+            test.add(t.getPlateau()[yPast-1][xPast]);
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast-1, xPast, xApres, yApres));
         }
-        return calculPlusCourtChemin(test, xApres, yApres);
+        if (xPast-1 >= 0){
+            test.add(t.getPlateau()[yPast][xPast-1]);
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast-1, xApres, yApres));
+        }
+        return test;
+
     }
 
-    private Collection<Case> calculPlusCourtChemin(Collection<Case> t, int xApres, int yApres){
+    private Collection<Case> calculPlusCourtChemin(HashSet<Case> t, Terrain terrain, int xPast, int yPast, int xApres, int yApres){
         HashSet<Case> newCollection = new HashSet<>();
-        Iterator<Case> it = t.iterator();
-        int compteur = 0;
-        while(it.hasNext()){
-            newCollection.add(it.next());
-            compteur++;
-            if ((Math.abs(yApres - it.next().getY())+Math.abs(xApres - it.next().getX())) < compteur || (it.next().getX() == xApres) && (it.next().getY() == yApres)){
-                newCollection.remove(it.next());
-                compteur-=1;
+        //System.out.println(t);
+        for(Case c: t){newCollection.add(c);
+            if (c.getId() == terrain.getPlateau()[yApres][xApres].getId() && c.estVide()){
+            System.out.println(newCollection);
+            return newCollection;
             }
-            if ((Math.abs(yApres - it.next().getY())+Math.abs(xApres - it.next().getX())) == compteur && (it.next().getX() == xApres) && (it.next().getY() == yApres)){
-                return newCollection;
+            //System.out.println(c.getId());
+
+            if ((c.getX() != xApres) && (c.getY() != yApres) && !c.estVide()){
+                newCollection.remove(c);
             }
         }
         return newCollection;

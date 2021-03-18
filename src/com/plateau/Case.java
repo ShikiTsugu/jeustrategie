@@ -9,20 +9,25 @@ public class Case {
     protected boolean J2Buyable ;
     protected int x;
     protected int y;
+    protected int id;
+    protected static int incremente;
 
     public Case(){
         unit = null;
         obstacle = false;
+        id=incremente++;
     }
 
     public Case(Unite u){
         unit = u;
         obstacle = false;
+        id=incremente++;
     }
 
     public Case(int x, int y){
         this.x = x;
         this.y = y;
+        id=incremente++;
     }
 
     public Case(boolean o){
@@ -64,6 +69,8 @@ public class Case {
     public void setX(int x) {this.x = x;}
 
     public void setY(int y){this.y = y;}
+
+    public int getId(){ return id;}
     
     public boolean estObstacle(){
         return obstacle == true;
@@ -95,11 +102,11 @@ public class Case {
         if(unit instanceof Templier){
             return "T";
         }
-        return ".";
+        return Integer.toString(id);
     }
 
     public String toString(){
-        if(estVide()) return ".";
+        if(estVide()) return Integer.toString(id);
         if(estUnit()) return  afficheContenu();
         return obstacle==false?unit.toString():"obstacle";
     }
