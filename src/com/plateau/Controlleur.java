@@ -33,7 +33,7 @@ public class Controlleur {
         } else {
             ActionJoueur aj = new ActionJoueur(j);
             aj.setBought(true);
-            boolean b = jeu.getJoueur1() == jeu.getJoueur1();
+            boolean b = jeu.getTourDuJoueur() == jeu.getJoueur1();
             placeUniteApresAchat(u, aj,b);
             return true;
         }
