@@ -79,6 +79,7 @@ public class Vue extends JFrame{
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(bt.getX()/bt.getWidth());
                         System.out.println(bt.getY()/bt.getHeight());
+                        generateAction();
                     });
                     bt.setPreferredSize(new Dimension(150,150));
                     terrainBt.add(bt);
@@ -110,6 +111,21 @@ public class Vue extends JFrame{
             generateAchat();
         });
         TaskBar.add(btBuy);
+        JButton btFdt = new JButton("Fin de tour");
+        btFdt.setPreferredSize(new Dimension(300,150));
+        btFdt.addActionListener((ActionEvent e) -> {
+            controlleur.finDeTour();
+            generateTerrain();
+            TerrainPanel.updateUI();
+        });
+        TaskBar.add(btFdt);
+        TaskBar.updateUI();
+    }
+
+    public void generateAction(){
+        TaskBar.removeAll();
+        FlowLayout flow = new FlowLayout();
+        TaskBar.setLayout(flow);
         JButton btAtk = new JButton("Attaquer");
         btAtk.setPreferredSize(new Dimension(300,150));
         btAtk.addActionListener((ActionEvent e) -> {
@@ -122,14 +138,12 @@ public class Vue extends JFrame{
             controlleur.deplaceUnite();
         });
         TaskBar.add(bt);
-        JButton btFdt = new JButton("Fin de tour");
-        btFdt.setPreferredSize(new Dimension(300,150));
-        btFdt.addActionListener((ActionEvent e) -> {
-            controlleur.finDeTour();
-            generateTerrain();
-            TerrainPanel.updateUI();
+        JButton retour = new JButton("retour");
+        retour.setPreferredSize(new Dimension(300,150));
+        retour.addActionListener((ActionEvent e) -> {
+            generateTaskBar();
         });
-        TaskBar.add(btFdt);
+        TaskBar.add(retour);
         TaskBar.updateUI();
     }
 
