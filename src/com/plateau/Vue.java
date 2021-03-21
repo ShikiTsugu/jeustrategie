@@ -74,16 +74,16 @@ public class Vue extends JFrame{
         if(s.equals("Hero")){
             bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/hero.png"));
         }
-        if(s.equals("templier")){
+        if(s.equals("Templier")){
             bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/templier.png"));
         }
         if(s.equals("Archer")){
             bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/archer.png"));
         }
-        if(s.equals("mage")){
+        if(s.equals("Mage")){
             bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/mage.png"));
         }
-        if(s.equals("cavalier")){
+        if(s.equals("Cavalier")){
             bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/cavalier.png"));
         }
         return bt;
@@ -97,6 +97,7 @@ public class Vue extends JFrame{
             for (int y = 0; y < terrain.plateau[x].length; y++){
                 if (terrain.plateau[x][y].unit != null) {
                     JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
+                    bt.setText("PV : "+terrain.plateau[x][y].unit.getSanteCourante()+"/"+terrain.plateau[x][y].unit.getSanteMax());
                     TerrainPanel.add(bt);
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
                         bt.setBackground(Color.BLACK);
@@ -171,18 +172,18 @@ public class Vue extends JFrame{
         TaskBar.updateUI();
     }
 
-    public Unite createUnite(JButton b){
+    public Unite createUnite(String s){
         Unite u=null;
-        if(b.getText().equals("Templier")){
+        if(s.equals("Templier")){
             u = new Templier(tourJoueur);
         }
-        if(b.getText().equals("Cavalier")){
+        if(s.equals("Cavalier")){
             u = new Cavalier(tourJoueur);
         }
-        if(b.getText().equals("Mage")){
+        if(s.equals("Mage")){
             u = new Mage(tourJoueur);
         }
-        if(b.getText().equals("Archer")){
+        if(s.equals("Archer")){
             u = new Archer(tourJoueur);
         }
         return u;
@@ -193,10 +194,11 @@ public class Vue extends JFrame{
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
         for (int i = 0; i < 4; i++){
-            JButton bt = new JButton(listeUnit[i]);
+            JButton bt = generateButton(listeUnit[i]);
+            String unitName = listeUnit[i];
             bt.addActionListener((ActionEvent e) -> {
-                if(new ActionJoueur((tourJoueur)).acheteUnite(createUnite(bt),TerrainPanel)) {
-                    Unite unit = createUnite(bt);
+                if(new ActionJoueur((tourJoueur)).acheteUnite(createUnite(unitName),TerrainPanel)) {
+                    Unite unit = createUnite(unitName);
                     controlleur.acheteUnite(tourJoueur, unit);
                 }
                 //boutonAnnul();
