@@ -83,9 +83,9 @@ public class Vue extends JFrame{
         if(s.equals("mage")){
             bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/mage.png"));
         }
-        /*if(s.equals("cavalier")){
+        if(s.equals("cavalier")){
             bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/cavalier.png"));
-        }*/
+        }
         return bt;
     }
 
