@@ -33,7 +33,7 @@ public class Vue extends JFrame{
         imagePane.add(TerrainPanel);
         imagePane.add(TaskBar);
         setTitle("Jeu de Strategie");
-        setSize(1680,1050);
+        setSize(model.getImage().getWidth(),model.getImage().getHeight());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         terrain = t;
@@ -139,13 +139,13 @@ public class Vue extends JFrame{
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
         JButton btBuy = new JButton("Acheter une unité");
-        btBuy.setPreferredSize(new Dimension(300,150));
+        btBuy.setPreferredSize(new Dimension(200,100));
         btBuy.addActionListener((ActionEvent e) -> {
             generateAchat();
         });
         TaskBar.add(btBuy);
         JButton btFdt = new JButton("Fin de tour");
-        btFdt.setPreferredSize(new Dimension(300,150));
+        btFdt.setPreferredSize(new Dimension(200,100));
         btFdt.addActionListener((ActionEvent e) -> {
             controlleur.finDeTour();
             generateTerrain();
@@ -196,6 +196,7 @@ public class Vue extends JFrame{
         for (int i = 0; i < 4; i++){
             JButton bt = generateButton(listeUnit[i]);
             String unitName = listeUnit[i];
+            bt.setText(unitName);
             bt.addActionListener((ActionEvent e) -> {
                 if(new ActionJoueur((tourJoueur)).acheteUnite(createUnite(unitName),TerrainPanel)) {
                     Unite unit = createUnite(unitName);
@@ -204,14 +205,14 @@ public class Vue extends JFrame{
                 //boutonAnnul();
                 generateTaskBar();
             });
-            bt.setPreferredSize(new Dimension(100,150));
+            bt.setPreferredSize(new Dimension(200,150));
             TaskBar.add(bt);
         }
         JButton retour = new JButton("retour");
         retour.addActionListener((ActionEvent e) -> {
             generateTaskBar();
         });
-        retour.setPreferredSize(new Dimension(100,150));
+        retour.setPreferredSize(new Dimension(200,150));
         TaskBar.add(retour);
         TaskBar.updateUI();
     }
