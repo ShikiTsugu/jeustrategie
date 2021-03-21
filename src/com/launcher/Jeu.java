@@ -244,7 +244,7 @@ public class Jeu {
         scanner.close();
     }
 
-    private static String selectGoodPath(){
+    public static String selectGoodPath(){
         String path = System.getProperty("user.dir");
         File checkPath = new File(path);
         if(path.endsWith("jeu-de-strat") || hasAGoodChild(checkPath,"src")){
@@ -255,7 +255,7 @@ public class Jeu {
         return path;
     }
 
-    private static boolean hasAGoodChild(File checkPath,String wanted){
+    public static boolean hasAGoodChild(File checkPath,String wanted){
         File[] listOfChildren = checkPath.listFiles();
         if (listOfChildren==null)return false;
         for(File child:listOfChildren){

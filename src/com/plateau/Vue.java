@@ -1,5 +1,6 @@
 package com.plateau;
 
+import com.launcher.Jeu;
 import com.launcher.Reader;
 import com.player.ActionJoueur;
 import com.player.Joueur;
@@ -66,6 +67,28 @@ public class Vue extends JFrame{
         }
     }
 
+    public JButton generateButton(String s){
+        JButton bt = new JButton();
+        bt.setContentAreaFilled(false);
+        bt.setOpaque(false);
+        if(s.equals("Hero")){
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/hero.png"));
+        }
+        if(s.equals("templier")){
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/templier.png"));
+        }
+        if(s.equals("Archer")){
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/archer.png"));
+        }
+        if(s.equals("mage")){
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/mage.png"));
+        }
+        /*if(s.equals("cavalier")){
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/cavalier.png"));
+        }*/
+        return bt;
+    }
+
     public void generateTerrain(){
         TerrainPanel.removeAll();
         GridLayout grid = new GridLayout(5,5);
@@ -73,7 +96,7 @@ public class Vue extends JFrame{
         for (int x = 0; x < terrain.plateau.length; x++){
             for (int y = 0; y < terrain.plateau[x].length; y++){
                 if (terrain.plateau[x][y].unit != null) {
-                    JButton bt = new JButton(terrain.plateau[x][y].unit.toString());
+                    JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
                     TerrainPanel.add(bt);
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
                         bt.setBackground(Color.BLACK);
