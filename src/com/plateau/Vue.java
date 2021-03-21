@@ -98,9 +98,11 @@ public class Vue extends JFrame{
                 if (terrain.plateau[x][y].unit != null) {
                     JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
                     bt.setText("PV : "+terrain.plateau[x][y].unit.getSanteCourante()+"/"+terrain.plateau[x][y].unit.getSanteMax());
+                    bt.setForeground(new Color(0,200,0));
+                    bt.setFont(new Font("SansSerif",Font.BOLD,15));
                     TerrainPanel.add(bt);
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
-                        bt.setBackground(Color.BLACK);
+                        bt.setForeground(new Color(200,0,0));
                     }
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(bt.getX()/bt.getWidth());
