@@ -16,7 +16,7 @@ public class Mage extends Unite{
     }
     
     public String toString(){
-        return "mage";
+        return "Mage";
     }
     
     public final boolean isHero(){
