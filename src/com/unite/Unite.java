@@ -104,7 +104,7 @@ public abstract class Unite {
                 Case positionInitial = avant.getUnite().getPositionUnite();
                 destination.setUnite(avant.getUnite());
                 avant.getUnite().setPositionUnite(destination);
-                positionInitial.supprimerUniteCase();
+                positionInitial.supprimerUniteCase(positionInitial);
             }
         }
     }
@@ -116,7 +116,7 @@ public abstract class Unite {
             if (t.getPlateau()[yD][xD].estUnit() && ((Math.abs(yD - yA)+Math.abs(xD - xA)) <= attaquant.getPorteeAttaque())){
                 attaquant.setPointAction(attaquant.getPointAction() -1);
                 defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
-                if (defenseur.getSanteCourante() <= 0) t.getPlateau()[yD][xD].supprimerUniteCase();
+                if (defenseur.getSanteCourante() <= 0) t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
                 else if (t.getPlateau()[yD][xD].estObstacle() || t.getPlateau()[yD][xD].estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
             }
         }
@@ -130,26 +130,35 @@ public abstract class Unite {
 
     private Collection<Case> casesDisponiblePortee(HashSet<Case> test, Terrain t, int portee, int xPast, int yPast, int xApres, int yApres){
         if (portee <= 0) {
+            System.out.println(test);
             return calculPlusCourtChemin(test, t, xPast, yPast, xApres, yApres);
         }
-        if (yPast+1 < t.getPlateau().length){
+        if (yPast+1 < t.getPlateau().length && t.getPlateau()[yPast+1][xPast].estVide()){
             test.add(t.getPlateau()[yPast+1][xPast]);
             test.addAll(casesDisponiblePortee(test, t, portee-1, yPast+1, xPast, xApres, yApres));
+        }else if (yPast+1 < t.getPlateau().length){
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast+1, xPast, xApres, yApres));
         }
-        if (xPast+1 < t.getPlateau()[0].length){
+        if (xPast+1 < t.getPlateau()[0].length && t.getPlateau()[yPast][xPast+1].estVide()){
             test.add(t.getPlateau()[yPast][xPast+1]);
             test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast+1, xApres, yApres));
+        }else if(xPast+1 < t.getPlateau()[0].length){
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast+1, xApres, yApres));
         }
-        if (yPast-1 >= 0){
+        if (yPast-1 >= 0 && t.getPlateau()[yPast-1][xPast].estVide()){
             test.add(t.getPlateau()[yPast-1][xPast]);
             test.addAll(casesDisponiblePortee(test, t, portee-1, yPast-1, xPast, xApres, yApres));
+        }else if(yPast-1 >= 0){
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast-1, xPast, xApres, yApres));
         }
-        if (xPast-1 >= 0){
+        if (xPast-1 >= 0 && t.getPlateau()[yPast][xPast-1].estVide()){
             test.add(t.getPlateau()[yPast][xPast-1]);
             test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast-1, xApres, yApres));
         }
+        else if (xPast-1 >= 0){
+            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast-1, xApres, yApres));
+        }
         return test;
-
     }
 
     private Collection<Case> calculPlusCourtChemin(HashSet<Case> t, Terrain terrain, int xPast, int yPast, int xApres, int yApres){

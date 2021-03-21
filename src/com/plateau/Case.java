@@ -80,10 +80,8 @@ public class Case {
         return unit != null;
     }
     
-    public Unite supprimerUniteCase(){
-        Unite newUnit = unit;
-        unit = null;
-        return newUnit;
+    public void supprimerUniteCase(Case c){
+        c.setUnite(null);
     }
 
     public String afficheContenu(){
