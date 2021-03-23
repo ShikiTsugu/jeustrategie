@@ -10,6 +10,7 @@ import javax.sound.sampled.BooleanControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Vue extends JFrame{
@@ -20,6 +21,7 @@ public class Vue extends JFrame{
     private JPanel TaskBar = new JPanel();
     Terrain terrain;
     ArrayList<JButton> terrainBt = new ArrayList<>();
+    ArrayList<JButton> terrainUnits = new ArrayList<>();
     private Controlleur controlleur = new Controlleur(this);
     private Joueur tourJoueur;
     private String[] listeUnit = {"Templier","Cavalier","Mage","Archer"};
@@ -89,6 +91,26 @@ public class Vue extends JFrame{
         return bt;
     }
 
+    public void resetButton(JButton b){
+        for(ActionListener al : b.getActionListeners() ) {
+            b.removeActionListener(al);
+        }
+    }
+
+    public void initialiseAtk(JButton b){
+        resetButton(btAtk);
+        btAtk.addActionListener((ActionEvent atk) -> {
+            controlleur.attaque(tourJoueur,b);
+        });
+    }
+
+    public void initialiseDep(JButton b){
+        resetButton(btDep);
+        btDep.addActionListener((ActionEvent dep) -> {
+            controlleur.deplaceUnite(tourJoueur,b);
+        });
+    }
+
     public void generateTerrain(){
         TerrainPanel.removeAll();
         GridLayout grid = new GridLayout(5,5);
@@ -104,33 +126,26 @@ public class Vue extends JFrame{
                     pv.setAlignmentY(BOTTOM_ALIGNMENT);
                     bt.add(pv);
                     TerrainPanel.add(bt);
+                    bt.addActionListener((ActionEvent e) -> {
+                        System.out.println(terrain.plateau[bt.getY()/bt.getHeight()][bt.getX()/bt.getWidth()].unit);
+                        if(terrain.getPlateau()[bt.getY()/bt.getHeight()][bt.getX()/bt.getWidth()].getUnite().getPointAction()>0){
+                            initialiseAtk(bt);
+                            initialiseDep(bt);
+                            generateAction();
+                        }
+                    });
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
+                        resetButton(bt);
                         pv.setForeground(new Color(200,0,0));
                     }
-                    bt.addActionListener((ActionEvent e) -> {
-                        System.out.println(bt.getX()/bt.getWidth());
-                        System.out.println(bt.getY()/bt.getHeight());
-                        btAtk.addActionListener((ActionEvent atk) -> {
-                            controlleur.attaque(bt);
-                        });
-                        btDep.addActionListener((ActionEvent dep) -> {
-                            controlleur.deplaceUnite(bt);
-                        });
-                        if(terrain.getPlateau()[bt.getY()/bt.getHeight()][bt.getX()/bt.getWidth()].getUnite().getPointAction()>0)
-                        generateAction();
-                    });
-                    bt.setPreferredSize(new Dimension(150,150));
+                    bt.setPreferredSize(new Dimension(150,125));
                     terrainBt.add(bt);
                 } else {
                     JButton bt = new JButton();
                     TerrainPanel.add(bt);
                     bt.setOpaque(false);
                     bt.setContentAreaFilled(false);
-                    bt.addActionListener((ActionEvent e) -> {
-                        System.out.println(bt.getX()/bt.getWidth());
-                        System.out.println(bt.getY()/bt.getHeight());
-                    });
-                    bt.setPreferredSize(new Dimension(150,150));
+                    bt.setPreferredSize(new Dimension(150,125));
                     terrainBt.add(bt);
                 }
             }
@@ -164,12 +179,12 @@ public class Vue extends JFrame{
         TaskBar.removeAll();
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
-        btAtk.setPreferredSize(new Dimension(300,150));
+        btAtk.setPreferredSize(new Dimension(100,125));
         TaskBar.add(btAtk);
-        btDep.setPreferredSize(new Dimension(300,150));
+        btDep.setPreferredSize(new Dimension(100,125));
         TaskBar.add(btDep);
         JButton retour = new JButton("retour");
-        retour.setPreferredSize(new Dimension(300,150));
+        retour.setPreferredSize(new Dimension(100,125));
         retour.addActionListener((ActionEvent e) -> {
             generateTaskBar();
         });
@@ -213,7 +228,7 @@ public class Vue extends JFrame{
                 //boutonAnnul();
                 generateTaskBar();
             });
-            bt.setPreferredSize(new Dimension(100,150));
+            bt.setPreferredSize(new Dimension(100,125));
             TaskBar.add(bt);
         }
         JButton retour = new JButton("retour");
