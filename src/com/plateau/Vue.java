@@ -97,12 +97,15 @@ public class Vue extends JFrame{
             for (int y = 0; y < terrain.plateau[x].length; y++){
                 if (terrain.plateau[x][y].unit != null) {
                     JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
-                    bt.setText("PV : "+terrain.plateau[x][y].unit.getSanteCourante()+"/"+terrain.plateau[x][y].unit.getSanteMax());
-                    bt.setForeground(new Color(0,200,0));
-                    bt.setFont(new Font("SansSerif",Font.BOLD,15));
+                    JLabel pv = new JLabel(terrain.plateau[x][y].unit.getSanteCourante()+"/"+terrain.plateau[x][y].unit.getSanteMax());
+                    pv.setFont(new Font("SansSerif",Font.BOLD,14));
+                    pv.setForeground(new Color(0,200,0));
+                    pv.setAlignmentX(CENTER_ALIGNMENT);
+                    pv.setAlignmentY(BOTTOM_ALIGNMENT);
+                    bt.add(pv);
                     TerrainPanel.add(bt);
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
-                        bt.setForeground(new Color(200,0,0));
+                        pv.setForeground(new Color(200,0,0));
                     }
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(bt.getX()/bt.getWidth());
@@ -198,7 +201,10 @@ public class Vue extends JFrame{
         for (int i = 0; i < 4; i++){
             JButton bt = generateButton(listeUnit[i]);
             String unitName = listeUnit[i];
-            bt.setText(unitName);
+            JLabel displayName = new JLabel(unitName);
+            displayName.setAlignmentX(CENTER_ALIGNMENT);
+            displayName.setAlignmentY(TOP_ALIGNMENT);
+            bt.add(displayName);
             bt.addActionListener((ActionEvent e) -> {
                 if(new ActionJoueur((tourJoueur)).acheteUnite(createUnite(unitName),TerrainPanel)) {
                     Unite unit = createUnite(unitName);
@@ -207,14 +213,14 @@ public class Vue extends JFrame{
                 //boutonAnnul();
                 generateTaskBar();
             });
-            bt.setPreferredSize(new Dimension(200,150));
+            bt.setPreferredSize(new Dimension(100,150));
             TaskBar.add(bt);
         }
         JButton retour = new JButton("retour");
         retour.addActionListener((ActionEvent e) -> {
             generateTaskBar();
         });
-        retour.setPreferredSize(new Dimension(200,150));
+        retour.setPreferredSize(new Dimension(80,50));
         TaskBar.add(retour);
         TaskBar.updateUI();
     }
