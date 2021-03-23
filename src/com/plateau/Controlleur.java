@@ -6,6 +6,7 @@ import com.unite.Unite;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Controlleur {
     private Vue vue;
@@ -45,18 +46,17 @@ public class Controlleur {
         }
     }
 
-    public void attaque(JButton attaquant){
-        Unite atq = vue.getTerrain().getPlateau()[attaquant.getY()/attaquant.getHeight()][attaquant.getX()/attaquant.getWidth()].getUnite();
-        int xAtq = attaquant.getX()/attaquant.getWidth();
-        int yAtq = attaquant.getY()/attaquant.getHeight();
+    public void attaque(Joueur j, JButton attaquant){
+        ActionJoueur aj = new ActionJoueur(j);
+        int[]coordI = {attaquant.getX()/attaquant.getWidth(), attaquant.getY()/attaquant.getHeight()};
+        int[]coordF = new int[2];
         for (JButton b : vue.terrainBt) {
             b.addActionListener((ActionEvent e) -> {
-                while(atq.getPointAction()>0) {
-                    atq.attaqueUnite(vue.terrain, xAtq, yAtq, b.getX() / b.getWidth(), b.getY() / b.getHeight());
-                    System.out.println("PA courant : " + atq.getPointAction());
-                    vue.generateTerrain();
-                    vue.generateTaskBar();
-                }
+                coordF[0] = b.getX()/b.getWidth();
+                coordF[1] = b.getY()/b.getHeight();
+                aj.attaqueUnite(vue.terrain,coordI[0],coordI[1],coordF[0],coordF[1]);
+                vue.generateTerrain();
+                vue.generateTaskBar();
             });
         }
     }
@@ -66,13 +66,15 @@ public class Controlleur {
         vue.setTourJoueur(jeu.getTourDuJoueur());
     }
 
-    public void deplaceUnite(JButton posAct){
-        Unite act = vue.getTerrain().getPlateau()[posAct.getY()/posAct.getHeight()][posAct.getX()/posAct.getWidth()].getUnite();
-        System.out.println("l'unité : "+act);
+    public void deplaceUnite(Joueur j, JButton posIni){
+        ActionJoueur aj = new ActionJoueur(j);
+        int[]coordI = {posIni.getX()/posIni.getWidth(), posIni.getY()/posIni.getHeight()};
+        int[]coordF = new int[2];
         for (JButton b : vue.terrainBt) {
             b.addActionListener((ActionEvent e) -> {
-                act.deplaceUnite(vue.terrain,posAct.getX()/posAct.getWidth(),posAct.getY()/posAct.getHeight(),b.getX()/b.getWidth(),b.getY()/b.getHeight());
-                System.out.println("PA : "+act.getPointAction());
+                coordF[0] = b.getX()/b.getWidth();
+                coordF[1] = b.getY()/b.getHeight();
+                aj.deplaceUnite(vue.terrain, coordI[0],coordI[1],coordF[0],coordF[1]);
                 vue.generateTerrain();
                 vue.generateTaskBar();
             });
