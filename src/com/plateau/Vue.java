@@ -1,12 +1,10 @@
 package com.plateau;
 
 import com.launcher.Jeu;
-import com.launcher.Reader;
 import com.player.ActionJoueur;
 import com.player.Joueur;
 import com.unite.*;
 
-import javax.sound.sampled.BooleanControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,7 +19,6 @@ public class Vue extends JFrame{
     private JPanel TaskBar = new JPanel();
     Terrain terrain;
     ArrayList<JButton> terrainBt = new ArrayList<>();
-    ArrayList<JButton> terrainUnits = new ArrayList<>();
     private Controlleur controlleur = new Controlleur(this);
     private Joueur tourJoueur;
     private String[] listeUnit = {"Templier","Cavalier","Mage","Archer"};
@@ -99,6 +96,7 @@ public class Vue extends JFrame{
 
     public void initialiseAtk(JButton b){
         resetButton(btAtk);
+        btAtk.setEnabled(true);
         btAtk.addActionListener((ActionEvent atk) -> {
             controlleur.attaque(tourJoueur,b);
         });
@@ -106,6 +104,7 @@ public class Vue extends JFrame{
 
     public void initialiseDep(JButton b){
         resetButton(btDep);
+        btDep.setEnabled(true);
         btDep.addActionListener((ActionEvent dep) -> {
             controlleur.deplaceUnite(tourJoueur,b);
         });
@@ -131,7 +130,11 @@ public class Vue extends JFrame{
                         if(terrain.getPlateau()[bt.getY()/bt.getHeight()][bt.getX()/bt.getWidth()].getUnite().getPointAction()>0){
                             initialiseAtk(bt);
                             initialiseDep(bt);
-                            generateAction();
+                            generateAction(bt);
+                        }else{
+                            generateAction(bt);
+                            btAtk.setEnabled(false);
+                            btDep.setEnabled(false);
                         }
                     });
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
@@ -175,10 +178,54 @@ public class Vue extends JFrame{
         TaskBar.updateUI();
     }
 
-    public void generateAction(){
+    public ImageIcon generateImage(String s){
+        ImageIcon i = new ImageIcon();
+        if(s.equals("Hero")){
+            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/hero.png");
+        }
+        if(s.equals("Templier")){
+            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/templier.png");
+        }
+        if(s.equals("Archer")){
+            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/archer.png");
+        }
+        if(s.equals("Mage")){
+            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/mage.png");
+        }
+        if(s.equals("Cavalier")){
+            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/cavalier.png");
+        }
+        return i;
+    }
+
+    public JButton displayUnit(JButton b){
+        JButton unit = new JButton(generateImage(terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()]
+                .unit.toString()));
+        unit.setBorderPainted(false);
+        unit.setContentAreaFilled(false);
+        unit.setFocusPainted(false);
+        unit.setOpaque(false);
+        unit.setPreferredSize(new Dimension(250,125));
+        JLabel pa = new JLabel("PA : "+terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getPointAction());
+        pa.setFont(new Font("SansSerif",Font.BOLD,12));
+        pa.setAlignmentX(RIGHT_ALIGNMENT);
+        pa.setAlignmentY(TOP_ALIGNMENT);
+        JLabel pv = new JLabel("PV : "+terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getSanteCourante()+
+                "/"+terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getSanteMax());
+        pv.setFont(new Font("SansSerif",Font.BOLD,12));
+        pv.setAlignmentX(RIGHT_ALIGNMENT);
+        pv.setAlignmentY(BOTTOM_ALIGNMENT);
+        unit.add(pa);
+        unit.add(pv);
+        return unit;
+    }
+
+    public void generateAction(JButton unite){
         TaskBar.removeAll();
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
+        JButton unit = displayUnit(unite);
+        TaskBar.add(unit);
         btAtk.setPreferredSize(new Dimension(100,125));
         TaskBar.add(btAtk);
         btDep.setPreferredSize(new Dimension(100,125));
