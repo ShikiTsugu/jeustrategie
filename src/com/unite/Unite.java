@@ -125,38 +125,28 @@ public abstract class Unite {
     public Collection<Case> casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){
         int portee = unite.getPorteeDeplacement();
         HashSet<Case> test = new HashSet<>();
-        return casesDisponiblePortee(test, t, portee, xPast, yPast, xApres, yApres);
+        return casesDisponiblePortee(test, t, portee, xPast, yPast, xApres, yApres, 0);
     }
 
-    private Collection<Case> casesDisponiblePortee(HashSet<Case> test, Terrain t, int portee, int xPast, int yPast, int xApres, int yApres){
-        if (portee <= 0) {
+    private Collection<Case> casesDisponiblePortee (HashSet<Case> test, Terrain t, int portee, int xPast, int yPast, int xApres, int yApres, int compteur){
+        if (compteur > portee) {
             System.out.println(test);
-            return calculPlusCourtChemin(test, t, xPast, yPast, xApres, yApres);
+            return test; //calculPlusCourtChemin(test, t, xPast, yPast, xApres, yApres);
         }
-        if (yPast+1 < t.getPlateau().length && t.getPlateau()[yPast+1][xPast].estVide()){
-            test.add(t.getPlateau()[yPast+1][xPast]);
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast+1, xPast, xApres, yApres));
-        }else if (yPast+1 < t.getPlateau().length){
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast+1, xPast, xApres, yApres));
-        }
-        if (xPast+1 < t.getPlateau()[0].length && t.getPlateau()[yPast][xPast+1].estVide()){
-            test.add(t.getPlateau()[yPast][xPast+1]);
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast+1, xApres, yApres));
-        }else if(xPast+1 < t.getPlateau()[0].length){
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast+1, xApres, yApres));
-        }
-        if (yPast-1 >= 0 && t.getPlateau()[yPast-1][xPast].estVide()){
-            test.add(t.getPlateau()[yPast-1][xPast]);
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast-1, xPast, xApres, yApres));
-        }else if(yPast-1 >= 0){
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast-1, xPast, xApres, yApres));
-        }
-        if (xPast-1 >= 0 && t.getPlateau()[yPast][xPast-1].estVide()){
-            test.add(t.getPlateau()[yPast][xPast-1]);
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast-1, xApres, yApres));
-        }
-        else if (xPast-1 >= 0){
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast-1, xApres, yApres));
+        if (yPast < t.getPlateau().length && xPast < t.getPlateau().length && yPast >= 0 && xPast >= 0 && compteur >= 0){
+            if (t.getPlateau()[yPast][xPast].estVide()){
+                test.add(t.getPlateau()[yPast][xPast]);
+                casesDisponiblePortee(test, t, portee, yPast+1, xPast, xApres, yApres, compteur+1);
+                casesDisponiblePortee(test, t, portee, yPast, xPast+1, xApres, yApres, compteur+1);
+                casesDisponiblePortee(test, t, portee, yPast-1, xPast, xApres, yApres, compteur+1);
+                casesDisponiblePortee(test, t, portee, yPast, xPast-1, xApres, yApres, compteur+1);
+            }
+            else if (compteur == 0 && !t.getPlateau()[yPast][xPast].estVide()){
+                casesDisponiblePortee(test, t, portee, yPast+1, xPast, xApres, yApres, compteur+1);
+                casesDisponiblePortee(test, t, portee, yPast, xPast+1, xApres, yApres, compteur+1);
+                casesDisponiblePortee(test, t, portee, yPast-1, xPast, xApres, yApres, compteur+1);
+                casesDisponiblePortee(test, t, portee, yPast, xPast-1, xApres, yApres, compteur+1);
+            }
         }
         return test;
     }

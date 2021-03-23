@@ -73,7 +73,7 @@ public class Case {
     public int getId(){ return id;}
     
     public boolean estObstacle(){
-        return obstacle == true;
+        return obstacle;
     }
     
     public boolean estUnit(){
@@ -106,6 +106,6 @@ public class Case {
     public String toString(){
         if(estVide()) return Integer.toString(id);
         if(estUnit()) return  afficheContenu();
-        return obstacle==false?unit.toString():"obstacle";
+        return !obstacle?unit.toString():"obstacle";
     }
 }
