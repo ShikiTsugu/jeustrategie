@@ -7,8 +7,6 @@ public class Case {
     protected Unite unit;
     protected boolean J1Buyable ;
     protected boolean J2Buyable ;
-    protected int x;
-    protected int y;
     protected int id;
     protected static int incremente;
 
@@ -21,12 +19,6 @@ public class Case {
     public Case(Unite u){
         unit = u;
         obstacle = false;
-        id=incremente++;
-    }
-
-    public Case(int x, int y){
-        this.x = x;
-        this.y = y;
         id=incremente++;
     }
 
@@ -61,16 +53,6 @@ public class Case {
     public boolean J2CanBuy(){
         return J2Buyable;
     }
-
-    public int getX(){ return x;}
-
-    public int getY(){ return y;}
-
-    public void setX(int x) {this.x = x;}
-
-    public void setY(int y){this.y = y;}
-
-    public int getId(){ return id;}
     
     public boolean estObstacle(){
         return obstacle;

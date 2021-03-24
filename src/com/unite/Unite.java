@@ -99,7 +99,7 @@ public abstract class Unite {
         Case avant = t.getPlateau()[yPast][xPast];
         if (t.getPlateau()[yPast][xPast].estUnit()) {
             Case destination = t.getPlateau()[yApres][xApres];
-            if (destination.estVide() && (casesDisponibleDeplacement(t, avant.getUnite(), xPast, yPast, xApres, yApres).contains(t.getPlateau()[yApres][xApres])) && avant.getUnite().getPointAction() > 0) {
+            if (destination.estVide() && (casesDisponibleDeplacement(t, avant.getUnite(), xPast, yPast, xApres, yApres)) && avant.getUnite().getPointAction() > 0) {
                 avant.getUnite().setPointAction(avant.getUnite().getPointAction() -1);
                 Case positionInitial = avant.getUnite().getPositionUnite();
                 destination.setUnite(avant.getUnite());
@@ -122,49 +122,43 @@ public abstract class Unite {
         }
     }
 
-    public Collection<Case> casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){
+    public boolean casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){
         int portee = unite.getPorteeDeplacement();
         HashSet<Case> test = new HashSet<>();
-        return casesDisponiblePortee(test, t, portee, xPast, yPast, xApres, yApres, 0);
+        return cheminTrouver(test, t, xPast, yPast, xApres, yApres, portee);
     }
 
-    private Collection<Case> casesDisponiblePortee (HashSet<Case> test, Terrain t, int portee, int xPast, int yPast, int xApres, int yApres, int compteur){
-        if (compteur > portee) {
-            System.out.println(test);
-            return test; //calculPlusCourtChemin(test, t, xPast, yPast, xApres, yApres);
+    public boolean cheminTrouver (HashSet<Case> test, Terrain t, int xPast, int yPast, int xApres, int yApres, int portee){
+        if (xPast == xApres && yPast == yApres && portee >= 0 && estDansTableau(t, xPast, yPast)){
+            test.add(t.getPlateau()[yPast][xPast]);
+            return true;
         }
-        if (yPast < t.getPlateau().length && xPast < t.getPlateau().length && yPast >= 0 && xPast >= 0 && compteur >= 0){
-            if (t.getPlateau()[yPast][xPast].estVide()){
+        if (portee >= 0 && estDansTableau(t, xPast, yPast)){
+            if (cheminTrouver(test, t, xPast -1, yPast, xApres, yApres, portee -1) && estDansTableau(t, xPast -1, yPast)
+            && t.getPlateau()[yPast][xPast-1].estVide()){
                 test.add(t.getPlateau()[yPast][xPast]);
-                casesDisponiblePortee(test, t, portee, yPast+1, xPast, xApres, yApres, compteur+1);
-                casesDisponiblePortee(test, t, portee, yPast, xPast+1, xApres, yApres, compteur+1);
-                casesDisponiblePortee(test, t, portee, yPast-1, xPast, xApres, yApres, compteur+1);
-                casesDisponiblePortee(test, t, portee, yPast, xPast-1, xApres, yApres, compteur+1);
+                return true;
             }
-            else if (compteur == 0 && !t.getPlateau()[yPast][xPast].estVide()){
-                casesDisponiblePortee(test, t, portee, yPast+1, xPast, xApres, yApres, compteur+1);
-                casesDisponiblePortee(test, t, portee, yPast, xPast+1, xApres, yApres, compteur+1);
-                casesDisponiblePortee(test, t, portee, yPast-1, xPast, xApres, yApres, compteur+1);
-                casesDisponiblePortee(test, t, portee, yPast, xPast-1, xApres, yApres, compteur+1);
+            if (cheminTrouver(test, t, xPast + 1, yPast, xApres, yApres, portee -1) && estDansTableau(t, xPast +1, yPast)
+            && t.getPlateau()[yPast][xPast+1].estVide()){
+                test.add(t.getPlateau()[yPast][xPast]);
+                return true;
+            }
+            if (cheminTrouver(test, t, xPast, yPast-1, xApres, yApres, portee -1) && estDansTableau(t, xPast, yPast-1)
+            && t.getPlateau()[yPast-1][xPast].estVide()){
+                test.add(t.getPlateau()[yPast][xPast]);
+                return true;
+            }
+            if (cheminTrouver(test, t, xPast, yPast +1, xApres, yApres, portee -1) && estDansTableau(t, xPast, yPast+1)
+            && t.getPlateau()[yPast+1][xPast].estVide()){
+                test.add(t.getPlateau()[yPast][xPast]);
+                return true;
             }
         }
-        return test;
+        return false;
     }
 
-    private Collection<Case> calculPlusCourtChemin(HashSet<Case> t, Terrain terrain, int xPast, int yPast, int xApres, int yApres){
-        HashSet<Case> newCollection = new HashSet<>();
-        //System.out.println(t);
-        for(Case c: t){newCollection.add(c);
-            if (c.getId() == terrain.getPlateau()[yApres][xApres].getId() && c.estVide()){
-            System.out.println(newCollection);
-            return newCollection;
-            }
-            //System.out.println(c.getId());
-
-            if ((c.getX() != xApres) && (c.getY() != yApres) && !c.estVide()){
-                newCollection.remove(c);
-            }
-        }
-        return newCollection;
+    public boolean estDansTableau(Terrain t, int xPast, int yPast) {
+        return (yPast < t.getPlateau().length && xPast < t.getPlateau().length && yPast >= 0 && xPast >= 0);
     }
 }
