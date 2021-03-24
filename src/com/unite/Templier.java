@@ -12,6 +12,7 @@ public class Templier extends Unite{
         coutUnite = 200; //discussion en cours
         porteeDeplacement = 3; //discussion en cours
         porteeAttaque = 1; //discussion en cours
+        pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
     }
     

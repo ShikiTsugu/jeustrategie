@@ -12,6 +12,7 @@ public abstract class Unite {
     protected int coutUnite;
     protected int porteeDeplacement;
     protected int porteeAttaque;
+    protected int pointActionMax;
     protected int pointAction;
     protected Joueur joueur;
     protected Case positionUnite;
@@ -43,6 +44,8 @@ public abstract class Unite {
     public int getPorteeAttaque(){
         return porteeAttaque;
     }
+
+    public int getPointActionMax() { return pointActionMax; }
     
     public int getPointAction(){
         return pointAction;
@@ -79,6 +82,8 @@ public abstract class Unite {
     public void setPorteeAttaque(int porteeAttaque){
         this.porteeAttaque = porteeAttaque;
     }
+
+    public void setPointActionMax(int pointActionMax){ this.pointActionMax = pointActionMax; }
     
     public void setPointAction(int pointAction){
         this.pointAction = pointAction;
@@ -162,4 +167,6 @@ public abstract class Unite {
     public boolean estDansTableau(Terrain t, int xPast, int yPast) {
         return (yPast < t.getPlateau().length && xPast < t.getPlateau().length && yPast >= 0 && xPast >= 0);
     }
+
+    public void resetPointAction(){pointAction = pointActionMax; }
 }

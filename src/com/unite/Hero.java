@@ -12,6 +12,7 @@ public class Hero extends Unite{
         coutUnite = 0; //discussion en cours
         porteeDeplacement = 5; //discussion en cours
         porteeAttaque = 1; //discussion en cours
+        pointActionMax = 3; //discussion en cours
         pointAction = 3; //discussion en cours
     }
     

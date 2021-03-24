@@ -12,6 +12,7 @@ public class Cavalier extends Unite{
         coutUnite = 500; //discussion en cours
         porteeDeplacement = 6; //discussion en cours
         porteeAttaque = 1; //discussion en cours
+        pointActionMax = 3; //discussion en cours
         pointAction = 3; //discussion en cours
     }
     

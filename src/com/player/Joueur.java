@@ -72,4 +72,12 @@ public class Joueur {
             }
         }
     }
+
+    public void resetPointAction(){
+        for (Unite u : unites) {
+            try {
+                u.resetPointAction();
+            } catch (NullPointerException e){}
+        }
+    }
 }

@@ -12,6 +12,7 @@ public class Archer extends Unite{
         coutUnite = 300; //discussion en cours
         porteeDeplacement = 3; //discussion en cours
         porteeAttaque = 5; //discussion en cours
+        pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
     }
     

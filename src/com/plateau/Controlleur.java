@@ -62,6 +62,11 @@ public class Controlleur {
 
     public void finDeTour(){
         jeu.finDeTour();
+        if(jeu.getTourDuJoueur() == jeu.getJoueur1()){
+            jeu.getJoueur1().resetPointAction();
+        } else if (jeu.getTourDuJoueur() == jeu.getJoueur2()){
+            jeu.getJoueur2().resetPointAction();
+        }
         vue.setTourJoueur(jeu.getTourDuJoueur());
     }
 

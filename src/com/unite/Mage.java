@@ -12,6 +12,7 @@ public class Mage extends Unite{
         coutUnite = 400; //discussion en cours
         porteeDeplacement = 4; //discussion en cours
         porteeAttaque = 5; //discussion en cours
+        pointActionMax = 1; //discussion en cours
         pointAction = 1; //discussion en cours
     }
     
