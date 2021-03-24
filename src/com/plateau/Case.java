@@ -7,15 +7,19 @@ public class Case {
     protected Unite unit;
     protected boolean J1Buyable ;
     protected boolean J2Buyable ;
+    protected int id;
+    protected static int incremente;
 
     public Case(){
         unit = null;
         obstacle = false;
+        id=incremente++;
     }
 
     public Case(Unite u){
         unit = u;
         obstacle = false;
+        id=incremente++;
     }
 
     public Case(boolean o){
@@ -49,22 +53,17 @@ public class Case {
     public boolean J2CanBuy(){
         return J2Buyable;
     }
-
-
-
     
     public boolean estObstacle(){
-        return obstacle == true;
+        return obstacle;
     }
     
     public boolean estUnit(){
         return unit != null;
     }
     
-    public Unite supprimerUniteCase(){
-        Unite newUnit = unit;
-        unit = null;
-        return newUnit;
+    public void supprimerUniteCase(Case c){
+        c.setUnite(null);
     }
 
     public String afficheContenu(){
@@ -83,12 +82,12 @@ public class Case {
         if(unit instanceof Templier){
             return "T";
         }
-        return ".";
+        return Integer.toString(id);
     }
 
     public String toString(){
-        if(estVide()) return ".";
+        if(estVide()) return Integer.toString(id);
         if(estUnit()) return  afficheContenu();
-        return obstacle==false?unit.toString():"obstacle";
+        return !obstacle?unit.toString():"obstacle";
     }
 }

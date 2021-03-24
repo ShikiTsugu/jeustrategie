@@ -99,15 +99,12 @@ public abstract class Unite {
         Case avant = t.getPlateau()[yPast][xPast];
         if (t.getPlateau()[yPast][xPast].estUnit()) {
             Case destination = t.getPlateau()[yApres][xApres];
-            if (((Math.abs(yApres - yPast)+Math.abs(xApres - xPast)) <= avant.getUnite().getPorteeDeplacement()) && destination.estVide()
-            && (casesDisponibleDeplacement(t, xPast, yPast).contains(t.getPlateau()[yApres][xApres])) && avant.getUnite().getPointAction() > 0) {
+            if (destination.estVide() && (casesDisponibleDeplacement(t, avant.getUnite(), xPast, yPast, xApres, yApres)) && avant.getUnite().getPointAction() > 0) {
                 avant.getUnite().setPointAction(avant.getUnite().getPointAction() -1);
                 Case positionInitial = avant.getUnite().getPositionUnite();
                 destination.setUnite(avant.getUnite());
-                System.out.println(positionInitial);
                 avant.getUnite().setPositionUnite(destination);
-                System.out.println(positionInitial);
-                positionInitial.supprimerUniteCase();
+                positionInitial.supprimerUniteCase(positionInitial);
             }
         }
     }
@@ -120,37 +117,49 @@ public abstract class Unite {
             if (t.getPlateau()[yD][xD].estUnit() && ((Math.abs(yD - yA)+Math.abs(xD - xA)) <= attaquant.getPorteeAttaque())){
                 attaquant.setPointAction(attaquant.getPointAction() -1);
                 defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
-                if (defenseur.getSanteCourante() <= 0) t.getPlateau()[yD][xD].supprimerUniteCase();
+                if (defenseur.getSanteCourante() <= 0) t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
                 else if (t.getPlateau()[yD][xD].estObstacle() || t.getPlateau()[yD][xD].estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
             }
         } System.out.println("def pv avant : "+defenseur.santeCourante);
     }
 
-    public Collection<Case> casesDisponibleDeplacement (Terrain t, int xPast, int yPast){
-        Unite unite = t.getPlateau()[yPast][xPast].getUnite();
+    public boolean casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){
         int portee = unite.getPorteeDeplacement();
         HashSet<Case> test = new HashSet<>();
-        return casesDisponiblePortee(test, t, portee, xPast, yPast);
+        return cheminTrouver(test, t, xPast, yPast, xApres, yApres, portee);
     }
 
-    private Collection<Case> casesDisponiblePortee(HashSet<Case> test, Terrain t, int portee, int xPast, int yPast){
-        if (portee <= 0) return test;
-        if (yPast+1 < t.getPlateau().length && t.getPlateau()[yPast+1][xPast].estVide()){
-            test.add(t.getPlateau()[yPast+1][xPast]);
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast+1, xPast));
+    public boolean cheminTrouver (HashSet<Case> test, Terrain t, int xPast, int yPast, int xApres, int yApres, int portee){
+        if (xPast == xApres && yPast == yApres && portee >= 0 && estDansTableau(t, xPast, yPast)){
+            test.add(t.getPlateau()[yPast][xPast]);
+            return true;
         }
-        if (xPast+1 < t.getPlateau()[0].length && t.getPlateau()[yPast][xPast+1].estVide()){
-            test.add(t.getPlateau()[yPast][xPast+1]);
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast+1));
+        if (portee >= 0 && estDansTableau(t, xPast, yPast)){
+            if (cheminTrouver(test, t, xPast -1, yPast, xApres, yApres, portee -1) && estDansTableau(t, xPast -1, yPast)
+            && t.getPlateau()[yPast][xPast-1].estVide()){
+                test.add(t.getPlateau()[yPast][xPast]);
+                return true;
+            }
+            if (cheminTrouver(test, t, xPast + 1, yPast, xApres, yApres, portee -1) && estDansTableau(t, xPast +1, yPast)
+            && t.getPlateau()[yPast][xPast+1].estVide()){
+                test.add(t.getPlateau()[yPast][xPast]);
+                return true;
+            }
+            if (cheminTrouver(test, t, xPast, yPast-1, xApres, yApres, portee -1) && estDansTableau(t, xPast, yPast-1)
+            && t.getPlateau()[yPast-1][xPast].estVide()){
+                test.add(t.getPlateau()[yPast][xPast]);
+                return true;
+            }
+            if (cheminTrouver(test, t, xPast, yPast +1, xApres, yApres, portee -1) && estDansTableau(t, xPast, yPast+1)
+            && t.getPlateau()[yPast+1][xPast].estVide()){
+                test.add(t.getPlateau()[yPast][xPast]);
+                return true;
+            }
         }
-        if (yPast-1 >= 0 && t.getPlateau()[yPast-1][xPast].estVide()){
-            test.add(t.getPlateau()[yPast-1][xPast]);
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast-1, xPast));
-        }
-        if (xPast-1 >= 0 && t.getPlateau()[yPast][xPast-1].estVide()){
-            test.add(t.getPlateau()[yPast][xPast-1]);
-            test.addAll(casesDisponiblePortee(test, t, portee-1, yPast, xPast-1));
-        }
-        return test;
+        return false;
+    }
+
+    public boolean estDansTableau(Terrain t, int xPast, int yPast) {
+        return (yPast < t.getPlateau().length && xPast < t.getPlateau().length && yPast >= 0 && xPast >= 0);
     }
 }

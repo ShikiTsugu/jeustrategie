@@ -222,6 +222,7 @@ public class Jeu {
                 }
             }
         }catch (Exception e){
+            e.printStackTrace();
             System.out.println("Requete non reconnue");
         }
 

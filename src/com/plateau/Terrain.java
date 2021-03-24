@@ -35,12 +35,12 @@ public class Terrain {
     public void Print(){
         System.out.print("  ");
         for(int i=0;i< plateau[0].length;i++){
-            System.out.print(i+" ");
+            System.out.print("y" + i+" ");
         }
         System.out.println("");
 
         for(int i=0;i<plateau.length;i++){
-            System.out.print(i+" ");
+            System.out.print("x"+ i+" ");
             for(int j=0;j<plateau[i].length;j++){
                 System.out.print(plateau[i][j].toString() +" ");
             }
