@@ -169,7 +169,6 @@ public class Jeu {
                 unite = new Templier(tourDuJoueur);
                 if (requeteCourante.substring(5, 6).equals("A")) {
                     unite = new Archer(tourDuJoueur);
-
                 }
                 if (requeteCourante.substring(5, 6).equals("C")) {
                     unite = new Cavalier(tourDuJoueur);
@@ -246,7 +245,7 @@ public class Jeu {
         scanner.close();
     }
 
-    private static String selectGoodPath(){
+    public static String selectGoodPath(){
         String path = System.getProperty("user.dir");
         File checkPath = new File(path);
         if(path.endsWith("jeu-de-strat") || hasAGoodChild(checkPath,"src")){
@@ -257,7 +256,7 @@ public class Jeu {
         return path;
     }
 
-    private static boolean hasAGoodChild(File checkPath,String wanted){
+    public static boolean hasAGoodChild(File checkPath,String wanted){
         File[] listOfChildren = checkPath.listFiles();
         if (listOfChildren==null)return false;
         for(File child:listOfChildren){
@@ -269,7 +268,6 @@ public class Jeu {
     }
 
     public void startGraphique(){
-        v = new Vue(m,terrain);
         setJoueur1(new Joueur(1000));
         setActionjoueur1(new ActionJoueur(joueur1));
         joueur1.initialiseListeUnites(terrain);
@@ -277,10 +275,20 @@ public class Jeu {
         setActionjoueur2(new ActionJoueur(joueur2));
         joueur2.initialiseListeUnites(terrain);
         setTerrain(terrain);
-        v.setTourJoueur(joueur1);
+        tourDuJoueur = joueur1;
+        v = new Vue(m,terrain,joueur1);
+        v.getControlleur().setJeu(this);
         terrain.ajouteUnite(new Hero(joueur1),0,2);
         terrain.ajouteUnite(new Hero(joueur2),4,2);
         v.AfficheTerrain();
+    }
+
+    public void finDeTour(){
+        if (tourDuJoueur == joueur1) {
+            tourDuJoueur = joueur2;
+        } else {
+            tourDuJoueur = joueur1;
+        }
     }
 
     public static void main(String[] args) {
@@ -297,8 +305,8 @@ public class Jeu {
                 {false,false,false,true,true},
                 {false,false,false,true,true}};
 
-        Terrain terrain = new Terrain(5,5,5,0,3,4,3,b1,b2);
-        jeu.playGame(terrain);
+        Terrain terrain = new Terrain(5,5,10,0,3,4,3,b1,b2);
+        //jeu.playGame(terrain);
         //System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1, true));
         jeu.setTerrain(terrain);
         jeu.startGraphique();

@@ -112,6 +112,7 @@ public abstract class Unite {
     public void attaqueUnite(Terrain t, int xA, int yA, int xD, int yD){
         Unite attaquant = t.getPlateau()[yA][xA].getUnite();
         Unite defenseur = t.getPlateau()[yD][xD].getUnite();
+        System.out.println("def pv avant : "+defenseur.santeCourante);
         if (t.getPlateau()[yA][xA].estUnit() && attaquant.getPointAction() > 0) {
             if (t.getPlateau()[yD][xD].estUnit() && ((Math.abs(yD - yA)+Math.abs(xD - xA)) <= attaquant.getPorteeAttaque())){
                 attaquant.setPointAction(attaquant.getPointAction() -1);
@@ -119,7 +120,7 @@ public abstract class Unite {
                 if (defenseur.getSanteCourante() <= 0) t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
                 else if (t.getPlateau()[yD][xD].estObstacle() || t.getPlateau()[yD][xD].estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
             }
-        }
+        } System.out.println("def pv avant : "+defenseur.santeCourante);
     }
 
     public boolean casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){
