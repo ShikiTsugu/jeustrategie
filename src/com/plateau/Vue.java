@@ -60,15 +60,16 @@ public class Vue extends JFrame{
         quitter.setForeground(Color.WHITE);
         quitter.addActionListener((ActionEvent e) -> System.exit(0));
 
-        JLabel titre = new JLabel(new ImageIcon(Jeu.selectGoodPath() + "/plateau/titre.png"));
+        JLabel titre = new JLabel();
+        titre.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/gameTitle.png"));
 
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);
         titre.setAlignmentX(Component.CENTER_ALIGNMENT);
-        imagePane.add(Box.createRigidArea(new Dimension(0, 80)));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 200)));
         imagePane.add(titre);
         jouer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        imagePane.add(Box.createRigidArea(new Dimension(0, 20)));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 200)));
         imagePane.add(jouer);
         quitter.setAlignmentX(Component.CENTER_ALIGNMENT);
         imagePane.add(Box.createRigidArea(new Dimension(0, 20)));
