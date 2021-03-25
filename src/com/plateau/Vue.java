@@ -60,7 +60,7 @@ public class Vue extends JFrame{
         quitter.setForeground(Color.WHITE);
         quitter.addActionListener((ActionEvent e) -> System.exit(0));
 
-        JLabel titre = new JLabel("titre");
+        JLabel titre = new JLabel();
         //titre.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/gameTitle.png"));
 
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
