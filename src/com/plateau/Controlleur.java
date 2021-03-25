@@ -58,6 +58,13 @@ public class Controlleur {
                 vue.generateTaskBar();
             });
         }
+        System.out.println(jeu.getJoueur1().getHero().getSanteCourante());
+        // appel trop tot
+        if (jeu.getJoueur1().getHero().getSanteCourante() <= 0){
+            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 2 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
+        }   else if (jeu.getJoueur2().getHero().getSanteCourante() <= 0){
+            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 1 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
+        }
     }
 
     public void finDeTour(){

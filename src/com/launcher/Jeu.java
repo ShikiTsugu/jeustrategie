@@ -274,12 +274,16 @@ public class Jeu {
         setJoueur2(new Joueur(1000));
         setActionjoueur2(new ActionJoueur(joueur2));
         joueur2.initialiseListeUnites(terrain);
+        Hero h1 = new Hero(joueur1);
+        Hero h2 = new Hero(joueur2);
+        joueur1.ajouteUnite(h1);
+        joueur2.ajouteUnite(h2);
+        terrain.ajouteUnite(h1,0,2);
+        terrain.ajouteUnite(h2,4,2);
         setTerrain(terrain);
         tourDuJoueur = joueur1;
         v = new Vue(m,terrain,joueur1);
         v.getControlleur().setJeu(this);
-        terrain.ajouteUnite(new Hero(joueur1),0,2);
-        terrain.ajouteUnite(new Hero(joueur2),4,2);
         v.AfficheTerrain();
     }
 
