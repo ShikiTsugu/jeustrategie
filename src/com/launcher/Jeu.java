@@ -284,7 +284,7 @@ public class Jeu {
         tourDuJoueur = joueur1;
         v = new Vue(m,terrain,joueur1);
         v.getControlleur().setJeu(this);
-        v.AfficheTerrain();
+        v.afficheIni();
     }
 
     public void finDeTour(){
