@@ -44,6 +44,7 @@ public class Vue extends JFrame{
 
     //affichage initial
     public void afficheIni(){
+        imagePane.removeAll();
         JButton jouer = new JButton("Jouer");
         jouer.setFont(new Font("Monospaced",Font.BOLD,20));
         jouer.setBackground(new Color(83, 214, 191));
@@ -61,7 +62,7 @@ public class Vue extends JFrame{
         quitter.addActionListener((ActionEvent e) -> System.exit(0));
 
         JLabel titre = new JLabel();
-        //titre.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/gameTitle.png"));
+        titre.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/gameTitle.png"));
 
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);
@@ -76,6 +77,7 @@ public class Vue extends JFrame{
         imagePane.add(quitter);
 
         setContentPane(imagePane);
+        imagePane.updateUI();
     }
 
     /*Affichage d'un terrain*/
