@@ -29,8 +29,6 @@ public class Vue extends JFrame{
         model = m;
         imagePane = new ImagePane();
         tourJoueur = j;
-        imagePane.add(TerrainPanel);
-        imagePane.add(TaskBar);
         setTitle("Jeu de Strategie");
         setSize(model.getImage().getWidth(),model.getImage().getHeight());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -44,15 +42,50 @@ public class Vue extends JFrame{
         setVisible(true);
     }
 
+    //affichage initial
+    public void afficheIni(){
+        JButton jouer = new JButton("Jouer");
+        jouer.setFont(new Font("Monospaced",Font.BOLD,20));
+        jouer.setBackground(new Color(83, 214, 191));
+        jouer.setForeground(Color.WHITE);
+        jouer.addActionListener((ActionEvent e) -> {
+            AfficheTerrain();
+            imagePane.add(TerrainPanel);
+            imagePane.add(TaskBar);
+        });
+
+        JButton quitter = new JButton("Quitter");
+        quitter.setFont(new Font("Monospaced",Font.BOLD,20));
+        quitter.setBackground(new Color(37, 150, 131));
+        quitter.setForeground(Color.WHITE);
+        quitter.addActionListener((ActionEvent e) -> System.exit(0));
+
+        JLabel titre = new JLabel();
+        titre.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/gameTitle.png"));
+
+        BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
+        imagePane.setLayout(boxlayout);
+        titre.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 200)));
+        imagePane.add(titre);
+        jouer.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 200)));
+        imagePane.add(jouer);
+        quitter.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 20)));
+        imagePane.add(quitter);
+
+        setContentPane(imagePane);
+    }
+
     /*Affichage d'un terrain*/
     public void AfficheTerrain(){
-
+        imagePane.removeAll();
         BoxLayout box = new BoxLayout(imagePane,BoxLayout.Y_AXIS);
         imagePane.setLayout(box);
         generateTerrain();
         generateTaskBar();
-
-        setContentPane(imagePane);
+        imagePane.updateUI();
     }
 
     /* Ajout d'image de fond */
