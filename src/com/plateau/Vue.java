@@ -21,7 +21,7 @@ public class Vue extends JFrame{
     ArrayList<JButton> terrainBt = new ArrayList<>();
     private Controlleur controlleur = new Controlleur(this);
     private Joueur tourJoueur;
-    private String[] listeUnit = {"Templier","Cavalier","Mage","Archer"};
+    private String[] listeUnit = {"Templier","Cavalier","Mage","Archer","Pretresse","Lancier","Assassin"};
     private JButton btAtk = new JButton("Attaquer");
     private JButton btDep = new JButton("Déplacer");
 
@@ -120,6 +120,15 @@ public class Vue extends JFrame{
         if(s.equals("Cavalier")){
             bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/cavalier.png"));
         }
+        if(s.equals("Pretresse")){
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/pretresse.png"));
+        }
+        if(s.equals("Lancier")){
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/lancier.png"));
+        }
+        if(s.equals("Assassin")){
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/Assassin.png"));
+        }
         return bt;
     }
 
@@ -197,13 +206,13 @@ public class Vue extends JFrame{
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
         JButton btBuy = new JButton("Acheter une unité");
-        btBuy.setPreferredSize(new Dimension(200,100));
+        btBuy.setPreferredSize(new Dimension(200,125));
         btBuy.addActionListener((ActionEvent e) -> {
             generateAchat();
         });
         TaskBar.add(btBuy);
         JButton btFdt = new JButton("Fin de tour");
-        btFdt.setPreferredSize(new Dimension(200,100));
+        btFdt.setPreferredSize(new Dimension(200,125));
         btFdt.addActionListener((ActionEvent e) -> {
             controlleur.finDeTour();
             generateTerrain();
@@ -229,6 +238,15 @@ public class Vue extends JFrame{
         }
         if(s.equals("Cavalier")){
             i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/cavalier.png");
+        }
+        if(s.equals("Pretresse")){
+            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/pretresse.png");
+        }
+        if(s.equals("Lancier")){
+            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/lancier.png");
+        }
+        if(s.equals("Assassin")){
+            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/Assassin.png");
         }
         return i;
     }
@@ -288,6 +306,15 @@ public class Vue extends JFrame{
         if(s.equals("Archer")){
             u = new Archer(tourJoueur);
         }
+        if(s.equals("Pretresse")){
+            u = new Pretresse(tourJoueur);
+        }
+        if(s.equals("Lancier")){
+            u = new Lancier(tourJoueur);
+        }
+        if(s.equals("Assassin")){
+            u = new Assassin(tourJoueur);
+        }
         return u;
     }
 
@@ -295,7 +322,7 @@ public class Vue extends JFrame{
         TaskBar.removeAll();
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 7; i++){
             JButton bt = generateButton(listeUnit[i]);
             String unitName = listeUnit[i];
             JLabel displayName = new JLabel(unitName);
@@ -314,10 +341,12 @@ public class Vue extends JFrame{
             TaskBar.add(bt);
         }
         JButton retour = new JButton("retour");
+        retour.setPreferredSize(new Dimension(100,125));
+        retour.setOpaque(false);
+        retour.setContentAreaFilled(false);
         retour.addActionListener((ActionEvent e) -> {
             generateTaskBar();
         });
-        retour.setPreferredSize(new Dimension(80,50));
         TaskBar.add(retour);
         TaskBar.updateUI();
     }
