@@ -12,6 +12,7 @@ public class Controlleur {
     private Jeu jeu;
 
     public Controlleur(Vue v){
+        jeu = new Jeu();
         vue = v;
     }
 

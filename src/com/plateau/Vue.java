@@ -132,6 +132,35 @@ public class Vue extends JFrame{
         return bt;
     }
 
+    public void flippedImages(JButton bt, String s, boolean b){
+        if(b==true) {
+            if (s.equals("Hero")) {
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/hero2.png"));
+            }
+            if (s.equals("Templier")) {
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/templier2.png"));
+            }
+            if (s.equals("Archer")) {
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/archer2.png"));
+            }
+            if (s.equals("Mage")) {
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/mage2.png"));
+            }
+            if (s.equals("Cavalier")) {
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/cavalier2.png"));
+            }
+            if (s.equals("Pretresse")) {
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/pretresse2.png"));
+            }
+            if (s.equals("Lancier")) {
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/lancier2.png"));
+            }
+            if (s.equals("Assassin")) {
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/Assassin2.png"));
+            }
+        }
+    }
+
     public void resetButton(JButton b){
         for(ActionListener al : b.getActionListeners() ) {
             b.removeActionListener(al);
@@ -156,12 +185,17 @@ public class Vue extends JFrame{
 
     public void generateTerrain(){
         TerrainPanel.removeAll();
+        boolean b = false;
         GridLayout grid = new GridLayout(5,5);
         TerrainPanel.setLayout(grid);
         for (int x = 0; x < terrain.plateau.length; x++){
             for (int y = 0; y < terrain.plateau[x].length; y++){
                 if (terrain.plateau[x][y].unit != null) {
                     JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
+                    if(terrain.plateau[x][y].unit.getJoueur()!=controlleur.getJeu().getJoueur1()) {
+                        b = true;
+                        flippedImages(bt, terrain.plateau[x][y].unit.toString(), b);
+                    }
                     JLabel pv = new JLabel(terrain.plateau[x][y].unit.getSanteCourante()+"/"+terrain.plateau[x][y].unit.getSanteMax());
                     pv.setFont(new Font("SansSerif",Font.BOLD,14));
                     pv.setForeground(new Color(0,200,0));
