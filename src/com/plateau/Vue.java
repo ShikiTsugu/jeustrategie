@@ -40,6 +40,7 @@ public class Vue extends JFrame{
         }
 
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
     //affichage initial
