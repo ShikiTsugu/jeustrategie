@@ -83,12 +83,18 @@ public class Controlleur {
         ActionJoueur aj = new ActionJoueur(j);
         int[]coordI = {attaquant.getX()/attaquant.getWidth(), attaquant.getY()/attaquant.getHeight()};
         int[]coordF = new int[2];
+        Unite atq = vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit;
         for (JButton b : vue.terrainBt) {
             b.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     b.setContentAreaFilled(true);
-                    b.setBackground(new Color(150,0,0));
+                    if(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].estUnit() && ((Math.abs(b.getY()/b.getHeight() - coordI[1])+Math.abs(b.getX()/b.getWidth() - coordI[0])) <= atq.getPorteeAttaque())
+                    && vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit!=atq && vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getJoueur()!=j) {
+                        b.setBackground(new Color(0, 150, 0));
+                    }else{
+                        b.setBackground(new Color(150, 0, 0));
+                    }
                 }
 
                 @Override
@@ -99,14 +105,18 @@ public class Controlleur {
             b.addActionListener((ActionEvent e) -> {
                 coordF[0] = b.getX()/b.getWidth();
                 coordF[1] = b.getY()/b.getHeight();
-                int hpMax = vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.getSanteCourante();
-                if(aj.attaqueUnite(vue.terrain,coordI[0],coordI[1],coordF[0],coordF[1])){
-                    int hpLost = hpMax-vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.getSanteCourante();
-                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "PV perdus : "+hpLost,
-                            vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.toString()+
-                            (vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit.getJoueur()==j?" Adverse":" Allié"),
-                            JOptionPane.PLAIN_MESSAGE,
-                            vue.generateImage(vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.toString()));
+                try {
+                    int hpMax = vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.getSanteCourante();
+                    if (aj.attaqueUnite(vue.terrain, coordI[0], coordI[1], coordF[0], coordF[1])) {
+                        int hpLost = hpMax - vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.getSanteCourante();
+                        JOptionPane.showMessageDialog(vue.getTerrainPanel(), "PV perdus : " + hpLost,
+                                vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.toString() +
+                                        (vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit.getJoueur() == j ? " Adverse" : " Allié"),
+                                JOptionPane.PLAIN_MESSAGE,
+                                vue.generateImage(vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.toString()));
+                    }
+                }catch (NullPointerException ex){
+                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Vous attaquez dans le vide.", "", JOptionPane.PLAIN_MESSAGE);
                 }
                 vue.generateTerrain();
                 vue.generateTaskBar();
