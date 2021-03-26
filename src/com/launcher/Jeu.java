@@ -316,5 +316,11 @@ public class Jeu {
         jeu.startGraphique();
         //System.out.println(joueur2.getArgent());
 
+
+
+
+
+
+
     }
 }

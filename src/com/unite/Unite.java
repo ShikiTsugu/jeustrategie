@@ -16,6 +16,7 @@ public abstract class Unite {
     protected int pointAction;
     protected Joueur joueur;
     protected Case positionUnite;
+    protected Competence[] competences;
     //rajouter plus tard protected AlterationEtat etat;
     public Unite(Joueur joueur){
         this.joueur = joueur;
@@ -58,6 +59,8 @@ public abstract class Unite {
     public Case getPositionUnite(){
         return positionUnite;
     }
+
+
     
     public void setSanteMax(int santeMax){
         this.santeMax = santeMax;
@@ -96,7 +99,9 @@ public abstract class Unite {
     public void setPositionUnite(Case positionUnite){
         this.positionUnite = positionUnite;
     }
-    
+
+    public void setCompetences(Competence[] competences) { this.competences = competences; }
+
     public abstract String toString();
     public abstract boolean isHero();
     
