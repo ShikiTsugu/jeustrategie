@@ -133,12 +133,17 @@ public class Controlleur {
         ActionJoueur aj = new ActionJoueur(j);
         int[]coordI = {posIni.getX()/posIni.getWidth(), posIni.getY()/posIni.getHeight()};
         int[]coordF = new int[2];
+        Unite u = vue.terrain.plateau[coordI[1]][coordI[0]].unit;
         for (JButton b : vue.terrainBt) {
             b.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     b.setContentAreaFilled(true);
-                    b.setBackground(new Color(0,150,0));
+                    if(u.casesDisponibleDeplacement(vue.terrain, u, coordI[0], coordI[1], b.getX()/b.getWidth(), b.getY()/b.getHeight())) {
+                        b.setBackground(new Color(0, 150, 0));
+                    }else{
+                        b.setBackground(new Color(150, 0, 0));
+                    }
                 }
 
                 @Override
