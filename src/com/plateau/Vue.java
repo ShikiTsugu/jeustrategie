@@ -22,6 +22,7 @@ public class Vue extends JFrame{
     private Controlleur controlleur = new Controlleur(this);
     private Joueur tourJoueur;
     private String[] listeUnit = {"Templier","Cavalier","Mage","Archer","Pretresse","Lancier","Assassin"};
+    private JButton btStats = new JButton("Stats");
     private JButton btAtk = new JButton("Attaquer");
     private JButton btDep = new JButton("Déplacer");
 
@@ -168,6 +169,13 @@ public class Vue extends JFrame{
         }
     }
 
+    public void initialiseStats(JButton b){
+        resetButton(btStats);
+        btStats.addActionListener((ActionEvent stats) -> {
+            controlleur.viewStats(b);
+        });
+    }
+
     public void initialiseAtk(JButton b){
         resetButton(btAtk);
         btAtk.setEnabled(true);
@@ -207,6 +215,7 @@ public class Vue extends JFrame{
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(terrain.plateau[bt.getY()/bt.getHeight()][bt.getX()/bt.getWidth()].unit);
                         if(terrain.getPlateau()[bt.getY()/bt.getHeight()][bt.getX()/bt.getWidth()].getUnite().getPointAction()>0){
+                            initialiseStats(bt);
                             initialiseAtk(bt);
                             initialiseDep(bt);
                             generateAction(bt);
@@ -294,7 +303,8 @@ public class Vue extends JFrame{
         unit.setFocusPainted(false);
         unit.setOpaque(false);
         unit.setPreferredSize(new Dimension(250,125));
-        JLabel pa = new JLabel("PA : "+terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getPointAction());
+        JLabel pa = new JLabel("PA : "+terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getPointAction()
+                +"/"+terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getPointActionMax());
         pa.setFont(new Font("SansSerif",Font.BOLD,12));
         pa.setAlignmentX(RIGHT_ALIGNMENT);
         pa.setAlignmentY(TOP_ALIGNMENT);
@@ -314,6 +324,8 @@ public class Vue extends JFrame{
         TaskBar.setLayout(flow);
         JButton unit = displayUnit(unite);
         TaskBar.add(unit);
+        btStats.setPreferredSize(new Dimension(100,125));
+        TaskBar.add(btStats);
         btAtk.setPreferredSize(new Dimension(100,125));
         TaskBar.add(btAtk);
         btDep.setPreferredSize(new Dimension(100,125));
