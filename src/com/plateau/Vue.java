@@ -28,7 +28,7 @@ public class Vue extends JFrame{
 
     public Vue(Model m, Terrain t, Joueur j){
         model = m;
-        imagePane = new ImagePane();
+        imagePane = new ImagePane(model);
         tourJoueur = j;
         setTitle("Jeu de Strategie");
         setSize(model.getImage().getWidth(),model.getImage().getHeight());
@@ -94,12 +94,14 @@ public class Vue extends JFrame{
 
     /* Ajout d'image de fond */
     public class ImagePane extends JPanel{
-        public ImagePane(){
-            setPreferredSize(new Dimension(model.getImage().getWidth(), model.getImage().getHeight()));
+        private Model imModel;
+        public ImagePane(Model m){
+            imModel=m;
+            setPreferredSize(new Dimension(m.getImage().getWidth(), m.getImage().getHeight()));
         }
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(model.getImage(),0,0,this);
+            g.drawImage(imModel.getImage(),0,0,this);
         }
     }
 
@@ -249,7 +251,7 @@ public class Vue extends JFrame{
         TaskBar.removeAll();
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
-        JButton btBuy = new JButton("Acheter une unité");
+        JButton btBuy = new JButton("Shop");
         btBuy.setPreferredSize(new Dimension(200,125));
         btBuy.addActionListener((ActionEvent e) -> {
             generateAchat();
@@ -366,13 +368,30 @@ public class Vue extends JFrame{
     }
 
     public void generateAchat(){
-        TaskBar.removeAll();
-        FlowLayout flow = new FlowLayout();
-        TaskBar.setLayout(flow);
+        JFrame shop = new JFrame("Shop");
+        shop.setVisible(true);
+        shop.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        shop.setSize(400,475);
+        shop.setLocationRelativeTo(imagePane);
+        shop.setResizable(false);
+        ImagePane bg = new ImagePane(new Model(Jeu.selectGoodPath() + "/plateau/shop.png"));
+        shop.setContentPane(bg);
+        JPanel money = new JPanel(new FlowLayout());
+        money.setOpaque(false);
+        JLabel joueurMoney = new JLabel(" Argent : "+tourJoueur.getArgent());
+        joueurMoney.setFont(new Font("SansSerif",Font.BOLD,14));
+        joueurMoney.setForeground(new Color(200,200,150));
+        money.add(joueurMoney);
+        bg.setLayout(new BorderLayout());
+        bg.add(money, BorderLayout.NORTH);
+        JPanel liste = new JPanel(new FlowLayout());
+        liste.setOpaque(false);
         for (int i = 0; i < 7; i++){
             JButton bt = generateButton(listeUnit[i]);
+            bt.setFocusable(false);
             String unitName = listeUnit[i];
             JLabel displayName = new JLabel(unitName);
+            displayName.setForeground(new Color(200,200,150));
             displayName.setAlignmentX(CENTER_ALIGNMENT);
             displayName.setAlignmentY(TOP_ALIGNMENT);
             bt.add(displayName);
@@ -380,22 +399,15 @@ public class Vue extends JFrame{
                 if(new ActionJoueur((tourJoueur)).acheteUnite(createUnite(unitName),TerrainPanel)) {
                     Unite unit = createUnite(unitName);
                     controlleur.acheteUnite(tourJoueur, unit);
+                    shop.dispose();
                 }
                 //boutonAnnul();
                 generateTaskBar();
             });
             bt.setPreferredSize(new Dimension(100,125));
-            TaskBar.add(bt);
+            liste.add(bt);
         }
-        JButton retour = new JButton("retour");
-        retour.setPreferredSize(new Dimension(100,125));
-        retour.setOpaque(false);
-        retour.setContentAreaFilled(false);
-        retour.addActionListener((ActionEvent e) -> {
-            generateTaskBar();
-        });
-        TaskBar.add(retour);
-        TaskBar.updateUI();
+        bg.add(liste,BorderLayout.CENTER);
     }
 
     // bouton pour annuler l'achat d'unité (ne marche pas encore)
