@@ -342,8 +342,6 @@ public class Vue extends JFrame{
         }
         JButton retour = new JButton("retour");
         retour.setPreferredSize(new Dimension(100,125));
-        retour.setOpaque(false);
-        retour.setContentAreaFilled(false);
         retour.addActionListener((ActionEvent e) -> {
             generateTaskBar();
         });
