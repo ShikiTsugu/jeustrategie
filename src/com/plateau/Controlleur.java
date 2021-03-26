@@ -7,6 +7,8 @@ import com.unite.Unite;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Controlleur {
     private Vue vue;
@@ -82,6 +84,18 @@ public class Controlleur {
         int[]coordI = {attaquant.getX()/attaquant.getWidth(), attaquant.getY()/attaquant.getHeight()};
         int[]coordF = new int[2];
         for (JButton b : vue.terrainBt) {
+            b.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    b.setContentAreaFilled(true);
+                    b.setBackground(new Color(150,0,0));
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    b.setContentAreaFilled(false);
+                }
+            });
             b.addActionListener((ActionEvent e) -> {
                 coordF[0] = b.getX()/b.getWidth();
                 coordF[1] = b.getY()/b.getHeight();
@@ -120,6 +134,18 @@ public class Controlleur {
         int[]coordI = {posIni.getX()/posIni.getWidth(), posIni.getY()/posIni.getHeight()};
         int[]coordF = new int[2];
         for (JButton b : vue.terrainBt) {
+            b.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    b.setContentAreaFilled(true);
+                    b.setBackground(new Color(0,150,0));
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    b.setContentAreaFilled(false);
+                }
+            });
             b.addActionListener((ActionEvent e) -> {
                 coordF[0] = b.getX()/b.getWidth();
                 coordF[1] = b.getY()/b.getHeight();
