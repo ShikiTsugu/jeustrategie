@@ -122,7 +122,10 @@ public abstract class Unite {
             if (t.getPlateau()[yD][xD].estUnit() && ((Math.abs(yD - yA)+Math.abs(xD - xA)) <= attaquant.getPorteeAttaque())){
                 attaquant.setPointAction(attaquant.getPointAction() -1);
                 defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
-                if (defenseur.getSanteCourante() <= 0) t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
+                if (defenseur.getSanteCourante() <= 0){
+                    joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
+                    t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
+                }
                 else if (t.getPlateau()[yD][xD].estObstacle() || t.getPlateau()[yD][xD].estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
             }
         } System.out.println("def pv avant : "+defenseur.santeCourante);
