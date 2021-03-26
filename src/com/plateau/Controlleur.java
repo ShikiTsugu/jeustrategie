@@ -54,7 +54,11 @@ public class Controlleur {
             b.addActionListener((ActionEvent e) -> {
                 coordF[0] = b.getX()/b.getWidth();
                 coordF[1] = b.getY()/b.getHeight();
-                aj.attaqueUnite(vue.terrain,coordI[0],coordI[1],coordF[0],coordF[1]);
+                if(aj.attaqueUnite(vue.terrain,coordI[0],coordI[1],coordF[0],coordF[1])){
+                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "PV perdus : "+
+                            (vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.getSanteMax()-vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.getSanteCourante()),
+                            "", JOptionPane.PLAIN_MESSAGE, vue.generateImage(vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.toString()));
+                }
                 vue.generateTerrain();
                 vue.generateTaskBar();
                 if (jeu.getJoueur1().getHero().getSanteCourante() <= 0){
