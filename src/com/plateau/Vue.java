@@ -23,7 +23,7 @@ public class Vue extends JFrame{
     private JPanel TerrainPanel = new JPanel();
     private JPanel TaskBar = new JPanel();
     Terrain terrain;
-    ArrayList<JButton> terrainBt = new ArrayList<>();
+    ArrayList<JButton> terrainBt;
     private Controlleur controlleur = new Controlleur(this);
     private Joueur tourJoueur;
     private String[] listeUnit = {"Templier","Cavalier","Mage","Archer","Pretresse","Lancier","Assassin"};
@@ -210,6 +210,7 @@ public class Vue extends JFrame{
     }
 
     public void generateTerrain(){
+        terrainBt = new ArrayList<>();
         TerrainPanel.removeAll();
         boolean b;
         GridLayout grid = new GridLayout(terrain.plateau.length,terrain.plateau[0].length);
