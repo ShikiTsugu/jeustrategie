@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Vue extends JFrame{
@@ -251,14 +253,50 @@ public class Vue extends JFrame{
         TaskBar.removeAll();
         FlowLayout flow = new FlowLayout();
         TaskBar.setLayout(flow);
-        JButton btBuy = new JButton("Shop");
+        JButton btBuy = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/moneyBag.png"));
+        JLabel shop = new JLabel("Shop");
+        shop.setAlignmentX(Component.CENTER_ALIGNMENT);
+        shop.setAlignmentY(Component.CENTER_ALIGNMENT+0.2f);
+        shop.setFont(new Font("SansSerif",Font.BOLD,14));
+        shop.setForeground(Color.black);
         btBuy.setPreferredSize(new Dimension(200,125));
+        btBuy.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btBuy.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/moneyBag2.png"));
+                shop.setForeground(new Color(230,200,120));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btBuy.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/moneyBag.png"));
+                shop.setForeground(Color.black);
+            }
+        });
+        btBuy.add(shop);
+        btBuy.setContentAreaFilled(false);
+        btBuy.setFocusable(false);
+        btBuy.setBorderPainted(false);
         btBuy.addActionListener((ActionEvent e) -> {
             generateAchat();
         });
         TaskBar.add(btBuy);
-        JButton btFdt = new JButton("Fin de tour");
+        JButton btFdt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/endturn.png"));
         btFdt.setPreferredSize(new Dimension(200,125));
+        btFdt.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btFdt.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/endturn2.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btFdt.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/endturn.png"));
+            }
+        });
+        btFdt.setContentAreaFilled(false);
+        btFdt.setFocusable(false);
+        btFdt.setBorderPainted(false);
         btFdt.addActionListener((ActionEvent e) -> {
             controlleur.finDeTour();
             generateTerrain();
@@ -332,8 +370,22 @@ public class Vue extends JFrame{
         TaskBar.add(btAtk);
         btDep.setPreferredSize(new Dimension(100,125));
         TaskBar.add(btDep);
-        JButton retour = new JButton("retour");
+        JButton retour = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/retour.png"));
         retour.setPreferredSize(new Dimension(100,125));
+        retour.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                retour.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/retour2.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                retour.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/retour.png"));
+            }
+        });
+        retour.setContentAreaFilled(false);
+        retour.setFocusable(false);
+        retour.setBorderPainted(false);
         retour.addActionListener((ActionEvent e) -> {
             generateTaskBar();
         });
@@ -378,10 +430,12 @@ public class Vue extends JFrame{
         shop.setContentPane(bg);
         JPanel money = new JPanel(new FlowLayout());
         money.setOpaque(false);
-        JLabel joueurMoney = new JLabel(" Argent : "+tourJoueur.getArgent());
-        joueurMoney.setFont(new Font("SansSerif",Font.BOLD,14));
-        joueurMoney.setForeground(new Color(200,200,150));
-        money.add(joueurMoney);
+        JLabel moneyIcon = new JLabel(new ImageIcon(Jeu.selectGoodPath()+"/assets/coins.png"));
+        JLabel moneyValue = new JLabel(" Argent : "+tourJoueur.getArgent());
+        moneyValue.setFont(new Font("SansSerif",Font.BOLD,14));
+        moneyValue.setForeground(new Color(200,200,150));
+        money.add(moneyIcon);
+        money.add(moneyValue);
         bg.setLayout(new BorderLayout());
         bg.add(money, BorderLayout.NORTH);
         JPanel liste = new JPanel(new FlowLayout());
@@ -404,7 +458,7 @@ public class Vue extends JFrame{
                 //boutonAnnul();
                 generateTaskBar();
             });
-            bt.setPreferredSize(new Dimension(100,125));
+            bt.setPreferredSize(new Dimension(100,120));
             liste.add(bt);
         }
         bg.add(liste,BorderLayout.CENTER);
