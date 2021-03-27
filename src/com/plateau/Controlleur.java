@@ -24,12 +24,35 @@ public class Controlleur {
     public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
         for (JButton b : vue.terrainBt) {
             b.addActionListener((ActionEvent e) -> {
-                if(vue.getTerrain().getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estVide()) {
-                    j.placeUnite(vue.terrain, u, b.getX() / b.getWidth(), b.getY() / b.getHeight(), J1);
-                }else{
-                    j.getJoueur().annuleAjout(u);
-                    j.getJoueur().setArgent(j.getJoueur().getArgent()+u.getCoutUnite());
-                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Il y a déjà une unité.", "", JOptionPane.PLAIN_MESSAGE);
+                if (j.getJoueur()==jeu.getJoueur1()) {
+                    if (vue.terrain.getB1()[b.getY() / b.getHeight()][b.getX() / b.getWidth()] == true) {
+                        if (vue.getTerrain().getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estVide()) {
+                            j.placeUnite(vue.terrain, u, b.getX() / b.getWidth(), b.getY() / b.getHeight(), J1);
+                        } else {
+                            j.getJoueur().annuleAjout(u);
+                            j.getJoueur().setArgent(j.getJoueur().getArgent() + u.getCoutUnite());
+                            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Il y a déjà une unité.", "", JOptionPane.PLAIN_MESSAGE);
+                        }
+                    } else {
+                        j.getJoueur().annuleAjout(u);
+                        j.getJoueur().setArgent(j.getJoueur().getArgent() + u.getCoutUnite());
+                        JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Impossible, en dehors de la zone d'achat.", "", JOptionPane.PLAIN_MESSAGE);
+                    }
+                }
+                if (j.getJoueur()==jeu.getJoueur2()) {
+                    if (vue.terrain.getB2()[b.getY() / b.getHeight()][b.getX() / b.getWidth()] == true) {
+                        if (vue.getTerrain().getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estVide()) {
+                            j.placeUnite(vue.terrain, u, b.getX() / b.getWidth(), b.getY() / b.getHeight(), J1);
+                        } else {
+                            j.getJoueur().annuleAjout(u);
+                            j.getJoueur().setArgent(j.getJoueur().getArgent() + u.getCoutUnite());
+                            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Il y a déjà une unité.", "", JOptionPane.PLAIN_MESSAGE);
+                        }
+                    } else {
+                        j.getJoueur().annuleAjout(u);
+                        j.getJoueur().setArgent(j.getJoueur().getArgent() + u.getCoutUnite());
+                        JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Impossible, en dehors de la zone d'achat.", "", JOptionPane.PLAIN_MESSAGE);
+                    }
                 }
                 vue.generateTerrain();
                 vue.generateTaskBar();
