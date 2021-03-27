@@ -27,9 +27,9 @@ public class Vue extends JFrame{
     private Controlleur controlleur = new Controlleur(this);
     private Joueur tourJoueur;
     private String[] listeUnit = {"Templier","Cavalier","Mage","Archer","Pretresse","Lancier","Assassin"};
-    private JButton btStats = new JButton("Stats");
-    private JButton btAtk = new JButton("Attaquer");
-    private JButton btDep = new JButton("Déplacer");
+    private JButton btStats = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/stats.png"));
+    private JButton btAtk = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+    private JButton btDep = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/deplace.png"));
     private JLabel taskbarbg = new JLabel(new ImageIcon(Jeu.selectGoodPath()+"/assets/taskbarbg.png"));
 
     public Vue(Model m, Terrain t, Joueur j){
@@ -384,11 +384,50 @@ public class Vue extends JFrame{
         taskbarbg.setLayout(flow);
         JButton unit = displayUnit(unite);
         taskbarbg.add(unit);
-        btStats.setPreferredSize(new Dimension(100,125));
+        btStats.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btStats.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/stats2.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btStats.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/stats.png"));
+            }
+        });
         taskbarbg.add(btStats);
-        btAtk.setPreferredSize(new Dimension(100,125));
+        btAtk.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btAtk.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque2.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btAtk.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+            }
+        });
         taskbarbg.add(btAtk);
-        btDep.setPreferredSize(new Dimension(100,125));
+        btDep.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btDep.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/deplace2.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btDep.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/deplace.png"));
+            }
+        });
+        btStats.setContentAreaFilled(false);
+        btStats.setBorderPainted(false);
+        btStats.setFocusable(false);
+        btAtk.setContentAreaFilled(false);
+        btAtk.setBorderPainted(false);
+        btAtk.setFocusable(false);
+        btDep.setContentAreaFilled(false);
+        btDep.setBorderPainted(false);
+        btDep.setFocusable(false);
         taskbarbg.add(btDep);
         JButton retour = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/retour.png"));
         retour.setPreferredSize(new Dimension(100,125));
