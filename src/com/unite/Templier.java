@@ -14,6 +14,10 @@ public class Templier extends Unite{
         porteeAttaque = 1; //discussion en cours
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
+        competences = new Competence[1];
+        Evenement[] event = {new Evenement("infligeDegats",0,0,10)};
+        competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1);
+
     }
     
     public String toString(){
