@@ -23,6 +23,35 @@ public class Controlleur {
 
     public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
         for (JButton b : vue.terrainBt) {
+            if(j.getJoueur()==jeu.getJoueur1()){
+                if(vue.terrain.getB1()[b.getY() / b.getHeight()][b.getX() / b.getWidth()]==true) {
+                    if (vue.getTerrain().getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estVide()) {
+                        b.setContentAreaFilled(true);
+                        b.setBackground(new Color(0, 150, 0));
+                    }else{
+                        b.setContentAreaFilled(true);
+                        b.setBackground(new Color(150, 0, 0));
+                    }
+                }else{
+                    b.setContentAreaFilled(true);
+                    b.setBackground(new Color(150, 0, 0));
+                }
+            }
+            if(j.getJoueur()==jeu.getJoueur2()){
+                if(vue.terrain.getB2()[b.getY() / b.getHeight()][b.getX() / b.getWidth()]==true) {
+                    if (vue.getTerrain().getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estVide()) {
+                        b.setContentAreaFilled(true);
+                        b.setBackground(new Color(0, 150, 0));
+                    }else{
+                        b.setContentAreaFilled(true);
+                        b.setBackground(new Color(150, 0, 0));
+                    }
+                }else{
+                    b.setContentAreaFilled(true);
+                    b.setBackground(new Color(150, 0, 0));
+                }
+            }
+
             b.addActionListener((ActionEvent e) -> {
                 if (j.getJoueur()==jeu.getJoueur1()) {
                     if (vue.terrain.getB1()[b.getY() / b.getHeight()][b.getX() / b.getWidth()] == true) {
