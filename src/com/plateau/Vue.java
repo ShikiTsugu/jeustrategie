@@ -64,8 +64,8 @@ public class Vue extends JFrame{
         jouer.setForeground(Color.WHITE);
         jouer.addActionListener((ActionEvent e) -> {
             AfficheTerrain();
-            imagePane.add(TerrainPanel);
-            imagePane.add(TaskBar);
+            imagePane.add(TerrainPanel,BorderLayout.CENTER);
+            imagePane.add(TaskBar,BorderLayout.SOUTH);
         });
 
         JButton quitter = new JButton("Quitter");
@@ -101,8 +101,7 @@ public class Vue extends JFrame{
             System.out.println("Fichier non trouv�, chemin incorrecte.");
         }
         imagePane.removeAll();
-        BoxLayout box = new BoxLayout(imagePane,BoxLayout.Y_AXIS);
-        imagePane.setLayout(box);
+        imagePane.setLayout(new BorderLayout());
         generateTerrain();
         generateTaskBar();
         imagePane.updateUI();
@@ -212,8 +211,8 @@ public class Vue extends JFrame{
 
     public void generateTerrain(){
         TerrainPanel.removeAll();
-        boolean b = false;
-        GridLayout grid = new GridLayout(5,5);
+        boolean b;
+        GridLayout grid = new GridLayout(terrain.plateau.length,terrain.plateau[0].length);
         TerrainPanel.setLayout(grid);
         for (int x = 0; x < terrain.plateau.length; x++){
             for (int y = 0; y < terrain.plateau[x].length; y++){

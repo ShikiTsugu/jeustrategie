@@ -40,15 +40,14 @@ public class Controlleur {
         JFrame stats = new JFrame(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString());
         stats.setVisible(true);
         stats.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        stats.setSize(250,175);
         stats.setLocationRelativeTo(vue.getContentPane());
 
-        JPanel statsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel statsPanel = new JPanel(new BorderLayout());
         JLabel unite = new JLabel(vue.generateImage(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString()));
-        statsPanel.add(unite);
+        statsPanel.add(unite,BorderLayout.WEST);
 
         JPanel allStats = new JPanel();
-        allStats.setPreferredSize(new Dimension(90,120));
+        allStats.setPreferredSize(new Dimension(300,300));
         allStats.setLayout(new BoxLayout(allStats,BoxLayout.Y_AXIS));
         allStats.add(new JLabel("PV : "+u.getSanteCourante()+"/"+u.getSanteMax()));
         allStats.add(new JLabel("ATQ : "+u.getAttaque()));
@@ -57,10 +56,13 @@ public class Controlleur {
         allStats.add(new JLabel("PA : "+u.getPointAction()+"/"+u.getPointActionMax()));
         allStats.add(new JLabel("Buff : "));
         allStats.add(new JLabel("Debuff : "));
-        JScrollPane scrollStats = new JScrollPane(allStats);
-        scrollStats.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        statsPanel.add(scrollStats);
 
+        JScrollPane scrollStats = new JScrollPane(allStats);
+        scrollStats.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollStats.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        statsPanel.add(scrollStats,BorderLayout.CENTER);
+
+        stats.setSize(250,175);
         stats.setResizable(false);
         stats.add(statsPanel);
     }
