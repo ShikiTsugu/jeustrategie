@@ -237,6 +237,7 @@ public class Vue extends JFrame{
                             initialiseDep(bt);
                             generateAction(bt);
                         }else{
+                            initialiseStats(bt);
                             generateAction(bt);
                             btAtk.setEnabled(false);
                             btDep.setEnabled(false);
