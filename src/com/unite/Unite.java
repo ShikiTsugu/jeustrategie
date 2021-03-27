@@ -61,10 +61,11 @@ public abstract class Unite {
         return positionUnite;
     }
 
-    public HashSet<Case> getDeplacementDisponible(){return deplacementDisponible;}
+    public Competence[] getCompetences() { return competences; }
 
-    
-    public void setSanteMax(int santeMax){ this.santeMax = santeMax; }
+    public void setSanteMax(int santeMax){
+        this.santeMax = santeMax;
+    }
     
     public void setSanteCourante(int santeCourante){
 	    this.santeCourante = santeCourante;
@@ -137,6 +138,12 @@ public abstract class Unite {
                 else if (t.getPlateau()[yD][xD].estObstacle() || t.getPlateau()[yD][xD].estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
             }
         } System.out.println("def pv avant : "+defenseur.santeCourante);
+    }
+
+    public void utiliseCompetence(int xD, int yD, int xA,int yA,int c, Terrain t){
+
+        if (c >=0 && c < competences.length)
+            competences[c].useSkill(xD,yD,xA,yA,t);
     }
 
     public boolean casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){
