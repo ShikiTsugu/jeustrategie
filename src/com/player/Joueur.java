@@ -47,12 +47,14 @@ public class Joueur {
         //si la liste d'unite est vide, ajoute l'unite en première position
         if(unites[0]==null&&(u instanceof Hero)){
             unites[0]=u;
+            u.setPointAction(0);
             System.out.println("Hero ajouté");
             return true;
         }
         //sinon parcourt le tableau et cherche une position vide pour y ajouter l'unite
         for (int i = 1; i<unites.length; i++) {
             if (unites[i]==null) {
+                u.setPointAction(0);
                 unites[i] = u;
                 System.out.println(u+" Ajouté");
                 added = true;
