@@ -13,10 +13,12 @@ import java.awt.event.MouseEvent;
 public class Controlleur {
     private Vue vue;
     private Jeu jeu;
+    private int nbTour;
 
     public Controlleur(Vue v){
         jeu = new Jeu();
         vue = v;
+        nbTour = 1;
     }
 
     public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
@@ -133,11 +135,36 @@ public class Controlleur {
 
     public void finDeTour(){
         jeu.finDeTour();
+        nbTour++;
+        JFrame findeTour = new JFrame();
+        findeTour.setVisible(true);
+        findeTour.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        findeTour.setLocationRelativeTo(vue.getContentPane());
+        findeTour.setSize(new Dimension(300, 150));
+
+        JPanel panelFindeTour = new JPanel();
+        BoxLayout box = new  BoxLayout(panelFindeTour,BoxLayout.Y_AXIS);
+        panelFindeTour.setLayout(box);
+        panelFindeTour.setPreferredSize(new Dimension(200, 100));
+        JLabel nTour = new JLabel("Tour " + nbTour);
+        JLabel jTour = new JLabel("Tour du joueur");
         if(jeu.getTourDuJoueur() == jeu.getJoueur1()){
             jeu.getJoueur1().resetPointAction();
+            jTour = new JLabel("Tour du joueur 1");
         } else if (jeu.getTourDuJoueur() == jeu.getJoueur2()){
             jeu.getJoueur2().resetPointAction();
+            jTour = new JLabel("Tour du joueur 2");
         }
+        nTour.setPreferredSize(new Dimension(50, 25));
+        jTour.setPreferredSize(new Dimension(50, 25));
+        nTour.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jTour.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelFindeTour.add(Box.createRigidArea(new Dimension(10, 10)));
+        panelFindeTour.add(nTour);
+        panelFindeTour.add(Box.createRigidArea(new Dimension(25, 25)));
+        panelFindeTour.add(jTour);
+        findeTour.add(panelFindeTour);
+        findeTour.pack();
         vue.setTourJoueur(jeu.getTourDuJoueur());
     }
 
