@@ -278,8 +278,8 @@ public class Jeu {
         Hero h2 = new Hero(joueur2);
         joueur1.ajouteUnite(h1);
         joueur2.ajouteUnite(h2);
-        terrain.ajouteUnite(h1,0,3);
-        terrain.ajouteUnite(h2,13,3);
+        terrain.ajouteUnite(h1,0,2);
+        terrain.ajouteUnite(h2,4,2);
         setTerrain(terrain);
         tourDuJoueur = joueur1;
         v = new Vue(m,terrain,joueur1);
@@ -297,21 +297,19 @@ public class Jeu {
 
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
-        boolean[][] b1 = {{true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false}};
+        boolean[][] b1 = {{true,true,false,false,false},
+                {true,true,false,false,false},
+                {true,true,false,false,false},
+                {true,true,false,false,false},
+                {true,true,false,false,false}};
 
-        boolean[][] b2 = {{false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true}};
+        boolean[][] b2 = {{false,false,false,true,true},
+                {false,false,false,true,true},
+                {false,false,false,true,true},
+                {false,false,false,true,true},
+                {false,false,false,true,true}};
 
-        Terrain terrain = new Terrain(14,6,12,0,3,4,3,b1,b2);
+        Terrain terrain = new Terrain(5,5,10,0,3,4,3,b1,b2);
         //jeu.playGame(terrain);
         //System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1, true));
         jeu.setTerrain(terrain);
