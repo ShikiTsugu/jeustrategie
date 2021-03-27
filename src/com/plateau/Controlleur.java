@@ -2,6 +2,7 @@ package com.plateau;
 
 import com.launcher.Jeu;
 import com.player.*;
+import com.player.Robot;
 import com.unite.Unite;
 
 import javax.swing.*;
@@ -143,33 +144,38 @@ public class Controlleur {
 
     public void deplaceUnite(Joueur j, JButton posIni){
         ActionJoueur aj = new ActionJoueur(j);
-        int[]coordI = {posIni.getX()/posIni.getWidth(), posIni.getY()/posIni.getHeight()};
-        int[]coordF = new int[2];
-        Unite u = vue.terrain.plateau[coordI[1]][coordI[0]].unit;
-        for (JButton b : vue.terrainBt) {
-            b.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    b.setContentAreaFilled(true);
-                    if(u.casesDisponibleDeplacement(vue.terrain, u, coordI[0], coordI[1], b.getX()/b.getWidth(), b.getY()/b.getHeight())) {
-                        b.setBackground(new Color(0, 150, 0));
-                    }else{
-                        b.setBackground(new Color(150, 0, 0));
+        if(j.getIsHuman()) {
+            int[] coordI = {posIni.getX() / posIni.getWidth(), posIni.getY() / posIni.getHeight()};
+            int[] coordF = new int[2];
+            Unite u = vue.terrain.plateau[coordI[1]][coordI[0]].unit;
+            for (JButton b : vue.terrainBt) {
+                b.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        b.setContentAreaFilled(true);
+                        if (u.casesDisponibleDeplacement(vue.terrain, u, coordI[0], coordI[1], b.getX() / b.getWidth(), b.getY() / b.getHeight())) {
+                            b.setBackground(new Color(0, 150, 0));
+                        } else {
+                            b.setBackground(new Color(150, 0, 0));
+                        }
                     }
-                }
 
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    b.setContentAreaFilled(false);
-                }
-            });
-            b.addActionListener((ActionEvent e) -> {
-                coordF[0] = b.getX()/b.getWidth();
-                coordF[1] = b.getY()/b.getHeight();
-                aj.deplaceUnite(vue.terrain, coordI[0],coordI[1],coordF[0],coordF[1]);
-                vue.generateTerrain();
-                vue.generateTaskBar();
-            });
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        b.setContentAreaFilled(false);
+                    }
+                });
+                b.addActionListener((ActionEvent e) -> {
+                    coordF[0] = b.getX() / b.getWidth();
+                    coordF[1] = b.getY() / b.getHeight();
+                    aj.deplaceUnite(vue.terrain, coordI[0], coordI[1], coordF[0], coordF[1]);
+                    vue.generateTerrain();
+                    vue.generateTaskBar();
+                });
+            }
+        }else{
+            int[] coordI = ((Robot) j).unitCoord(vue.terrain);
+            int[] coordF = new int[2];
         }
     }
 
