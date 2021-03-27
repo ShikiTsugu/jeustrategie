@@ -64,7 +64,7 @@ public class Vue extends JFrame{
         quitter.addActionListener((ActionEvent e) -> System.exit(0));
 
         JLabel titre = new JLabel();
-        titre.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/gameTitle.png"));
+        titre.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/gameTitle.png"));
 
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);
@@ -110,28 +110,28 @@ public class Vue extends JFrame{
         bt.setContentAreaFilled(false);
         bt.setOpaque(false);
         if(s.equals("Hero")){
-            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/hero.png"));
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/hero.png"));
         }
         if(s.equals("Templier")){
-            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/templier.png"));
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/templier.png"));
         }
         if(s.equals("Archer")){
-            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/archer.png"));
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/archer.png"));
         }
         if(s.equals("Mage")){
-            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/mage.png"));
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/mage.png"));
         }
         if(s.equals("Cavalier")){
-            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/cavalier.png"));
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/cavalier.png"));
         }
         if(s.equals("Pretresse")){
-            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/pretresse.png"));
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/pretresse.png"));
         }
         if(s.equals("Lancier")){
-            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/lancier.png"));
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/lancier.png"));
         }
         if(s.equals("Assassin")){
-            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/Assassin.png"));
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/Assassin.png"));
         }
         return bt;
     }
@@ -139,28 +139,28 @@ public class Vue extends JFrame{
     public void flippedImages(JButton bt, String s, boolean b){
         if(b==true) {
             if (s.equals("Hero")) {
-                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/hero2.png"));
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/hero2.png"));
             }
             if (s.equals("Templier")) {
-                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/templier2.png"));
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/templier2.png"));
             }
             if (s.equals("Archer")) {
-                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/archer2.png"));
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/archer2.png"));
             }
             if (s.equals("Mage")) {
-                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/mage2.png"));
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/mage2.png"));
             }
             if (s.equals("Cavalier")) {
-                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/cavalier2.png"));
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/cavalier2.png"));
             }
             if (s.equals("Pretresse")) {
-                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/pretresse2.png"));
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/pretresse2.png"));
             }
             if (s.equals("Lancier")) {
-                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/lancier2.png"));
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/lancier2.png"));
             }
             if (s.equals("Assassin")) {
-                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/plateau/Assassin2.png"));
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/Assassin2.png"));
             }
         }
     }
@@ -271,28 +271,28 @@ public class Vue extends JFrame{
     public ImageIcon generateImage(String s){
         ImageIcon i = new ImageIcon();
         if(s.equals("Hero")){
-            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/hero.png");
+            i = new ImageIcon(Jeu.selectGoodPath() + "/assets/hero.png");
         }
         if(s.equals("Templier")){
-            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/templier.png");
+            i = new ImageIcon(Jeu.selectGoodPath() + "/assets/templier.png");
         }
         if(s.equals("Archer")){
-            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/archer.png");
+            i = new ImageIcon(Jeu.selectGoodPath() + "/assets/archer.png");
         }
         if(s.equals("Mage")){
-            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/mage.png");
+            i = new ImageIcon(Jeu.selectGoodPath() + "/assets/mage.png");
         }
         if(s.equals("Cavalier")){
-            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/cavalier.png");
+            i = new ImageIcon(Jeu.selectGoodPath() + "/assets/cavalier.png");
         }
         if(s.equals("Pretresse")){
-            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/pretresse.png");
+            i = new ImageIcon(Jeu.selectGoodPath() + "/assets/pretresse.png");
         }
         if(s.equals("Lancier")){
-            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/lancier.png");
+            i = new ImageIcon(Jeu.selectGoodPath() + "/assets/lancier.png");
         }
         if(s.equals("Assassin")){
-            i = new ImageIcon(Jeu.selectGoodPath() + "/plateau/Assassin.png");
+            i = new ImageIcon(Jeu.selectGoodPath() + "/assets/Assassin.png");
         }
         return i;
     }
@@ -374,7 +374,7 @@ public class Vue extends JFrame{
         shop.setSize(400,475);
         shop.setLocationRelativeTo(imagePane);
         shop.setResizable(false);
-        ImagePane bg = new ImagePane(new Model(Jeu.selectGoodPath() + "/plateau/shop.png"));
+        ImagePane bg = new ImagePane(new Model(Jeu.selectGoodPath() + "/assets/shop.png"));
         shop.setContentPane(bg);
         JPanel money = new JPanel(new FlowLayout());
         money.setOpaque(false);

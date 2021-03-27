@@ -22,7 +22,7 @@ public class Jeu {
     protected Terrain terrain;
     protected Joueur tourDuJoueur;
     protected String requeteCourante;
-    protected Model m = new Model(selectGoodPath() + "/plateau/plaine.png");
+    protected Model m = new Model(selectGoodPath() + "/assets/plaine.png");
     protected Vue v;
 
 
