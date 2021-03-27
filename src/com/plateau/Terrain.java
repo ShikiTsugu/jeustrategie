@@ -8,6 +8,7 @@ public class Terrain {
     protected int nbUnits;
     protected int xH1,yH1;
     protected int xH2,yH2;
+    protected boolean[][] b1,b2;
 
     public Terrain(int largeur, int hauteur, int max,int x1,int y1, int x2, int y2, boolean[][] b1, boolean[][] b2){
         plateau = new Case[hauteur][largeur];
@@ -17,11 +18,21 @@ public class Terrain {
         yH1 = y1;
         xH2 = x2;
         yH2 = y2;
+        this.b1=b1;
+        this.b2=b2;
         initialiseTerrain();
         setBuyableArea(b1,b2);
     }
 
-    public void setBuyableArea(boolean[][] b1,boolean[][] b2){
+    public boolean[][] getB1() {
+        return b1;
+    }
+
+    public boolean[][] getB2() {
+        return b2;
+    }
+
+    public void setBuyableArea(boolean[][] b1, boolean[][] b2){
         for(int i=0;i<b1.length;i++){
             for(int j=0;j<b1[i].length;j++){
                 plateau[i][j].setJ1Buyable(b1[i][j]);
