@@ -17,6 +17,7 @@ public abstract class Unite {
     protected Joueur joueur;
     protected Case positionUnite;
     protected Competence[] competences;
+    protected HashSet<Case> deplacementDisponible;
     //rajouter plus tard protected AlterationEtat etat;
     public Unite(Joueur joueur){
         this.joueur = joueur;
@@ -60,6 +61,8 @@ public abstract class Unite {
         return positionUnite;
     }
 
+    public HashSet<Case> getDeplacementDisponible(){return deplacementDisponible;}
+
 
     
     public void setSanteMax(int santeMax){
@@ -101,6 +104,8 @@ public abstract class Unite {
     }
 
     public void setCompetences(Competence[] competences) { this.competences = competences; }
+
+    public void setDeplacementDisponible(HashSet<Case> deplacementDisponible){this.deplacementDisponible = deplacementDisponible;}
 
     public abstract String toString();
     public abstract boolean isHero();
@@ -145,6 +150,7 @@ public abstract class Unite {
     public boolean cheminTrouver (HashSet<Case> test, Terrain t, int xPast, int yPast, int xApres, int yApres, int portee){
         if (xPast == xApres && yPast == yApres && portee >= 0 && estDansTableau(t, xPast, yPast)){
             test.add(t.getPlateau()[yPast][xPast]);
+            setDeplacementDisponible(test);
             return true;
         }
         if (portee >= 0 && estDansTableau(t, xPast, yPast)){

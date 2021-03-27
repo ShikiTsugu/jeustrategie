@@ -22,6 +22,8 @@ public class Case {
         id=incremente++;
     }
 
+    public int getId(){return id;}
+
     public Case(boolean o){
         obstacle = o;
     }

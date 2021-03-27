@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 public class Controlleur {
     private Vue vue;
@@ -175,7 +176,18 @@ public class Controlleur {
             }
         }else{
             int[] coordI = ((Robot) j).unitCoord(vue.terrain);
-            int[] coordF = new int[2];
+            Unite u = vue.terrain.plateau[coordI[1]][coordI[0]].unit;
+            Random rand = new Random();
+            int randX = rand.nextInt(vue.terrain.plateau[0].length-1);
+            int randY = rand.nextInt(vue.terrain.plateau.length-1);
+            u.casesDisponibleDeplacement(vue.terrain,u,coordI[0],coordI[1],coordI[0],coordI[1]);
+            while (!u.getDeplacementDisponible().contains(vue.terrain.plateau[randY][randX])){
+                randX = rand.nextInt(vue.terrain.plateau[0].length-1);
+                randY = rand.nextInt(vue.terrain.plateau.length-1);
+            }
+            aj.deplaceUnite(vue.terrain,coordI[0],coordI[1],randX,randY);
+            vue.generateTerrain();
+            vue.generateTaskBar();
         }
     }
 
