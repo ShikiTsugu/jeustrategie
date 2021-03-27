@@ -30,6 +30,7 @@ public class Vue extends JFrame{
     private JButton btStats = new JButton("Stats");
     private JButton btAtk = new JButton("Attaquer");
     private JButton btDep = new JButton("Déplacer");
+    private JLabel taskbarbg = new JLabel(new ImageIcon(Jeu.selectGoodPath()+"/assets/taskbarbg.png"));
 
     public Vue(Model m, Terrain t, Joueur j){
         model = m;
@@ -263,9 +264,11 @@ public class Vue extends JFrame{
     }
 
     public void generateTaskBar(){
-        TaskBar.removeAll();
+        TaskBar.setBackground(Color.black);
+        TaskBar.add(taskbarbg);
+        taskbarbg.removeAll();
         FlowLayout flow = new FlowLayout();
-        TaskBar.setLayout(flow);
+        taskbarbg.setLayout(flow);
         JButton btBuy = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/moneyBag.png"));
         JLabel shop = new JLabel("Shop");
         shop.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -293,7 +296,7 @@ public class Vue extends JFrame{
         btBuy.addActionListener((ActionEvent e) -> {
             generateAchat();
         });
-        TaskBar.add(btBuy);
+        taskbarbg.add(btBuy);
         JButton btFdt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/endturn.png"));
         btFdt.setPreferredSize(new Dimension(200,125));
         btFdt.addMouseListener(new MouseAdapter() {
@@ -315,8 +318,8 @@ public class Vue extends JFrame{
             generateTerrain();
             TerrainPanel.updateUI();
         });
-        TaskBar.add(btFdt);
-        TaskBar.updateUI();
+        taskbarbg.add(btFdt);
+        taskbarbg.updateUI();
     }
 
     public ImageIcon generateImage(String s){
@@ -358,31 +361,35 @@ public class Vue extends JFrame{
         unit.setPreferredSize(new Dimension(250,125));
         JLabel pa = new JLabel("PA : "+terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getPointAction()
                 +"/"+terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getPointActionMax());
-        pa.setFont(new Font("SansSerif",Font.BOLD,12));
+        pa.setFont(new Font("SansSerif",Font.BOLD,13));
         pa.setAlignmentX(RIGHT_ALIGNMENT);
         pa.setAlignmentY(TOP_ALIGNMENT);
+        pa.setForeground(new Color(200,20,80));
         JLabel pv = new JLabel("PV : "+terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getSanteCourante()+
                 "/"+terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getSanteMax());
-        pv.setFont(new Font("SansSerif",Font.BOLD,12));
+        pv.setFont(new Font("SansSerif",Font.BOLD,13));
         pv.setAlignmentX(RIGHT_ALIGNMENT);
         pv.setAlignmentY(BOTTOM_ALIGNMENT);
+        pv.setForeground(new Color(0,200,100));
         unit.add(pa);
         unit.add(pv);
         return unit;
     }
 
     public void generateAction(JButton unite){
-        TaskBar.removeAll();
+        TaskBar.setBackground(Color.black);
+        TaskBar.add(taskbarbg);
+        taskbarbg.removeAll();
         FlowLayout flow = new FlowLayout();
-        TaskBar.setLayout(flow);
+        taskbarbg.setLayout(flow);
         JButton unit = displayUnit(unite);
-        TaskBar.add(unit);
+        taskbarbg.add(unit);
         btStats.setPreferredSize(new Dimension(100,125));
-        TaskBar.add(btStats);
+        taskbarbg.add(btStats);
         btAtk.setPreferredSize(new Dimension(100,125));
-        TaskBar.add(btAtk);
+        taskbarbg.add(btAtk);
         btDep.setPreferredSize(new Dimension(100,125));
-        TaskBar.add(btDep);
+        taskbarbg.add(btDep);
         JButton retour = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/retour.png"));
         retour.setPreferredSize(new Dimension(100,125));
         retour.addMouseListener(new MouseAdapter() {
@@ -402,8 +409,8 @@ public class Vue extends JFrame{
         retour.addActionListener((ActionEvent e) -> {
             generateTaskBar();
         });
-        TaskBar.add(retour);
-        TaskBar.updateUI();
+        taskbarbg.add(retour);
+        taskbarbg.updateUI();
     }
 
     public Unite createUnite(String s){
