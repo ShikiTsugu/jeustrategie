@@ -226,22 +226,10 @@ public class Controlleur {
         int[]coordF = new int[2];
         Unite u = vue.terrain.plateau[coordI[1]][coordI[0]].unit;
         for (JButton b : vue.terrainBt) {
-            b.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    b.setContentAreaFilled(true);
-                    if(u.casesDisponibleDeplacement(vue.terrain, u, coordI[0], coordI[1], b.getX()/b.getWidth(), b.getY()/b.getHeight())) {
-                        b.setBackground(new Color(0, 150, 0));
-                    }else{
-                        b.setBackground(new Color(150, 0, 0));
-                    }
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    b.setContentAreaFilled(false);
-                }
-            });
+            if(u.casesDisponibleDeplacement(vue.terrain, u, coordI[0], coordI[1], b.getX()/b.getWidth(), b.getY()/b.getHeight())) {
+                b.setContentAreaFilled(true);
+                b.setBackground(new Color(0, 150, 0));
+            }
             b.addActionListener((ActionEvent e) -> {
                 coordF[0] = b.getX()/b.getWidth();
                 coordF[1] = b.getY()/b.getHeight();
