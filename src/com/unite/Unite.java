@@ -173,7 +173,7 @@ public abstract class Unite {
     }
 
     public boolean estDansTableau(Terrain t, int xPast, int yPast) {
-        return (yPast < t.getPlateau().length && xPast < t.getPlateau().length && yPast >= 0 && xPast >= 0);
+        return (yPast < t.getPlateau().length && xPast < t.getPlateau()[0].length && yPast >= 0 && xPast >= 0);
     }
 
     public void resetPointAction(){pointAction = pointActionMax; }
