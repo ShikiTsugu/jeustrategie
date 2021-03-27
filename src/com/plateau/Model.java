@@ -17,5 +17,7 @@ public class Model {
         }
     }
 
+    public void setImage(BufferedImage im){image=im;}
+
     public BufferedImage getImage(){return image;}
 }

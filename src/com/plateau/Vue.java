@@ -5,12 +5,15 @@ import com.player.ActionJoueur;
 import com.player.Joueur;
 import com.unite.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Vue extends JFrame{
@@ -48,6 +51,11 @@ public class Vue extends JFrame{
 
     //affichage initial
     public void afficheIni(){
+        try {
+            imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/titlescreen.png")));
+        }catch(IOException e){
+            System.out.println("Fichier non trouv�, chemin incorrecte.");
+        }
         imagePane.removeAll();
         JButton jouer = new JButton("Jouer");
         jouer.setFont(new Font("Monospaced",Font.BOLD,20));
@@ -86,6 +94,11 @@ public class Vue extends JFrame{
 
     /*Affichage d'un terrain*/
     public void AfficheTerrain(){
+        try {
+            imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/plaine.png")));
+        }catch(IOException e){
+            System.out.println("Fichier non trouv�, chemin incorrecte.");
+        }
         imagePane.removeAll();
         BoxLayout box = new BoxLayout(imagePane,BoxLayout.Y_AXIS);
         imagePane.setLayout(box);
