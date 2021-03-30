@@ -185,6 +185,49 @@ public class Controlleur {
         }
     }
 
+    public void useSkill(Joueur j, JButton cast,int c) {
+        ActionJoueur aj = new ActionJoueur(j);
+        int[] coordI = {cast.getX() / cast.getWidth(), cast.getY() / cast.getHeight()};
+        int[] coordF = new int[2];
+        Unite atq = vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit;
+        for (JButton b : vue.terrainBt) {
+            b.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    b.setContentAreaFilled(true);
+                    if (vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estUnit() && ((Math.abs(b.getY() / b.getHeight() - coordI[1]) + Math.abs(b.getX() / b.getWidth() - coordI[0])) <= atq.getPorteeAttaque())
+                            && vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].unit != atq && vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].unit.getJoueur() != j) {
+                        b.setBackground(new Color(0, 150, 0));
+                    } else {
+                        b.setBackground(new Color(150, 0, 0));
+                    }
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    b.setContentAreaFilled(false);
+                }
+            });
+            b.addActionListener((ActionEvent e) -> {
+                coordF[0] = b.getX() / b.getWidth();
+                coordF[1] = b.getY() / b.getHeight();
+                try {
+                    vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit.utiliseCompetence(coordI[0], coordI[1], coordF[0], coordF[1], c, vue.terrain);
+                } catch (NullPointerException ex) {
+                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Vous attaquez dans le vide.", "", JOptionPane.PLAIN_MESSAGE);
+                }
+                vue.generateTerrain();
+                vue.generateTaskBar();
+                if (jeu.getJoueur1().getHero().getSanteCourante() <= 0) {
+                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 2 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
+                } else if (jeu.getJoueur2().getHero().getSanteCourante() <= 0) {
+                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 1 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
+                }
+            });
+
+        }
+    }
+
     public void finDeTour(){
         jeu.finDeTour();
         nbTour++;
