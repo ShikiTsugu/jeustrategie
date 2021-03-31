@@ -29,6 +29,27 @@ public class Evenement {
             t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante()+value);
             return true;
         }
+        if(event.equals("appliqueEtourdissement")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("etourdissement",value);
+            return true;
+        }
+        if(event.equals("appliquePoison")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("poison",value);
+            return true;
+        }
+        if(event.equals("appliqueImmobilise")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("immobilise",value);
+            return true;
+        }
+        if(event.equals("appliqueRalentissement")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("ralentissement",value);
+            return true;
+        }
+        if(event.equals("appliqueAveugle")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("aveugle",value);
+            return true;
+        }
+
         return false;
     }
 
