@@ -13,13 +13,11 @@ import java.awt.event.MouseEvent;
 public class Controlleur {
     private Vue vue;
     private Jeu jeu;
-    private Terrain terrain;
     private int nbTour;
 
     public Controlleur(Vue v){
         jeu = new Jeu();
         vue = v;
-        terrain = jeu.getTerrain();
         nbTour = 1;
     }
 
@@ -203,10 +201,10 @@ public class Controlleur {
     }
 
     public void TerrrainEffect(){
-        for (int x = 0; x < terrain.plateau.length; x++) {
-            for (int y = 0; y < terrain.plateau[x].length; y++) {
-                if (terrain.plateau[x][y] instanceof CaseEffect){
-                    ((CaseEffect) terrain.plateau[x][y]).Effect();
+        for (int x = 0; x < vue.terrain.plateau.length; x++) {
+            for (int y = 0; y < vue.terrain.plateau[x].length; y++) {
+                if (vue.terrain.plateau[x][y] instanceof CaseEffect){
+                    ((CaseEffect) vue.terrain.plateau[x][y]).Effect();
                 }
             }
         }
