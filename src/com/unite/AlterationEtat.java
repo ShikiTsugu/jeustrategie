@@ -7,44 +7,68 @@ import java.util.*;
 
 public class AlterationEtat {
     protected String nom;
+    protected Unite unite;
     protected int tourRestant;
 
-    public AlterationEtat(String nom, int tourRestant){
+    public AlterationEtat(String nom, int tourRestant,Unite u){
         this.nom = nom;
         this.tourRestant = tourRestant;
+        unite = u;
     }
 
-    public void etourdissement(Terrain t, int x, int y){
+    public int getTourRestant(){
+        return tourRestant;
+    }
+
+    public void readAlterationEtat(){
+        if(nom.equals("etourdissement")){
+            etourdissement();
+        }
+        if(nom.equals("poison")){
+            poison();
+        }
+        if(nom.equals("immobilise")){
+            immobilise();
+        }
+        if(nom.equals("ralentissement")){
+            ralentissement();
+        }
+        if(nom.equals("aveugle")){
+            aveugle();
+        }
+    }
+
+    public void etourdissement(){
         if (tourRestant > 0) {
-            t.getPlateau()[y][x].getUnite().setPointAction(0);
+            unite.setPointAction(0);
             tourRestant -= 1;
         }
     }
 
-    public void poison(Terrain t, int x, int y){
+    public void poison(){
         if (tourRestant > 0){
-            t.getPlateau()[y][x].getUnite().setSanteCourante(t.getPlateau()[y][x].getUnite().getSanteCourante()-20);
+            unite.setSanteCourante(unite.getSanteCourante()-20);
             tourRestant-=1;
         }
     }
 
-    public void immobilise(Terrain t, int x, int y){
+    public void immobilise(){
         if (tourRestant > 0){
-            t.getPlateau()[y][x].getUnite().setPorteeDeplacement(-1);
+            unite.setPorteeDeplacement(-1);
             tourRestant-=1;
         }
     }
 
-    public void ralentissement(Terrain t, int x, int y){
+    public void ralentissement(){
         if (tourRestant > 0){
-            t.getPlateau()[y][x].getUnite().setPorteeDeplacement(t.getPlateau()[y][x].getUnite().getPorteeDeplacement()-1);
+            unite.setPorteeDeplacement(unite.getPorteeDeplacement()-1);
             tourRestant-=1;
         }
     }
 
-    public void aveugle(Terrain t, int x, int y){
+    public void aveugle(){
         if (tourRestant > 0){
-            t.getPlateau()[y][x].getUnite().setPorteeAttaque(-1);
+            unite.setPorteeAttaque(-1);
             tourRestant-=1;
         }
     }

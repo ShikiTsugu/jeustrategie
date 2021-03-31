@@ -4,6 +4,7 @@ import com.plateau.*;
 import com.player.Joueur;
 import java.lang.*;
 import java.util.*;
+import java.util.ArrayList;
 
 public abstract class Unite {
     protected int santeMax;
@@ -18,7 +19,7 @@ public abstract class Unite {
     protected Case positionUnite;
     protected Competence[] competences;
     protected HashSet<Case> deplacementDisponible;
-    protected AlterationEtat[] alterationEtats;
+    protected ArrayList<AlterationEtat> alterationEtats;
     public Unite(Joueur joueur){
         this.joueur = joueur;
     }
@@ -104,6 +105,26 @@ public abstract class Unite {
     public void setCompetences(Competence[] competences) { this.competences = competences; }
 
     public void setDeplacementDisponible(HashSet<Case> deplacementDisponible){this.deplacementDisponible = deplacementDisponible;}
+
+    public void addAlterationEtat(String a,int n){
+        alterationEtats.add(new AlterationEtat(a,n,this));
+    }
+
+    public void updateAlterationEtats(){
+        for(int i =0; i< alterationEtats.size();i++){
+            if(alterationEtats.get(i).getTourRestant() <= 0){
+                alterationEtats.remove(i);
+            }
+        }
+    }
+
+    public void activeAlterationEtats(){
+        for(int i =0; i< alterationEtats.size();i++){
+            if(alterationEtats.get(i).getTourRestant() > 0){
+                alterationEtats.get(i).readAlterationEtat();
+            }
+        }
+    }
 
     public abstract String toString();
     public abstract boolean isHero();
