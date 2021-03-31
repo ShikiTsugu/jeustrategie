@@ -166,6 +166,7 @@ public class Controlleur {
         findeTour.add(panelFindeTour);
         findeTour.pack();
         vue.setTourJoueur(jeu.getTourDuJoueur());
+        TerrrainEffect();
     }
 
     public void deplaceUnite(Joueur j, JButton posIni){
@@ -201,13 +202,15 @@ public class Controlleur {
     }
 
     public void TerrrainEffect(){
-        for (int x = 0; x < vue.terrain.plateau.length; x++) {
-            for (int y = 0; y < vue.terrain.plateau[x].length; y++) {
-                if (vue.terrain.plateau[x][y] instanceof CaseEffect){
-                    ((CaseEffect) vue.terrain.plateau[x][y]).Effect();
+        try {
+            for (int x = 0; x < vue.terrain.plateau.length; x++) {
+                for (int y = 0; y < vue.terrain.plateau[x].length; y++) {
+                    if (vue.terrain.plateau[x][y] instanceof CaseEffect){
+                        ((CaseEffect) vue.terrain.plateau[x][y]).Effect();
+                    }
                 }
             }
-        }
+        } catch (NullPointerException e) {}
     }
 
     public void setJeu(Jeu j){

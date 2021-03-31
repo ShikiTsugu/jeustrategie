@@ -1,9 +1,6 @@
 package com.launcher;
 
-import com.plateau.Case;
-import com.plateau.Model;
-import com.plateau.Terrain;
-import com.plateau.Vue;
+import com.plateau.*;
 import com.player.ActionJoueur;
 import com.player.Joueur;
 import com.unite.*;
@@ -280,6 +277,7 @@ public class Jeu {
         joueur2.ajouteUnite(h2);
         terrain.ajouteUnite(h1,0,3);
         terrain.ajouteUnite(h2,13,3);
+        terrain.setEffectCase(7,3, new CaseGold());
         setTerrain(terrain);
         tourDuJoueur = joueur1;
         v = new Vue(m,terrain,joueur1);

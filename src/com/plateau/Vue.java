@@ -152,7 +152,7 @@ public class Vue extends JFrame{
     }
 
     public void flippedImages(JButton bt, String s, boolean b){
-        if(b==true) {
+        if(b) {
             if (s.equals("Hero")) {
                 bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/hero2.png"));
             }
@@ -247,6 +247,14 @@ public class Vue extends JFrame{
                         resetButton(bt);
                         pv.setForeground(new Color(200,0,0));
                     }
+                    bt.setPreferredSize(new Dimension(150,125));
+                    terrainBt.add(bt);
+                } else if(terrain.plateau[x][y] instanceof CaseGold){
+                    JButton bt = new JButton();
+                    TerrainPanel.add(bt);
+                    bt.setOpaque(false);
+                    bt.setContentAreaFilled(false);
+                    bt.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
                     bt.setPreferredSize(new Dimension(150,125));
                     terrainBt.add(bt);
                 } else {
