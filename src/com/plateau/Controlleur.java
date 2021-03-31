@@ -247,7 +247,8 @@ public class Controlleur {
             jeu.getJoueur1().resetPointAction();
             jTour = new JLabel("Tour du joueur 1");
         } else if (jeu.getTourDuJoueur() == jeu.getJoueur2()){
-            jeu.getJoueur2().resetPointAction();
+            if (nbTour == 2) jeu.getJoueur2().getHero().setPointAction(0);
+            else jeu.getJoueur2().resetPointAction();
             jTour = new JLabel("Tour du joueur 2");
         }
         nTour.setPreferredSize(new Dimension(50, 25));
