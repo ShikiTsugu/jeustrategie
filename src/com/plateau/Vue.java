@@ -209,34 +209,35 @@ public class Vue extends JFrame{
         });
     }
 
-    public void generateTerrain(){
+    public void generateTerrain() {
         TerrainPanel.removeAll();
         boolean b;
-        GridLayout grid = new GridLayout(terrain.plateau.length,terrain.plateau[0].length);
+        GridLayout grid = new GridLayout(terrain.plateau.length, terrain.plateau[0].length);
         TerrainPanel.setLayout(grid);
-        for (int x = 0; x < terrain.plateau.length; x++){
-            for (int y = 0; y < terrain.plateau[x].length; y++){
+        for (int x = 0; x < terrain.plateau.length; x++) {
+            for (int y = 0; y < terrain.plateau[x].length; y++) {
                 if (terrain.plateau[x][y].unit != null) {
                     JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
-                    if(terrain.plateau[x][y].unit.getJoueur()!=controlleur.getJeu().getJoueur1()) {
+                    setBorder(bt, x, y);
+                    if (terrain.plateau[x][y].unit.getJoueur() != controlleur.getJeu().getJoueur1()) {
                         b = true;
                         flippedImages(bt, terrain.plateau[x][y].unit.toString(), b);
                     }
-                    JLabel pv = new JLabel(terrain.plateau[x][y].unit.getSanteCourante()+"/"+terrain.plateau[x][y].unit.getSanteMax());
-                    pv.setFont(new Font("SansSerif",Font.BOLD,14));
-                    pv.setForeground(new Color(0,200,0));
+                    JLabel pv = new JLabel(terrain.plateau[x][y].unit.getSanteCourante() + "/" + terrain.plateau[x][y].unit.getSanteMax());
+                    pv.setFont(new Font("SansSerif", Font.BOLD, 14));
+                    pv.setForeground(new Color(0, 200, 0));
                     pv.setAlignmentX(CENTER_ALIGNMENT);
                     pv.setAlignmentY(BOTTOM_ALIGNMENT);
                     bt.add(pv);
                     TerrainPanel.add(bt);
                     bt.addActionListener((ActionEvent e) -> {
-                        System.out.println(terrain.plateau[bt.getY()/bt.getHeight()][bt.getX()/bt.getWidth()].unit);
-                        if(terrain.getPlateau()[bt.getY()/bt.getHeight()][bt.getX()/bt.getWidth()].getUnite().getPointAction()>0){
+                        System.out.println(terrain.plateau[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].unit);
+                        if (terrain.getPlateau()[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].getUnite().getPointAction() > 0) {
                             initialiseStats(bt);
                             initialiseAtk(bt);
                             initialiseDep(bt);
                             generateAction(bt);
-                        }else{
+                        } else {
                             initialiseStats(bt);
                             generateAction(bt);
                             btAtk.setEnabled(false);
@@ -245,30 +246,30 @@ public class Vue extends JFrame{
                     });
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
                         resetButton(bt);
-                        pv.setForeground(new Color(200,0,0));
+                        pv.setForeground(new Color(200, 0, 0));
                     }
-                    bt.setPreferredSize(new Dimension(150,125));
-                    terrainBt.add(bt);
-                } else if(terrain.plateau[x][y] instanceof CaseGold){
-                    JButton bt = new JButton();
-                    TerrainPanel.add(bt);
-                    bt.setOpaque(false);
-                    bt.setContentAreaFilled(false);
-                    bt.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-                    bt.setPreferredSize(new Dimension(150,125));
+                    bt.setPreferredSize(new Dimension(150, 125));
                     terrainBt.add(bt);
                 } else {
                     JButton bt = new JButton();
+                    bt = setBorder(bt, x, y);
                     TerrainPanel.add(bt);
                     bt.setOpaque(false);
                     bt.setContentAreaFilled(false);
-                    bt.setPreferredSize(new Dimension(150,125));
+                    bt.setPreferredSize(new Dimension(150, 125));
                     terrainBt.add(bt);
                 }
             }
+            TerrainPanel.setOpaque(false);
+            TerrainPanel.updateUI();
         }
-        TerrainPanel.setOpaque(false);
-        TerrainPanel.updateUI();
+    }
+
+    public JButton setBorder(JButton bt, int x, int y){
+        if (terrain.plateau[x][y] instanceof CaseGold) {
+            bt.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        }
+        return bt;
     }
 
     public void generateTaskBar(){
