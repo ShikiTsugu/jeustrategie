@@ -21,6 +21,7 @@ public class Jeu {
     protected String requeteCourante;
     protected Model m = new Model(selectGoodPath() + "/assets/titlescreen.png");
     protected Vue v;
+    protected Map map;
 
 
 
