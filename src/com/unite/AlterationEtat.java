@@ -9,6 +9,7 @@ public class AlterationEtat {
     protected String nom;
     protected Unite unite;
     protected int tourRestant;
+    protected Debuff debuff;
 
     public AlterationEtat(String nom, int tourRestant,Unite u){
         this.nom = nom;
@@ -22,54 +23,19 @@ public class AlterationEtat {
 
     public void readAlterationEtat(){
         if(nom.equals("etourdissement")){
-            etourdissement();
+            debuff.etourdissement();
         }
         if(nom.equals("poison")){
-            poison();
+            debuff.poison();
         }
         if(nom.equals("immobilise")){
-            immobilise();
+            debuff.immobilise();
         }
         if(nom.equals("ralentissement")){
-            ralentissement();
+            debuff.ralentissement();
         }
         if(nom.equals("aveugle")){
-            aveugle();
-        }
-    }
-
-    public void etourdissement(){
-        if (tourRestant > 0) {
-            unite.setPointAction(0);
-            tourRestant -= 1;
-        }
-    }
-
-    public void poison(){
-        if (tourRestant > 0){
-            unite.setSanteCourante(unite.getSanteCourante()-20);
-            tourRestant-=1;
-        }
-    }
-
-    public void immobilise(){
-        if (tourRestant > 0){
-            unite.setPorteeDeplacement(-1);
-            tourRestant-=1;
-        }
-    }
-
-    public void ralentissement(){
-        if (tourRestant > 0){
-            unite.setPorteeDeplacement(unite.getPorteeDeplacement()-1);
-            tourRestant-=1;
-        }
-    }
-
-    public void aveugle(){
-        if (tourRestant > 0){
-            unite.setPorteeAttaque(-1);
-            tourRestant-=1;
+            debuff.aveugle();
         }
     }
 }

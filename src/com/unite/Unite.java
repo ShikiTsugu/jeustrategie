@@ -153,6 +153,7 @@ public abstract class Unite {
                 attaquant.setPointAction(attaquant.getPointAction() -1);
                 defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
                 if (defenseur.getSanteCourante() <= 0){
+                    gagnerArgentApresMort(defenseur);
                     joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
                     t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
                 }
@@ -161,8 +162,11 @@ public abstract class Unite {
         } System.out.println("def pv avant : "+defenseur.santeCourante);
     }
 
-    public void utiliseCompetence(int xD, int yD, int xA,int yA,int c, Terrain t){
+    public void gagnerArgentApresMort(Unite unite){
+        joueur.setArgent(joueur.getArgent() + (unite.getCoutUnite()/3));
+    }
 
+    public void utiliseCompetence(int xD, int yD, int xA,int yA,int c, Terrain t){
         if (c >=0 && c < competences.length)
             competences[c].useSkill(xD,yD,xA,yA,t);
     }

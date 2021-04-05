@@ -15,6 +15,10 @@ public class Evenement {
         value = v;
     }
 
+    public int getValue(){ return value;}
+
+    public void setValue(int value){this.value = value;}
+
     public boolean readEvent(int x,int y,Terrain t){
         if(x+this.x < 0 || x+this.x >= t.getPlateau()[0].length ||y+this.y < 0 || y+this.y >= t.getPlateau().length || t.getPlateau()[y+this.y][x+this.x].getUnite() ==null ){
             return false;
