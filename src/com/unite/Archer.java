@@ -6,9 +6,9 @@ public class Archer extends Unite{
     
     public Archer(Joueur joueur){
         super(joueur);
-        santeMax = 150; //discussion en cours
-        santeCourante = 150;
-        attaque = 30; //discussion en cours
+        santeMax = 200; //discussion en cours
+        santeCourante = 200;
+        attaque = 100; //discussion en cours
         coutUnite = 300; //discussion en cours
         porteeDeplacement = 3; //discussion en cours
         porteeAttaque = 5; //discussion en cours

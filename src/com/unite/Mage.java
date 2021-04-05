@@ -8,10 +8,10 @@ public class Mage extends Unite{
         super(joueur);
         santeMax = 125; //discussion en cours
         santeCourante = 125;
-        attaque = 50; //discussion en cours
-        coutUnite = 400; //discussion en cours
+        attaque = 125; //discussion en cours
+        coutUnite = 250; //discussion en cours
         porteeDeplacement = 4; //discussion en cours
-        porteeAttaque = 5; //discussion en cours
+        porteeAttaque = 4; //discussion en cours
         pointActionMax = 1; //discussion en cours
         pointAction = 1; //discussion en cours
         competences = new Competence[1];

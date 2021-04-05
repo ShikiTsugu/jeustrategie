@@ -8,8 +8,8 @@ public class Lancier extends Unite{
         super(joueur);
         santeMax = 200; //discussion en cours
         santeCourante = 200;
-        attaque = 30; //discussion en cours
-        coutUnite = 300; //discussion en cours
+        attaque = 75; //discussion en cours
+        coutUnite = 150; //discussion en cours
         porteeDeplacement = 3; //discussion en cours
         porteeAttaque = 1; //discussion en cours
         pointActionMax = 2; //discussion en cours
