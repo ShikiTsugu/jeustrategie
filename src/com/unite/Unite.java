@@ -162,13 +162,22 @@ public abstract class Unite {
         } System.out.println("def pv avant : "+defenseur.santeCourante);
     }
 
-    public void gagnerArgentApresMort(Unite unite){
-        joueur.setArgent(joueur.getArgent() + (unite.getCoutUnite()/3));
+    public void estMort(Terrain t, int xD, int yD){
+        Unite defenseur = t.getPlateau()[yD][xD].getUnite();
+        if (defenseur.getSanteCourante() <= 0) {
+            gagnerArgentApresMort(defenseur);
+            joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
+            t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
+        }
     }
 
-    public void utiliseCompetence(int xD, int yD, int xA,int yA,int c, Terrain t){
+    public void gagnerArgentApresMort(Unite uniteD){
+        joueur.setArgent(joueur.getArgent() + (uniteD.getCoutUnite()/3));
+    }
+
+    public void utiliseCompetence(int xA, int yA, int xD,int yD,int c, Terrain t){
         if (c >=0 && c < competences.length)
-            competences[c].useSkill(xD,yD,xA,yA,t);
+            competences[c].useSkill(xA,yA,xD,yD,t);
     }
 
     public boolean casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){

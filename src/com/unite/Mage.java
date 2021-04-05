@@ -15,7 +15,7 @@ public class Mage extends Unite{
         pointActionMax = 1; //discussion en cours
         pointAction = 1; //discussion en cours
         competences = new Competence[1];
-        Evenement[] event = {new Evenement("infligeDegats",0,0,50)};
+        Evenement[] event = {new Evenement("infligeDegats",0,0,125)};
         competences[0] = new Competence("tir maquique","lancer un projectile magique",event, 5,1);
     }
     
