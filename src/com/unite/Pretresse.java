@@ -14,9 +14,11 @@ public class Pretresse extends Unite{
         porteeAttaque = 3; //discussion en cours
         pointActionMax = 1; //discussion en cours
         pointAction = 1; //discussion en cours
-        competences = new Competence[1];
+        competences = new Competence[2];
         Evenement[] event = {new Evenement("soin",0,0,50)};
         competences[0] = new Competence("soin","soigne une unité",event, 5,1);
+        Evenement[] event2 = {new Evenement("appliqueAveugle",0,0,2)};
+        competences[1] = new Competence("lumière aveuglante","aveugle les ennemis , ce qui les empêchent d'attaquer",event2, 5,1);
     }
 
     public String toString(){

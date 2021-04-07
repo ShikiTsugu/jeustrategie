@@ -14,9 +14,16 @@ public class Mage extends Unite{
         porteeAttaque = 4; //discussion en cours
         pointActionMax = 1; //discussion en cours
         pointAction = 1; //discussion en cours
-        competences = new Competence[1];
+        competences = new Competence[2];
         Evenement[] event = {new Evenement("infligeDegats",0,0,125)};
         competences[0] = new Competence("tir maquique","lancer un projectile magique",event, 5,1);
+        Evenement[] event2 = {new Evenement("infligeDegats",0,0,125),
+                new Evenement("infligeDegats",1,0,125),
+                new Evenement("infligeDegats",-1,0,125),
+                new Evenement("infligeDegats",0,1,125),
+                new Evenement("infligeDegats",0,-1,125),
+        };
+        competences[1] = new Competence("météore","fait tomber un météore devastateur du ciel pour l'abatre sur ces ennemis",event2, 5,1);
     }
     
     public String toString(){

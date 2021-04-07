@@ -27,7 +27,7 @@ public class Evenement {
         if(event.equals("infligeDegats")){
             int res = t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante()-value;
             t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(res);
-            t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x, y);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x+this.x, y+this.y);
             return true;
         }
         if(event.equals("soin")){

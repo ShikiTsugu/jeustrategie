@@ -17,6 +17,7 @@ public class AlterationEtat {
         unite = u;
     }
 
+    public String getNom(){ return nom; }
     public int getTourRestant(){
         return tourRestant;
     }

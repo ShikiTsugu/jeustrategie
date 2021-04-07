@@ -167,6 +167,19 @@ public abstract class Unite {
 
     }
 
+    public int modifPortee(){
+        int modif = 0;
+        for(int i =0; i< debuffs.size();i++){
+            if(debuffs.get(i).getNom().equals("aveugle")){
+                System.out.println("-99");
+                return -99;
+            }
+        }
+        System.out.println(modif);
+        return modif ;
+
+    }
+
     public abstract String toString();
     public abstract boolean isHero();
     

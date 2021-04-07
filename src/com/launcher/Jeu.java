@@ -297,11 +297,17 @@ public class Jeu {
     }
 
     public void activateAlterationEtats(){
-        for(int i=0 ; i<tourDuJoueur.getUnites().length;i++){
-            if(tourDuJoueur.getUnites()[i]!=null) {
-                tourDuJoueur.getUnites()[i].readAlterationEtats();
+        for(int i=0 ; i<joueur2.getUnites().length;i++){
+            if(joueur2.getUnites()[i]!=null) {
+                joueur2.getUnites()[i].readAlterationEtats();
             }
         }
+        for(int i=0 ; i<joueur1.getUnites().length;i++){
+            if(joueur1.getUnites()[i]!=null) {
+                joueur1.getUnites()[i].readAlterationEtats();
+            }
+        }
+
 
     }
 
