@@ -87,6 +87,20 @@ public class Case {
         return Integer.toString(id);
     }
 
+    public int[] casePos(Terrain t){
+        int[] coord = new int[2];
+        for (int i = 0; i<t.getPlateau().length; i++){
+            for (int j = 0; j<t.getPlateau()[i].length; j++){
+                if (t.getPlateau()[i][j].id==this.id){
+                    coord[1]=i;
+                    coord[0]=j;
+                    return coord;
+                }
+            }
+        }
+        return coord;
+    }
+
     public String toString(){
         if(estVide()) return Integer.toString(id);
         if(estUnit()) return  afficheContenu();
