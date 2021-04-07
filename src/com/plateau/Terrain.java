@@ -67,7 +67,7 @@ public class Terrain {
     public boolean ajouteUnite(Unite u, int x, int y){
         try{
             if(plateau[y][x].unit==null){
-                plateau[y][x]=new Case(u);
+                plateau[y][x].setUnite(u);
                 u.setPositionUnite(plateau[y][x]);
                 u.setCurrentX(x);
                 u.setCurrentY(y);
