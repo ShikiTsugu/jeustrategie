@@ -230,6 +230,7 @@ public class Controlleur {
 
     public void finDeTour(){
         jeu.finDeTour();
+        jeu.activateAlterationEtats();
         nbTour++;
         JFrame findeTour = new JFrame();
         findeTour.setVisible(true);

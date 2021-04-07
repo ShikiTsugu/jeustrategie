@@ -6,4 +6,7 @@ public class Buff extends AlterationEtat{
     }
 
     //fonction à venir
+    public void readBuff(){
+
+    }
 }

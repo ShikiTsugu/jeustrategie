@@ -295,6 +295,15 @@ public class Jeu {
         }
     }
 
+    public void activateAlterationEtats(){
+        for(int i=0 ; i<tourDuJoueur.getUnites().length;i++){
+            if(tourDuJoueur.getUnites()[i]!=null) {
+                tourDuJoueur.getUnites()[i].readAlterationEtats();
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
         boolean[][] b1 = {{true,true,true,true,false,false,false,false,false,false,false,false,false,false},

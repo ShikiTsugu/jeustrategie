@@ -7,6 +7,24 @@ public class Debuff extends AlterationEtat {
         super(nom, tourRestant, u);
     }
 
+    public void readDebuff(){
+        if(nom.equals("etourdissement")){
+            etourdissement();
+        }
+        if(nom.equals("poison")){
+            poison();
+        }
+        if(nom.equals("immobilise")){
+            immobilise();
+        }
+        if(nom.equals("ralentissement")){
+            ralentissement();
+        }
+        if(nom.equals("aveugle")){
+            aveugle();
+        }
+    }
+
     public void etourdissement(){
         if (tourRestant > 0) {
             unite.setPointAction(0);

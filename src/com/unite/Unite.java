@@ -19,9 +19,13 @@ public abstract class Unite {
     protected Case positionUnite;
     protected Competence[] competences;
     protected HashSet<Case> deplacementDisponible;
-    protected ArrayList<AlterationEtat> alterationEtats;
+    protected ArrayList<Buff> buffs;
+    protected ArrayList<Debuff> debuffs;
+
     public Unite(Joueur joueur){
         this.joueur = joueur;
+        buffs = new ArrayList<Buff>();
+        debuffs = new ArrayList<Debuff>();
     }
     
     public int getSanteMax(){
@@ -106,24 +110,44 @@ public abstract class Unite {
 
     public void setDeplacementDisponible(HashSet<Case> deplacementDisponible){this.deplacementDisponible = deplacementDisponible;}
 
-    public void addAlterationEtat(String a,int n){
-        alterationEtats.add(new AlterationEtat(a,n,this));
+    public void addBuff(String a,int n){
+        buffs.add(new Buff(a,n,this));
+    }
+
+    public void addDebuff(String a,int n){
+        debuffs.add(new Debuff(a,n,this));
+    }
+
+    public void readAlterationEtats(){
+        updateAlterationEtats();
+        activeAlterationEtats();
     }
 
     public void updateAlterationEtats(){
-        for(int i =0; i< alterationEtats.size();i++){
-            if(alterationEtats.get(i).getTourRestant() <= 0){
-                alterationEtats.remove(i);
+        for(int i =0; i< buffs.size();i++){
+            if(buffs.get(i).getTourRestant() <= 0){
+                buffs.remove(i);
+            }
+        }
+        for(int i =0; i< debuffs.size();i++){
+            if(debuffs.get(i).getTourRestant() <= 0){
+                debuffs.remove(i);
             }
         }
     }
 
     public void activeAlterationEtats(){
-        for(int i =0; i< alterationEtats.size();i++){
-            if(alterationEtats.get(i).getTourRestant() > 0){
-                alterationEtats.get(i).readAlterationEtat();
+        for(int i =0; i< buffs.size();i++){
+            if(buffs.get(i).getTourRestant() > 0){
+                buffs.get(i).readBuff();
             }
         }
+        for(int i =0; i< debuffs.size();i++){
+            if(debuffs.get(i).getTourRestant() > 0){
+                debuffs.get(i).readDebuff();
+            }
+        }
+
     }
 
     public abstract String toString();

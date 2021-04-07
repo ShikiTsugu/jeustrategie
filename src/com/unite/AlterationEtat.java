@@ -9,7 +9,7 @@ public class AlterationEtat {
     protected String nom;
     protected Unite unite;
     protected int tourRestant;
-    protected Debuff debuff;
+
 
     public AlterationEtat(String nom, int tourRestant,Unite u){
         this.nom = nom;
@@ -21,21 +21,5 @@ public class AlterationEtat {
         return tourRestant;
     }
 
-    public void readAlterationEtat(){
-        if(nom.equals("etourdissement")){
-            debuff.etourdissement();
-        }
-        if(nom.equals("poison")){
-            debuff.poison();
-        }
-        if(nom.equals("immobilise")){
-            debuff.immobilise();
-        }
-        if(nom.equals("ralentissement")){
-            debuff.ralentissement();
-        }
-        if(nom.equals("aveugle")){
-            debuff.aveugle();
-        }
-    }
+
 }

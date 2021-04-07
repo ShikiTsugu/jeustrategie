@@ -35,23 +35,23 @@ public class Evenement {
             return true;
         }
         if(event.equals("appliqueEtourdissement")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("etourdissement",value);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("etourdissement",value);
             return true;
         }
         if(event.equals("appliquePoison")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("poison",value);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("poison",value);
             return true;
         }
         if(event.equals("appliqueImmobilise")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("immobilise",value);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("immobilise",value);
             return true;
         }
         if(event.equals("appliqueRalentissement")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("ralentissement",value);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("ralentissement",value);
             return true;
         }
         if(event.equals("appliqueAveugle")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("aveugle",value);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("aveugle",value);
             return true;
         }
 
