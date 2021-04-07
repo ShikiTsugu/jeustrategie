@@ -16,12 +16,19 @@ public abstract class Unite {
     protected int pointActionMax;
     protected int pointAction;
     protected Joueur joueur;
+    protected Terrain terrain;
     protected Case positionUnite;
+    protected int currentX;
+    protected int currentY;
     protected Competence[] competences;
     protected HashSet<Case> deplacementDisponible;
-    protected ArrayList<AlterationEtat> alterationEtats;
+    protected ArrayList<Buff> buffs;
+    protected ArrayList<Debuff> debuffs;
+
     public Unite(Joueur joueur){
         this.joueur = joueur;
+        buffs = new ArrayList<Buff>();
+        debuffs = new ArrayList<Debuff>();
     }
     
     public int getSanteMax(){
@@ -57,12 +64,18 @@ public abstract class Unite {
     public Joueur getJoueur(){
         return joueur;
     }
-    
+
+    public Terrain getTerrain() { return terrain;  }
+
     public Case getPositionUnite(){
         return positionUnite;
     }
     
     public HashSet<Case> getDeplacementDisponible(){return deplacementDisponible;}
+
+    public int getCurrentX() { return currentX; }
+
+    public int getCurrentY() { return currentY; }
 
     public Competence[] getCompetences() { return competences; }
 
@@ -99,33 +112,59 @@ public abstract class Unite {
     public void setJoueur(Joueur joueur){
 	    this.joueur = joueur;
     }
-    
+
+    public void setTerrain(Terrain terrain) { this.terrain = terrain;  }
+
     public void setPositionUnite(Case positionUnite){
         this.positionUnite = positionUnite;
     }
+
+    public void setCurrentX(int currentX) { this.currentX = currentX; }
+
+    public void setCurrentY(int currentY) { this.currentY = currentY; }
 
     public void setCompetences(Competence[] competences) { this.competences = competences; }
 
     public void setDeplacementDisponible(HashSet<Case> deplacementDisponible){this.deplacementDisponible = deplacementDisponible;}
 
-    public void addAlterationEtat(String a,int n){
-        alterationEtats.add(new AlterationEtat(a,n,this));
+    public void addBuff(String a,int n){
+        buffs.add(new Buff(a,n,this));
+    }
+
+    public void addDebuff(String a,int n){
+        debuffs.add(new Debuff(a,n,this));
+    }
+
+    public void readAlterationEtats(){
+        updateAlterationEtats();
+        activeAlterationEtats();
     }
 
     public void updateAlterationEtats(){
-        for(int i =0; i< alterationEtats.size();i++){
-            if(alterationEtats.get(i).getTourRestant() <= 0){
-                alterationEtats.remove(i);
+        for(int i =0; i< buffs.size();i++){
+            if(buffs.get(i).getTourRestant() <= 0){
+                buffs.remove(i);
+            }
+        }
+        for(int i =0; i< debuffs.size();i++){
+            if(debuffs.get(i).getTourRestant() <= 0){
+                debuffs.remove(i);
             }
         }
     }
 
     public void activeAlterationEtats(){
-        for(int i =0; i< alterationEtats.size();i++){
-            if(alterationEtats.get(i).getTourRestant() > 0){
-                alterationEtats.get(i).readAlterationEtat();
+        for(int i =0; i< buffs.size();i++){
+            if(buffs.get(i).getTourRestant() > 0){
+                buffs.get(i).readBuff();
             }
         }
+        for(int i =0; i< debuffs.size();i++){
+            if(debuffs.get(i).getTourRestant() > 0){
+                debuffs.get(i).readDebuff();
+            }
+        }
+
     }
 
     public abstract String toString();
@@ -141,6 +180,8 @@ public abstract class Unite {
                 destination.setUnite(avant.getUnite());
                 avant.getUnite().setPositionUnite(destination);
                 positionInitial.supprimerUniteCase(positionInitial);
+                currentX = xApres;
+                currentY = yApres;
                 System.out.println(deplacementDisponible);
             }
         }
@@ -155,6 +196,7 @@ public abstract class Unite {
                 attaquant.setPointAction(attaquant.getPointAction() -1);
                 defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
                 if (defenseur.getSanteCourante() <= 0){
+                    gagnerArgentApresMort(defenseur);
                     joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
                     t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
                 }
@@ -163,10 +205,30 @@ public abstract class Unite {
         } System.out.println("def pv avant : "+defenseur.santeCourante);
     }
 
-    public void utiliseCompetence(int xD, int yD, int xA,int yA,int c, Terrain t){
+    public void estMort(Terrain t, int xD, int yD){
+        Unite defenseur = t.getPlateau()[yD][xD].getUnite();
+        if (defenseur.getSanteCourante() <= 0) {
+            gagnerArgentApresMort(defenseur);
+            joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
+            t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
+        }
+    }
 
+
+
+    public void gagnerArgentApresMort(Unite uniteD){
+        Joueur j;
+        if(uniteD.getJoueur() == uniteD.getJoueur().getJeu().getJoueur1()) {
+            j = uniteD.getJoueur().getJeu().getJoueur2();
+        }else{
+            j = uniteD.getJoueur().getJeu().getJoueur1();
+        }
+        j.setArgent(j.getArgent() + (uniteD.getCoutUnite()/3));
+    }
+
+    public void utiliseCompetence(int xA, int yA, int xD,int yD,int c, Terrain t){
         if (c >=0 && c < competences.length)
-            competences[c].useSkill(xD,yD,xA,yA,t);
+            competences[c].useSkill(xA,yA,xD,yD,t);
     }
 
     public boolean casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){

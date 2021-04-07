@@ -69,6 +69,9 @@ public class Terrain {
             if(plateau[y][x].unit==null){
                 plateau[y][x]=new Case(u);
                 u.setPositionUnite(plateau[y][x]);
+                u.setCurrentX(x);
+                u.setCurrentY(y);
+                u.setTerrain(this);
                 System.out.println("unite placé");
                 return true;
             }

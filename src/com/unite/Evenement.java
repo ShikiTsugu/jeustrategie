@@ -15,7 +15,11 @@ public class Evenement {
         value = v;
     }
 
-    public boolean readEvent(int x,int y,Terrain t){
+    public int getValue(){ return value;}
+
+    public void setValue(int value){this.value = value;}
+
+    public boolean readEvent(int x, int y, Terrain t){
         if(x+this.x < 0 || x+this.x >= t.getPlateau()[0].length ||y+this.y < 0 || y+this.y >= t.getPlateau().length || t.getPlateau()[y+this.y][x+this.x].getUnite() ==null ){
             return false;
         }
@@ -23,6 +27,7 @@ public class Evenement {
         if(event.equals("infligeDegats")){
             int res = t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante()-value;
             t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(res);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x, y);
             return true;
         }
         if(event.equals("soin")){
@@ -30,23 +35,23 @@ public class Evenement {
             return true;
         }
         if(event.equals("appliqueEtourdissement")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("etourdissement",value);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("etourdissement",value);
             return true;
         }
         if(event.equals("appliquePoison")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("poison",value);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("poison",value);
             return true;
         }
         if(event.equals("appliqueImmobilise")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("immobilise",value);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("immobilise",value);
             return true;
         }
         if(event.equals("appliqueRalentissement")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("ralentissement",value);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("ralentissement",value);
             return true;
         }
         if(event.equals("appliqueAveugle")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addAlterationEtat("aveugle",value);
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("aveugle",value);
             return true;
         }
 

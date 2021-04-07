@@ -1,5 +1,4 @@
 package com.player;
-
 import com.plateau.Terrain;
 import com.unite.Unite;
 
@@ -8,8 +7,8 @@ import java.util.Random;
 public class Robot extends Joueur{
     private int[] coordTarget = new int[2];
     private int[] coord = new int[2];
-    public Robot(int a){
-        super(a);
+    public Robot(int a,Jeu jeu){
+        super(a,jeu);
         isHuman = false;
     }
 
