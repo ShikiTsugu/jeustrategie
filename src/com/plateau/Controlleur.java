@@ -247,11 +247,19 @@ public class Controlleur {
         JLabel jTour = new JLabel("Tour du joueur");
         if(jeu.getTourDuJoueur() == jeu.getJoueur1()){
             jeu.getJoueur1().resetPointAction();
-            jTour = new JLabel("Tour du joueur 1");
+            if(jeu.getJoueur2().getIsHuman()) {
+                jTour = new JLabel("Tour du joueur 1");
+            }else{
+                jTour = new JLabel("A votre tour, le robot a joué");
+            }
         } else if (jeu.getTourDuJoueur() == jeu.getJoueur2()){
             if (nbTour == 2) jeu.getJoueur2().getHero().setPointAction(0);
             else jeu.getJoueur2().resetPointAction();
-            jTour = new JLabel("Tour du joueur 2");
+            if(jeu.getJoueur2().getIsHuman()) {
+                jTour = new JLabel("Tour du joueur 2");
+            }else{
+                findeTour.dispose();
+            }
         }
         nTour.setPreferredSize(new Dimension(50, 25));
         jTour.setPreferredSize(new Dimension(50, 25));
