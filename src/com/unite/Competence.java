@@ -32,7 +32,7 @@ public class Competence {
     }
 
     public boolean useSkill(int xA , int yA, int xD,int yD, Terrain terrain){
-        if(terrain.getPlateau()[yA][xA].getUnite().getPointAction()>=cout && ((Math.abs(yA - yD)+Math.abs(xA - xD)) <= portee)) {
+        if(terrain.getPlateau()[yA][xA].getUnite().getPointAction()>=cout && ((Math.abs(yA - yD)+Math.abs(xA - xD)) <= portee + terrain.getPlateau()[yA][xA].getUnite().modifPortee())) {
             for (int i = 0; i < effets.length; i++) {
                 effets[i].readEvent(xD,yD,terrain);
             }

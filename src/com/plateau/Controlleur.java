@@ -232,7 +232,6 @@ public class Controlleur {
 
     public void finDeTour(){
         jeu.finDeTour();
-        jeu.activateAlterationEtats();
         nbTour++;
         JFrame findeTour = new JFrame();
         findeTour.setVisible(true);
@@ -262,6 +261,7 @@ public class Controlleur {
                 findeTour.dispose();
             }
         }
+        jeu.activateAlterationEtats();
         nTour.setPreferredSize(new Dimension(50, 25));
         jTour.setPreferredSize(new Dimension(50, 25));
         nTour.setAlignmentX(Component.CENTER_ALIGNMENT);
