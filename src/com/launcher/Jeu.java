@@ -6,6 +6,7 @@ import com.plateau.Terrain;
 import com.plateau.Vue;
 import com.player.ActionJoueur;
 import com.player.Joueur;
+import com.player.Robot;
 import com.unite.*;
 import com.unite.Templier;
 
@@ -271,7 +272,7 @@ public class Jeu {
         setJoueur1(new Joueur(1000));
         setActionjoueur1(new ActionJoueur(joueur1));
         joueur1.initialiseListeUnites(terrain);
-        setJoueur2(new Joueur(1000));
+        setJoueur2(new Robot(1000));
         setActionjoueur2(new ActionJoueur(joueur2));
         joueur2.initialiseListeUnites(terrain);
         Hero h1 = new Hero(joueur1);
