@@ -272,25 +272,24 @@ public class Vue extends JFrame{
                     pv.setAlignmentY(BOTTOM_ALIGNMENT);
                     bt.add(pv);
                     TerrainPanel.add(bt);
-                    if (tourJoueur.getIsHuman()) {
-                        bt.addActionListener((ActionEvent e) -> {
-                            System.out.println(terrain.plateau[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].unit);
-                            if (terrain.getPlateau()[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].getUnite().getPointAction() > 0) {
-                                initialiseStats(bt);
-                                initialiseAtk(bt);
-                                initialiseDep(bt);
-                                generateAction(bt);
-                            } else {
-                                initialiseStats(bt);
-                                generateAction(bt);
-                                btAtk.setEnabled(false);
-                                btDep.setEnabled(false);
-                            }
-                        });
-                    }else{
-                        if(terrain.plateau[x][y].unit.getPointAction()>0){
+                    bt.addActionListener((ActionEvent e) -> {
+                        System.out.println(terrain.plateau[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].unit);
+                        if (terrain.getPlateau()[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].getUnite().getPointAction() > 0) {
+                            initialiseStats(bt);
+                            initialiseAtk(bt);
+                            initialiseDep(bt);
+                            generateAction(bt);
+                        } else {
+                            initialiseStats(bt);
+                            generateAction(bt);
+                            btAtk.setEnabled(false);
+                            btDep.setEnabled(false);
+                        }
+                    });
+                    if(!tourJoueur.getIsHuman()) {
+                        if (terrain.plateau[x][y].unit.getPointAction() > 0) {
                             controlleur.deplaceUniteRob(tourJoueur);
-                        }else{
+                        } else {
                             controlleur.finDeTour();
                         }
                     }
