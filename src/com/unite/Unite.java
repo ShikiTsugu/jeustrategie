@@ -4,6 +4,7 @@ import com.plateau.*;
 import com.player.Joueur;
 import java.lang.*;
 import java.util.*;
+import java.util.ArrayList;
 
 public abstract class Unite {
     protected int santeMax;
@@ -18,7 +19,7 @@ public abstract class Unite {
     protected Case positionUnite;
     protected Competence[] competences;
     protected HashSet<Case> deplacementDisponible;
-    //rajouter plus tard protected AlterationEtat etat;
+    protected ArrayList<AlterationEtat> alterationEtats;
     public Unite(Joueur joueur){
         this.joueur = joueur;
     }
@@ -61,10 +62,8 @@ public abstract class Unite {
         return positionUnite;
     }
 
-    public HashSet<Case> getDeplacementDisponible(){return deplacementDisponible;}
+    public Competence[] getCompetences() { return competences; }
 
-
-    
     public void setSanteMax(int santeMax){
         this.santeMax = santeMax;
     }
@@ -107,6 +106,26 @@ public abstract class Unite {
 
     public void setDeplacementDisponible(HashSet<Case> deplacementDisponible){this.deplacementDisponible = deplacementDisponible;}
 
+    public void addAlterationEtat(String a,int n){
+        alterationEtats.add(new AlterationEtat(a,n,this));
+    }
+
+    public void updateAlterationEtats(){
+        for(int i =0; i< alterationEtats.size();i++){
+            if(alterationEtats.get(i).getTourRestant() <= 0){
+                alterationEtats.remove(i);
+            }
+        }
+    }
+
+    public void activeAlterationEtats(){
+        for(int i =0; i< alterationEtats.size();i++){
+            if(alterationEtats.get(i).getTourRestant() > 0){
+                alterationEtats.get(i).readAlterationEtat();
+            }
+        }
+    }
+
     public abstract String toString();
     public abstract boolean isHero();
     
@@ -120,6 +139,7 @@ public abstract class Unite {
                 destination.setUnite(avant.getUnite());
                 avant.getUnite().setPositionUnite(destination);
                 positionInitial.supprimerUniteCase(positionInitial);
+                System.out.println(deplacementDisponible);
             }
         }
     }
@@ -139,6 +159,12 @@ public abstract class Unite {
                 else if (t.getPlateau()[yD][xD].estObstacle() || t.getPlateau()[yD][xD].estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
             }
         } System.out.println("def pv avant : "+defenseur.santeCourante);
+    }
+
+    public void utiliseCompetence(int xD, int yD, int xA,int yA,int c, Terrain t){
+
+        if (c >=0 && c < competences.length)
+            competences[c].useSkill(xD,yD,xA,yA,t);
     }
 
     public boolean casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){
