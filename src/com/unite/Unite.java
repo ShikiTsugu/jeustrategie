@@ -17,6 +17,8 @@ public abstract class Unite {
     protected int pointAction;
     protected Joueur joueur;
     protected Case positionUnite;
+    protected int currentX;
+    protected int currentY;
     protected Competence[] competences;
     protected HashSet<Case> deplacementDisponible;
     protected ArrayList<Buff> buffs;
@@ -106,6 +108,10 @@ public abstract class Unite {
         this.positionUnite = positionUnite;
     }
 
+    public void setCurrentX(int currentX) { this.currentX = currentX; }
+
+    public void setCurrentY(int currentY) { this.currentY = currentY; }
+
     public void setCompetences(Competence[] competences) { this.competences = competences; }
 
     public void setDeplacementDisponible(HashSet<Case> deplacementDisponible){this.deplacementDisponible = deplacementDisponible;}
@@ -163,6 +169,8 @@ public abstract class Unite {
                 destination.setUnite(avant.getUnite());
                 avant.getUnite().setPositionUnite(destination);
                 positionInitial.supprimerUniteCase(positionInitial);
+                currentX = xApres;
+                currentY = yApres;
                 System.out.println(deplacementDisponible);
             }
         }
@@ -194,6 +202,8 @@ public abstract class Unite {
             t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
         }
     }
+
+
 
     public void gagnerArgentApresMort(Unite uniteD){
         joueur.setArgent(joueur.getArgent() + (uniteD.getCoutUnite()/3));
