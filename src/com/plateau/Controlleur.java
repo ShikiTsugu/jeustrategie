@@ -2,6 +2,7 @@ package com.plateau;
 
 import com.launcher.Jeu;
 import com.player.*;
+import com.player.Robot;
 import com.unite.Unite;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 public class Controlleur {
     private Vue vue;
@@ -282,6 +284,29 @@ public class Controlleur {
                 vue.generateTaskBar();
             });
         }
+    }
+
+    public void deplaceUniteRob(Joueur j){
+        ActionJoueur aj = new ActionJoueur(j);
+        if(((Robot) j).pickUnit(vue.terrain)) {
+            int[] coordI = ((Robot) j).getCoord();
+            Unite u = vue.terrain.plateau[coordI[0]][coordI[1]].unit;
+            u.casesDisponibleDeplacement(vue.terrain, u, coordI[1], coordI[0], coordI[1], coordI[0]);
+            int[] coordF = {coordI[0], coordI[1] - 1};
+            for (Case c : u.getDeplacementDisponible()) {
+                if (u.getPointAction() > 0) {
+                    if (c.estUnit() && c.getUnite().getJoueur() != j) {
+                        ((Robot) j).setCoordTarget(c.casePos(vue.terrain)[1], c.casePos(vue.terrain)[0]);
+                        break;
+                    }
+                    aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                    coordF[1]--;
+                } else {
+                    break;
+                }
+            }
+        }
+        finDeTour();
     }
 
     public void setJeu(Jeu j){

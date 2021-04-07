@@ -61,6 +61,8 @@ public abstract class Unite {
     public Case getPositionUnite(){
         return positionUnite;
     }
+    
+    public HashSet<Case> getDeplacementDisponible(){return deplacementDisponible;}
 
     public Competence[] getCompetences() { return competences; }
 
