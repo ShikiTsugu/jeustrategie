@@ -35,23 +35,53 @@ public class Evenement {
             return true;
         }
         if(event.equals("appliqueEtourdissement")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("etourdissement",value);
+            if(!t.getPlateau()[y+this.y][x+this.x].getUnite().possedeBuff("immuniteEtourdissement")) {
+                t.getPlateau()[y + this.y][x + this.x].getUnite().addDebuff("etourdissement", value);
+            }
+            return true;
+        }
+        if(event.equals("appliqueResistEtourdissement")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("immuniteEtourdissement",value);
             return true;
         }
         if(event.equals("appliquePoison")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("poison",value);
+            if(!t.getPlateau()[y+this.y][x+this.x].getUnite().possedeBuff("immunitePoison")) {
+                t.getPlateau()[y + this.y][x + this.x].getUnite().addDebuff("poison", value);
+            }
+            return true;
+        }
+        if(event.equals("appliqueResistPoison")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("immunitePoison",value);
             return true;
         }
         if(event.equals("appliqueImmobilise")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("immobilise",value);
+            if(!t.getPlateau()[y+this.y][x+this.x].getUnite().possedeBuff("immuniteImmobilise")) {
+                t.getPlateau()[y + this.y][x + this.x].getUnite().addDebuff("immobilise", value);
+            }
+            return true;
+        }
+        if(event.equals("appliqueResistImmobilise")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("immuniteImmobilise",value);
             return true;
         }
         if(event.equals("appliqueRalentissement")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("ralentissement",value);
+            if(!t.getPlateau()[y+this.y][x+this.x].getUnite().possedeBuff("immuniteRalentissement")) {
+                t.getPlateau()[y + this.y][x + this.x].getUnite().addDebuff("ralentissement", value);
+            }
+            return true;
+        }
+        if(event.equals("appliqueResistRalentissement")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("immuniteRalentissement",value);
             return true;
         }
         if(event.equals("appliqueAveugle")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("aveugle",value);
+            if(!t.getPlateau()[y+this.y][x+this.x].getUnite().possedeBuff("immuniteAveugle")) {
+                t.getPlateau()[y + this.y][x + this.x].getUnite().addDebuff("aveugle", value);
+            }
+            return true;
+        }
+        if(event.equals("appliqueResistAveugle")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addBuff("immuniteAveugle",value);
             return true;
         }
 
