@@ -3,6 +3,7 @@ package com.plateau;
 import com.launcher.Jeu;
 import com.player.ActionJoueur;
 import com.player.Joueur;
+import com.player.Robot;
 import com.unite.*;
 
 import javax.imageio.ImageIO;
@@ -213,7 +214,7 @@ public class Vue extends JFrame{
         resetButton(btDep);
         btDep.setEnabled(true);
         btDep.addActionListener((ActionEvent dep) -> {
-            controlleur.deplaceUnite(tourJoueur,b);
+            controlleur.deplaceUnite(tourJoueur, b);
         });
     }
 
@@ -255,6 +256,7 @@ public class Vue extends JFrame{
         boolean b;
         GridLayout grid = new GridLayout(terrain.plateau.length,terrain.plateau[0].length);
         TerrainPanel.setLayout(grid);
+        tourJoueur.displayList();
         for (int x = 0; x < terrain.plateau.length; x++){
             for (int y = 0; y < terrain.plateau[x].length; y++){
                 if (terrain.plateau[x][y].unit != null) {
@@ -271,19 +273,26 @@ public class Vue extends JFrame{
                     bt.add(pv);
                     TerrainPanel.add(bt);
                     bt.addActionListener((ActionEvent e) -> {
-                        System.out.println(terrain.plateau[bt.getY()/bt.getHeight()][bt.getX()/bt.getWidth()].unit);
-                        if(terrain.getPlateau()[bt.getY()/bt.getHeight()][bt.getX()/bt.getWidth()].getUnite().getPointAction()>0){
+                        System.out.println(terrain.plateau[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].unit);
+                        if (terrain.getPlateau()[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].getUnite().getPointAction() > 0) {
                             initialiseStats(bt);
                             initialiseAtk(bt);
                             initialiseDep(bt);
                             generateAction(bt);
-                        }else{
+                        } else {
                             initialiseStats(bt);
                             generateAction(bt);
                             btAtk.setEnabled(false);
                             btDep.setEnabled(false);
                         }
                     });
+                    if(!tourJoueur.getIsHuman()) {
+                        if (terrain.plateau[x][y].unit.getPointAction() > 0) {
+                            controlleur.deplaceUniteRob(tourJoueur);
+                        } else {
+                            controlleur.finDeTour();
+                        }
+                    }
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
                         resetButton(bt);
                         pv.setForeground(new Color(200,0,0));

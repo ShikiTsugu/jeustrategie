@@ -6,6 +6,7 @@ import com.plateau.Terrain;
 import com.plateau.Vue;
 import com.player.ActionJoueur;
 import com.player.Joueur;
+import com.player.Robot;
 import com.unite.*;
 import com.unite.Templier;
 

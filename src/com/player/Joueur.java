@@ -80,6 +80,12 @@ public class Joueur {
         }
     }
 
+    public void displayList(){
+        for (int i = 0; i<unites.length;i++){
+            System.out.println(unites[i]);
+        }
+    }
+
     public void resetPointAction(){
         for (Unite u : unites) {
             try {

@@ -2,6 +2,7 @@ package com.plateau;
 
 import com.launcher.Jeu;
 import com.player.*;
+import com.player.Robot;
 import com.unite.Unite;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 public class Controlleur {
     private Vue vue;
@@ -246,11 +248,19 @@ public class Controlleur {
         JLabel jTour = new JLabel("Tour du joueur");
         if(jeu.getTourDuJoueur() == jeu.getJoueur1()){
             jeu.getJoueur1().resetPointAction();
-            jTour = new JLabel("Tour du joueur 1");
+            if(jeu.getJoueur2().getIsHuman()) {
+                jTour = new JLabel("Tour du joueur 1");
+            }else{
+                jTour = new JLabel("A votre tour, le robot a joué");
+            }
         } else if (jeu.getTourDuJoueur() == jeu.getJoueur2()){
             if (nbTour == 2) jeu.getJoueur2().getHero().setPointAction(0);
             else jeu.getJoueur2().resetPointAction();
-            jTour = new JLabel("Tour du joueur 2");
+            if(jeu.getJoueur2().getIsHuman()) {
+                jTour = new JLabel("Tour du joueur 2");
+            }else{
+                findeTour.dispose();
+            }
         }
         nTour.setPreferredSize(new Dimension(50, 25));
         jTour.setPreferredSize(new Dimension(50, 25));
@@ -283,6 +293,29 @@ public class Controlleur {
                 vue.generateTaskBar();
             });
         }
+    }
+
+    public void deplaceUniteRob(Joueur j){
+        ActionJoueur aj = new ActionJoueur(j);
+        if(((Robot) j).pickUnit(vue.terrain)) {
+            int[] coordI = ((Robot) j).getCoord();
+            Unite u = vue.terrain.plateau[coordI[0]][coordI[1]].unit;
+            u.casesDisponibleDeplacement(vue.terrain, u, coordI[1], coordI[0], coordI[1], coordI[0]);
+            int[] coordF = {coordI[0], coordI[1] - 1};
+            for (Case c : u.getDeplacementDisponible()) {
+                if (u.getPointAction() > 0) {
+                    if (c.estUnit() && c.getUnite().getJoueur() != j) {
+                        ((Robot) j).setCoordTarget(c.casePos(vue.terrain)[1], c.casePos(vue.terrain)[0]);
+                        break;
+                    }
+                    aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                    coordF[1]--;
+                } else {
+                    break;
+                }
+            }
+        }
+        finDeTour();
     }
 
     public void setJeu(Jeu j){
