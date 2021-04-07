@@ -10,7 +10,7 @@ public class Assassin extends Unite{
         santeCourante = 100;
         attaque = 200; //discussion en cours
         coutUnite = 500; //discussion en cours
-        porteeDeplacement = 4; //discussion en cours
+        porteeDeplacement = 5; //discussion en cours
         porteeAttaque = 1; //discussion en cours
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours

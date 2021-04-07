@@ -34,7 +34,7 @@ public class Debuff extends AlterationEtat {
 
     public void poison(){
         if (tourRestant > 0){
-            unite.setSanteCourante(unite.getSanteCourante()-20);
+            unite.setSanteCourante(unite.getSanteCourante()-50);
             unite.estMort(unite.getTerrain(), unite.getCurrentX(), unite.getCurrentY());
             tourRestant-=1;
         }

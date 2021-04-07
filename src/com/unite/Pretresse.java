@@ -10,7 +10,7 @@ public class Pretresse extends Unite{
         santeCourante = 150;
         attaque = 25; //discussion en cours
         coutUnite = 400; //discussion en cours
-        porteeDeplacement = 4; //discussion en cours
+        porteeDeplacement = 5; //discussion en cours
         porteeAttaque = 3; //discussion en cours
         pointActionMax = 1; //discussion en cours
         pointAction = 1; //discussion en cours
