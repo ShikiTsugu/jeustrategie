@@ -71,6 +71,7 @@ public class Terrain {
                 u.setPositionUnite(plateau[y][x]);
                 u.setCurrentX(x);
                 u.setCurrentY(y);
+                u.setTerrain(this);
                 System.out.println("unite placé");
                 return true;
             }

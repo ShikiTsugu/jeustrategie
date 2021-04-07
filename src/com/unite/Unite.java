@@ -16,6 +16,7 @@ public abstract class Unite {
     protected int pointActionMax;
     protected int pointAction;
     protected Joueur joueur;
+    protected Terrain terrain;
     protected Case positionUnite;
     protected int currentX;
     protected int currentY;
@@ -63,10 +64,16 @@ public abstract class Unite {
     public Joueur getJoueur(){
         return joueur;
     }
-    
+
+    public Terrain getTerrain() { return terrain;  }
+
     public Case getPositionUnite(){
         return positionUnite;
     }
+
+    public int getCurrentX() { return currentX; }
+
+    public int getCurrentY() { return currentY; }
 
     public Competence[] getCompetences() { return competences; }
 
@@ -103,7 +110,9 @@ public abstract class Unite {
     public void setJoueur(Joueur joueur){
 	    this.joueur = joueur;
     }
-    
+
+    public void setTerrain(Terrain terrain) { this.terrain = terrain;  }
+
     public void setPositionUnite(Case positionUnite){
         this.positionUnite = positionUnite;
     }
