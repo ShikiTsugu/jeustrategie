@@ -29,6 +29,10 @@ public class Debuff extends AlterationEtat {
         if (tourRestant > 0) {
             unite.setPointAction(0);
             tourRestant -= 1;
+
+        }
+        if(tourRestant >= 0){
+            unite.addBuff("immuniteEtourdissement",3);
         }
     }
 
