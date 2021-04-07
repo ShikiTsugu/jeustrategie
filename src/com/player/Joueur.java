@@ -1,19 +1,24 @@
 package com.player;
 
+import com.launcher.Jeu;
 import com.unite.Hero;
 import com.unite.Unite;
 import com.plateau.Terrain;
 
 public class Joueur {
     protected int argent;
+    protected Jeu jeu ;
     protected boolean isHuman;
     protected Unite[] unites;
     private boolean added=false;
 
-    public Joueur(int a){
+    public Joueur(int a, Jeu jeu){
+        this.jeu = jeu;
         argent = a;
         isHuman = true;
     }
+
+    public Jeu getJeu() {return jeu;}
 
     public Unite getHero(){
         return unites[0];

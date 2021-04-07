@@ -215,7 +215,13 @@ public abstract class Unite {
 
 
     public void gagnerArgentApresMort(Unite uniteD){
-        joueur.setArgent(joueur.getArgent() + (uniteD.getCoutUnite()/3));
+        Joueur j;
+        if(uniteD.getJoueur() == uniteD.getJoueur().getJeu().getJoueur1()) {
+            j = uniteD.getJoueur().getJeu().getJoueur2();
+        }else{
+            j = uniteD.getJoueur().getJeu().getJoueur1();
+        }
+        j.setArgent(j.getArgent() + (uniteD.getCoutUnite()/3));
     }
 
     public void utiliseCompetence(int xA, int yA, int xD,int yD,int c, Terrain t){

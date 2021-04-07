@@ -136,10 +136,10 @@ public class Jeu {
      * A MODIFIER
      */
     public void startNewGame(Terrain terrain){
-        setJoueur1(new Joueur(1000));
+        setJoueur1(new Joueur(1000,this));
         setActionjoueur1(new ActionJoueur(joueur1));
         joueur1.initialiseListeUnites(terrain);
-        setJoueur2(new Joueur(1000));
+        setJoueur2(new Joueur(1000,this));
         setActionjoueur2(new ActionJoueur(joueur2));
         joueur2.initialiseListeUnites(terrain);
         setTerrain(terrain);
@@ -268,10 +268,10 @@ public class Jeu {
     }
 
     public void startGraphique(){
-        setJoueur1(new Joueur(1000));
+        setJoueur1(new Joueur(1000,this));
         setActionjoueur1(new ActionJoueur(joueur1));
         joueur1.initialiseListeUnites(terrain);
-        setJoueur2(new Joueur(1000));
+        setJoueur2(new Joueur(1000,this));
         setActionjoueur2(new ActionJoueur(joueur2));
         joueur2.initialiseListeUnites(terrain);
         Hero h1 = new Hero(joueur1);
