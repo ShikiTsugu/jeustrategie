@@ -349,7 +349,8 @@ public class Controlleur {
         int uniteRandom = rand.nextInt(vue.getListeUnit().length);
         Unite u = vue.createUnite(vue.getListeUnit()[uniteRandom]);
         ActionJoueur aj = new ActionJoueur(j);
-        int[] pos = ((Robot)j).availableSpace(vue.terrain);
+        int randPosLibre = rand.nextInt(((Robot)j).availableSpace(vue.terrain).size());
+        int[] pos = (int[]) ((Robot)j).availableSpace(vue.terrain).get(randPosLibre);
         if (j.getArgent()>=u.getCoutUnite() && !j.maxUnit()){
             aj.acheteUnite(u,vue.getTerrainPanel());
             j.ajouteUnite(u);
