@@ -37,6 +37,8 @@ public class Vue extends JFrame{
     private JButton btSkill4 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
     private JLabel taskbarbg = new JLabel(new ImageIcon(Jeu.selectGoodPath()+"/assets/taskbarbg.png"));
 
+    public String[] getListeUnit(){return listeUnit;}
+
     public Vue(Model m, Terrain t, Joueur j){
         model = m;
         imagePane = new ImagePane(model);
@@ -287,11 +289,7 @@ public class Vue extends JFrame{
                         }
                     });
                     if(!tourJoueur.getIsHuman()) {
-                        if (terrain.plateau[x][y].unit.getPointAction() > 0) {
-                            controlleur.deplaceUniteRob(tourJoueur);
-                        } else {
-                            controlleur.finDeTour();
-                        }
+                        controlleur.robotPlay(tourJoueur);
                     }
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
                         resetButton(bt);
