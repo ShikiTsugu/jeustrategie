@@ -93,4 +93,13 @@ public class Joueur {
             } catch (NullPointerException e){}
         }
     }
+
+    public boolean maxUnit(){
+        for (Unite u : unites){
+            if(u == null){
+                return false;
+            }
+        }
+        return true;
+    }
 }
