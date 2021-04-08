@@ -3,6 +3,7 @@ import com.launcher.Jeu;
 import com.plateau.Terrain;
 import com.unite.Unite;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Robot extends Joueur{
@@ -56,14 +57,16 @@ public class Robot extends Joueur{
         return true;
     }
 
-    public int[] availableSpace(Terrain t){
+    public LinkedList availableSpace(Terrain t){
+        LinkedList<int[]> coord = new LinkedList<>();
         for (int i = 0; i<t.getB2().length; i++){
             for (int j = 0; j<t.getB2()[i].length; j++){
                 if(t.getB2()[i][j]==true && t.getPlateau()[i][j].estVide()){
-                    return new int[]{i, j};
+                    int[] tmp = {i,j};
+                    coord.add(tmp);
                 }
             }
         }
-        return null;
+        return coord;
     }
 }
