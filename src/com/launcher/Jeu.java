@@ -272,7 +272,8 @@ public class Jeu {
         setJoueur1(new Joueur(1000,this));
         setActionjoueur1(new ActionJoueur(joueur1));
         joueur1.initialiseListeUnites(terrain);
-        setJoueur2(new Robot(1000,this));
+        //setJoueur2(new Joueur(1000,this));
+        setJoueur2(new Robot(1000,this)); //Pour tester le robot
         setActionjoueur2(new ActionJoueur(joueur2));
         joueur2.initialiseListeUnites(terrain);
         Hero h1 = new Hero(joueur1);
