@@ -276,6 +276,8 @@ public class Controlleur {
             jeu.activateAlterationEtats();
         }
         vue.setTourJoueur(jeu.getTourDuJoueur());
+        vue.generateTerrain();
+        vue.generateTaskBar();
     }
 
     public void deplaceUnite(Joueur j, JButton posIni){
