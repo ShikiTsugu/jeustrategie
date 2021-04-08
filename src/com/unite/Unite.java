@@ -167,25 +167,15 @@ public abstract class Unite {
 
     }
 
-    public boolean possedeBuff(String s){
-        for(int i =0 ; i< buffs.size();i++){
-            if(buffs.get(i).getNom().equals(s)){
-                System.out.println("true");
-                return true;
-            }
-        }
-        System.out.println("true");
-
-        return false;
-    }
-
     public int modifPortee(){
         int modif = 0;
         for(int i =0; i< debuffs.size();i++){
             if(debuffs.get(i).getNom().equals("aveugle")){
                 System.out.println("-99");
+                return -99;
             }
         }
+        System.out.println(modif);
         return modif ;
 
     }
