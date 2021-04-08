@@ -316,21 +316,27 @@ public class Controlleur {
             Unite u = vue.terrain.plateau[coordI[0]][coordI[1]].unit;
             u.casesDisponibleDeplacement(vue.terrain, u, coordI[1], coordI[0], coordI[1], coordI[0]);
             int[] coordF = {coordI[0], coordI[1]};
+            int catchTarget=0;
             for (Case c : u.getDeplacementDisponible()) {
-                if (u.getPointAction() > 0) {
-                    if (c.estUnit() && c.getUnite().getJoueur() != j) {
-                        ((Robot) j).setCoordTarget(c.casePos(vue.terrain)[1], c.casePos(vue.terrain)[0]);
+                if (c.estUnit() && c.getUnite().getJoueur() != j) {
+                    ((Robot) j).setCoordTarget(c.casePos(vue.terrain)[1], c.casePos(vue.terrain)[0]);
+                    catchTarget=1;
+                    break;
+                }
+            }
+            if(catchTarget==0) {
+                for (Case c : u.getDeplacementDisponible()) {
+                    if (u.getPointAction() > 0) {
+                        if (coordF[1] != 0) {
+                            coordF[1]--;
+                            aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                        } else if (coordF[0] != vue.terrain.plateau.length - 1) {
+                            coordF[0]++;
+                            aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                        }
+                    } else {
                         break;
                     }
-                    if(coordF[1]!=0) {
-                        coordF[1]--;
-                        aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
-                    }else if(coordF[0]!=vue.terrain.plateau.length-1){
-                        coordF[0]++;
-                        aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
-                    }
-                } else {
-                    break;
                 }
             }
         }
