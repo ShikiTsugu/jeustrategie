@@ -6,12 +6,11 @@ public class Map {
     protected boolean b1[][];
     protected boolean b2[][];
 
-    public Map(){
+    public Map(){}
 
-    }
-
-    public void generateMap5x5(){
-
+    public void createTerrain(int x, int y, int z){
+        generateSpawnable(y, x, z);
+        map = new Terrain(x,y,12,0,3,13,3,b1,b2);
     }
 
     public void generateSpawnable(int x, int y, int s){
@@ -24,6 +23,14 @@ public class Map {
                 b2[i][j] = j >= y - s;
             }
         }
+    }
+
+    public void Map5x5(){
+        createTerrain(5, 5, 2);
+    }
+
+    public void Map14x6(){
+        createTerrain(14, 6, 2);
     }
 
     public void printSpawnable1(){

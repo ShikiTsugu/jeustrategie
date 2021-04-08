@@ -21,7 +21,6 @@ public class Jeu {
     protected String requeteCourante;
     protected Model m = new Model(selectGoodPath() + "/assets/titlescreen.png");
     protected Vue v;
-    protected Map map;
 
 
 
@@ -268,31 +267,24 @@ public class Jeu {
     public void startGraphique(){
         setJoueur1(new Joueur(1000));
         setActionjoueur1(new ActionJoueur(joueur1));
-        joueur1.initialiseListeUnites(terrain);
+        //joueur1.initialiseListeUnites(terrain);
         setJoueur2(new Joueur(1000));
         setActionjoueur2(new ActionJoueur(joueur2));
-        joueur2.initialiseListeUnites(terrain);
+        //joueur2.initialiseListeUnites(terrain);
         Hero h1 = new Hero(joueur1);
         Hero h2 = new Hero(joueur2);
-        joueur1.ajouteUnite(h1);
-        joueur2.ajouteUnite(h2);
-        terrain.ajouteUnite(h1,0,3);
-        terrain.ajouteUnite(h2,13,3);
-        terrain.setEffectCase(7,3, new CaseGold());
-        setTerrain(terrain);
+        //joueur1.ajouteUnite(h1);
+        //joueur2.ajouteUnite(h2);
+        //terrain.ajouteUnite(h1,0,3);
+        //terrain.ajouteUnite(h2,13,3);
+        //terrain.setEffectCase(7,3, new CaseGold());
+        //setTerrain(terrain);
         tourDuJoueur = joueur1;
         v = new Vue(m,terrain,joueur1);
         v.getControlleur().setJeu(this);
         v.afficheIni();
     }
 
-    public void createTerrain(int x, int y, int z){
-        map = new Map();
-        map.generateSpawnable(y, x, 4);
-        boolean[][] b1 = map.getB1();
-        boolean[][] b2 = map.getB2();
-        terrain = new Terrain(14,6,12,0,3,13,3,b1,b2);
-    }
 
     public void finDeTour(){
         if (tourDuJoueur == joueur1) {
@@ -304,7 +296,6 @@ public class Jeu {
 
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
-        jeu.createTerrain(14, 6, 4);
         //jeu.playGame(terrain);
         //System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1, true));
         jeu.startGraphique();

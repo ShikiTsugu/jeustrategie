@@ -42,10 +42,6 @@ public class Vue extends JFrame{
         setResizable(false);
         terrain = t;
 
-        if (terrain != null) {
-            AfficheTerrain();
-        }
-
         setVisible(true);
         setLocationRelativeTo(null);
     }
@@ -63,9 +59,11 @@ public class Vue extends JFrame{
         jouer.setBackground(new Color(83, 214, 191));
         jouer.setForeground(Color.WHITE);
         jouer.addActionListener((ActionEvent e) -> {
+            AfficheMenu();
+            /*
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
-            imagePane.add(TaskBar,BorderLayout.SOUTH);
+            imagePane.add(TaskBar,BorderLayout.SOUTH);*/
         });
 
         JButton quitter = new JButton("Quitter");
@@ -90,6 +88,39 @@ public class Vue extends JFrame{
         imagePane.add(quitter);
 
         setContentPane(imagePane);
+        imagePane.updateUI();
+    }
+
+    public void AfficheMenu(){
+        imagePane.removeAll();
+
+        JLabel titre = new JLabel("Map Select");
+
+        JButton Map5x5 = new JButton("Map 5x5");
+        Map5x5.setFont(new Font("Monospaced",Font.BOLD,20));
+        Map5x5.setBackground(new Color(37, 150, 131));
+        Map5x5.setForeground(Color.WHITE);
+        Map5x5.addActionListener((ActionEvent e) -> controlleur.getMap().Map5x5());
+
+        JButton Map14x6 = new JButton("Map 14x6");
+        Map14x6.setFont(new Font("Monospaced",Font.BOLD,20));
+        Map14x6.setBackground(new Color(37, 150, 131));
+        Map14x6.setForeground(Color.WHITE);
+        Map14x6.addActionListener((ActionEvent e) -> controlleur.getMap().Map14x6());
+
+        BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
+        imagePane.setLayout(boxlayout);
+        titre.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titre.setFont((new Font("Monospaced",Font.BOLD,20)));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 100 )));
+        imagePane.add(titre);
+        Map5x5.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
+        imagePane.add(Map5x5);
+        Map14x6.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
+        imagePane.add(Map14x6);
+
         imagePane.updateUI();
     }
 

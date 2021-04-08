@@ -14,11 +14,13 @@ public class Controlleur {
     private Vue vue;
     private Jeu jeu;
     private int nbTour;
+    private Map map;
 
     public Controlleur(Vue v){
         jeu = new Jeu();
         vue = v;
         nbTour = 1;
+        map = new Map();
     }
 
     public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
@@ -219,6 +221,10 @@ public class Controlleur {
 
     public Jeu getJeu(){
         return jeu;
+    }
+
+    public Map getMap(){
+        return map;
     }
 
 }
