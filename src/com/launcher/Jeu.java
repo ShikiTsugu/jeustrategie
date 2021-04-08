@@ -286,6 +286,14 @@ public class Jeu {
         v.afficheIni();
     }
 
+    public void createTerrain(int x, int y, int z){
+        map = new Map();
+        map.generateSpawnable(y, x, 4);
+        boolean[][] b1 = map.getB1();
+        boolean[][] b2 = map.getB2();
+        terrain = new Terrain(14,6,12,0,3,13,3,b1,b2);
+    }
+
     public void finDeTour(){
         if (tourDuJoueur == joueur1) {
             tourDuJoueur = joueur2;
@@ -296,24 +304,9 @@ public class Jeu {
 
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
-        boolean[][] b1 = {{true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false}};
-
-        boolean[][] b2 = {{false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true}};
-
-        Terrain terrain = new Terrain(14,6,12,0,3,4,3,b1,b2);
+        jeu.createTerrain(14, 6, 4);
         //jeu.playGame(terrain);
         //System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1, true));
-        jeu.setTerrain(terrain);
         jeu.startGraphique();
         //System.out.println(joueur2.getArgent());
     }
