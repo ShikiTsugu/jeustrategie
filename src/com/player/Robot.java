@@ -44,4 +44,26 @@ public class Robot extends Joueur{
         }
         return false;
     }
+
+    public boolean allPAused(){
+        for (Unite u : unites){
+            if(u != null){
+                if(u.getPointAction()>0){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public int[] availableSpace(Terrain t){
+        for (int i = 0; i<t.getB2().length; i++){
+            for (int j = 0; j<t.getB2()[i].length; j++){
+                if(t.getB2()[i][j]==true && t.getPlateau()[i][j].estVide()){
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return null;
+    }
 }
