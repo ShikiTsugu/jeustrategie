@@ -27,33 +27,28 @@ public class Buff extends AlterationEtat{
     }
 
     public void immuniteEtourdissement(){
-        if (tourRestant > 0) {
             tourRestant -= 1;
-        }
+
     }
 
     public void immunitePoison(){
-        if (tourRestant > 0) {
             tourRestant -= 1;
-        }
+
     }
 
     public void immuniteImmobilise(){
-        if (tourRestant > 0) {
             tourRestant -= 1;
-        }
+
     }
 
     public void immuniteRalentissement(){
-        if (tourRestant > 0) {
             tourRestant -= 1;
-        }
+
     }
 
     public void immuniteAveugle(){
-        if (tourRestant > 0) {
             tourRestant -= 1;
-        }
+
     }
 
 }

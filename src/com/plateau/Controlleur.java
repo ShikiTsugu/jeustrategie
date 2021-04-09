@@ -233,45 +233,48 @@ public class Controlleur {
     public void finDeTour(){
         jeu.finDeTour();
         nbTour++;
-        JFrame findeTour = new JFrame();
-        findeTour.setVisible(true);
-        findeTour.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        findeTour.setLocationRelativeTo(vue.getContentPane());
-        findeTour.setSize(new Dimension(300, 150));
+        if(jeu.getJoueur2().getIsHuman()) {
+            JFrame findeTour = new JFrame();
+            findeTour.setVisible(true);
+            findeTour.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            findeTour.setLocationRelativeTo(vue.getContentPane());
+            findeTour.setSize(new Dimension(300, 150));
 
-        JPanel panelFindeTour = new JPanel();
-        BoxLayout box = new  BoxLayout(panelFindeTour,BoxLayout.Y_AXIS);
-        panelFindeTour.setLayout(box);
-        panelFindeTour.setPreferredSize(new Dimension(200, 100));
-        JLabel nTour = new JLabel("Tour " + nbTour);
-        JLabel jTour = new JLabel("Tour du joueur");
-        if(jeu.getTourDuJoueur() == jeu.getJoueur1()){
-            jeu.getJoueur1().resetPointAction();
-            if(jeu.getJoueur2().getIsHuman()) {
+            JPanel panelFindeTour = new JPanel();
+            BoxLayout box = new BoxLayout(panelFindeTour, BoxLayout.Y_AXIS);
+            panelFindeTour.setLayout(box);
+            panelFindeTour.setPreferredSize(new Dimension(200, 100));
+            JLabel nTour = new JLabel("Tour " + nbTour);
+            JLabel jTour = new JLabel("Tour du joueur");
+            if (jeu.getTourDuJoueur() == jeu.getJoueur1()) {
+                jeu.getJoueur1().resetPointAction();
                 jTour = new JLabel("Tour du joueur 1");
-            }else{
-                jTour = new JLabel("A votre tour, le robot a joué");
-            }
-        } else if (jeu.getTourDuJoueur() == jeu.getJoueur2()){
-            if (nbTour == 2) jeu.getJoueur2().getHero().setPointAction(0);
-            else jeu.getJoueur2().resetPointAction();
-            if(jeu.getJoueur2().getIsHuman()) {
+            } else if (jeu.getTourDuJoueur() == jeu.getJoueur2()) {
+                if (nbTour == 2) jeu.getJoueur2().getHero().setPointAction(0);
+                else jeu.getJoueur2().resetPointAction();
                 jTour = new JLabel("Tour du joueur 2");
-            }else{
-                findeTour.dispose();
             }
+            jeu.activateAlterationEtats();
+            nTour.setPreferredSize(new Dimension(50, 25));
+            jTour.setPreferredSize(new Dimension(50, 25));
+            nTour.setAlignmentX(Component.CENTER_ALIGNMENT);
+            jTour.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelFindeTour.add(Box.createRigidArea(new Dimension(10, 10)));
+            panelFindeTour.add(nTour);
+            panelFindeTour.add(Box.createRigidArea(new Dimension(25, 25)));
+            panelFindeTour.add(jTour);
+            findeTour.add(panelFindeTour);
+            findeTour.pack();
+        }else{
+            if (jeu.getTourDuJoueur() == jeu.getJoueur1()) {
+                jeu.getJoueur1().resetPointAction();
+                JOptionPane.showMessageDialog(vue.getTerrainPanel(), "A votre tour, le robot a joué.", "Tour "+nbTour, JOptionPane.PLAIN_MESSAGE);
+            } else if (jeu.getTourDuJoueur() == jeu.getJoueur2()) {
+                if (nbTour == 2) jeu.getJoueur2().getHero().setPointAction(0);
+                else jeu.getJoueur2().resetPointAction();
+            }
+            jeu.activateAlterationEtats();
         }
-        jeu.activateAlterationEtats();
-        nTour.setPreferredSize(new Dimension(50, 25));
-        jTour.setPreferredSize(new Dimension(50, 25));
-        nTour.setAlignmentX(Component.CENTER_ALIGNMENT);
-        jTour.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelFindeTour.add(Box.createRigidArea(new Dimension(10, 10)));
-        panelFindeTour.add(nTour);
-        panelFindeTour.add(Box.createRigidArea(new Dimension(25, 25)));
-        panelFindeTour.add(jTour);
-        findeTour.add(panelFindeTour);
-        findeTour.pack();
         vue.setTourJoueur(jeu.getTourDuJoueur());
     }
 
@@ -295,35 +298,70 @@ public class Controlleur {
         }
     }
 
-    public void deplaceUniteRob(Joueur j){
-        ActionJoueur aj = new ActionJoueur(j);
-        if(((Robot) j).pickUnit(vue.terrain)) {
-            int[] coordI = ((Robot) j).getCoord();
-            Unite u = vue.terrain.plateau[coordI[0]][coordI[1]].unit;
-            u.casesDisponibleDeplacement(vue.terrain, u, coordI[1], coordI[0], coordI[1], coordI[0]);
-            int[] coordF = {coordI[0], coordI[1] - 1};
-            for (Case c : u.getDeplacementDisponible()) {
-                if (u.getPointAction() > 0) {
-                    if (c.estUnit() && c.getUnite().getJoueur() != j) {
-                        ((Robot) j).setCoordTarget(c.casePos(vue.terrain)[1], c.casePos(vue.terrain)[0]);
-                        break;
-                    }
-                    aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
-                    coordF[1]--;
-                } else {
-                    break;
-                }
-            }
-        }
-        finDeTour();
-    }
-
     public void setJeu(Jeu j){
         jeu = j;
     }
 
     public Jeu getJeu(){
         return jeu;
+    }
+
+
+    //Méthodes concernant le robot
+
+    public void deplaceUniteRob(Joueur j){
+        ActionJoueur aj = new ActionJoueur(j);
+        if(((Robot) j).pickUnit(vue.terrain)) {
+            int[] coordI = ((Robot) j).getCoord();
+            Unite u = vue.terrain.plateau[coordI[0]][coordI[1]].unit;
+            u.casesDisponibleDeplacement(vue.terrain, u, coordI[1], coordI[0], coordI[1], coordI[0]);
+            int[] coordF = {coordI[0], coordI[1]};
+            for (Case c : u.getDeplacementDisponible()) {
+                if (u.getPointAction() > 0) {
+                    if (c.estUnit() && c.getUnite().getJoueur() != j) {
+                        ((Robot) j).setCoordTarget(c.casePos(vue.terrain)[1], c.casePos(vue.terrain)[0]);
+                        break;
+                    }
+                    if(coordF[1]!=0) {
+                        coordF[1]--;
+                        aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                    }else if(coordF[0]!=vue.terrain.plateau.length-1){
+                        coordF[0]++;
+                        aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+
+    public void achatUniteRob(Joueur j){
+        Random rand = new Random();
+        int uniteRandom = rand.nextInt(vue.getListeUnit().length);
+        Unite u = vue.createUnite(vue.getListeUnit()[uniteRandom]);
+        ActionJoueur aj = new ActionJoueur(j);
+        int[] pos = ((Robot)j).availableSpace(vue.terrain);
+        if (j.getArgent()>=u.getCoutUnite() && !j.maxUnit()){
+            aj.acheteUnite(u,vue.getTerrainPanel());
+            j.ajouteUnite(u);
+            if(pos!=null){
+                aj.placeUnite(vue.terrain,u,pos[1],pos[0],false);
+            }else{
+                j.annuleAjout(u);
+                j.setArgent(j.getArgent() + u.getCoutUnite());
+            }
+        }
+    }
+
+    public void robotPlay(Joueur j){
+        while(!((Robot)j).allPAused()){
+            deplaceUniteRob(j);
+        }
+        if(j.getArgent()>=100) {
+            achatUniteRob(j);
+        }
+        finDeTour();
     }
 
 }

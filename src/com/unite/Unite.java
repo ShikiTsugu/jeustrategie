@@ -174,7 +174,7 @@ public abstract class Unite {
                 return true;
             }
         }
-        System.out.println("true");
+        System.out.println("false");
 
         return false;
     }
@@ -183,7 +183,8 @@ public abstract class Unite {
         int modif = 0;
         for(int i =0; i< debuffs.size();i++){
             if(debuffs.get(i).getNom().equals("aveugle")){
-                System.out.println("-99");
+                return -99;
+
             }
         }
         return modif ;
