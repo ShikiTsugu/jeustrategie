@@ -100,13 +100,29 @@ public class Vue extends JFrame{
         Map5x5.setFont(new Font("Monospaced",Font.BOLD,20));
         Map5x5.setBackground(new Color(37, 150, 131));
         Map5x5.setForeground(Color.WHITE);
-        Map5x5.addActionListener((ActionEvent e) -> controlleur.getMap().Map5x5());
+        Map5x5.addActionListener((ActionEvent e) -> {
+            controlleur.getMap().Map5x5();
+            controlleur.getJeu().getMapTerrain();
+            controlleur.getJeu().AjouteHero();
+            terrain = controlleur.getMap().getTerrain();
+            AfficheTerrain();
+            imagePane.add(TerrainPanel,BorderLayout.CENTER);
+            imagePane.add(TaskBar,BorderLayout.SOUTH);
+        });
 
         JButton Map14x6 = new JButton("Map 14x6");
         Map14x6.setFont(new Font("Monospaced",Font.BOLD,20));
         Map14x6.setBackground(new Color(37, 150, 131));
         Map14x6.setForeground(Color.WHITE);
-        Map14x6.addActionListener((ActionEvent e) -> controlleur.getMap().Map14x6());
+        Map14x6.addActionListener((ActionEvent e) -> {
+            controlleur.getMap().Map14x6();
+            controlleur.getJeu().getMapTerrain();
+            controlleur.getJeu().AjouteHero();
+            terrain = controlleur.getMap().getTerrain();
+            AfficheTerrain();
+            imagePane.add(TerrainPanel,BorderLayout.CENTER);
+            imagePane.add(TaskBar,BorderLayout.SOUTH);
+        });
 
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);

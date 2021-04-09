@@ -267,22 +267,29 @@ public class Jeu {
     public void startGraphique(){
         setJoueur1(new Joueur(1000));
         setActionjoueur1(new ActionJoueur(joueur1));
-        //joueur1.initialiseListeUnites(terrain);
         setJoueur2(new Joueur(1000));
         setActionjoueur2(new ActionJoueur(joueur2));
-        //joueur2.initialiseListeUnites(terrain);
-        Hero h1 = new Hero(joueur1);
-        Hero h2 = new Hero(joueur2);
-        //joueur1.ajouteUnite(h1);
-        //joueur2.ajouteUnite(h2);
-        //terrain.ajouteUnite(h1,0,3);
-        //terrain.ajouteUnite(h2,13,3);
-        //terrain.setEffectCase(7,3, new CaseGold());
-        //setTerrain(terrain);
         tourDuJoueur = joueur1;
         v = new Vue(m,terrain,joueur1);
         v.getControlleur().setJeu(this);
         v.afficheIni();
+    }
+
+    public void getMapTerrain(){
+        terrain = v.getControlleur().getMap().getTerrain();
+    }
+
+    public void AjouteHero(){
+        joueur1.initialiseListeUnites(terrain);
+        joueur2.initialiseListeUnites(terrain);
+        Hero h1 = new Hero(joueur1);
+        Hero h2 = new Hero(joueur2);
+        joueur1.ajouteUnite(h1);
+        joueur2.ajouteUnite(h2);
+        terrain.ajouteUnite(h1,0,terrain.getPlateau().length/2);
+        terrain.ajouteUnite(h2,terrain.getPlateau()[0].length-1,terrain.getPlateau().length/2);
+        terrain.setEffectCase(terrain.getPlateau()[0].length/2,terrain.getPlateau().length/2, new CaseGold());
+        setTerrain(terrain);
     }
 
 

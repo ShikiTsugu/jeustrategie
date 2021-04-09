@@ -58,4 +58,8 @@ public class Map {
     public boolean[][] getB2() {
         return b2;
     }
+
+    public Terrain getTerrain(){
+        return map;
+    }
 }
