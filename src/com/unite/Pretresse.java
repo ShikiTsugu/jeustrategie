@@ -17,7 +17,7 @@ public class Pretresse extends Unite{
         competences = new Competence[2];
         Evenement[] event = {new Evenement("soin",0,0,50)};
         competences[0] = new Competence("soin","soigne une unité",event, 5,1);
-        Evenement[] event2 = {new Evenement("appliqueAveugle",0,0,2)};
+        Evenement[] event2 = {new Evenement("appliqueAveugle",0,0,3)};
         competences[1] = new Competence("lumière aveuglante","aveugle les ennemis , ce qui les empêchent d'attaquer",event2, 5,1);
     }
 
