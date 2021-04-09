@@ -1,9 +1,6 @@
 package com.launcher;
 
-import com.plateau.Case;
-import com.plateau.Model;
-import com.plateau.Terrain;
-import com.plateau.Vue;
+import com.plateau.*;
 import com.player.ActionJoueur;
 import com.player.Joueur;
 import com.player.Robot;
@@ -272,22 +269,32 @@ public class Jeu {
         setJoueur1(new Joueur(1000,this));
         setActionjoueur1(new ActionJoueur(joueur1));
         joueur1.initialiseListeUnites(terrain);
-        //setJoueur2(new Joueur(1000,this));
-        setJoueur2(new Robot(1000,this)); //Pour tester le robot
+        setJoueur2(new Joueur(1000,this));
+        //setJoueur2(new Robot(1000,this)); //Pour tester le robot
         setActionjoueur2(new ActionJoueur(joueur2));
-        joueur2.initialiseListeUnites(terrain);
-        Hero h1 = new Hero(joueur1);
-        Hero h2 = new Hero(joueur2);
-        joueur1.ajouteUnite(h1);
-        joueur2.ajouteUnite(h2);
-        terrain.ajouteUnite(h1,0,3);
-        terrain.ajouteUnite(h2,13,3);
-        setTerrain(terrain);
         tourDuJoueur = joueur1;
         v = new Vue(m,terrain,joueur1);
         v.getControlleur().setJeu(this);
         v.afficheIni();
     }
+
+    public void getMapTerrain(){
+        terrain = v.getControlleur().getMap().getTerrain();
+    }
+
+    public void AjouteHero(){
+        joueur1.initialiseListeUnites(terrain);
+        joueur2.initialiseListeUnites(terrain);
+        Hero h1 = new Hero(joueur1);
+        Hero h2 = new Hero(joueur2);
+        joueur1.ajouteUnite(h1);
+        joueur2.ajouteUnite(h2);
+        terrain.ajouteUnite(h1,0,terrain.getPlateau().length/2);
+        terrain.ajouteUnite(h2,terrain.getPlateau()[0].length-1,terrain.getPlateau().length/2);
+        terrain.setEffectCase(terrain.getPlateau()[0].length/2,terrain.getPlateau().length/2, new CaseGold());
+        setTerrain(terrain);
+    }
+
 
     public void finDeTour(){
         if (tourDuJoueur == joueur1) {
@@ -314,24 +321,8 @@ public class Jeu {
 
     public static void main(String[] args) {
         Jeu jeu = new Jeu();
-        boolean[][] b1 = {{true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false},
-                {true,true,true,true,false,false,false,false,false,false,false,false,false,false}};
-
-        boolean[][] b2 = {{false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true},
-                {false,false,false,false,false,false,false,false,false,false,true,true,true,true}};
-
-        Terrain terrain = new Terrain(14,6,12,0,3,4,3,b1,b2);
         //jeu.playGame(terrain);
         //System.out.println(act.placeUnite(terrain,joueur.getUnites()[1],1,1, true));
-        jeu.setTerrain(terrain);
         jeu.startGraphique();
         //System.out.println(joueur2.getArgent());
     }

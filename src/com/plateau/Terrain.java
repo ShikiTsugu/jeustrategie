@@ -41,8 +41,6 @@ public class Terrain {
         }
     }
 
-
-
     public void Print(){
         System.out.print("  ");
         for(int i=0;i< plateau[0].length;i++){
@@ -131,6 +129,10 @@ public class Terrain {
             return "0"+String.valueOf(yH2);
         }
         return String.valueOf(yH2);
+    }
+
+    public void setEffectCase(int x, int y, CaseEffect ce){
+        plateau[y][x] = ce;
     }
 
 }

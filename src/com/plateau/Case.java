@@ -9,6 +9,7 @@ public class Case {
     protected boolean J2Buyable ;
     protected int id;
     protected static int incremente;
+    protected int hauteur;
 
     public Case(){
         unit = null;
@@ -68,6 +69,10 @@ public class Case {
         c.setUnite(null);
     }
 
+    public int getHauteur(){ return hauteur; }
+
+    public void setHauteur(int h){ hauteur = h; }
+
     public String afficheContenu(){
         if(unit instanceof Hero){
             return "H";
@@ -106,4 +111,5 @@ public class Case {
         if(estUnit()) return  afficheContenu();
         return !obstacle?unit.toString():"obstacle";
     }
+
 }
