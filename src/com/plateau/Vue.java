@@ -297,7 +297,7 @@ public class Vue extends JFrame{
         terrainBt = new ArrayList<>();
         TerrainPanel.removeAll();
         boolean b;
-        GridLayout grid = new GridLayout(terrain.plateau.length, terrain.plateau[0].length);
+        GridLayout grid = new GridLayout(terrain.plateau.length,terrain.plateau[0].length);
         TerrainPanel.setLayout(grid);
         tourJoueur.displayList();
         for (int x = 0; x < terrain.plateau.length; x++){
@@ -305,13 +305,13 @@ public class Vue extends JFrame{
                 if (terrain.plateau[x][y].unit != null) {
                     JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
                     setBorder(bt, x, y);
-                    if (terrain.plateau[x][y].unit.getJoueur() != controlleur.getJeu().getJoueur1()) {
+                    if(terrain.plateau[x][y].unit.getJoueur()!=controlleur.getJeu().getJoueur1()) {
                         b = true;
                         flippedImages(bt, terrain.plateau[x][y].unit.toString(), b);
                     }
-                    JLabel pv = new JLabel(terrain.plateau[x][y].unit.getSanteCourante() + "/" + terrain.plateau[x][y].unit.getSanteMax());
-                    pv.setFont(new Font("SansSerif", Font.BOLD, 14));
-                    pv.setForeground(new Color(0, 200, 0));
+                    JLabel pv = new JLabel(terrain.plateau[x][y].unit.getSanteCourante()+"/"+terrain.plateau[x][y].unit.getSanteMax());
+                    pv.setFont(new Font("SansSerif",Font.BOLD,14));
+                    pv.setForeground(new Color(0,200,0));
                     pv.setAlignmentX(CENTER_ALIGNMENT);
                     pv.setAlignmentY(BOTTOM_ALIGNMENT);
                     bt.add(pv);
@@ -332,12 +332,12 @@ public class Vue extends JFrame{
                     });
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
                         resetButton(bt);
-                        pv.setForeground(new Color(200, 0, 0));
+                        pv.setForeground(new Color(200,0,0));
                     }
                     if(!tourJoueur.getIsHuman()) {
                         controlleur.robotPlay(tourJoueur);
                     }
-                    bt.setPreferredSize(new Dimension(150, 125));
+                    bt.setPreferredSize(new Dimension(150,125));
                     terrainBt.add(bt);
                 } else {
                     JButton bt = new JButton();
@@ -345,14 +345,15 @@ public class Vue extends JFrame{
                     TerrainPanel.add(bt);
                     bt.setOpaque(false);
                     bt.setContentAreaFilled(false);
-                    bt.setPreferredSize(new Dimension(150, 125));
+                    bt.setPreferredSize(new Dimension(150,125));
                     terrainBt.add(bt);
                 }
             }
-            TerrainPanel.setOpaque(false);
-            TerrainPanel.updateUI();
         }
+        TerrainPanel.setOpaque(false);
+        TerrainPanel.updateUI();
     }
+
 
     public JButton setBorder(JButton bt, int x, int y){
         if (terrain.plateau[x][y] instanceof CaseGold) {
