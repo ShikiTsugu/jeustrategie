@@ -16,11 +16,13 @@ public class Controlleur {
     private Vue vue;
     private Jeu jeu;
     private int nbTour;
+    private Map map;
 
     public Controlleur(Vue v){
         jeu = new Jeu();
         vue = v;
         nbTour = 1;
+        map = new Map();
     }
 
     public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
@@ -276,6 +278,9 @@ public class Controlleur {
             jeu.activateAlterationEtats();
         }
         vue.setTourJoueur(jeu.getTourDuJoueur());
+        TerrrainEffect();
+        vue.generateTerrain();
+        vue.generateTaskBar();
     }
 
     public void deplaceUnite(Joueur j, JButton posIni){
@@ -298,6 +303,18 @@ public class Controlleur {
         }
     }
 
+    public void TerrrainEffect(){
+        try {
+            for (int x = 0; x < vue.terrain.plateau.length; x++) {
+                for (int y = 0; y < vue.terrain.plateau[x].length; y++) {
+                    if (vue.terrain.plateau[x][y] instanceof CaseEffect){
+                        ((CaseEffect) vue.terrain.plateau[x][y]).Effect();
+                    }
+                }
+            }
+        } catch (NullPointerException e) {}
+    }
+
     public void setJeu(Jeu j){
         jeu = j;
     }
@@ -316,21 +333,27 @@ public class Controlleur {
             Unite u = vue.terrain.plateau[coordI[0]][coordI[1]].unit;
             u.casesDisponibleDeplacement(vue.terrain, u, coordI[1], coordI[0], coordI[1], coordI[0]);
             int[] coordF = {coordI[0], coordI[1]};
+            int catchTarget=0;
             for (Case c : u.getDeplacementDisponible()) {
-                if (u.getPointAction() > 0) {
-                    if (c.estUnit() && c.getUnite().getJoueur() != j) {
-                        ((Robot) j).setCoordTarget(c.casePos(vue.terrain)[1], c.casePos(vue.terrain)[0]);
+                if (c.estUnit() && c.getUnite().getJoueur() != j) {
+                    ((Robot) j).setCoordTarget(c.casePos(vue.terrain)[1], c.casePos(vue.terrain)[0]);
+                    catchTarget=1;
+                    break;
+                }
+            }
+            if(catchTarget==0) {
+                for (Case c : u.getDeplacementDisponible()) {
+                    if (u.getPointAction() > 0) {
+                        if (coordF[1] != 0) {
+                            coordF[1]--;
+                            aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                        } else if (coordF[0] != vue.terrain.plateau.length - 1) {
+                            coordF[0]++;
+                            aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                        }
+                    } else {
                         break;
                     }
-                    if(coordF[1]!=0) {
-                        coordF[1]--;
-                        aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
-                    }else if(coordF[0]!=vue.terrain.plateau.length-1){
-                        coordF[0]++;
-                        aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
-                    }
-                } else {
-                    break;
                 }
             }
         }
@@ -341,7 +364,8 @@ public class Controlleur {
         int uniteRandom = rand.nextInt(vue.getListeUnit().length);
         Unite u = vue.createUnite(vue.getListeUnit()[uniteRandom]);
         ActionJoueur aj = new ActionJoueur(j);
-        int[] pos = ((Robot)j).availableSpace(vue.terrain);
+        int randPosLibre = rand.nextInt(((Robot)j).availableSpace(vue.terrain).size());
+        int[] pos = (int[]) ((Robot)j).availableSpace(vue.terrain).get(randPosLibre);
         if (j.getArgent()>=u.getCoutUnite() && !j.maxUnit()){
             aj.acheteUnite(u,vue.getTerrainPanel());
             j.ajouteUnite(u);
@@ -364,4 +388,7 @@ public class Controlleur {
         finDeTour();
     }
 
+    public Map getMap() {
+        return map;
+    }
 }

@@ -49,10 +49,6 @@ public class Vue extends JFrame{
         setResizable(false);
         terrain = t;
 
-        if (terrain != null) {
-            AfficheTerrain();
-        }
-
         setVisible(true);
         setLocationRelativeTo(null);
     }
@@ -69,11 +65,7 @@ public class Vue extends JFrame{
         jouer.setFont(new Font("Monospaced",Font.BOLD,20));
         jouer.setBackground(new Color(83, 214, 191));
         jouer.setForeground(Color.WHITE);
-        jouer.addActionListener((ActionEvent e) -> {
-            AfficheTerrain();
-            imagePane.add(TerrainPanel,BorderLayout.CENTER);
-            imagePane.add(TaskBar,BorderLayout.SOUTH);
-        });
+        jouer.addActionListener((ActionEvent e) -> AfficheMenu());
 
         JButton quitter = new JButton("Quitter");
         quitter.setFont(new Font("Monospaced",Font.BOLD,20));
@@ -97,6 +89,55 @@ public class Vue extends JFrame{
         imagePane.add(quitter);
 
         setContentPane(imagePane);
+        imagePane.updateUI();
+    }
+
+    public void AfficheMenu(){
+        imagePane.removeAll();
+
+        JLabel titre = new JLabel("Map Select");
+
+        JButton Map5x5 = new JButton("Map 5x5");
+        Map5x5.setFont(new Font("Monospaced",Font.BOLD,20));
+        Map5x5.setBackground(new Color(37, 150, 131));
+        Map5x5.setForeground(Color.WHITE);
+        Map5x5.addActionListener((ActionEvent e) -> {
+            controlleur.getMap().Map5x5();
+            controlleur.getJeu().getMapTerrain();
+            controlleur.getJeu().AjouteHero();
+            terrain = controlleur.getMap().getTerrain();
+            AfficheTerrain();
+            imagePane.add(TerrainPanel,BorderLayout.CENTER);
+            imagePane.add(TaskBar,BorderLayout.SOUTH);
+        });
+
+        JButton Map14x6 = new JButton("Map 14x6");
+        Map14x6.setFont(new Font("Monospaced",Font.BOLD,20));
+        Map14x6.setBackground(new Color(37, 150, 131));
+        Map14x6.setForeground(Color.WHITE);
+        Map14x6.addActionListener((ActionEvent e) -> {
+            controlleur.getMap().Map14x6();
+            controlleur.getJeu().getMapTerrain();
+            controlleur.getJeu().AjouteHero();
+            terrain = controlleur.getMap().getTerrain();
+            AfficheTerrain();
+            imagePane.add(TerrainPanel,BorderLayout.CENTER);
+            imagePane.add(TaskBar,BorderLayout.SOUTH);
+        });
+
+        BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
+        imagePane.setLayout(boxlayout);
+        titre.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titre.setFont((new Font("Monospaced",Font.BOLD,20)));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 100 )));
+        imagePane.add(titre);
+        Map5x5.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
+        imagePane.add(Map5x5);
+        Map14x6.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
+        imagePane.add(Map14x6);
+
         imagePane.updateUI();
     }
 
@@ -159,7 +200,7 @@ public class Vue extends JFrame{
     }
 
     public void flippedImages(JButton bt, String s, boolean b){
-        if(b==true) {
+        if(b) {
             if (s.equals("Hero")) {
                 bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/hero2.png"));
             }
@@ -256,20 +297,21 @@ public class Vue extends JFrame{
         terrainBt = new ArrayList<>();
         TerrainPanel.removeAll();
         boolean b;
-        GridLayout grid = new GridLayout(terrain.plateau.length,terrain.plateau[0].length);
+        GridLayout grid = new GridLayout(terrain.plateau.length, terrain.plateau[0].length);
         TerrainPanel.setLayout(grid);
         tourJoueur.displayList();
         for (int x = 0; x < terrain.plateau.length; x++){
             for (int y = 0; y < terrain.plateau[x].length; y++){
                 if (terrain.plateau[x][y].unit != null) {
                     JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
-                    if(terrain.plateau[x][y].unit.getJoueur()!=controlleur.getJeu().getJoueur1()) {
+                    setBorder(bt, x, y);
+                    if (terrain.plateau[x][y].unit.getJoueur() != controlleur.getJeu().getJoueur1()) {
                         b = true;
                         flippedImages(bt, terrain.plateau[x][y].unit.toString(), b);
                     }
-                    JLabel pv = new JLabel(terrain.plateau[x][y].unit.getSanteCourante()+"/"+terrain.plateau[x][y].unit.getSanteMax());
-                    pv.setFont(new Font("SansSerif",Font.BOLD,14));
-                    pv.setForeground(new Color(0,200,0));
+                    JLabel pv = new JLabel(terrain.plateau[x][y].unit.getSanteCourante() + "/" + terrain.plateau[x][y].unit.getSanteMax());
+                    pv.setFont(new Font("SansSerif", Font.BOLD, 14));
+                    pv.setForeground(new Color(0, 200, 0));
                     pv.setAlignmentX(CENTER_ALIGNMENT);
                     pv.setAlignmentY(BOTTOM_ALIGNMENT);
                     bt.add(pv);
@@ -293,22 +335,30 @@ public class Vue extends JFrame{
                     }
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
                         resetButton(bt);
-                        pv.setForeground(new Color(200,0,0));
+                        pv.setForeground(new Color(200, 0, 0));
                     }
-                    bt.setPreferredSize(new Dimension(150,125));
+                    bt.setPreferredSize(new Dimension(150, 125));
                     terrainBt.add(bt);
                 } else {
                     JButton bt = new JButton();
+                    bt = setBorder(bt, x, y);
                     TerrainPanel.add(bt);
                     bt.setOpaque(false);
                     bt.setContentAreaFilled(false);
-                    bt.setPreferredSize(new Dimension(150,125));
+                    bt.setPreferredSize(new Dimension(150, 125));
                     terrainBt.add(bt);
                 }
             }
+            TerrainPanel.setOpaque(false);
+            TerrainPanel.updateUI();
         }
-        TerrainPanel.setOpaque(false);
-        TerrainPanel.updateUI();
+    }
+
+    public JButton setBorder(JButton bt, int x, int y){
+        if (terrain.plateau[x][y] instanceof CaseGold) {
+            bt.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        }
+        return bt;
     }
 
     public void generateTaskBar(){
