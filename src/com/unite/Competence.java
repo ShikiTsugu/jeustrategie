@@ -31,12 +31,12 @@ public class Competence {
         return cout;
     }
 
-    public boolean useSkill(int xD , int yD, int x,int y, Terrain terrain){
-        if(terrain.getPlateau()[yD][xD].getUnite().getPointAction()>=cout && ((Math.abs(yD - y)+Math.abs(xD - x)) <= portee)) {
+    public boolean useSkill(int xA , int yA, int xD,int yD, Terrain terrain){
+        if(terrain.getPlateau()[yA][xA].getUnite().getPointAction()>=cout && ((Math.abs(yA - yD)+Math.abs(xA - xD)) <= portee + terrain.getPlateau()[yA][xA].getUnite().modifPortee())) {
             for (int i = 0; i < effets.length; i++) {
-                effets[i].readEvent(x,y,terrain);
+                effets[i].readEvent(xD,yD,terrain);
             }
-            terrain.getPlateau()[yD][xD].getUnite().setPointAction(terrain.getPlateau()[yD][xD].getUnite().getPointAction()-cout);
+            terrain.getPlateau()[yA][xA].getUnite().setPointAction(terrain.getPlateau()[yA][xA].getUnite().getPointAction()-cout);
             return true;
         }
         return false;

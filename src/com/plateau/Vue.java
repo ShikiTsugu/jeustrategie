@@ -3,6 +3,7 @@ package com.plateau;
 import com.launcher.Jeu;
 import com.player.ActionJoueur;
 import com.player.Joueur;
+import com.player.Robot;
 import com.unite.*;
 
 import javax.imageio.ImageIO;
@@ -23,14 +24,20 @@ public class Vue extends JFrame{
     private JPanel TerrainPanel = new JPanel();
     private JPanel TaskBar = new JPanel();
     Terrain terrain;
-    ArrayList<JButton> terrainBt = new ArrayList<>();
+    ArrayList<JButton> terrainBt;
     private Controlleur controlleur = new Controlleur(this);
     private Joueur tourJoueur;
     private String[] listeUnit = {"Templier","Cavalier","Mage","Archer","Pretresse","Lancier","Assassin"};
     private JButton btStats = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/stats.png"));
     private JButton btAtk = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
     private JButton btDep = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/deplace.png"));
+    private JButton btSkill1 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+    private JButton btSkill2 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+    private JButton btSkill3 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+    private JButton btSkill4 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
     private JLabel taskbarbg = new JLabel(new ImageIcon(Jeu.selectGoodPath()+"/assets/taskbarbg.png"));
+
+    public String[] getListeUnit(){return listeUnit;}
 
     public Vue(Model m, Terrain t, Joueur j){
         model = m;
@@ -238,7 +245,11 @@ public class Vue extends JFrame{
         resetButton(btAtk);
         btAtk.setEnabled(true);
         btAtk.addActionListener((ActionEvent atk) -> {
-            controlleur.attaque(tourJoueur,b);
+            initialiseSkill1(b);
+            initialiseSkill2(b);
+            initialiseSkill3(b);
+            initialiseSkill4(b);
+            generateSkills(b);
         });
     }
 
@@ -246,17 +257,51 @@ public class Vue extends JFrame{
         resetButton(btDep);
         btDep.setEnabled(true);
         btDep.addActionListener((ActionEvent dep) -> {
-            controlleur.deplaceUnite(tourJoueur,b);
+            controlleur.deplaceUnite(tourJoueur, b);
         });
     }
 
-    public void generateTerrain() {
+    public void initialiseSkill1(JButton b){
+        resetButton(btSkill1);
+        btSkill1.setEnabled(true);
+        btSkill1.addActionListener((ActionEvent useSkill1) ->{
+            controlleur.useSkill(tourJoueur,b,0);
+        });
+    }
+
+    public void initialiseSkill2(JButton b){
+        resetButton(btSkill2);
+        btSkill2.setEnabled(true);
+        btSkill2.addActionListener((ActionEvent useSkill1) ->{
+            controlleur.useSkill(tourJoueur,b,1);
+        });
+    }
+
+    public void initialiseSkill3(JButton b){
+        resetButton(btSkill3);
+        btSkill3.setEnabled(true);
+        btSkill3.addActionListener((ActionEvent useSkill1) ->{
+            controlleur.useSkill(tourJoueur,b,2);
+        });
+    }
+
+    public void initialiseSkill4(JButton b){
+        resetButton(btSkill4);
+        btSkill4.setEnabled(true);
+        btSkill4.addActionListener((ActionEvent useSkill1) ->{
+            controlleur.useSkill(tourJoueur,b,3);
+        });
+    }
+
+    public void generateTerrain(){
+        terrainBt = new ArrayList<>();
         TerrainPanel.removeAll();
         boolean b;
         GridLayout grid = new GridLayout(terrain.plateau.length, terrain.plateau[0].length);
         TerrainPanel.setLayout(grid);
-        for (int x = 0; x < terrain.plateau.length; x++) {
-            for (int y = 0; y < terrain.plateau[x].length; y++) {
+        tourJoueur.displayList();
+        for (int x = 0; x < terrain.plateau.length; x++){
+            for (int y = 0; y < terrain.plateau[x].length; y++){
                 if (terrain.plateau[x][y].unit != null) {
                     JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
                     setBorder(bt, x, y);
@@ -285,6 +330,9 @@ public class Vue extends JFrame{
                             btDep.setEnabled(false);
                         }
                     });
+                    if(!tourJoueur.getIsHuman()) {
+                        controlleur.robotPlay(tourJoueur);
+                    }
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
                         resetButton(bt);
                         pv.setForeground(new Color(200, 0, 0));
@@ -424,6 +472,98 @@ public class Vue extends JFrame{
         unit.add(pa);
         unit.add(pv);
         return unit;
+    }
+
+    public void generateSkills(JButton unite){
+        TaskBar.setBackground(Color.black);
+        TaskBar.add(taskbarbg);
+        taskbarbg.removeAll();
+        FlowLayout flow = new FlowLayout();
+        taskbarbg.setLayout(flow);
+        JButton unit = displayUnit(unite);
+        taskbarbg.add(unit);
+        btSkill1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btSkill1.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque2.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btSkill1.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+            }
+        });
+        taskbarbg.add(btSkill1);
+        btSkill2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btSkill2.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque2.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btSkill2.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+            }
+        });
+        taskbarbg.add(btSkill2);
+        btSkill3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btSkill3.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque2.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btSkill3.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+            }
+        });
+        taskbarbg.add(btSkill3);
+        btSkill4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btSkill4.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque2.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btSkill4.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+            }
+        });
+        taskbarbg.add(btSkill4);
+
+        btSkill1.setContentAreaFilled(false);
+        btSkill1.setBorderPainted(false);
+        btSkill1.setFocusable(false);
+        btSkill2.setContentAreaFilled(false);
+        btSkill2.setBorderPainted(false);
+        btSkill2.setFocusable(false);
+        btSkill3.setContentAreaFilled(false);
+        btSkill3.setBorderPainted(false);
+        btSkill3.setFocusable(false);
+        btSkill4.setContentAreaFilled(false);
+        btSkill4.setBorderPainted(false);
+        btSkill4.setFocusable(false);
+        JButton retour = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/retour.png"));
+        retour.setPreferredSize(new Dimension(100,125));
+        retour.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                retour.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/retour2.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                retour.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/retour.png"));
+            }
+        });
+        retour.setContentAreaFilled(false);
+        retour.setFocusable(false);
+        retour.setBorderPainted(false);
+        retour.addActionListener((ActionEvent e) -> {
+            generateTaskBar();
+        });
+        taskbarbg.add(retour);
+        taskbarbg.updateUI();
     }
 
     public void generateAction(JButton unite){

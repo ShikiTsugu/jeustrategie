@@ -78,4 +78,15 @@ public class ActionJoueur {
         depart.getUnite().attaqueUnite(t, xA, yA, xD, yD);
         return true;
     }
+
+    public boolean utiliseCompetence(Terrain t, int xA, int yA, int xD,int yD,int c){
+        Case depart = t.getPlateau()[yA][xA];
+
+        if(depart.getUnite() == null) return false;
+
+        depart.getUnite().utiliseCompetence(xA,yA,xD,yD,c,t);
+        return true;
+    }
+
+
 }

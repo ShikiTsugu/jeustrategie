@@ -3,6 +3,7 @@ package com.launcher;
 import com.plateau.*;
 import com.player.ActionJoueur;
 import com.player.Joueur;
+import com.player.Robot;
 import com.unite.*;
 import com.unite.Templier;
 
@@ -133,10 +134,10 @@ public class Jeu {
      * A MODIFIER
      */
     public void startNewGame(Terrain terrain){
-        setJoueur1(new Joueur(1000));
+        setJoueur1(new Joueur(1000,this));
         setActionjoueur1(new ActionJoueur(joueur1));
         joueur1.initialiseListeUnites(terrain);
-        setJoueur2(new Joueur(1000));
+        setJoueur2(new Joueur(1000,this));
         setActionjoueur2(new ActionJoueur(joueur2));
         joueur2.initialiseListeUnites(terrain);
         setTerrain(terrain);
@@ -265,9 +266,11 @@ public class Jeu {
     }
 
     public void startGraphique(){
-        setJoueur1(new Joueur(1000));
+        setJoueur1(new Joueur(1000,this));
         setActionjoueur1(new ActionJoueur(joueur1));
-        setJoueur2(new Joueur(1000));
+        joueur1.initialiseListeUnites(terrain);
+        setJoueur2(new Joueur(1000,this));
+        //setJoueur2(new Robot(1000,this)); //Pour tester le robot
         setActionjoueur2(new ActionJoueur(joueur2));
         tourDuJoueur = joueur1;
         v = new Vue(m,terrain,joueur1);
@@ -299,6 +302,21 @@ public class Jeu {
         } else {
             tourDuJoueur = joueur1;
         }
+    }
+
+    public void activateAlterationEtats(){
+        for(int i=0 ; i<joueur2.getUnites().length;i++){
+            if(joueur2.getUnites()[i]!=null) {
+                joueur2.getUnites()[i].readAlterationEtats();
+            }
+        }
+        for(int i=0 ; i<joueur1.getUnites().length;i++){
+            if(joueur1.getUnites()[i]!=null) {
+                joueur1.getUnites()[i].readAlterationEtats();
+            }
+        }
+
+
     }
 
     public static void main(String[] args) {
