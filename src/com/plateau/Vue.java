@@ -58,13 +58,7 @@ public class Vue extends JFrame{
         jouer.setFont(new Font("Monospaced",Font.BOLD,20));
         jouer.setBackground(new Color(83, 214, 191));
         jouer.setForeground(Color.WHITE);
-        jouer.addActionListener((ActionEvent e) -> {
-            AfficheMenu();
-            /*
-            AfficheTerrain();
-            imagePane.add(TerrainPanel,BorderLayout.CENTER);
-            imagePane.add(TaskBar,BorderLayout.SOUTH);*/
-        });
+        jouer.addActionListener((ActionEvent e) -> AfficheMenu());
 
         JButton quitter = new JButton("Quitter");
         quitter.setFont(new Font("Monospaced",Font.BOLD,20));

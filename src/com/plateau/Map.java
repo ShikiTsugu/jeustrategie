@@ -30,7 +30,7 @@ public class Map {
     }
 
     public void Map14x6(){
-        createTerrain(14, 6, 2);
+        createTerrain(14, 6, 4);
     }
 
     public void printSpawnable1(){
