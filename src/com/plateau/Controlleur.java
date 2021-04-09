@@ -25,6 +25,32 @@ public class Controlleur {
         map = new Map();
     }
 
+    public Map getMap() {
+        return map;
+    }
+
+    public Jeu getJeu(){
+        return jeu;
+    }
+
+    public void setJeu(Jeu j){
+        jeu = j;
+    }
+
+    public boolean acheteUnite(Joueur j, Unite u){
+        if (!j.ajouteUnite(u)) {
+            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le max d'unité a été atteint.", "", JOptionPane.PLAIN_MESSAGE);
+            System.out.println("Achat impossible");
+            return false;
+        } else {
+            ActionJoueur aj = new ActionJoueur(j);
+            aj.setBought(true);
+            boolean b = jeu.getTourDuJoueur() == jeu.getJoueur1();
+            placeUniteApresAchat(u, aj,b);
+            return true;
+        }
+    }
+
     public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
         for (JButton b : vue.terrainBt) {
             if(j.getJoueur()==jeu.getJoueur1()){
@@ -93,52 +119,6 @@ public class Controlleur {
         }
     }
 
-    public void viewStats(JButton b){
-        Unite u = vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit;
-        JFrame stats = new JFrame(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString());
-        stats.setVisible(true);
-        stats.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        stats.setLocationRelativeTo(vue.getContentPane());
-
-        JPanel statsPanel = new JPanel(new BorderLayout());
-        JLabel unite = new JLabel(vue.generateImage(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString()));
-        statsPanel.add(unite,BorderLayout.WEST);
-
-        JPanel allStats = new JPanel();
-        allStats.setPreferredSize(new Dimension(300,300));
-        allStats.setLayout(new BoxLayout(allStats,BoxLayout.Y_AXIS));
-        allStats.add(new JLabel("PV : "+u.getSanteCourante()+"/"+u.getSanteMax()));
-        allStats.add(new JLabel("ATQ : "+u.getAttaque()));
-        allStats.add(new JLabel("PorteeATQ : "+u.getPorteeAttaque()));
-        allStats.add(new JLabel("PorteeDEP : "+u.getPorteeDeplacement()));
-        allStats.add(new JLabel("PA : "+u.getPointAction()+"/"+u.getPointActionMax()));
-        allStats.add(new JLabel("Buff : "));
-        allStats.add(new JLabel("Debuff : "));
-
-        JScrollPane scrollStats = new JScrollPane(allStats);
-        scrollStats.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollStats.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        statsPanel.add(scrollStats,BorderLayout.CENTER);
-
-        stats.setSize(250,175);
-        stats.setResizable(false);
-        stats.add(statsPanel);
-    }
-
-    public boolean acheteUnite(Joueur j, Unite u){
-        if (!j.ajouteUnite(u)) {
-            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le max d'unité a été atteint.", "", JOptionPane.PLAIN_MESSAGE);
-            System.out.println("Achat impossible");
-            return false;
-        } else {
-            ActionJoueur aj = new ActionJoueur(j);
-            aj.setBought(true);
-            boolean b = jeu.getTourDuJoueur() == jeu.getJoueur1();
-            placeUniteApresAchat(u, aj,b);
-            return true;
-        }
-    }
-
     public void attaque(Joueur j, JButton attaquant){
         ActionJoueur aj = new ActionJoueur(j);
         int[]coordI = {attaquant.getX()/attaquant.getWidth(), attaquant.getY()/attaquant.getHeight()};
@@ -150,7 +130,7 @@ public class Controlleur {
                 public void mouseEntered(MouseEvent e) {
                     b.setContentAreaFilled(true);
                     if(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].estUnit() && ((Math.abs(b.getY()/b.getHeight() - coordI[1])+Math.abs(b.getX()/b.getWidth() - coordI[0])) <= atq.getPorteeAttaque())
-                    && vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit!=atq && vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getJoueur()!=j) {
+                            && vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit!=atq && vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getJoueur()!=j) {
                         b.setBackground(new Color(0, 150, 0));
                     }else{
                         b.setBackground(new Color(150, 0, 0));
@@ -232,6 +212,70 @@ public class Controlleur {
         }
     }
 
+    public void deplaceUnite(Joueur j, JButton posIni){
+        ActionJoueur aj = new ActionJoueur(j);
+        int[]coordI = {posIni.getX()/posIni.getWidth(), posIni.getY()/posIni.getHeight()};
+        int[]coordF = new int[2];
+        Unite u = vue.terrain.plateau[coordI[1]][coordI[0]].unit;
+        for (JButton b : vue.terrainBt) {
+            if(u.casesDisponibleDeplacement(vue.terrain, u, coordI[0], coordI[1], b.getX()/b.getWidth(), b.getY()/b.getHeight())) {
+                b.setContentAreaFilled(true);
+                b.setBackground(new Color(0, 150, 0));
+            }
+            b.addActionListener((ActionEvent e) -> {
+                coordF[0] = b.getX()/b.getWidth();
+                coordF[1] = b.getY()/b.getHeight();
+                aj.deplaceUnite(vue.terrain, coordI[0],coordI[1],coordF[0],coordF[1]);
+                vue.generateTerrain();
+                vue.generateTaskBar();
+            });
+        }
+    }
+
+    public void viewStats(JButton b){
+        Unite u = vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit;
+        JFrame stats = new JFrame(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString());
+        stats.setVisible(true);
+        stats.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        stats.setLocationRelativeTo(vue.getContentPane());
+
+        JPanel statsPanel = new JPanel(new BorderLayout());
+        JLabel unite = new JLabel(vue.generateImage(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString()));
+        statsPanel.add(unite,BorderLayout.WEST);
+
+        JPanel allStats = new JPanel();
+        allStats.setPreferredSize(new Dimension(300,300));
+        allStats.setLayout(new BoxLayout(allStats,BoxLayout.Y_AXIS));
+        allStats.add(new JLabel("PV : "+u.getSanteCourante()+"/"+u.getSanteMax()));
+        allStats.add(new JLabel("ATQ : "+u.getAttaque()));
+        allStats.add(new JLabel("PorteeATQ : "+u.getPorteeAttaque()));
+        allStats.add(new JLabel("PorteeDEP : "+u.getPorteeDeplacement()));
+        allStats.add(new JLabel("PA : "+u.getPointAction()+"/"+u.getPointActionMax()));
+        allStats.add(new JLabel("Buff : "));
+        allStats.add(new JLabel("Debuff : "));
+
+        JScrollPane scrollStats = new JScrollPane(allStats);
+        scrollStats.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollStats.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        statsPanel.add(scrollStats,BorderLayout.CENTER);
+
+        stats.setSize(250,175);
+        stats.setResizable(false);
+        stats.add(statsPanel);
+    }
+
+    public void TerrrainEffect(){
+        try {
+            for (int x = 0; x < vue.terrain.plateau.length; x++) {
+                for (int y = 0; y < vue.terrain.plateau[x].length; y++) {
+                    if (vue.terrain.plateau[x][y] instanceof CaseEffect){
+                        ((CaseEffect) vue.terrain.plateau[x][y]).Effect();
+                    }
+                }
+            }
+        } catch (NullPointerException e) {}
+    }
+
     public void finDeTour(){
         jeu.finDeTour();
         nbTour++;
@@ -281,46 +325,6 @@ public class Controlleur {
         TerrrainEffect();
         vue.generateTerrain();
         vue.generateTaskBar();
-    }
-
-    public void deplaceUnite(Joueur j, JButton posIni){
-        ActionJoueur aj = new ActionJoueur(j);
-        int[]coordI = {posIni.getX()/posIni.getWidth(), posIni.getY()/posIni.getHeight()};
-        int[]coordF = new int[2];
-        Unite u = vue.terrain.plateau[coordI[1]][coordI[0]].unit;
-        for (JButton b : vue.terrainBt) {
-            if(u.casesDisponibleDeplacement(vue.terrain, u, coordI[0], coordI[1], b.getX()/b.getWidth(), b.getY()/b.getHeight())) {
-                b.setContentAreaFilled(true);
-                b.setBackground(new Color(0, 150, 0));
-            }
-            b.addActionListener((ActionEvent e) -> {
-                coordF[0] = b.getX()/b.getWidth();
-                coordF[1] = b.getY()/b.getHeight();
-                aj.deplaceUnite(vue.terrain, coordI[0],coordI[1],coordF[0],coordF[1]);
-                vue.generateTerrain();
-                vue.generateTaskBar();
-            });
-        }
-    }
-
-    public void TerrrainEffect(){
-        try {
-            for (int x = 0; x < vue.terrain.plateau.length; x++) {
-                for (int y = 0; y < vue.terrain.plateau[x].length; y++) {
-                    if (vue.terrain.plateau[x][y] instanceof CaseEffect){
-                        ((CaseEffect) vue.terrain.plateau[x][y]).Effect();
-                    }
-                }
-            }
-        } catch (NullPointerException e) {}
-    }
-
-    public void setJeu(Jeu j){
-        jeu = j;
-    }
-
-    public Jeu getJeu(){
-        return jeu;
     }
 
 
@@ -386,9 +390,5 @@ public class Controlleur {
             achatUniteRob(j);
         }
         finDeTour();
-    }
-
-    public Map getMap() {
-        return map;
     }
 }
