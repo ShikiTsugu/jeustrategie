@@ -330,12 +330,12 @@ public class Vue extends JFrame{
                             btDep.setEnabled(false);
                         }
                     });
-                    if(!tourJoueur.getIsHuman()) {
-                        controlleur.robotPlay(tourJoueur);
-                    }
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
                         resetButton(bt);
                         pv.setForeground(new Color(200, 0, 0));
+                    }
+                    if(!tourJoueur.getIsHuman()) {
+                        controlleur.robotPlay(tourJoueur);
                     }
                     bt.setPreferredSize(new Dimension(150, 125));
                     terrainBt.add(bt);
