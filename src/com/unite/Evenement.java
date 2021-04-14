@@ -7,7 +7,6 @@ public class Evenement {
     protected int value;
     protected int x;
     protected int y;
-    protected int cooldown;
 
     public Evenement(String e, int x,int y,int v){
         event = e;
@@ -20,16 +19,12 @@ public class Evenement {
 
     public void setValue(int value){this.value = value;}
 
-    public int getCooldown(){return cooldown;}
-
-    public void setCooldown(int cooldown){this.cooldown = cooldown;}
-
     public boolean readEvent(int x, int y, Terrain t){
         if(x+this.x < 0 || x+this.x >= t.getPlateau()[0].length ||y+this.y < 0 || y+this.y >= t.getPlateau().length || t.getPlateau()[y+this.y][x+this.x].getUnite() ==null ){
             return false;
         }
 
-        if(event.equals("infligeDegats")){
+        if(event.equals("infligeDegats") && t.getPlateau()[y+this.y][x+this.x].getUnite().getPeutEtreAttaque()){
             int res = t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante()-value;
             t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(res);
             t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x+this.x, y+this.y);
@@ -46,17 +41,13 @@ public class Evenement {
             return true;
         }
         if (event.equals("appliqueCamouflage")) {
-            if (cooldown == 0){
-                t.getPlateau()[y+this.y][x+this.x].getUnite().setPeutEtreAttaque(false);
-                setCooldown(2);
-            }
+            t.getPlateau()[y + this.y][x + this.x].getUnite().addBuff("camouflage", value);
             return true;
         }
         if(event.equals("appliqueMort")){
-            if (cooldown == 0 && t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante() <= 100){
+            if (t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante() <= 100){
                 t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(0);
                 t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x+this.x, y+this.y);
-                setCooldown(4);
             }
             return true;
         }

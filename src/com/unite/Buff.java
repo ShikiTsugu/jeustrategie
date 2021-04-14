@@ -22,7 +22,9 @@ public class Buff extends AlterationEtat{
         if(nom.equals("immuniteAveugle")){
             immuniteAveugle();
         }
-
+        if(nom.equals("camouflage")){
+            camouflage();
+        }
 
     }
 
@@ -49,6 +51,11 @@ public class Buff extends AlterationEtat{
     public void immuniteAveugle(){
             tourRestant -= 1;
 
+    }
+
+    public void camouflage(){
+        unite.setPeutEtreAttaque(false);
+        tourRestant -=1;
     }
 
 }
