@@ -24,6 +24,7 @@ public abstract class Unite {
     protected HashSet<Case> deplacementDisponible;
     protected ArrayList<Buff> buffs;
     protected ArrayList<Debuff> debuffs;
+    protected boolean peutEtreAttaque= true;
 
     public Unite(Joueur joueur){
         this.joueur = joueur;
@@ -78,6 +79,8 @@ public abstract class Unite {
     public int getCurrentY() { return currentY; }
 
     public Competence[] getCompetences() { return competences; }
+
+    public boolean getPeutEtreAttaque(){return peutEtreAttaque;}
 
     public void setSanteMax(int santeMax){
         this.santeMax = santeMax;
@@ -134,6 +137,8 @@ public abstract class Unite {
     public void addDebuff(String a,int n){
         debuffs.add(new Debuff(a,n,this));
     }
+
+    public void setPeutEtreAttaque(boolean peutEtreAttaque){this.peutEtreAttaque = peutEtreAttaque;}
 
     public void readAlterationEtats(){
         updateAlterationEtats();

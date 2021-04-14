@@ -7,17 +7,23 @@ public class Evenement {
     protected int value;
     protected int x;
     protected int y;
+    protected int cooldown;
 
-    public Evenement(String e, int x,int y,int v){
+    public Evenement(String e, int x,int y,int v, int cooldown){
         event = e;
         this.x=x;
         this.y=y;
         value = v;
+        this.cooldown = cooldown;
     }
 
     public int getValue(){ return value;}
 
     public void setValue(int value){this.value = value;}
+
+    public int getCooldown(){return cooldown;}
+
+    public void setCooldown(int cooldown){this.cooldown = cooldown;}
 
     public boolean readEvent(int x, int y, Terrain t){
         if(x+this.x < 0 || x+this.x >= t.getPlateau()[0].length ||y+this.y < 0 || y+this.y >= t.getPlateau().length || t.getPlateau()[y+this.y][x+this.x].getUnite() ==null ){
@@ -37,6 +43,13 @@ public class Evenement {
         if(event.equals("appliqueEtourdissement")){
             if(t.getPlateau()[y+this.y][x+this.x].getUnite().possedeBuff("immuniteEtourdissement")==false) {
                 t.getPlateau()[y + this.y][x + this.x].getUnite().addDebuff("etourdissement", value);
+            }
+            return true;
+        }
+        if (event.equals("appliqueCamouflage")) {
+            if (cooldown == 0){
+                t.getPlateau()[y+this.y][x+this.x].getUnite().setPeutEtreAttaque(false);
+                setCooldown(2);
             }
             return true;
         }
