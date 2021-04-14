@@ -268,7 +268,8 @@ public class Jeu {
     public void startGraphique(){
         setJoueur1(new Joueur(1000, this));
         setActionjoueur1(new ActionJoueur(joueur1));
-        setJoueur2(new Robot(1000, this));
+        //setJoueur2(new Robot(1000, this));
+        setJoueur2(new Joueur(1000, this));
         setActionjoueur2(new ActionJoueur(joueur2));
         tourDuJoueur = joueur1;
         v = new Vue(m,terrain,joueur1);

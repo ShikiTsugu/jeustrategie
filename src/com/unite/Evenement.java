@@ -44,7 +44,7 @@ public class Evenement {
             t.getPlateau()[y + this.y][x + this.x].getUnite().addBuff("camouflage", value);
             return true;
         }
-        if(event.equals("appliqueMort")){
+        if(event.equals("appliqueMort") && t.getPlateau()[y+this.y][x+this.x].getUnite().isHero() == false){
             if (t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante() <= 100){
                 t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(0);
                 t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x+this.x, y+this.y);
