@@ -9,12 +9,11 @@ public class Evenement {
     protected int y;
     protected int cooldown;
 
-    public Evenement(String e, int x,int y,int v, int cooldown){
+    public Evenement(String e, int x,int y,int v){
         event = e;
         this.x=x;
         this.y=y;
         value = v;
-        this.cooldown = cooldown;
     }
 
     public int getValue(){ return value;}
@@ -50,6 +49,14 @@ public class Evenement {
             if (cooldown == 0){
                 t.getPlateau()[y+this.y][x+this.x].getUnite().setPeutEtreAttaque(false);
                 setCooldown(2);
+            }
+            return true;
+        }
+        if(event.equals("appliqueMort")){
+            if (cooldown == 0 && t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante() <= 100){
+                t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(0);
+                t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x+this.x, y+this.y);
+                setCooldown(4);
             }
             return true;
         }
