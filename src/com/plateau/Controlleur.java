@@ -301,6 +301,7 @@ public class Controlleur {
                 jTour = new JLabel("Tour du joueur 2");
             }
             jeu.activateAlterationEtats();
+
             nTour.setPreferredSize(new Dimension(50, 25));
             jTour.setPreferredSize(new Dimension(50, 25));
             nTour.setAlignmentX(Component.CENTER_ALIGNMENT);

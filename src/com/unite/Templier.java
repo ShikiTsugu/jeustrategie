@@ -16,13 +16,13 @@ public class Templier extends Unite{
         pointAction = 2; //discussion en cours
         competences = new Competence[2];
         Evenement[] event = {new Evenement("infligeDegats",0,0,50)};
-        competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1);
+        competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1, 0);
         Evenement[] event2 = {new Evenement("appliqueResistEtourdissement",0,0,5),
                 new Evenement("appliqueResistImmobilise",0,0,5),
                 new Evenement("appliqueResistRalentissement",0,0,5),
                 new Evenement("appliqueResistAveugle",0,0,5)};
         competences[1] = new Competence("conviction innébranlable","le templier,armé de son courage et d'une volonté à toute épreuve " +
-                "ne laissera rien le ralentir dans dans sa mission. L'imuunise contre tout effet de contrôle",event2, 0,1);
+                "ne laissera rien le ralentir dans dans sa mission. L'imuunise contre tout effet de contrôle",event2, 0,1, 0);
 
     }
     

@@ -268,7 +268,8 @@ public class Jeu {
     public void startGraphique(){
         setJoueur1(new Joueur(1000, this));
         setActionjoueur1(new ActionJoueur(joueur1));
-        setJoueur2(new Robot(1000, this));
+        //setJoueur2(new Robot(1000, this));
+        setJoueur2(new Joueur(1000, this));
         setActionjoueur2(new ActionJoueur(joueur2));
         tourDuJoueur = joueur1;
         v = new Vue(m,terrain,joueur1);
@@ -306,11 +307,13 @@ public class Jeu {
         for(int i=0 ; i<joueur2.getUnites().length;i++){
             if(joueur2.getUnites()[i]!=null) {
                 joueur2.getUnites()[i].readAlterationEtats();
+                joueur2.getUnites()[i].checkCooldowns();
             }
         }
         for(int i=0 ; i<joueur1.getUnites().length;i++){
             if(joueur1.getUnites()[i]!=null) {
                 joueur1.getUnites()[i].readAlterationEtats();
+                joueur1.getUnites()[i].checkCooldowns();
             }
         }
     }

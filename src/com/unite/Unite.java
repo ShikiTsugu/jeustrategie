@@ -5,6 +5,7 @@ import com.player.Joueur;
 import java.lang.*;
 import java.util.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Unite {
     protected int santeMax;
@@ -24,6 +25,7 @@ public abstract class Unite {
     protected HashSet<Case> deplacementDisponible;
     protected ArrayList<Buff> buffs;
     protected ArrayList<Debuff> debuffs;
+    protected boolean peutEtreAttaque= true;
 
     public Unite(Joueur joueur){
         this.joueur = joueur;
@@ -78,6 +80,8 @@ public abstract class Unite {
     public int getCurrentY() { return currentY; }
 
     public Competence[] getCompetences() { return competences; }
+
+    public boolean getPeutEtreAttaque(){return peutEtreAttaque;}
 
     public void setSanteMax(int santeMax){
         this.santeMax = santeMax;
@@ -135,9 +139,19 @@ public abstract class Unite {
         debuffs.add(new Debuff(a,n,this));
     }
 
+    public void setPeutEtreAttaque(boolean peutEtreAttaque){this.peutEtreAttaque = peutEtreAttaque;}
+
     public void readAlterationEtats(){
         updateAlterationEtats();
         activeAlterationEtats();
+    }
+
+    public void checkCooldowns(){
+        for(int i =0 ; i<competences.length ;i++){
+            if(competences[i].getCooldownActuel() > 0 ){
+                competences[i].setCooldownActuel(competences[i].getCooldownActuel()-1);
+            }
+        }
     }
 
     public void updateAlterationEtats(){
@@ -229,13 +243,15 @@ public abstract class Unite {
         } System.out.println("def pv avant : "+defenseur.santeCourante);
     }
 
-    public void estMort(Terrain t, int xD, int yD){
+    public boolean estMort(Terrain t, int xD, int yD){
         Unite defenseur = t.getPlateau()[yD][xD].getUnite();
         if (defenseur.getSanteCourante() <= 0) {
             gagnerArgentApresMort(defenseur);
             joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
             t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
+            return true;
         }
+        return false;
     }
 
 

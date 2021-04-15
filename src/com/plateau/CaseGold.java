@@ -9,7 +9,8 @@ public class CaseGold extends CaseEffect{
     }
 
     public void Effect(){
-        unit.getJoueur().setArgent(unit.getJoueur().getArgent() + 100);
+        if (unit.toString().equals("Templier")) unit.getJoueur().setArgent(unit.getJoueur().getArgent() + 200);
+        else unit.getJoueur().setArgent(unit.getJoueur().getArgent() + 100);
     }
 
 }
