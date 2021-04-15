@@ -49,7 +49,7 @@ public class Evenement {
             return resultat;
         }
         if(event.equals("appliqueMort") && t.getPlateau()[y+this.y][x+this.x].getUnite().isHero() == false){
-            if (t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante() <= 100){
+            if (t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante() < 100){
                 t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(0);
                 t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x+this.x, y+this.y);
             }
