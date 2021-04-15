@@ -59,6 +59,15 @@ public class Evenement {
             t.getPlateau()[y+this.y][x+this.x].getUnite().setPointAction(t.getPlateau()[y+this.y][x+this.x].getUnite().getPointAction()+1);
             return true;
         }
+        if(event.equals("mettreBarricade")){
+            if (t.getPlateau()[y+this.y][x+this.x].estVide() && value > 0){
+                t.getPlateau()[y+this.y][x+this.x].setObstacle(true);
+                value-=1;
+                return true;
+            }
+            else if(value == 0) t.getPlateau()[y+this.y][x+this.x].setObstacle(false);
+            return true;
+        }
         if(event.equals("appliqueResistEtourdissement")){
             t.getPlateau()[y+this.y][x+this.x].getUnite().addBuff("immuniteEtourdissement",value);
             return true;

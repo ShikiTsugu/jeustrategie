@@ -41,6 +41,8 @@ public class Case {
         this.unit = unit;
     }
 
+    public void setObstacle(boolean obstacle){this.obstacle = obstacle;}
+
     public void setJ1Buyable(boolean j1Buyable) {
         J1Buyable = j1Buyable;
     }
