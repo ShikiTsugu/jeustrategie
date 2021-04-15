@@ -71,24 +71,24 @@ public class Robot extends Joueur{
     }
 
     public boolean targetDetected(Unite u, int x, int y, Joueur j, Terrain t, int portee) {
-        if(t.getPlateau()[y][x].estUnit() && portee>=0) {
-            if (t.getPlateau()[y][x].getUnite().getJoueur() != j) {
-                setCoordTarget(x, y);
-                System.out.println("caught");
-                return true;
-            }
+        if(t.getPlateau()[y][x].estUnit()
+                && t.getPlateau()[y][x].getUnite().getJoueur() != j
+                && portee>=0) {
+            setCoordTarget(x, y);
+            System.out.println("caught");
+            return true;
         }
-        if (u.estDansTableau(t, u.getCurrentX(), y-1) && portee>=0) {
-            return targetDetected(u, u.getCurrentX(), y-1, j, t, portee-1);
+        if (u.estDansTableau(t, x, y-1) && portee>=0) {
+            return targetDetected(u, x, y-1, j, t, portee-1);
         }
-        if (u.estDansTableau(t, u.getCurrentX(), y+1) && portee>=0) {
-            return targetDetected(u, u.getCurrentX(), y+1, j, t, portee-1);
+        if (u.estDansTableau(t, x, y+1) && portee>=0) {
+            return targetDetected(u, x, y+1, j, t, portee-1);
         }
-        if (u.estDansTableau(t, x-1, u.getCurrentY()) && portee>=0) {
-            return targetDetected(u, x-1, u.getCurrentY(), j, t, portee-1);
+        if (u.estDansTableau(t, x-1, y) && portee>=0) {
+            return targetDetected(u, x-1, y, j, t, portee-1);
         }
-        if (u.estDansTableau(t, x+1, u.getCurrentY()) && portee>=0) {
-            return targetDetected(u, x+1, u.getCurrentY(), j, t, portee-1);
+        if (u.estDansTableau(t, x+1, y) && portee>=0) {
+            return targetDetected(u, x+1, y, j, t, portee-1);
         }
         System.out.println("didn't find any");
         return false;
