@@ -2,6 +2,8 @@ package com.unite;
 
 import com.plateau.*;
 
+import java.util.HashMap;
+
 public class Competence {
 
     protected String name;
@@ -46,16 +48,26 @@ public class Competence {
         return cout;
     }
 
-    public boolean useSkill(int xA , int yA, int xD,int yD, Terrain terrain){
+    public HashMap<String, Integer> useSkill(int xA , int yA, int xD, int yD, Terrain terrain){
+        HashMap<String,Integer> resultat = new HashMap<String,Integer>();
         if(terrain.getPlateau()[yA][xA].getUnite().getPointAction()>=cout && ((Math.abs(yA - yD)+Math.abs(xA - xD)) <= portee + terrain.getPlateau()[yA][xA].getUnite().modifPortee()) &&  cooldownActuel<= 0) {
             for (int i = 0; i < effets.length; i++) {
-                effets[i].readEvent(xD,yD,terrain);
+                HashMap<String,Boolean> recap = effets[i].readEvent(xD,yD,terrain);
+                for(String j : recap.keySet()){
+                    if(recap.get(j)) {
+                        if (resultat.containsKey(j)) {
+                            resultat.put(j, resultat.get(j) + 1);
+                        } else {
+                            resultat.put(j, 1);
+                        }
+                    }
+                }
             }
             terrain.getPlateau()[yA][xA].getUnite().setPointAction(terrain.getPlateau()[yA][xA].getUnite().getPointAction()-cout);
             cooldownActuel = cooldown;
-            return true;
+            return resultat;
         }
-        return false;
+        return resultat;
     }
 
 

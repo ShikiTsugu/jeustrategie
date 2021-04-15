@@ -5,6 +5,7 @@ import com.player.Joueur;
 import java.lang.*;
 import java.util.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Unite {
     protected int santeMax;
@@ -242,13 +243,15 @@ public abstract class Unite {
         } System.out.println("def pv avant : "+defenseur.santeCourante);
     }
 
-    public void estMort(Terrain t, int xD, int yD){
+    public boolean estMort(Terrain t, int xD, int yD){
         Unite defenseur = t.getPlateau()[yD][xD].getUnite();
         if (defenseur.getSanteCourante() <= 0) {
             gagnerArgentApresMort(defenseur);
             joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
             t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
+            return true;
         }
+        return false;
     }
 
 
