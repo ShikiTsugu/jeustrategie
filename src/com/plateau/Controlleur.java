@@ -338,12 +338,8 @@ public class Controlleur {
             u.casesDisponibleDeplacement(vue.terrain, u, coordI[1], coordI[0], coordI[1], coordI[0]);
             int[] coordF = {coordI[0], coordI[1]};
             int catchTarget=0;
-            for (Case c : u.getDeplacementDisponible()) {
-                if (c.estUnit() && c.getUnite().getJoueur() != j) {
-                    ((Robot) j).setCoordTarget(c.casePos(vue.terrain)[1], c.casePos(vue.terrain)[0]);
-                    catchTarget=1;
-                    break;
-                }
+            if(((Robot)j).targetDetected(u,u.getCurrentX(),u.getCurrentY(),j, vue.terrain, u.getPorteeDeplacement())){
+                catchTarget=1;
             }
             if(catchTarget==0) {
                 for (Case c : u.getDeplacementDisponible()) {
