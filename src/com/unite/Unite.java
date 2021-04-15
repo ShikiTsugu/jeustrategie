@@ -145,6 +145,14 @@ public abstract class Unite {
         activeAlterationEtats();
     }
 
+    public void checkCooldowns(){
+        for(int i =0 ; i<competences.length ;i++){
+            if(competences[i].getCooldownActuel() > 0 ){
+                competences[i].setCooldownActuel(competences[i].getCooldownActuel()-1);
+            }
+        }
+    }
+
     public void updateAlterationEtats(){
         for(int i =0; i< buffs.size();i++){
             if(buffs.get(i).getTourRestant() <= 0){

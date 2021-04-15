@@ -307,11 +307,13 @@ public class Jeu {
         for(int i=0 ; i<joueur2.getUnites().length;i++){
             if(joueur2.getUnites()[i]!=null) {
                 joueur2.getUnites()[i].readAlterationEtats();
+                joueur2.getUnites()[i].checkCooldowns();
             }
         }
         for(int i=0 ; i<joueur1.getUnites().length;i++){
             if(joueur1.getUnites()[i]!=null) {
                 joueur1.getUnites()[i].readAlterationEtats();
+                joueur1.getUnites()[i].checkCooldowns();
             }
         }
     }

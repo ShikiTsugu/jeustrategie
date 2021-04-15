@@ -57,10 +57,9 @@ public class Buff extends AlterationEtat{
     }
 
     public void camouflage(){
-        if(tourRestant > 0){
-            unite.setPeutEtreAttaque(false);
-            tourRestant -=1;
-        }
+        unite.setPeutEtreAttaque(false);
+        tourRestant -=1;
+        if(tourRestant <= 0) unite.setPeutEtreAttaque(true);
     }
 
     public void buffProphete(){
