@@ -25,6 +25,9 @@ public class Buff extends AlterationEtat{
         if(nom.equals("camouflage")){
             camouflage();
         }
+        if(nom.equals("buffProphete")){
+            buffProphete();
+        }
 
     }
 
@@ -54,8 +57,20 @@ public class Buff extends AlterationEtat{
     }
 
     public void camouflage(){
-        unite.setPeutEtreAttaque(false);
-        tourRestant -=1;
+        if(tourRestant > 0){
+            unite.setPeutEtreAttaque(false);
+            tourRestant -=1;
+        }
+    }
+
+    public void buffProphete(){
+        if(tourRestant > 0){
+            unite.setSanteCourante(unite.getSanteCourante()*2);
+            if(unite.getPorteeAttaque() > 1) unite.setPorteeAttaque(unite.getPorteeAttaque()*2);
+            unite.setPorteeDeplacement(unite.getPorteeDeplacement()*2);
+            unite.setAttaque(unite.getAttaque()*2);
+            tourRestant-=1;
+        }
     }
 
 }

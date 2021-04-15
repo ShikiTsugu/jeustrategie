@@ -51,6 +51,10 @@ public class Evenement {
             }
             return true;
         }
+        if(event.equals("appliqueBuffProphete") && t.getPlateau()[y+this.y][x+this.x].getUnite().isHero() == false){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addBuff("buffProphete", value);
+            return true;
+        }
         if(event.equals("donnePa")){
             t.getPlateau()[y+this.y][x+this.x].getUnite().setPointAction(t.getPlateau()[y+this.y][x+this.x].getUnite().getPointAction()+1);
             return true;
