@@ -337,7 +337,7 @@ public class Controlleur {
             Unite u = vue.terrain.plateau[coordI[0]][coordI[1]].unit;
             u.casesDisponibleDeplacement(vue.terrain, u, coordI[1], coordI[0], coordI[1], coordI[0]);
             int[] coordF = {coordI[0], coordI[1]};
-            if(((Robot)j).targetDetected(u,u.getCurrentX(),u.getCurrentY(),j, vue.terrain, u.getPorteeDeplacement())){
+            if(((Robot)j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j)){
                 return;
             }
             for (Case c : u.getDeplacementDisponible()) {
@@ -354,6 +354,7 @@ public class Controlleur {
                 }
             }
         }
+        return;
     }
 
     public void achatUniteRob(Joueur j){

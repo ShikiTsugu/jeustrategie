@@ -1,8 +1,10 @@
 package com.player;
 import com.launcher.Jeu;
+import com.plateau.Case;
 import com.plateau.Terrain;
 import com.unite.Unite;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -70,27 +72,33 @@ public class Robot extends Joueur{
         return coord;
     }
 
-    public boolean targetDetected(Unite u, int x, int y, Joueur j, Terrain t, int portee) {
-        if(t.getPlateau()[y][x].estUnit()
+    public boolean targetDetected (Terrain t, int x, int y, int portee, Unite u, Joueur j){
+        if(u.estDansTableau(t, x, y)
+                && t.getPlateau()[y][x].estUnit()
                 && t.getPlateau()[y][x].getUnite().getJoueur() != j
                 && portee>=0) {
             setCoordTarget(x, y);
             System.out.println("caught");
             return true;
         }
-        if (u.estDansTableau(t, x, y-1) && portee>=0) {
-            return targetDetected(u, x, y-1, j, t, portee-1);
+        if (portee >= 0 && u.estDansTableau(t, x, y)){
+            if (targetDetected(t, x -1, y, portee -1, u, j)
+                    && u.estDansTableau(t, x -1, y)){
+                return true;
+            }
+            if (targetDetected(t, x + 1, y, portee -1, u, j)
+                    && u.estDansTableau(t, x +1, y)){
+                return true;
+            }
+            if (targetDetected(t, x, y-1, portee -1, u, j)
+                    && u.estDansTableau(t, x, y-1)){
+                return true;
+            }
+            if (targetDetected(t, x, y +1, portee -1, u, j)
+                    && u.estDansTableau(t, x, y+1)){
+                return true;
+            }
         }
-        if (u.estDansTableau(t, x, y+1) && portee>=0) {
-            return targetDetected(u, x, y+1, j, t, portee-1);
-        }
-        if (u.estDansTableau(t, x-1, y) && portee>=0) {
-            return targetDetected(u, x-1, y, j, t, portee-1);
-        }
-        if (u.estDansTableau(t, x+1, y) && portee>=0) {
-            return targetDetected(u, x+1, y, j, t, portee-1);
-        }
-        System.out.println("didn't find any");
         return false;
     }
 }
