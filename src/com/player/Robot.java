@@ -69,4 +69,26 @@ public class Robot extends Joueur{
         }
         return coord;
     }
+
+    public boolean targetDetected(Unite u, int x, int y, Joueur j, Terrain t, int portee) {
+        if(t.getPlateau()[y][x].estUnit() && portee>=0) {
+            if (t.getPlateau()[y][x].getUnite().getJoueur() != j) {
+                setCoordTarget(x, y);
+                return true;
+            }
+        }
+        if (u.estDansTableau(t, u.getCurrentX(), y-1)) {
+            return targetDetected(u, u.getCurrentX(), y-1, j, t, portee-1);
+        }
+        if (u.estDansTableau(t, u.getCurrentX(), y+1)) {
+            return targetDetected(u, u.getCurrentX(), y+1, j, t, portee-1);
+        }
+        if (u.estDansTableau(t, x-1, u.getCurrentY())) {
+            return targetDetected(u, x-1, u.getCurrentY(), j, t, portee-1);
+        }
+        if (u.estDansTableau(t, x+1, u.getCurrentY())) {
+            return targetDetected(u, x+1, u.getCurrentY(), j, t, portee-1);
+        }
+        return false;
+    }
 }
