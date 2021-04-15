@@ -16,13 +16,8 @@ public class Prophete extends Unite{
         competences = new Competence[2];
         Evenement[] event = {new Evenement("infligeDegats",0,0,150)};
         competences[0] = new Competence("tir maquique","lancer un projectile magique",event, 5,1, 0);
-        Evenement[] event2 = {new Evenement("infligeDegats",0,0,150),
-                new Evenement("infligeDegats",1,0,150),
-                new Evenement("infligeDegats",-1,0,150),
-                new Evenement("infligeDegats",0,1,150),
-                new Evenement("infligeDegats",0,-1,150),
-        };
-        competences[1] = new Competence("météore","fait tomber un météore devastateur du ciel pour l'abatre sur ces ennemis",event2, 5,1, 1);
+        Evenement[] event2 = {new Evenement("donnePa",0,0,150)};
+        competences[1] = new Competence("donationPA","redonne de la force à une unitée, lui confère 1 PA supplémentaire",event2, 4,1, 3);
     }
 
     public String toString(){
