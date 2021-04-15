@@ -338,6 +338,7 @@ public class Controlleur {
             u.casesDisponibleDeplacement(vue.terrain, u, coordI[1], coordI[0], coordI[1], coordI[0]);
             int[] coordF = {coordI[0], coordI[1]};
             if(((Robot)j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j)){
+                u.setPointAction(0); //temporaire => pour éviter boucle infinie
                 return;
             }
             for (Case c : u.getDeplacementDisponible()) {
