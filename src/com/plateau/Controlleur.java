@@ -343,19 +343,37 @@ public class Controlleur {
             }
             for (Case c : u.getDeplacementDisponible()) {
                 if (u.getPointAction() > 0) {
-                    /*if (coordI[1] > 0) {
-                        if(c.casePos(vue.terrain)[0]>coordI[1] && c.estVide()) {
-                            coordF[1]=c.casePos(vue.terrain)[0];
+                    if (coordI[1] != 0) {
+                        if (c.casePos(vue.terrain)[0] < coordI[1]
+                                && c.estVide()
+                                && Math.abs(c.casePos(vue.terrain)[0]-coordI[1])==1) {
+                            coordF[1] = c.casePos(vue.terrain)[0];
                             aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
-                        }*/
-                    if (coordF[1] != 0) {
-                        coordF[1]--;
-                        aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
-                    } else if (coordF[0] != vue.terrain.plateau.length - 1) {
-                        coordF[0]++;
-                        aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                        }
+                    } else {
+                        if (c.casePos(vue.terrain)[0] > coordI[1]
+                                && c.estVide()
+                                && Math.abs(c.casePos(vue.terrain)[0]-coordI[1])==1) {
+                            coordF[1] = c.casePos(vue.terrain)[0];
+                            aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                        }
                     }
-                } else {
+                    if (coordI[0] != 0) {
+                        if (c.casePos(vue.terrain)[1] < coordI[0]
+                                && c.estVide()
+                                && Math.abs(c.casePos(vue.terrain)[0]-coordI[1])==1) {
+                            coordF[0] = c.casePos(vue.terrain)[1];
+                            aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                        }
+                    } else {
+                        if (c.casePos(vue.terrain)[1] > coordI[0]
+                                && c.estVide()
+                                && Math.abs(c.casePos(vue.terrain)[0]-coordI[1])==1) {
+                            coordF[0] = c.casePos(vue.terrain)[1];
+                            aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
+                        }
+                    }
+                }else{
                     break;
                 }
             }
