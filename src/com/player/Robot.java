@@ -29,7 +29,6 @@ public class Robot extends Joueur{
         for(int x = 0; x<t.getPlateau().length; x++){
             for(int y = 0; y<t.getPlateau()[x].length; y++){
                 if(t.getPlateau()[x][y].estUnit()){
-                    System.out.println(t.getPlateau()[x][y].getUnite().getJoueur()==this);
                     if(t.getPlateau()[x][y].getUnite().getJoueur()==this) {
                         if(t.getPlateau()[x][y].getUnite().getPointAction()>0) {
                             coord[0] = x;
