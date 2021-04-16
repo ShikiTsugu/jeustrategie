@@ -90,9 +90,9 @@ public abstract class Unite {
 	    this.santeCourante = santeCourante;
     }
     
-    public void setAttaque(int attaque){
-        this.attaqueCourante = attaque;
-    }
+    public void setAttaque(int attaque){ this.attaqueCourante = attaque; }
+
+    public void resetAttaque(){ attaqueCourante = attaqueMax; }
     
     public void setCoutUnite(int coutUnite){
         this.coutUnite = coutUnite;

@@ -16,7 +16,7 @@ public class Lancier extends Unite{
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
         competences = new Competence[2];
-        Evenement[] event = {new Evenement("infligeDegats",0,0,75)};
+        Evenement[] event = {new Evenement("infligeDegats",0,0,attaqueCourante)};
         competences[0] = new Competence("coup de lance","effectue un coup avec sa lance",event, 1,1);
         Evenement[] event2 = {new Evenement("infligeDegats",0,0,50),
                 new Evenement("appliqueEtourdissement",0,0,3)

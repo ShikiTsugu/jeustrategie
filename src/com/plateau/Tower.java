@@ -9,7 +9,7 @@ public class Tower extends CaseEffect{
     }
 
     public void Effect(){
-        unit.addBuff("tower", 1);
+        unit.addBuff("Tower", 1);
     }
 
 }

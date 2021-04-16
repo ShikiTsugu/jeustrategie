@@ -22,8 +22,9 @@ public class Buff extends AlterationEtat{
         if(nom.equals("immuniteAveugle")){
             immuniteAveugle();
         }
-
-
+        if(nom.equals("Tower")){
+            TowerBuff();
+        }
     }
 
     public void immuniteEtourdissement(){
@@ -49,6 +50,11 @@ public class Buff extends AlterationEtat{
     public void immuniteAveugle(){
             tourRestant -= 1;
 
+    }
+
+    public void TowerBuff(){
+        tourRestant -=1;
+        unite.setAttaque(unite.getAttaqueCourante() + 150);
     }
 
 }

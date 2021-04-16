@@ -16,7 +16,7 @@ public class Archer extends Unite{
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
         competences = new Competence[1];
-        Evenement[] event = {new Evenement("infligeDegats",0,0,100)};
+        Evenement[] event = {new Evenement("infligeDegats",0,0,attaqueCourante)};
         competences[0] = new Competence("tir à l'arc","tire une flèche",event, 5,1);
     }
     
