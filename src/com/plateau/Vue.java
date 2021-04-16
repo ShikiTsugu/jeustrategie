@@ -105,6 +105,7 @@ public class Vue extends JFrame{
             controlleur.getMap().Map5x5();
             controlleur.getJeu().getMapTerrain();
             controlleur.getJeu().AjouteHero();
+            controlleur.getJeu().AjouteCaseEffect();
             terrain = controlleur.getMap().getTerrain();
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
@@ -119,6 +120,7 @@ public class Vue extends JFrame{
             controlleur.getMap().Map14x6();
             controlleur.getJeu().getMapTerrain();
             controlleur.getJeu().AjouteHero();
+            controlleur.getJeu().AjouteCaseEffect();
             terrain = controlleur.getMap().getTerrain();
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
@@ -358,6 +360,8 @@ public class Vue extends JFrame{
     public JButton setBorder(JButton bt, int x, int y){
         if (terrain.plateau[x][y] instanceof CaseGold) {
             bt.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        } else if (terrain.plateau[x][y] instanceof Tower){
+            bt.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         }
         return bt;
     }

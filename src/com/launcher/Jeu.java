@@ -289,8 +289,12 @@ public class Jeu {
         joueur2.ajouteUnite(h2);
         terrain.ajouteUnite(h1,0,terrain.getPlateau().length/2);
         terrain.ajouteUnite(h2,terrain.getPlateau()[0].length-1,terrain.getPlateau().length/2);
-        terrain.setEffectCase(terrain.getPlateau()[0].length/2,terrain.getPlateau().length/2, new CaseGold());
         setTerrain(terrain);
+    }
+
+    public void AjouteCaseEffect(){
+        terrain.setEffectCase(terrain.getPlateau()[0].length/2,terrain.getPlateau().length/2, new CaseGold());
+        terrain.setEffectCase(terrain.getPlateau()[0].length/2-1,terrain.getPlateau().length/2-1, new Tower());
     }
 
 
