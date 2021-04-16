@@ -247,7 +247,7 @@ public class Controlleur {
         allStats.setPreferredSize(new Dimension(300,300));
         allStats.setLayout(new BoxLayout(allStats,BoxLayout.Y_AXIS));
         allStats.add(new JLabel("PV : "+u.getSanteCourante()+"/"+u.getSanteMax()));
-        allStats.add(new JLabel("ATQ : "+u.getAttaque()));
+        allStats.add(new JLabel("ATQ : "+u.getAttaqueCourante()));
         allStats.add(new JLabel("PorteeATQ : "+u.getPorteeAttaque()));
         allStats.add(new JLabel("PorteeDEP : "+u.getPorteeDeplacement()));
         allStats.add(new JLabel("PA : "+u.getPointAction()+"/"+u.getPointActionMax()));

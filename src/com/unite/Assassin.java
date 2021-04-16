@@ -8,7 +8,8 @@ public class Assassin extends Unite{
         super(joueur);
         santeMax = 100; //discussion en cours
         santeCourante = 100;
-        attaque = 200; //discussion en cours
+        attaqueMax = 200; //discussion en cours
+        attaqueCourante = 200; //discussion en cours
         coutUnite = 500; //discussion en cours
         porteeDeplacement = 5; //discussion en cours
         porteeAttaque = 1; //discussion en cours

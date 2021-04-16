@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public abstract class Unite {
     protected int santeMax;
     protected int santeCourante;
-    protected int attaque;
+    protected int attaqueMax;
+    protected int attaqueCourante;
     protected int coutUnite;
     protected int porteeDeplacement;
     protected int porteeAttaque;
@@ -39,9 +40,11 @@ public abstract class Unite {
 	    return santeCourante;
     }
     
-    public int getAttaque(){
-        return attaque;
+    public int getAttaqueMax(){
+        return attaqueMax;
     }
+
+    public int getAttaqueCourante(){ return attaqueCourante; }
     
     public int getCoutUnite(){
         return coutUnite;
@@ -88,7 +91,7 @@ public abstract class Unite {
     }
     
     public void setAttaque(int attaque){
-        this.attaque = attaque;
+        this.attaqueCourante = attaque;
     }
     
     public void setCoutUnite(int coutUnite){
@@ -218,7 +221,7 @@ public abstract class Unite {
         if (t.getPlateau()[yA][xA].estUnit() && attaquant.getPointAction() > 0) {
             if (t.getPlateau()[yD][xD].estUnit() && ((Math.abs(yD - yA)+Math.abs(xD - xA)) <= attaquant.getPorteeAttaque())){
                 attaquant.setPointAction(attaquant.getPointAction() -1);
-                defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
+                defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaqueCourante());
                 if (defenseur.getSanteCourante() <= 0){
                     gagnerArgentApresMort(defenseur);
                     joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());

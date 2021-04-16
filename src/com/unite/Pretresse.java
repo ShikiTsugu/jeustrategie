@@ -8,7 +8,8 @@ public class Pretresse extends Unite{
         super(joueur);
         santeMax = 150; //discussion en cours
         santeCourante = 150;
-        attaque = 25; //discussion en cours
+        attaqueMax = 25; //discussion en cours
+        attaqueCourante = 25; //discussion en cours
         coutUnite = 400; //discussion en cours
         porteeDeplacement = 5; //discussion en cours
         porteeAttaque = 3; //discussion en cours

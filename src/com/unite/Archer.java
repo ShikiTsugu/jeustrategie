@@ -8,7 +8,8 @@ public class Archer extends Unite{
         super(joueur);
         santeMax = 200; //discussion en cours
         santeCourante = 200;
-        attaque = 100; //discussion en cours
+        attaqueMax = 100; //discussion en cours
+        attaqueCourante = 100; //discussion en cours
         coutUnite = 300; //discussion en cours
         porteeDeplacement = 4; //discussion en cours
         porteeAttaque = 4; //discussion en cours

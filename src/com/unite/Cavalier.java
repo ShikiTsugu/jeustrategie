@@ -8,7 +8,8 @@ public class Cavalier extends Unite{
         super(joueur);
         santeMax = 300; //discussion en cours
         santeCourante = 300;
-        attaque = 150; //discussion en cours
+        attaqueMax = 150; //discussion en cours
+        attaqueCourante = 150; //discussion en cours
         coutUnite = 600; //discussion en cours
         porteeDeplacement = 6; //discussion en cours
         porteeAttaque = 1; //discussion en cours

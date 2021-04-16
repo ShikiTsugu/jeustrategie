@@ -8,7 +8,8 @@ public class Templier extends Unite{
         super(joueur);
         santeMax = 150; //discussion en cours
         santeCourante = 150;
-        attaque = 50; //discussion en cours
+        attaqueMax = 50; //discussion en cours
+        attaqueCourante = 50; //discussion en cours
         coutUnite = 100; //discussion en cours
         porteeDeplacement = 4; //discussion en cours
         porteeAttaque = 1; //discussion en cours

@@ -8,7 +8,8 @@ public class Hero extends Unite{
         super(joueur);
         santeMax = 1000; //discussion en cours
         santeCourante = 1000; //discusssion en cours
-        attaque = 250; //discussion en cours
+        attaqueMax = 250; //discussion en cours
+        attaqueCourante = 250; //discussion en cours
         coutUnite = 0; //discussion en cours
         porteeDeplacement = 4; //discussion en cours
         porteeAttaque = 1; //discussion en cours
