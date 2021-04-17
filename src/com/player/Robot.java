@@ -29,15 +29,13 @@ public class Robot extends Joueur{
         for(int x = 0; x<t.getPlateau().length; x++){
             for(int y = 0; y<t.getPlateau()[x].length; y++){
                 if(t.getPlateau()[x][y].estUnit()){
-                    if(t.getPlateau()[x][y].getUnite().getJoueur()==this) {
-                        if(t.getPlateau()[x][y].getUnite().getPointAction()>0) {
-                            coord[0] = x;
-                            coord[1] = y;
-                            System.out.println("L'unite choisit : " + t.getPlateau()[coord[0]][coord[1]].getUnite());
-                            return true;
-                        }else{
-                            System.out.println("Cette unite n'a plus de PA.");
-                        }
+                    if(t.getPlateau()[x][y].getUnite().getJoueur()==this
+                            && t.getPlateau()[x][y].getUnite().getPointAction()>0) {
+                        coord[0] = x;
+                        coord[1] = y;
+                        System.out.println("L'unite choisit : " + t.getPlateau()[coord[0]][coord[1]].getUnite() +
+                                ", PA : " + t.getPlateau()[coord[0]][coord[1]].getUnite().getPointAction());
+                        return true;
                     }
                 }
             }

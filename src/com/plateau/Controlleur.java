@@ -357,38 +357,38 @@ public class Controlleur {
             System.out.println(casesDispo);
             for (Case dispo : casesDispo) {
                 if (u.getPointAction() > 0) {
-                    if (u.getCurrentX() != 0) {
-                        if (dispo.casePos(vue.terrain)[0] < u.getCurrentX()
-                                && dispo.estVide()) {
-                            coordF[1] = dispo.casePos(vue.terrain)[0];
-                            aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
-                        }
-                    } else {
-                        if (dispo.casePos(vue.terrain)[0] > u.getCurrentX()
-                                && dispo.estVide()) {
-                            coordF[1] = dispo.casePos(vue.terrain)[0];
-                            aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
-                        }
+                    if (u.getCurrentX() > 0
+                            && dispo.casePos(vue.terrain)[0] < u.getCurrentX()
+                            && dispo.estVide()) {
+                        coordF[1] = dispo.casePos(vue.terrain)[0];
+                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
+                    }else if (u.getCurrentX() == 0
+                            && dispo.casePos(vue.terrain)[0] > u.getCurrentX()
+                            && dispo.estVide()) {
+                        coordF[1] = dispo.casePos(vue.terrain)[0];
+                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
                     }
-                    if (u.getCurrentY() != 0) {
-                        if (dispo.casePos(vue.terrain)[1] < u.getCurrentY()
-                                && dispo.estVide()) {
-                            coordF[0] = dispo.casePos(vue.terrain)[1];
-                            aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
-                        }
-                    } else {
-                        if (dispo.casePos(vue.terrain)[1] > u.getCurrentY()
-                                && dispo.estVide()) {
-                            coordF[0] = dispo.casePos(vue.terrain)[1];
-                            aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
-                        }
+                    if (u.getCurrentY() > 0
+                            && dispo.casePos(vue.terrain)[1] < u.getCurrentY()
+                            && dispo.estVide()) {
+                        coordF[0] = dispo.casePos(vue.terrain)[1];
+                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
+                    }else if (u.getCurrentY() == 0
+                            && dispo.casePos(vue.terrain)[1] > u.getCurrentY()
+                            && dispo.estVide()) {
+                        coordF[0] = dispo.casePos(vue.terrain)[1];
+                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
+                    }
+                    if (dispo.estVide()){
+                        coordF[1] = dispo.casePos(vue.terrain)[0];
+                        coordF[0] = dispo.casePos(vue.terrain)[1];
+                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
                     }
                 }else{
-                    break;
+                    return;
                 }
             }
         }
-        return;
     }
 
     public void achatUniteRob(Joueur j){
