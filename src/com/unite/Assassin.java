@@ -15,7 +15,7 @@ public class Assassin extends Unite{
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
         competences = new Competence[4];
-        Evenement[] event = {new Evenement("infligeDegats",0,0,200)};
+        Evenement[] event = {new Evenement("infligeDegats",0,0,attaque)};
         competences[0] = new Competence("poignarder","effectue un coup de dague",event, 1,1, 0);
         Evenement[] event2 = {new Evenement("infligeDegats",0,0,50),
         new Evenement("appliquePoison",0,0,3)};
