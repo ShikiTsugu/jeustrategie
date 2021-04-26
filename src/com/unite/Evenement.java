@@ -72,6 +72,11 @@ public class Evenement {
             else if(value == 0) t.getPlateau()[y+this.y][x+this.x].setObstacle(false);
             return resultat;
         }
+
+        if(event.equals("transformationMouton")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("mouton", value);
+            return resultat;
+        }
         if(event.equals("appliqueResistEtourdissement")){
             t.getPlateau()[y+this.y][x+this.x].getUnite().addBuff("immuniteEtourdissement",value);
             return resultat;

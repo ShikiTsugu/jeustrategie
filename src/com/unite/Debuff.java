@@ -23,6 +23,9 @@ public class Debuff extends AlterationEtat {
         if(nom.equals("aveugle")){
             aveugle();
         }
+        if(nom.equals("mouton")){
+            mouton(unite);
+        }
     }
 
     public void etourdissement(){
@@ -65,5 +68,12 @@ public class Debuff extends AlterationEtat {
         }
     }
 
+    public void mouton(Unite tmp){
+        unite = new Mouton(unite.getJoueur());
+        if (tourRestant == 0){
+            unite = tmp;
+        }
+        tourRestant-=1;
+    }
 
 }
