@@ -77,6 +77,10 @@ public class Evenement {
             t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("mouton", value);
             return resultat;
         }
+
+        if(event.equals("charge")){
+
+        }
         if(event.equals("appliqueResistEtourdissement")){
             t.getPlateau()[y+this.y][x+this.x].getUnite().addBuff("immuniteEtourdissement",value);
             return resultat;

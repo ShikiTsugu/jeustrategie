@@ -312,5 +312,47 @@ public abstract class Unite {
         return (yPast < t.getPlateau().length && xPast < t.getPlateau()[0].length && yPast >= 0 && xPast >= 0);
     }
 
+    public boolean casesDisponibleDeplacementCavalier (Terrain t, Unite unite, int xA, int yA, int xD, int yD){
+        int portee = unite.getPorteeDeplacement();
+        HashSet<Case> test = new HashSet<>();
+        return cheminTrouverCavalier(test, t, xA, yA, xD, yD, portee);
+    }
+
+    public boolean cheminTrouverCavalier (HashSet<Case> test, Terrain t, int xA, int yA, int xD, int yD, int portee){
+        if (xA == xD && yA == yD && portee >= 0){
+            setDeplacementDisponible(test);
+            return true;
+        }
+        if (xA == xD && portee >= 0){
+            if (yA > yD){
+                if (cheminTrouverCavalier(test, t, xA, yA-1, xD, yD, portee -1) && t.getPlateau()[yA-1][xA].estVide()){
+                test.add(t.getPlateau()[yA][xA]);
+                return true;
+                }
+            }
+            else if (yA < yD){
+                if (cheminTrouverCavalier(test, t, xA, yA+1, xD, yD, portee -1) && t.getPlateau()[yA+1][xA].estVide()){
+                test.add(t.getPlateau()[yA][xA]);
+                return true;
+                }
+            }
+        }
+        else if (yA == yD && portee >= 0){
+            if (xA > xD){
+                if (cheminTrouverCavalier(test, t, xA-1, yA, xD, yD, portee -1) && t.getPlateau()[yA][xA-1].estVide()){
+                test.add(t.getPlateau()[yA][xA]);
+                return true;
+                }
+            }
+            else if (xA < xD){
+                if (cheminTrouverCavalier(test, t, xA+1, yA, xD, yD, portee -1) && t.getPlateau()[yA][xA+1].estVide()){
+                test.add(t.getPlateau()[yA][xA]);
+                return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void resetPointAction(){pointAction = pointActionMax; }
 }
