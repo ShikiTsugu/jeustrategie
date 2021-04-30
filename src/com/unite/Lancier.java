@@ -17,14 +17,14 @@ public class Lancier extends Unite{
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
         competences = new Competence[3];
-        Evenement[] event = {new Evenement("infligeDegats",0,0,75)};
+        Evenement[] event = {new Evenement("infligeDegats",0,0,75,joueur)};
         competences[0] = new Competence("coup de lance","effectue un coup avec sa lance",event, 1,1, 0);
-        Evenement[] event2 = {new Evenement("infligeDegats",0,0,50),
-                new Evenement("appliqueEtourdissement",0,0,3)
+        Evenement[] event2 = {new Evenement("infligeDegats",0,0,50,joueur),
+                new Evenement("appliqueEtourdissement",0,0,3,joueur)
         };
         competences[1] = new Competence("maniement agile","le lancier effectue des movements précis avec sa lance pour donner un coup bien placé" +
                 " et étourdir l'ennemi",event2, 1,1, 0);
-        Evenement[] event3 = {new Evenement("mettreBarricade", 0, 0, 6)};
+        Evenement[] event3 = {new Evenement("mettreBarricade", 0, 0, 6,joueur)};
         competences[2] = new Competence("Barricade", "pose une barriacade temporaire pour vous sauver temporaiement de la bataille", event3, 1, 2, 0);
     }
 

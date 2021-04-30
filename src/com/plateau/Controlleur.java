@@ -252,7 +252,13 @@ public class Controlleur {
         allStats.add(new JLabel("PorteeDEP : "+u.getPorteeDeplacement()));
         allStats.add(new JLabel("PA : "+u.getPointAction()+"/"+u.getPointActionMax()));
         allStats.add(new JLabel("Buff : "));
+        for(int i =0;i < u.getBuffs().size();i++){
+            allStats.add(new JLabel(u.getBuffs().get(i).getNom()));
+        }
         allStats.add(new JLabel("Debuff : "));
+        for(int i =0;i < u.getDebuffs().size();i++){
+            allStats.add(new JLabel(u.getDebuffs().get(i).getNom()));
+        }
 
         JScrollPane scrollStats = new JScrollPane(allStats);
         scrollStats.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);

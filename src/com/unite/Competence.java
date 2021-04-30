@@ -51,14 +51,17 @@ public class Competence {
     public HashMap<String, Integer> useSkill(int xA , int yA, int xD, int yD, Terrain terrain){
         HashMap<String,Integer> resultat = new HashMap<String,Integer>();
         if(terrain.getPlateau()[yA][xA].getUnite().getPointAction()>=cout && ((Math.abs(yA - yD)+Math.abs(xA - xD)) <= portee + terrain.getPlateau()[yA][xA].getUnite().modifPortee()) &&  cooldownActuel<= 0) {
+
             for (int i = 0; i < effets.length; i++) {
-                HashMap<String,Boolean> recap = effets[i].readEvent(xD,yD,terrain);
+
+                HashMap<String,Integer> recap = effets[i].readEvent(xD,yD,terrain);
+
                 for(String j : recap.keySet()){
-                    if(recap.get(j)) {
+                    if(recap.get(j) >= 1) {
                         if (resultat.containsKey(j)) {
-                            resultat.put(j, resultat.get(j) + 1);
+                            resultat.put(j, resultat.get(j) + recap.get(j));
                         } else {
-                            resultat.put(j, 1);
+                            resultat.put(j, recap.get(j));
                         }
                     }
                 }
