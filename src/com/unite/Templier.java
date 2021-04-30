@@ -14,7 +14,7 @@ public class Templier extends Unite{
         porteeAttaque = 1; //discussion en cours
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
-        competences = new Competence[2];
+        competences = new Competence[3];
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque)};
         competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1, 0);
         Evenement[] event2 = {new Evenement("appliqueResistEtourdissement",0,0,5),
@@ -23,7 +23,8 @@ public class Templier extends Unite{
                 new Evenement("appliqueResistAveugle",0,0,5)};
         competences[1] = new Competence("conviction innébranlable","le templier,armé de son courage et d'une volonté à toute épreuve " +
                 "ne laissera rien le ralentir dans dans sa mission. L'imuunise contre tout effet de contrôle",event2, 0,1, 0);
-
+        Evenement[] event3 = {};
+        competences[2] = new Competence("Richesse", "Si le templier se trouve sur une case de gold, il gagnera le double", event3, -1, 999, 1);
     }
     
     public String toString(){
