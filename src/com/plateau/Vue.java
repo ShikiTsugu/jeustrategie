@@ -483,10 +483,24 @@ public class Vue extends JFrame{
         taskbarbg.setLayout(flow);
         JButton unit = displayUnit(unite);
         taskbarbg.add(unit);
-        btSkill1.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[0].getDescription());
-        btSkill2.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[1].getDescription());
-        //btSkill3.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[2].getDescription());
-        //btSkill4.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[3].getDescription());
+        for (int i = 0; i < terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences().length; i++){
+            if (i == 0){
+                btSkill1.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[0].getDescription());
+                taskbarbg.add(btSkill1);
+            }
+            if (i == 1){
+                btSkill2.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[1].getDescription());
+                taskbarbg.add(btSkill2);
+            }
+            if (i == 2){
+                btSkill3.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[2].getDescription());
+                taskbarbg.add(btSkill3);
+            }
+            if (i == 3){
+                btSkill4.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[3].getDescription());
+                taskbarbg.add(btSkill4);
+            }
+        }
         btSkill1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -498,7 +512,6 @@ public class Vue extends JFrame{
                 btSkill1.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
             }
         });
-        taskbarbg.add(btSkill1);
         btSkill2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -510,7 +523,6 @@ public class Vue extends JFrame{
                 btSkill2.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
             }
         });
-        taskbarbg.add(btSkill2);
         btSkill3.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -522,7 +534,6 @@ public class Vue extends JFrame{
                 btSkill3.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
             }
         });
-        taskbarbg.add(btSkill3);
         btSkill4.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -534,8 +545,6 @@ public class Vue extends JFrame{
                 btSkill4.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
             }
         });
-        taskbarbg.add(btSkill4);
-
         btSkill1.setContentAreaFilled(false);
         btSkill1.setBorderPainted(false);
         btSkill1.setFocusable(false);
