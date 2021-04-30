@@ -343,6 +343,30 @@ public class Controlleur {
         return casesDispo;
     }
 
+    public void attackUniteRob(Joueur j, Unite u){
+        int[] coordTarget = ((Robot)j).getCoordTarget().getFirst();
+        ActionJoueur aj = new ActionJoueur(j);
+        aj.attaqueUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordTarget[0], coordTarget[1]);
+    }
+
+    public void moveUntilAtRange(Joueur j, Unite u){
+        int[] coordTarget = ((Robot)j).getCoordTarget().getFirst();
+        Unite target = vue.terrain.getPlateau()[coordTarget[1]][coordTarget[0]].getUnite();
+        ActionJoueur aj = new ActionJoueur(j);
+        LinkedList<int[]> coords = ((Robot)j).availableSpaceAroundTarget(vue.terrain, target);
+        boolean moved = false;
+        for(int[] coord : coords){
+            if((Math.abs(coord[1]-u.getCurrentY())+Math.abs(coord[0]-u.getCurrentX()))<=u.getPorteeDeplacement()){
+                aj.deplaceUnite(vue.terrain, u.getCurrentX(),u.getCurrentY(),coord[0],coord[1]);
+                moved = true;
+                break;
+            }
+        }
+        if(moved==false){
+            u.setPointAction(0);
+        }
+    }
+
     public void deplaceUniteRob(Joueur j){
         ActionJoueur aj = new ActionJoueur(j);
         if(((Robot) j).pickUnit(vue.terrain)) {
@@ -351,7 +375,11 @@ public class Controlleur {
             LinkedList<Case> casesDispo = getCaseDispo(u);
             int[] coordF = {coordI[0], coordI[1]};
             if(((Robot)j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j)){
-                u.setPointAction(0); //temporaire => pour éviter boucle infinie
+                if(((Robot) j).canAttack(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeAttaque(), u, j)){
+                    attackUniteRob(j,u);
+                }else {
+                    moveUntilAtRange(j,u);
+                }
                 return;
             }
             System.out.println(casesDispo);
