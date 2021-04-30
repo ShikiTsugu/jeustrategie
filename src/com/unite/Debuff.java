@@ -24,7 +24,7 @@ public class Debuff extends AlterationEtat {
             aveugle();
         }
         if(nom.equals("mouton")){
-            mouton(unite);
+            mouton();
         }
     }
 
@@ -68,10 +68,11 @@ public class Debuff extends AlterationEtat {
         }
     }
 
-    public void mouton(Unite tmp){
+    public void mouton(){
         unite = new Mouton(unite.getJoueur());
-        if (tourRestant == 0){
-            unite = tmp;
+        if (tourRestant == 0 && unite.toString().equals("Mouton")){
+            unite = unite.getListUniteTransforme().get(0);
+            unite.getListUniteTransforme().remove(0);
         }
         tourRestant-=1;
     }

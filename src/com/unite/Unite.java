@@ -26,6 +26,7 @@ public abstract class Unite {
     protected ArrayList<Buff> buffs;
     protected ArrayList<Debuff> debuffs;
     protected boolean peutEtreAttaque= true;
+    protected ArrayList<Unite> listUniteTransforme;
 
     public Unite(Joueur joueur){
         this.joueur = joueur;
@@ -82,6 +83,8 @@ public abstract class Unite {
     public Competence[] getCompetences() { return competences; }
 
     public boolean getPeutEtreAttaque(){return peutEtreAttaque;}
+
+    public ArrayList<Unite> getListUniteTransforme(){return listUniteTransforme;}
 
     public void setSanteMax(int santeMax){
         this.santeMax = santeMax;
@@ -140,6 +143,8 @@ public abstract class Unite {
     }
 
     public void setPeutEtreAttaque(boolean peutEtreAttaque){this.peutEtreAttaque = peutEtreAttaque;}
+
+    public void setListUniteTransforme(ArrayList<Unite> listUniteTransforme){this.listUniteTransforme = listUniteTransforme;}
 
     public void readAlterationEtats(){
         updateAlterationEtats();
@@ -246,6 +251,9 @@ public abstract class Unite {
     public boolean estMort(Terrain t, int xD, int yD){
         Unite defenseur = t.getPlateau()[yD][xD].getUnite();
         if (defenseur.getSanteCourante() <= 0) {
+            if(defenseur.toString().equals("Mouton")){
+                defenseur.getListUniteTransforme().remove(0);
+            }
             gagnerArgentApresMort(defenseur);
             joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
             t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);

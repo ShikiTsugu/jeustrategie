@@ -74,6 +74,7 @@ public class Evenement {
         }
 
         if(event.equals("transformationMouton")){
+            t.getPlateau()[y+this.y][x+this.x].getUnite().getListUniteTransforme().add(t.getPlateau()[y+this.y][x+this.x].getUnite());
             t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("mouton", value);
             return resultat;
         }
