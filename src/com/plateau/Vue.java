@@ -483,6 +483,10 @@ public class Vue extends JFrame{
         taskbarbg.setLayout(flow);
         JButton unit = displayUnit(unite);
         taskbarbg.add(unit);
+        btSkill1.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[0].getDescription());
+        btSkill2.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[1].getDescription());
+        //btSkill3.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[2].getDescription());
+        //btSkill4.setToolTipText(terrain.getPlateau()[unite.getY()/unite.getHeight()][unite.getX()/unite.getWidth()].getUnite().getCompetences()[3].getDescription());
         btSkill1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
