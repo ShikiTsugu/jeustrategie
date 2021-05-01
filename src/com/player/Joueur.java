@@ -11,11 +11,13 @@ public class Joueur {
     protected boolean isHuman;
     protected Unite[] unites;
     private boolean added=false;
+    protected boolean propheteInvoc;
 
     public Joueur(int a, Jeu jeu){
         this.jeu = jeu;
         argent = a;
         isHuman = true;
+        propheteInvoc = false ;
     }
 
     public Jeu getJeu() {return jeu;}
@@ -39,6 +41,10 @@ public class Joueur {
     }
 
     public boolean getAdded(){return added;}
+
+    public boolean getPropheteInvoc(){
+        return propheteInvoc;
+    }
 
     public int achat(int cout){
         if(argent==0 || argent<cout){
@@ -101,5 +107,13 @@ public class Joueur {
             }
         }
         return true;
+    }
+    public boolean possedeUnite(Unite u){
+        for(Unite un : unites){
+            if(u == un){
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -54,6 +54,10 @@ public class Jeu {
         return terrain;
     }
 
+    public Vue getV(){
+        return v;
+    }
+
     /**
      * getter pour le joueur auqeul c'est à qui de jouer
      * @return le joueur a qui est le tour

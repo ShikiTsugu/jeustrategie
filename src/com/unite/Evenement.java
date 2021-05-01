@@ -1,28 +1,47 @@
 package com.unite;
 
 import com.plateau.*;
+import com.player.ActionJoueur;
+import com.player.Joueur;
 
 import java.util.HashMap;
 
 public class Evenement {
     protected String event;
+    protected Joueur j;
     protected int value;
     protected int x;
     protected int y;
 
-    public Evenement(String e, int x,int y,int v){
+
+    public Evenement(String e, int x,int y,int v,Joueur j){
         event = e;
         this.x=x;
         this.y=y;
         value = v;
+        this.j = j;
     }
 
     public int getValue(){ return value;}
 
     public void setValue(int value){this.value = value;}
 
-    public HashMap<String,Boolean> readEvent(int x, int y, Terrain t){
-        HashMap<String, Boolean> resultat = new HashMap<String,Boolean>();
+    public HashMap<String,Integer> readEvent(int x, int y, Terrain t){
+        HashMap<String, Integer> resultat = new HashMap<String,Integer>();
+
+        if(event.equals("invocation Prophete")){
+            System.out.println("Check");
+            ActionJoueur a = new ActionJoueur(j);
+            Prophete p = new Prophete(j);
+            if(a.acheteUnite(p,j.getJeu().getV().getTerrainPanel()) && j.ajouteUnite(p)){
+                boolean b = j.getJeu().getTourDuJoueur() == j.getJeu().getJoueur1();
+                a.placeUnite(t,p,x,y,b);
+
+            }
+
+            return resultat;
+        }
+
         if(x+this.x < 0 || x+this.x >= t.getPlateau()[0].length ||y+this.y < 0 || y+this.y >= t.getPlateau().length || t.getPlateau()[y+this.y][x+this.x].getUnite() ==null ){
             return resultat;
         }
@@ -30,12 +49,14 @@ public class Evenement {
         if(event.equals("infligeDegats") && t.getPlateau()[y+this.y][x+this.x].getUnite().getPeutEtreAttaque()){
             int res = t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante()-value;
             t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(res);
-            boolean b = t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x+this.x, y+this.y);
-            resultat.put("cible tué",b);
+            if(t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x+this.x, y+this.y))
+            resultat.put("cible tué",1);
             return resultat;
         }
         if(event.equals("soin")){
+            int pvAvant= t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante();
             t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante()+value);
+            resultat.put("PV soigné",t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante() - pvAvant);
             return resultat;
         }
         if(event.equals("appliqueEtourdissement")){
@@ -55,6 +76,8 @@ public class Evenement {
             }
             return resultat;
         }
+
+
         if(event.equals("appliqueBuffProphete") && t.getPlateau()[y+this.y][x+this.x].getUnite().isHero() == false){
             t.getPlateau()[y+this.y][x+this.x].getUnite().addBuff("buffProphete", value);
             return resultat;
