@@ -27,6 +27,7 @@ public class Buff extends AlterationEtat{
         }
         if(nom.equals("buffProphete")){
             buffProphete();
+
         }
 
     }
@@ -64,10 +65,13 @@ public class Buff extends AlterationEtat{
 
     public void buffProphete(){
         if(tourRestant > 0){
-            unite.setSanteCourante(unite.getSanteCourante()*2);
-            if(unite.getPorteeAttaque() > 1) unite.setPorteeAttaque(unite.getPorteeAttaque()*2);
-            unite.setPorteeDeplacement(unite.getPorteeDeplacement()*2);
-            unite.setAttaque(unite.getAttaque()*2);
+            if(activable) {
+                unite.setSanteCourante(unite.getSanteCourante() * 2);
+                if (unite.getPorteeAttaque() > 1) unite.setPorteeAttaque(unite.getPorteeAttaque() * 2);
+                unite.setPorteeDeplacement(unite.getPorteeDeplacement() * 2);
+                unite.setAttaque(unite.getAttaque() * 2);
+            }
+            activable = false;
             tourRestant-=1;
         }
     }
