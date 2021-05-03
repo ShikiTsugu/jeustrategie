@@ -9,9 +9,18 @@ public class Evenement {
     protected int value;
     protected int x;
     protected int y;
+    protected Unite unite;
 
     public Evenement(String e, int x,int y,int v){
         event = e;
+        this.x=x;
+        this.y=y;
+        value = v;
+    }
+
+    public Evenement(String e, Unite unite, int x,int y,int v){
+        event = e;
+        this.unite = unite;
         this.x=x;
         this.y=y;
         value = v;
@@ -80,7 +89,26 @@ public class Evenement {
         }
 
         if(event.equals("charge")){
-
+            Unite defenseur = t.getPlateau()[y+this.y][x+this.x].getUnite();
+            if(t.getPlateau()[y+this.y][x+this.x].estUnit()){
+                t.getPlateau()[unite.getCurrentY()][unite.getCurrentX()].getUnite().chargeCavalier(t, x+this.x, y+this.y);
+                Case derriereDefenseur = unite.getDeplacementDisponible().get(unite.getDeplacementDisponible().size()-1);
+                if(derriereDefenseur.estVide()){
+                    derriereDefenseur.setUnite(defenseur);
+                    defenseur.setPositionUnite(derriereDefenseur);
+                    t.getPlateau()[y+this.y][x+this.x].supprimerUniteCase(t.getPlateau()[y+this.y][x+this.x]);
+                    defenseur.setCurrentX(x);
+                    defenseur.setCurrentY(y);
+                }
+                else{
+                    defenseur.addDebuff("etourdissement", value);
+                }
+                int res = t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante()-value;
+                t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(res);
+                boolean b = t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x+this.x, y+this.y);
+                resultat.put("cible tué",b);
+                return resultat;
+            }
         }
         if(event.equals("appliqueResistEtourdissement")){
             t.getPlateau()[y+this.y][x+this.x].getUnite().addBuff("immuniteEtourdissement",value);
