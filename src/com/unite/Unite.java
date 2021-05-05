@@ -258,6 +258,10 @@ public abstract class Unite {
         return false;
     }
 
+    public boolean estDecede(){
+        return santeCourante <= 0;
+    }
+
 
 
     public void gagnerArgentApresMort(Unite uniteD){

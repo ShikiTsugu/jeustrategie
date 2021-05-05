@@ -80,6 +80,7 @@ public class Evenement {
 
         if(event.equals("appliqueBuffProphete") && t.getPlateau()[y+this.y][x+this.x].getUnite().isHero() == false){
             t.getPlateau()[y+this.y][x+this.x].getUnite().addBuff("buffProphete", value);
+            resultat.put("success",1);
             return resultat;
         }
         if(event.equals("donnePa")){
