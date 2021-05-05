@@ -386,13 +386,23 @@ public class Vue extends JFrame{
                     bt.setPreferredSize(new Dimension(150,125));
                     terrainBt.add(bt);
                 } else {
-                    JButton bt = new JButton();
-                    bt = setBorder(bt, x, y);
-                    TerrainPanel.add(bt);
-                    bt.setOpaque(false);
-                    bt.setContentAreaFilled(false);
-                    bt.setPreferredSize(new Dimension(150,125));
-                    terrainBt.add(bt);
+                    if(terrain.plateau[x][y].estObstacle()){
+                        JButton bt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/obstacle1.png"));
+                        bt = setBorder(bt, x, y);
+                        TerrainPanel.add(bt);
+                        bt.setOpaque(false);
+                        bt.setContentAreaFilled(false);
+                        bt.setPreferredSize(new Dimension(150,125));
+                        terrainBt.add(bt);
+                    }else {
+                        JButton bt = new JButton();
+                        bt = setBorder(bt, x, y);
+                        TerrainPanel.add(bt);
+                        bt.setOpaque(false);
+                        bt.setContentAreaFilled(false);
+                        bt.setPreferredSize(new Dimension(150, 125));
+                        terrainBt.add(bt);
+                    }
                 }
             }
         }
