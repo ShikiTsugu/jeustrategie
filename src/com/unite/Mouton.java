@@ -3,6 +3,7 @@ package com.unite;
 import com.player.Joueur;
 
 public class Mouton extends Unite{
+    protected Unite unite;
     public Mouton(Joueur joueur) {
         super(joueur);
         santeMax = 50; //discussion en cours
@@ -19,6 +20,14 @@ public class Mouton extends Unite{
     }
     public String toString(){
         return "Mouton";
+    }
+
+    public Unite getUnite() {
+        return unite;
+    }
+
+    public void setUnite(Unite unite) {
+        this.unite = unite;
     }
 
     public final boolean isHero(){

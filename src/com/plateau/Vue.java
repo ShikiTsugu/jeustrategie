@@ -239,6 +239,9 @@ public class Vue extends JFrame{
         if(s.equals("Prophete")){
             bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/Prophete.png"));
         }
+        if(s.equals("Mouton")){
+            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/mouton.png"));
+        }
         return bt;
     }
 
@@ -270,6 +273,9 @@ public class Vue extends JFrame{
             }
             if(s.equals("Prophete")){
                 bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/Prophete2.png"));
+            }
+            if(s.equals("Mouton")){
+                bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/mouton2.png"));
             }
         }
     }

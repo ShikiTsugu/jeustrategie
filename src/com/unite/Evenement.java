@@ -107,10 +107,24 @@ public class Evenement {
         }
 
         if(event.equals("transformationMouton")){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().getListUniteTransforme().add(t.getPlateau()[y+this.y][x+this.x].getUnite());
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addDebuff("mouton", value);
+            if(t.getPlateau()[y+this.y][x+this.x].getUnite() instanceof Hero == false) {
+                Unite u = t.getPlateau()[y + this.y][x + this.x].getUnite();
+                Mouton m = new Mouton(u.getJoueur());
+                m.setTerrain(t);
+                m.setPositionUnite(t.getPlateau()[y + this.y][x + this.x]);
+                Joueur j = u.getJoueur();
+                m.setUnite(u);
+                m.addDebuff("mouton", value);
+                m.setCurrentY(m.getUnite().getCurrentY());
+                m.setCurrentX(m.getUnite().getCurrentX());
+                j.annuleAjout(u);
+                j.ajouteUnite(m);
+                t.getPlateau()[y + this.y][x + this.x].setUnite(m);
+            }
             return resultat;
         }
+
+
 
         if(event.equals("charge")){
             Unite defenseur = t.getPlateau()[y+this.y][x+this.x].getUnite();
@@ -180,7 +194,7 @@ public class Evenement {
             t.getPlateau()[y+this.y][x+this.x].getUnite().addBuff("immuniteAveugle",value);
             return resultat;
         }
-
+        System.out.println("Nada");
         return resultat;
     }
 
