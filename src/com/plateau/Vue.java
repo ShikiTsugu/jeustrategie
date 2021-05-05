@@ -361,6 +361,7 @@ public class Vue extends JFrame{
                     pv.setAlignmentX(CENTER_ALIGNMENT);
                     pv.setAlignmentY(BOTTOM_ALIGNMENT);
                     bt.add(pv);
+                    bt.setToolTipText(pv.getText());
                     TerrainPanel.add(bt);
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(terrain.plateau[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].unit);
@@ -533,12 +534,19 @@ public class Vue extends JFrame{
             if(j.getUnites()[i]!=null) {
                 JButton bt = generateButton(j.getUnites()[i].toString());
                 bt.setFocusable(false);
+                bt.setLayout(new BorderLayout());
                 String unitName = j.getUnites()[i].toString();
+
                 JLabel displayName = new JLabel(unitName);
                 displayName.setForeground(new Color(200, 200, 150));
-                displayName.setAlignmentX(CENTER_ALIGNMENT);
-                displayName.setAlignmentY(TOP_ALIGNMENT);
-                bt.add(displayName);
+                displayName.setHorizontalAlignment(0);
+                bt.add(displayName, BorderLayout.NORTH);
+
+                JLabel displayHealth = new JLabel(j.getUnites()[i].getSanteCourante()+"/"+j.getUnites()[i].getSanteMax());
+                displayHealth.setForeground(new Color(0,200,0));
+                displayHealth.setHorizontalAlignment(0);
+                bt.add(displayHealth, BorderLayout.SOUTH);
+
                 bt.setPreferredSize(new Dimension(100, 120));
                 liste.add(bt);
             }else{
