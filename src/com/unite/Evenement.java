@@ -132,7 +132,7 @@ public class Evenement {
                 int res = t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante()-value;
                 t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(res);
                 boolean b = t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x+this.x, y+this.y);
-                resultat.put("cible tué",b);
+                resultat.put("cible tué",1);
                 return resultat;
             }
         }

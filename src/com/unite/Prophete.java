@@ -19,7 +19,7 @@ public class Prophete extends Unite{
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
         competences = new Competence[3];
-        Evenement[] event = {new Evenement("infligeDegats",0,0,attaque)};
+        Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
         competences[0] = new Competence("tir maquique","lancer un projectile magique",event, 5,1, 0);
         Evenement[] event2 = {new Evenement("donnePa",0,0,150,joueur)};
         competences[1] = new Competence("donationPA","redonne de la force à une unitée, lui confère 1 PA supplémentaire",event2, 4,1, 3);

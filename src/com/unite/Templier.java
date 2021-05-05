@@ -15,7 +15,7 @@ public class Templier extends Unite{
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
         competences = new Competence[3];
-        Evenement[] event = {new Evenement("infligeDegats",0,0,attaque)};
+        Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
         competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1, 0);
         Evenement[] event2 = {new Evenement("appliqueResistEtourdissement",0,0,5,joueur),
                 new Evenement("appliqueResistImmobilise",0,0,5,joueur),

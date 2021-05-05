@@ -87,6 +87,14 @@ public abstract class Unite {
 
     public ArrayList<Unite> getListUniteTransforme(){return listUniteTransforme;}
 
+    public ArrayList<Buff> getBuffs() {
+        return buffs;
+    }
+
+    public ArrayList<Debuff> getDebuffs() {
+        return debuffs;
+    }
+
     public void setSanteMax(int santeMax){
         this.santeMax = santeMax;
     }
