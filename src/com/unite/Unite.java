@@ -321,11 +321,11 @@ public abstract class Unite {
         return (yPast < t.getPlateau().length && xPast < t.getPlateau()[0].length && yPast >= 0 && xPast >= 0);
     }
 
-    public void chargeCavalier(Terrain t, int xApres, int yApres){
-        Case avant = t.getPlateau()[currentY][currentX];
-        if (t.getPlateau()[currentY][currentX].estUnit()) {
-            if ((casesDisponibleDeplacementCavalier(t, avant.getUnite(), currentX, currentY, xApres, yApres)) && avant.getUnite().getPointAction() > 0) {
-                avant.getUnite().setPointAction(avant.getUnite().getPointAction() -2);
+    public void chargeCavalier(Terrain t, int xPast, int yPast, int xApres, int yApres){
+        Case avant = t.getPlateau()[yPast][xPast];
+        if (t.getPlateau()[yPast][xPast].estUnit()) {
+            if ((casesDisponibleDeplacementCavalier(t, avant.getUnite(), xPast, yPast, xApres, yApres)) && avant.getUnite().getPointAction() > 0) {
+                System.out.println("yolo");
                 Case positionInitial = avant.getUnite().getPositionUnite();
                 Case destination = positionInitial.getUnite().getDeplacementDisponible().get(positionInitial.getUnite().getDeplacementDisponible().size()-3);
                 destination.setUnite(avant.getUnite());
@@ -345,25 +345,26 @@ public abstract class Unite {
     }
 
     public boolean cheminTrouverCavalier (ArrayList<Case> test, Terrain t, int xA, int yA, int xD, int yD, int portee){
-        if (xA == xD && yA == yD && portee >= 0){
+        if ((xA == xD && yA == yD && portee >= 0)){
             test.add(t.getPlateau()[yA][xA]);
             if(direction ==1) test.add(t.getPlateau()[yA-1][xA]);
             if(direction ==2) test.add(t.getPlateau()[yA+1][xA]);
             if(direction ==3) test.add(t.getPlateau()[yA][xA-1]);
             if(direction ==4) test.add(t.getPlateau()[yA][xA+1]);
             setDeplacementDisponible(test);
+            System.out.println(test);
             return true;
         }
         if (xA == xD && portee >= 0){
             if (yA > yD){
-                if (cheminTrouverCavalier(test, t, xA, yA-1, xD, yD, portee -1) && t.getPlateau()[yA-1][xA].estVide()){
+                if (cheminTrouverCavalier(test, t, xA, yA-1, xD, yD, portee -1) && t.getPlateau()[yA-1][xA].estVide() && estDansTableau(t, xA, yA-1)){
                 test.add(t.getPlateau()[yA][xA]);
                 setDirection(1);
                 return true;
                 }
             }
             else if (yA < yD){
-                if (cheminTrouverCavalier(test, t, xA, yA+1, xD, yD, portee -1) && t.getPlateau()[yA+1][xA].estVide()){
+                if (cheminTrouverCavalier(test, t, xA, yA+1, xD, yD, portee -1) && t.getPlateau()[yA+1][xA].estVide() && estDansTableau(t, xA, yA+1)){
                 test.add(t.getPlateau()[yA][xA]);
                 setDirection(2);
                 return true;
@@ -372,14 +373,14 @@ public abstract class Unite {
         }
         else if (yA == yD && portee >= 0){
             if (xA > xD){
-                if (cheminTrouverCavalier(test, t, xA-1, yA, xD, yD, portee -1) && t.getPlateau()[yA][xA-1].estVide()){
+                if (cheminTrouverCavalier(test, t, xA-1, yA, xD, yD, portee -1) && t.getPlateau()[yA][xA-1].estVide() && estDansTableau(t, xA-1, yA)){
                 test.add(t.getPlateau()[yA][xA]);
                 setDirection(3);
                 return true;
                 }
             }
             else if (xA < xD){
-                if (cheminTrouverCavalier(test, t, xA+1, yA, xD, yD, portee -1) && t.getPlateau()[yA][xA+1].estVide()){
+                if (cheminTrouverCavalier(test, t, xA+1, yA, xD, yD, portee -1) && t.getPlateau()[yA][xA+1].estVide() && estDansTableau(t, xA+1, yA)){
                 test.add(t.getPlateau()[yA][xA]);
                 setDirection(4);
                 return true;

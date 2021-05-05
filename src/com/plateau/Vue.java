@@ -299,7 +299,7 @@ public class Vue extends JFrame{
         boolean b;
         GridLayout grid = new GridLayout(terrain.plateau.length,terrain.plateau[0].length);
         TerrainPanel.setLayout(grid);
-        tourJoueur.displayList();
+        //tourJoueur.displayList();
         for (int x = 0; x < terrain.plateau.length; x++){
             for (int y = 0; y < terrain.plateau[x].length; y++){
                 if (terrain.plateau[x][y].unit != null) {

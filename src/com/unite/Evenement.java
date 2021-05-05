@@ -91,9 +91,11 @@ public class Evenement {
         if(event.equals("charge")){
             Unite defenseur = t.getPlateau()[y+this.y][x+this.x].getUnite();
             if(t.getPlateau()[y+this.y][x+this.x].estUnit()){
-                t.getPlateau()[unite.getCurrentY()][unite.getCurrentX()].getUnite().chargeCavalier(t, x+this.x, y+this.y);
+                System.out.println("test");
+                t.getPlateau()[unite.getCurrentY()][unite.getCurrentX()].getUnite().chargeCavalier(t, unite.getCurrentX(), unite.getCurrentY(), x+this.x, y+this.y);
                 Case derriereDefenseur = unite.getDeplacementDisponible().get(unite.getDeplacementDisponible().size()-1);
                 if(derriereDefenseur.estVide()){
+                    System.out.println("testtttt");
                     derriereDefenseur.setUnite(defenseur);
                     defenseur.setPositionUnite(derriereDefenseur);
                     t.getPlateau()[y+this.y][x+this.x].supprimerUniteCase(t.getPlateau()[y+this.y][x+this.x]);
