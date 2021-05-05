@@ -374,13 +374,19 @@ public class Controlleur {
             Unite u = vue.terrain.plateau[coordI[0]][coordI[1]].unit;
             LinkedList<Case> casesDispo = getCaseDispo(u);
             int[] coordF = {coordI[0], coordI[1]};
-            if(((Robot)j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j)){
-                if(((Robot) j).canAttack(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeAttaque(), u, j)){
-                    attackUniteRob(j,u);
-                }else {
-                    moveUntilAtRange(j,u);
+            try {
+                if (((Robot) j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j)) {
+                    if (((Robot) j).canAttack(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeAttaque(), u, j)) {
+                        attackUniteRob(j, u);
+                    } else {
+                        moveUntilAtRange(j, u);
+                    }
+                    ((Robot)j).getCoordTarget().clear();
+                    return;
                 }
-                return;
+            }catch(NullPointerException ex){
+                ((Robot)j).getCoordTarget().clear();
+                ((Robot) j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j);
             }
             System.out.println(casesDispo);
             for (Case dispo : casesDispo) {
