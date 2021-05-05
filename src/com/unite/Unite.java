@@ -359,8 +359,11 @@ public abstract class Unite {
     }
 
     public boolean cheminTrouverCavalier (ArrayList<Case> test, Terrain t, int xA, int yA, int xD, int yD, int portee){
+        System.out.println("pop");
         if ((xA == xD && yA == yD && portee >= 0)){
+            System.out.println("WTF");
             test.add(t.getPlateau()[yA][xA]);
+            System.out.println(direction);
             if(direction ==1) test.add(t.getPlateau()[yA-1][xA]);
             if(direction ==2) test.add(t.getPlateau()[yA+1][xA]);
             if(direction ==3) test.add(t.getPlateau()[yA][xA-1]);
@@ -371,9 +374,11 @@ public abstract class Unite {
         }
         if (xA == xD && portee >= 0){
             if (yA > yD){
-                if (cheminTrouverCavalier(test, t, xA, yA-1, xD, yD, portee -1) && t.getPlateau()[yA-1][xA].estVide() && estDansTableau(t, xA, yA-1)){
-                test.add(t.getPlateau()[yA][xA]);
                 setDirection(1);
+                if (cheminTrouverCavalier(test, t, xA, yA-1, xD, yD, portee -1) && estDansTableau(t, xA, yA-1)){
+                test.add(t.getPlateau()[yA][xA]);
+
+                    System.out.print("POP1");
                 return true;
                 }
             }
@@ -381,6 +386,7 @@ public abstract class Unite {
                 if (cheminTrouverCavalier(test, t, xA, yA+1, xD, yD, portee -1) && t.getPlateau()[yA+1][xA].estVide() && estDansTableau(t, xA, yA+1)){
                 test.add(t.getPlateau()[yA][xA]);
                 setDirection(2);
+
                 return true;
                 }
             }
@@ -401,6 +407,7 @@ public abstract class Unite {
                 }
             }
         }
+        System.out.println("false");
         return false;
     }
 
