@@ -32,9 +32,9 @@ public class Vue extends JFrame{
     private JButton btAtk = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
     private JButton btDep = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/deplace.png"));
     private JButton btSkill1 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
-    private JButton btSkill2 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
-    private JButton btSkill3 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
-    private JButton btSkill4 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+    private JButton btSkill2 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills.png"));
+    private JButton btSkill3 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills.png"));
+    private JButton btSkill4 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills.png"));
     private JLabel taskbarbg = new JLabel(new ImageIcon(Jeu.selectGoodPath()+"/assets/taskbarbg.png"));
 
     public String[] getListeUnit(){return listeUnit;}
@@ -692,34 +692,34 @@ public class Vue extends JFrame{
         btSkill2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                btSkill2.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque2.png"));
+                btSkill2.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills2.png"));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                btSkill2.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+                btSkill2.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills.png"));
             }
         });
         btSkill3.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                btSkill3.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque2.png"));
+                btSkill3.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills2.png"));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                btSkill3.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+                btSkill3.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills.png"));
             }
         });
         btSkill4.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                btSkill4.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque2.png"));
+                btSkill4.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills2.png"));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                btSkill4.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/attaque.png"));
+                btSkill4.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills.png"));
             }
         });
         btSkill1.setContentAreaFilled(false);
