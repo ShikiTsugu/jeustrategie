@@ -401,6 +401,36 @@ public class Vue extends JFrame{
             generateAchat();
         });
         taskbarbg.add(btBuy);
+
+        JButton btHeroes = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/heroes.png"));
+        JLabel heroes = new JLabel("Units");
+        heroes.setAlignmentX(Component.CENTER_ALIGNMENT);
+        heroes.setAlignmentY(Component.CENTER_ALIGNMENT+0.2f);
+        heroes.setFont(new Font("SansSerif",Font.BOLD,14));
+        heroes.setForeground(Color.black);
+        btHeroes.setPreferredSize(new Dimension(200,125));
+        btHeroes.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btHeroes.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/heroes2.png"));
+                heroes.setForeground(new Color(230,200,120));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btHeroes.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/heroes.png"));
+                heroes.setForeground(Color.black);
+            }
+        });
+        btHeroes.add(heroes);
+        btHeroes.setContentAreaFilled(false);
+        btHeroes.setFocusable(false);
+        btHeroes.setBorderPainted(false);
+        btHeroes.addActionListener((ActionEvent e) -> {
+            generateList(tourJoueur);
+        });
+        taskbarbg.add(btHeroes);
+
         JButton btFdt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/endturn.png"));
         btFdt.setPreferredSize(new Dimension(200,125));
         btFdt.addMouseListener(new MouseAdapter() {
@@ -424,6 +454,97 @@ public class Vue extends JFrame{
         });
         taskbarbg.add(btFdt);
         taskbarbg.updateUI();
+    }
+
+    private void generateList(Joueur j) {
+        JFrame units = new JFrame("Units");
+        units.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        units.setVisible(true);
+        units.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        units.setSize(400,475);
+        units.setLocationRelativeTo(imagePane);
+        units.setResizable(false);
+        ImagePane bg = new ImagePane(new Model(Jeu.selectGoodPath() + "/assets/shop.png"));
+        units.setContentPane(bg);
+
+        JPanel unitsCount = new JPanel(new FlowLayout());
+        unitsCount.setOpaque(false);
+        JLabel unitsValue = new JLabel(" Unites : "+tourJoueur.countUnits()+"/"+j.getUnites().length);
+        unitsValue.setFont(new Font("SansSerif",Font.BOLD,14));
+        unitsValue.setForeground(new Color(200,200,150));
+        unitsCount.add(unitsValue);
+        bg.setLayout(new BorderLayout());
+        bg.add(unitsCount, BorderLayout.NORTH);
+
+        JPanel liste = new JPanel(new FlowLayout());
+        liste.setOpaque(false);
+        for (int i = 0; i<j.getUnites().length; i++){
+            if(j.getUnites()[i]!=null) {
+                JButton bt = generateButton(j.getUnites()[i].toString());
+                bt.setFocusable(false);
+                String unitName = j.getUnites()[i].toString();
+                JLabel displayName = new JLabel(unitName);
+                displayName.setForeground(new Color(200, 200, 150));
+                displayName.setAlignmentX(CENTER_ALIGNMENT);
+                displayName.setAlignmentY(TOP_ALIGNMENT);
+                bt.add(displayName);
+                bt.setPreferredSize(new Dimension(100, 120));
+                liste.add(bt);
+            }else{
+                JButton bt = new JButton();
+                bt.setFocusable(false);
+                bt.setOpaque(false);
+                bt.setContentAreaFilled(false);
+                bt.setPreferredSize(new Dimension(100, 120));
+                liste.add(bt);
+            }
+        }
+        bg.add(liste,BorderLayout.CENTER);
+    }
+
+    public void generateAchat(){
+        JFrame shop = new JFrame("Shop");
+        shop.setVisible(true);
+        shop.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        shop.setSize(400,475);
+        shop.setLocationRelativeTo(imagePane);
+        shop.setResizable(false);
+        ImagePane bg = new ImagePane(new Model(Jeu.selectGoodPath() + "/assets/shop.png"));
+        shop.setContentPane(bg);
+        JPanel money = new JPanel(new FlowLayout());
+        money.setOpaque(false);
+        JLabel moneyIcon = new JLabel(new ImageIcon(Jeu.selectGoodPath()+"/assets/coins.png"));
+        JLabel moneyValue = new JLabel(" Argent : "+tourJoueur.getArgent());
+        moneyValue.setFont(new Font("SansSerif",Font.BOLD,14));
+        moneyValue.setForeground(new Color(200,200,150));
+        money.add(moneyIcon);
+        money.add(moneyValue);
+        bg.setLayout(new BorderLayout());
+        bg.add(money, BorderLayout.NORTH);
+        JPanel liste = new JPanel(new FlowLayout());
+        liste.setOpaque(false);
+        for (int i = 0; i < 7; i++){
+            JButton bt = generateButton(listeUnit[i]);
+            bt.setFocusable(false);
+            String unitName = listeUnit[i];
+            JLabel displayName = new JLabel(unitName);
+            displayName.setForeground(new Color(200,200,150));
+            displayName.setAlignmentX(CENTER_ALIGNMENT);
+            displayName.setAlignmentY(TOP_ALIGNMENT);
+            bt.add(displayName);
+            bt.addActionListener((ActionEvent e) -> {
+                if(new ActionJoueur((tourJoueur)).acheteUnite(createUnite(unitName),TerrainPanel)) {
+                    Unite unit = createUnite(unitName);
+                    controlleur.acheteUnite(tourJoueur, unit);
+                    shop.dispose();
+                }
+                //boutonAnnul();
+                generateTaskBar();
+            });
+            bt.setPreferredSize(new Dimension(100,120));
+            liste.add(bt);
+        }
+        bg.add(liste,BorderLayout.CENTER);
     }
 
     public ImageIcon generateImage(String s){
@@ -672,51 +793,6 @@ public class Vue extends JFrame{
             u = new Assassin(tourJoueur);
         }
         return u;
-    }
-
-    public void generateAchat(){
-        JFrame shop = new JFrame("Shop");
-        shop.setVisible(true);
-        shop.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        shop.setSize(400,475);
-        shop.setLocationRelativeTo(imagePane);
-        shop.setResizable(false);
-        ImagePane bg = new ImagePane(new Model(Jeu.selectGoodPath() + "/assets/shop.png"));
-        shop.setContentPane(bg);
-        JPanel money = new JPanel(new FlowLayout());
-        money.setOpaque(false);
-        JLabel moneyIcon = new JLabel(new ImageIcon(Jeu.selectGoodPath()+"/assets/coins.png"));
-        JLabel moneyValue = new JLabel(" Argent : "+tourJoueur.getArgent());
-        moneyValue.setFont(new Font("SansSerif",Font.BOLD,14));
-        moneyValue.setForeground(new Color(200,200,150));
-        money.add(moneyIcon);
-        money.add(moneyValue);
-        bg.setLayout(new BorderLayout());
-        bg.add(money, BorderLayout.NORTH);
-        JPanel liste = new JPanel(new FlowLayout());
-        liste.setOpaque(false);
-        for (int i = 0; i < 7; i++){
-            JButton bt = generateButton(listeUnit[i]);
-            bt.setFocusable(false);
-            String unitName = listeUnit[i];
-            JLabel displayName = new JLabel(unitName);
-            displayName.setForeground(new Color(200,200,150));
-            displayName.setAlignmentX(CENTER_ALIGNMENT);
-            displayName.setAlignmentY(TOP_ALIGNMENT);
-            bt.add(displayName);
-            bt.addActionListener((ActionEvent e) -> {
-                if(new ActionJoueur((tourJoueur)).acheteUnite(createUnite(unitName),TerrainPanel)) {
-                    Unite unit = createUnite(unitName);
-                    controlleur.acheteUnite(tourJoueur, unit);
-                    shop.dispose();
-                }
-                //boutonAnnul();
-                generateTaskBar();
-            });
-            bt.setPreferredSize(new Dimension(100,120));
-            liste.add(bt);
-        }
-        bg.add(liste,BorderLayout.CENTER);
     }
 
     // bouton pour annuler l'achat d'unité (ne marche pas encore)
