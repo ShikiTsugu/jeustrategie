@@ -22,10 +22,12 @@ public abstract class Unite {
     protected int currentX;
     protected int currentY;
     protected Competence[] competences;
-    protected HashSet<Case> deplacementDisponible;
+    protected ArrayList<Case> deplacementDisponible;
     protected ArrayList<Buff> buffs;
     protected ArrayList<Debuff> debuffs;
     protected boolean peutEtreAttaque= true;
+    protected ArrayList<Unite> listUniteTransforme;
+    protected int direction;
 
     public Unite(Joueur joueur){
         this.joueur = joueur;
@@ -73,7 +75,7 @@ public abstract class Unite {
         return positionUnite;
     }
     
-    public HashSet<Case> getDeplacementDisponible(){return deplacementDisponible;}
+    public ArrayList<Case> getDeplacementDisponible(){return deplacementDisponible;}
 
     public int getCurrentX() { return currentX; }
 
@@ -83,9 +85,7 @@ public abstract class Unite {
 
     public boolean getPeutEtreAttaque(){return peutEtreAttaque;}
 
-    public ArrayList<Buff> getBuffs() {return buffs;}
-
-    public ArrayList<Debuff> getDebuffs() {return debuffs;}
+    public ArrayList<Unite> getListUniteTransforme(){return listUniteTransforme;}
 
     public void setSanteMax(int santeMax){
         this.santeMax = santeMax;
@@ -133,7 +133,7 @@ public abstract class Unite {
 
     public void setCompetences(Competence[] competences) { this.competences = competences; }
 
-    public void setDeplacementDisponible(HashSet<Case> deplacementDisponible){this.deplacementDisponible = deplacementDisponible;}
+    public void setDeplacementDisponible(ArrayList<Case> deplacementDisponible){this.deplacementDisponible = deplacementDisponible;}
 
     public void addBuff(String a,int n){
         buffs.add(new Buff(a,n,this));
@@ -144,6 +144,10 @@ public abstract class Unite {
     }
 
     public void setPeutEtreAttaque(boolean peutEtreAttaque){this.peutEtreAttaque = peutEtreAttaque;}
+
+    public void setListUniteTransforme(ArrayList<Unite> listUniteTransforme){this.listUniteTransforme = listUniteTransforme;}
+
+    public void setDirection(int direction){this.direction = direction;}
 
     public void readAlterationEtats(){
         updateAlterationEtats();
@@ -250,6 +254,9 @@ public abstract class Unite {
     public boolean estMort(Terrain t, int xD, int yD){
         Unite defenseur = t.getPlateau()[yD][xD].getUnite();
         if (defenseur.getSanteCourante() <= 0) {
+            if(defenseur.toString().equals("Mouton")){
+                defenseur.getListUniteTransforme().remove(0);
+            }
             gagnerArgentApresMort(defenseur);
             joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
             t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
@@ -281,11 +288,11 @@ public abstract class Unite {
 
     public boolean casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){
         int portee = unite.getPorteeDeplacement();
-        HashSet<Case> test = new HashSet<>();
+        ArrayList<Case> test = new ArrayList<>();
         return cheminTrouver(test, t, xPast, yPast, xApres, yApres, portee);
     }
 
-    public boolean cheminTrouver (HashSet<Case> test, Terrain t, int xPast, int yPast, int xApres, int yApres, int portee){
+    public boolean cheminTrouver (ArrayList<Case> test, Terrain t, int xPast, int yPast, int xApres, int yApres, int portee){
         if (xPast == xApres && yPast == yApres && portee >= 0 && estDansTableau(t, xPast, yPast)){
             test.add(t.getPlateau()[yPast][xPast]);
             setDeplacementDisponible(test);
@@ -318,6 +325,75 @@ public abstract class Unite {
 
     public boolean estDansTableau(Terrain t, int xPast, int yPast) {
         return (yPast < t.getPlateau().length && xPast < t.getPlateau()[0].length && yPast >= 0 && xPast >= 0);
+    }
+
+    public void chargeCavalier(Terrain t, int xPast, int yPast, int xApres, int yApres){
+        Case avant = t.getPlateau()[yPast][xPast];
+        if (t.getPlateau()[yPast][xPast].estUnit()) {
+            if ((casesDisponibleDeplacementCavalier(t, avant.getUnite(), xPast, yPast, xApres, yApres)) && avant.getUnite().getPointAction() > 0) {
+                System.out.println("yolo");
+                Case positionInitial = avant.getUnite().getPositionUnite();
+                Case destination = positionInitial.getUnite().getDeplacementDisponible().get(positionInitial.getUnite().getDeplacementDisponible().size()-3);
+                destination.setUnite(avant.getUnite());
+                avant.getUnite().setPositionUnite(destination);
+                positionInitial.supprimerUniteCase(positionInitial);
+                currentX = xApres;
+                currentY = yApres;
+                System.out.println(deplacementDisponible);
+            }
+        }
+    }
+
+    public boolean casesDisponibleDeplacementCavalier (Terrain t, Unite unite, int xA, int yA, int xD, int yD){
+        int portee = unite.getPorteeDeplacement();
+        ArrayList<Case> test = new ArrayList<>();
+        return cheminTrouverCavalier(test, t, xA, yA, xD, yD, portee);
+    }
+
+    public boolean cheminTrouverCavalier (ArrayList<Case> test, Terrain t, int xA, int yA, int xD, int yD, int portee){
+        if ((xA == xD && yA == yD && portee >= 0)){
+            test.add(t.getPlateau()[yA][xA]);
+            if(direction ==1) test.add(t.getPlateau()[yA-1][xA]);
+            if(direction ==2) test.add(t.getPlateau()[yA+1][xA]);
+            if(direction ==3) test.add(t.getPlateau()[yA][xA-1]);
+            if(direction ==4) test.add(t.getPlateau()[yA][xA+1]);
+            setDeplacementDisponible(test);
+            System.out.println(test);
+            return true;
+        }
+        if (xA == xD && portee >= 0){
+            if (yA > yD){
+                if (cheminTrouverCavalier(test, t, xA, yA-1, xD, yD, portee -1) && t.getPlateau()[yA-1][xA].estVide() && estDansTableau(t, xA, yA-1)){
+                test.add(t.getPlateau()[yA][xA]);
+                setDirection(1);
+                return true;
+                }
+            }
+            else if (yA < yD){
+                if (cheminTrouverCavalier(test, t, xA, yA+1, xD, yD, portee -1) && t.getPlateau()[yA+1][xA].estVide() && estDansTableau(t, xA, yA+1)){
+                test.add(t.getPlateau()[yA][xA]);
+                setDirection(2);
+                return true;
+                }
+            }
+        }
+        else if (yA == yD && portee >= 0){
+            if (xA > xD){
+                if (cheminTrouverCavalier(test, t, xA-1, yA, xD, yD, portee -1) && t.getPlateau()[yA][xA-1].estVide() && estDansTableau(t, xA-1, yA)){
+                test.add(t.getPlateau()[yA][xA]);
+                setDirection(3);
+                return true;
+                }
+            }
+            else if (xA < xD){
+                if (cheminTrouverCavalier(test, t, xA+1, yA, xD, yD, portee -1) && t.getPlateau()[yA][xA+1].estVide() && estDansTableau(t, xA+1, yA)){
+                test.add(t.getPlateau()[yA][xA]);
+                setDirection(4);
+                return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void resetPointAction(){pointAction = pointActionMax; }

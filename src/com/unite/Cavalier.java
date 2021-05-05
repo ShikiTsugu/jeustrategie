@@ -14,9 +14,11 @@ public class Cavalier extends Unite{
         porteeAttaque = 1; //discussion en cours
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
-        competences = new Competence[1];
-        Evenement[] event = {new Evenement("infligeDegats",0,0,150,joueur)};
+        competences = new Competence[2];
+        Evenement[] event = {new Evenement("infligeDegats",0,0,attaque)};
         competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1, 0);
+        Evenement[] event2 = {new Evenement("charge", this, 0, 0, attaque-50)};
+        competences[1] = new Competence("charge", "charge en ligne droite pour infliger des dégats", event2, porteeDeplacement, 2, 4);
     }
     
     public String toString(){

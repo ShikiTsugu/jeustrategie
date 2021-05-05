@@ -14,16 +14,18 @@ public class Mage extends Unite{
         porteeAttaque = 4; //discussion en cours
         pointActionMax = 1; //discussion en cours
         pointAction = 1; //discussion en cours
-        competences = new Competence[2];
-        Evenement[] event = {new Evenement("infligeDegats",0,0,125,joueur)};
+        competences = new Competence[3];
+        Evenement[] event = {new Evenement("infligeDegats",0,0,attaque)};
         competences[0] = new Competence("tir maquique","lancer un projectile magique",event, 5,1, 0);
-        Evenement[] event2 = {new Evenement("infligeDegats",0,0,125,joueur),
-                new Evenement("infligeDegats",1,0,125,joueur),
-                new Evenement("infligeDegats",-1,0,125,joueur),
-                new Evenement("infligeDegats",0,1,125,joueur),
-                new Evenement("infligeDegats",0,-1,125,joueur),
+        Evenement[] event2 = {new Evenement("infligeDegats",0,0,attaque),
+                new Evenement("infligeDegats",1,0,attaque),
+                new Evenement("infligeDegats",-1,0,attaque),
+                new Evenement("infligeDegats",0,1,attaque),
+                new Evenement("infligeDegats",0,-1,attaque),
         };
-        competences[1] = new Competence("météore","fait tomber un météore devastateur du ciel pour l'abatre sur ces ennemis",event2, 5,1, 1);
+        competences[1] = new Competence("météore","fait tomber un météore devastateur du ciel pour l'abatre sur ces ennemis",event2, 4,2, 4);
+        Evenement[] event3 = {new Evenement("transformationMouton", 0, 0, 2)};
+        competences[2] = new Competence("transformation en mouton", "transforme son adversaire en mouton temporairement", event3, 4, 2, 6);
     }
     
     public String toString(){
