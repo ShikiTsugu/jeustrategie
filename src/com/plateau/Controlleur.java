@@ -375,12 +375,10 @@ public class Controlleur {
     }
 
     public void deplaceUniteRob(Joueur j){
-        ActionJoueur aj = new ActionJoueur(j);
         if(((Robot) j).pickUnit(vue.terrain)) {
             int[] coordI = ((Robot) j).getCoord();
             Unite u = vue.terrain.plateau[coordI[0]][coordI[1]].unit;
             LinkedList<Case> casesDispo = getCaseDispo(u);
-            int[] coordF = {coordI[0], coordI[1]};
             try {
                 if (((Robot) j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j)) {
                     if (((Robot) j).canAttack(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeAttaque(), u, j)) {
@@ -395,39 +393,13 @@ public class Controlleur {
                 ((Robot)j).getCoordTarget().clear();
                 ((Robot) j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j);
             }
-            System.out.println(casesDispo);
-            for (Case dispo : casesDispo) {
-                if (u.getPointAction() > 0) {
-                    if (u.getCurrentX() > 0
-                            && dispo.casePos(vue.terrain)[0] < u.getCurrentX()
-                            && dispo.estVide()) {
-                        coordF[1] = dispo.casePos(vue.terrain)[0];
-                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
-                    }else if (u.getCurrentX() == 0
-                            && dispo.casePos(vue.terrain)[0] > u.getCurrentX()
-                            && dispo.estVide()) {
-                        coordF[1] = dispo.casePos(vue.terrain)[0];
-                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
-                    }
-                    if (u.getCurrentY() > 0
-                            && dispo.casePos(vue.terrain)[1] < u.getCurrentY()
-                            && dispo.estVide()) {
-                        coordF[0] = dispo.casePos(vue.terrain)[1];
-                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
-                    }else if (u.getCurrentY() == 0
-                            && dispo.casePos(vue.terrain)[1] > u.getCurrentY()
-                            && dispo.estVide()) {
-                        coordF[0] = dispo.casePos(vue.terrain)[1];
-                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
-                    }
-                    if (dispo.estVide()){
-                        coordF[1] = dispo.casePos(vue.terrain)[0];
-                        coordF[0] = dispo.casePos(vue.terrain)[1];
-                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
-                    }
-                }else{
-                    return;
-                }
+            Random rand = new Random();
+            int randInd = rand.nextInt(casesDispo.size());
+            Case randCase = casesDispo.get(randInd);
+            int xF = randCase.casePos(vue.terrain)[0];
+            int yF = randCase.casePos(vue.terrain)[1];
+            if(u.getPointAction()>0) {
+                u.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), xF, yF);
             }
         }
     }
