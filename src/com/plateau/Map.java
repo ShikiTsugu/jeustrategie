@@ -31,6 +31,12 @@ public class Map {
 
     public void Map14x6(){
         createTerrain(14, 6, 4);
+        map.getPlateau()[0][4].setObstacle(true);
+        map.getPlateau()[1][4].setObstacle(true);
+        map.getPlateau()[1][5].setObstacle(true);
+        map.getPlateau()[map.getPlateau().length-1][(map.getPlateau()[0].length-1)-4].setObstacle(true);
+        map.getPlateau()[map.getPlateau().length-2][(map.getPlateau()[0].length-1)-4].setObstacle(true);
+        map.getPlateau()[map.getPlateau().length-2][(map.getPlateau()[0].length-1)-5].setObstacle(true);
     }
 
     public void printSpawnable1(){
