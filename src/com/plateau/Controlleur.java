@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Controlleur {
@@ -337,34 +338,95 @@ public class Controlleur {
 
     //Méthodes concernant le robot
 
+    public LinkedList<Case> getCaseDispo(Unite u){
+        LinkedList<Case> casesDispo = new LinkedList<>();
+        for(int y = 0; y<vue.terrain.getPlateau().length; y++) {
+            for (int x = 0; x < vue.terrain.getPlateau()[y].length; x++) {
+                if(u.casesDisponibleDeplacement(vue.terrain, u, u.getCurrentX(), u.getCurrentY(), x, y)){
+                    casesDispo.add(vue.terrain.getPlateau()[y][x]);
+                }
+            }
+        }
+        return casesDispo;
+    }
+
+    public void attackUniteRob(Joueur j, Unite u){
+        int[] coordTarget = ((Robot)j).getCoordTarget().getFirst();
+        ActionJoueur aj = new ActionJoueur(j);
+        aj.attaqueUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordTarget[0], coordTarget[1]);
+    }
+
+    public void moveUntilAtRange(Joueur j, Unite u){
+        int[] coordTarget = ((Robot)j).getCoordTarget().getFirst();
+        Unite target = vue.terrain.getPlateau()[coordTarget[1]][coordTarget[0]].getUnite();
+        ActionJoueur aj = new ActionJoueur(j);
+        LinkedList<int[]> coords = ((Robot)j).availableSpaceAroundTarget(vue.terrain, target);
+        boolean moved = false;
+        for(int[] coord : coords){
+            if((Math.abs(coord[1]-u.getCurrentY())+Math.abs(coord[0]-u.getCurrentX()))<=u.getPorteeDeplacement()){
+                aj.deplaceUnite(vue.terrain, u.getCurrentX(),u.getCurrentY(),coord[0],coord[1]);
+                moved = true;
+                break;
+            }
+        }
+        if(moved==false){
+            u.setPointAction(0);
+        }
+    }
+
     public void deplaceUniteRob(Joueur j){
         ActionJoueur aj = new ActionJoueur(j);
         if(((Robot) j).pickUnit(vue.terrain)) {
             int[] coordI = ((Robot) j).getCoord();
             Unite u = vue.terrain.plateau[coordI[0]][coordI[1]].unit;
-            u.casesDisponibleDeplacement(vue.terrain, u, coordI[1], coordI[0], coordI[1], coordI[0]);
+            LinkedList<Case> casesDispo = getCaseDispo(u);
             int[] coordF = {coordI[0], coordI[1]};
-            int catchTarget=0;
-            for (Case c : u.getDeplacementDisponible()) {
-                if (c.estUnit() && c.getUnite().getJoueur() != j) {
-                    ((Robot) j).setCoordTarget(c.casePos(vue.terrain)[1], c.casePos(vue.terrain)[0]);
-                    catchTarget=1;
-                    break;
-                }
-            }
-            if(catchTarget==0) {
-                for (Case c : u.getDeplacementDisponible()) {
-                    if (u.getPointAction() > 0) {
-                        if (coordF[1] != 0) {
-                            coordF[1]--;
-                            aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
-                        } else if (coordF[0] != vue.terrain.plateau.length - 1) {
-                            coordF[0]++;
-                            aj.deplaceUnite(vue.terrain, coordI[1], coordI[0], coordF[1], coordF[0]);
-                        }
+            try {
+                if (((Robot) j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j)) {
+                    if (((Robot) j).canAttack(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeAttaque(), u, j)) {
+                        attackUniteRob(j, u);
                     } else {
-                        break;
+                        moveUntilAtRange(j, u);
                     }
+                    ((Robot)j).getCoordTarget().clear();
+                    return;
+                }
+            }catch(NullPointerException ex){
+                ((Robot)j).getCoordTarget().clear();
+                ((Robot) j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j);
+            }
+            System.out.println(casesDispo);
+            for (Case dispo : casesDispo) {
+                if (u.getPointAction() > 0) {
+                    if (u.getCurrentX() > 0
+                            && dispo.casePos(vue.terrain)[0] < u.getCurrentX()
+                            && dispo.estVide()) {
+                        coordF[1] = dispo.casePos(vue.terrain)[0];
+                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
+                    }else if (u.getCurrentX() == 0
+                            && dispo.casePos(vue.terrain)[0] > u.getCurrentX()
+                            && dispo.estVide()) {
+                        coordF[1] = dispo.casePos(vue.terrain)[0];
+                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
+                    }
+                    if (u.getCurrentY() > 0
+                            && dispo.casePos(vue.terrain)[1] < u.getCurrentY()
+                            && dispo.estVide()) {
+                        coordF[0] = dispo.casePos(vue.terrain)[1];
+                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
+                    }else if (u.getCurrentY() == 0
+                            && dispo.casePos(vue.terrain)[1] > u.getCurrentY()
+                            && dispo.estVide()) {
+                        coordF[0] = dispo.casePos(vue.terrain)[1];
+                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
+                    }
+                    if (dispo.estVide()){
+                        coordF[1] = dispo.casePos(vue.terrain)[0];
+                        coordF[0] = dispo.casePos(vue.terrain)[1];
+                        aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordF[1], coordF[0]);
+                    }
+                }else{
+                    return;
                 }
             }
         }
