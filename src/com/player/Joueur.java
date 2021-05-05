@@ -78,17 +78,21 @@ public class Joueur {
         return false;
     }
 
+    public int countUnits(){
+        int units=0;
+        for(int i = 0; i<unites.length; i++){
+            if(unites[i]!=null){
+                units++;
+            }
+        }
+        return units;
+    }
+
     public void annuleAjout(Unite u){
         for (int i = 1; i<unites.length; i++) {
             if (unites[i] == u) {
                 unites[i] = null;
             }
-        }
-    }
-
-    public void displayList(){
-        for (int i = 0; i<unites.length;i++){
-            System.out.println(unites[i]);
         }
     }
 
