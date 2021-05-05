@@ -265,6 +265,12 @@ public abstract class Unite {
         return false;
     }
 
+    public boolean estDecede(){
+        return santeCourante <= 0;
+    }
+
+
+
     public void gagnerArgentApresMort(Unite uniteD){
         Joueur j;
         if(uniteD.getJoueur() == uniteD.getJoueur().getJeu().getJoueur1()) {
