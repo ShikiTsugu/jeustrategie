@@ -39,10 +39,9 @@ public class Vue extends JFrame{
 
     public String[] getListeUnit(){return listeUnit;}
 
-    public Vue(Model m, Terrain t, Joueur j){
+    public Vue(Model m, Terrain t){
         model = m;
         imagePane = new ImagePane(model);
-        tourJoueur = j;
         setTitle("Jeu de Strategie");
         setSize(model.getImage().getWidth(),model.getImage().getHeight());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -65,7 +64,7 @@ public class Vue extends JFrame{
         jouer.setFont(new Font("Monospaced",Font.BOLD,20));
         jouer.setBackground(new Color(83, 214, 191));
         jouer.setForeground(Color.WHITE);
-        jouer.addActionListener((ActionEvent e) -> AfficheMenu());
+        jouer.addActionListener((ActionEvent e) -> AfficheMenuRobot());
 
         JButton quitter = new JButton("Quitter");
         quitter.setFont(new Font("Monospaced",Font.BOLD,20));
@@ -92,7 +91,46 @@ public class Vue extends JFrame{
         imagePane.updateUI();
     }
 
-    public void AfficheMenu(){
+    public void AfficheMenuRobot(){
+        imagePane.removeAll();
+
+        JLabel titre = new JLabel("Select Mode");
+
+        JButton JcJ = new JButton("Joueur vs Joueur");
+        JcJ.setFont(new Font("Monospaced",Font.BOLD,20));
+        JcJ.setBackground(new Color(37, 150, 131));
+        JcJ.setForeground(Color.WHITE);
+        JcJ.addActionListener((ActionEvent e) -> {
+            controlleur.getJeu().setPlayer(true);
+            AfficheMenuLevel();
+        });
+
+        JButton JcI = new JButton("Joueur vs IA");
+        JcI.setFont(new Font("Monospaced",Font.BOLD,20));
+        JcI.setBackground(new Color(37, 150, 131));
+        JcI.setForeground(Color.WHITE);
+        JcI.addActionListener((ActionEvent e) -> {
+            controlleur.getJeu().setPlayer(false);
+            AfficheMenuLevel();
+        });
+
+        BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
+        imagePane.setLayout(boxlayout);
+        titre.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titre.setFont((new Font("Monospaced",Font.BOLD,20)));
+        imagePane.add(Box.createRigidArea(new Dimension(0, 100 )));
+        imagePane.add(titre);
+        JcJ.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
+        imagePane.add(JcJ);
+        JcI.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
+        imagePane.add(JcI);
+
+        imagePane.updateUI();
+    }
+
+    public void AfficheMenuLevel(){
         imagePane.removeAll();
 
         JLabel titre = new JLabel("Map Select");
@@ -105,6 +143,7 @@ public class Vue extends JFrame{
             controlleur.getMap().Map5x5();
             controlleur.getJeu().getMapTerrain();
             controlleur.getJeu().AjouteHero();
+            controlleur.getJeu().setStartingMoney(500);
             terrain = controlleur.getMap().getTerrain();
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
@@ -119,6 +158,7 @@ public class Vue extends JFrame{
             controlleur.getMap().Map14x6();
             controlleur.getJeu().getMapTerrain();
             controlleur.getJeu().AjouteHero();
+            controlleur.getJeu().setStartingMoney(1000);
             terrain = controlleur.getMap().getTerrain();
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
