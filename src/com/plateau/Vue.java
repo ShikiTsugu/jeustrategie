@@ -371,16 +371,20 @@ public class Vue extends JFrame{
                     TerrainPanel.add(bt);
                     bt.addActionListener((ActionEvent e) -> {
                         System.out.println(terrain.plateau[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].unit);
-                        if (terrain.getPlateau()[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].getUnite().getPointAction() > 0) {
-                            initialiseStats(bt);
-                            initialiseAtk(bt);
-                            initialiseDep(bt);
-                            generateAction(bt);
-                        } else {
-                            initialiseStats(bt);
-                            generateAction(bt);
-                            btAtk.setEnabled(false);
-                            btDep.setEnabled(false);
+                        try {
+                            if (terrain.getPlateau()[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].getUnite().getPointAction() > 0) {
+                                initialiseStats(bt);
+                                initialiseAtk(bt);
+                                initialiseDep(bt);
+                                generateAction(bt);
+                            } else {
+                                initialiseStats(bt);
+                                generateAction(bt);
+                                btAtk.setEnabled(false);
+                                btDep.setEnabled(false);
+                            }
+                        }catch (NullPointerException exception){
+                            System.out.println("impossible de trouver l'unité");
                         }
                     });
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {

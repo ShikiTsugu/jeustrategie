@@ -16,7 +16,7 @@ public class Hero extends Unite{
         pointAction = 1; //discussion en cours
         competences = new Competence[1];
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
-        competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1, 0);
+        competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1, 0,this);
     }
     
     public String toString(){

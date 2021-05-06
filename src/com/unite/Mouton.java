@@ -16,7 +16,7 @@ public class Mouton extends Unite{
         pointAction = 2; //discussion en cours
         competences = new Competence[1];
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
-        competences[0] = new Competence("Attaque du mouton","donne un coup de tête à son adversaire",event, porteeAttaque,pointAction-1, 0);
+        competences[0] = new Competence("Attaque du mouton","donne un coup de tête à son adversaire",event, porteeAttaque,pointAction-1, 0,this);
     }
     public String toString(){
         return "Mouton";

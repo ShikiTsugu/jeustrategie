@@ -33,6 +33,10 @@ public class Evenement {
 
     public int getValue(){ return value;}
 
+    public String getEvent() {
+        return event;
+    }
+
     public void setValue(int value){this.value = value;}
 
     public HashMap<String,Integer> readEvent(int x, int y, Terrain t){
@@ -50,16 +54,41 @@ public class Evenement {
 
             return resultat;
         }
+        if(event.equals("deplacementUniteSpecifique")){
+            if(unite.estDecede() || unite.currentY+this.y < 0 || unite.getCurrentY()+this.y >= t.getPlateau().length ||
+                    unite.currentX+this.x < 0 || unite.getCurrentX()+this.x >= t.getPlateau()[unite.currentY+this.y].length||!t.getPlateau()[unite.currentY+this.y][unite.currentX+this.x].estVide()){
+
+                return resultat;
+            }else{
+
+                t.getPlateau()[unite.currentY][unite.currentX].setUnite(null);
+                t.getPlateau()[unite.currentY+this.y][unite.currentX+this.x].setUnite(unite);
+                unite.setPositionUnite(t.getPlateau()[unite.currentY+this.y][unite.currentX+this.x]);
+                unite.setCurrentY(unite.currentY+this.y);
+                unite.setCurrentX(unite.currentX+this.x);
+
+            }
+        }
 
         if(x+this.x < 0 || x+this.x >= t.getPlateau()[0].length ||y+this.y < 0 || y+this.y >= t.getPlateau().length || t.getPlateau()[y+this.y][x+this.x].getUnite() ==null ){
             return resultat;
         }
+
+
 
         if(event.equals("infligeDegats") && t.getPlateau()[y+this.y][x+this.x].getUnite().getPeutEtreAttaque()){
             int res = t.getPlateau()[y+this.y][x+this.x].getUnite().getSanteCourante()-value;
             t.getPlateau()[y+this.y][x+this.x].getUnite().setSanteCourante(res);
             if(t.getPlateau()[y+this.y][x+this.x].getUnite().estMort(t, x+this.x, y+this.y))
             resultat.put("cible tué",1);
+            return resultat;
+        }
+        if(event.equals("infligeDegatsUniteSpecifique") && unite.getPeutEtreAttaque()){
+            System.out.println("dégatsInfligé");
+            int res = unite.getSanteCourante()-value;
+            unite.setSanteCourante(res);
+            if(unite.estMort(t, unite))
+                resultat.put("cible tué",1);
             return resultat;
         }
         if(event.equals("soin")){
@@ -71,6 +100,12 @@ public class Evenement {
         if(event.equals("appliqueEtourdissement")){
             if(t.getPlateau()[y+this.y][x+this.x].getUnite().possedeBuff("immuniteEtourdissement")==false) {
                 t.getPlateau()[y + this.y][x + this.x].getUnite().addDebuff("etourdissement", value);
+            }
+            return resultat;
+        }
+        if(event.equals("appliqueEtourdissementUniteSpecifique")){
+            if(unite.possedeBuff("immuniteEtourdissement")==false) {
+                unite.addDebuff("etourdissement", value);
             }
             return resultat;
         }
