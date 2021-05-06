@@ -27,7 +27,9 @@ public class Buff extends AlterationEtat{
         }
         if(nom.equals("buffProphete")){
             buffProphete();
-
+        }
+        if(nom.equals("Tower")){
+            Tower();
         }
 
     }
@@ -74,6 +76,10 @@ public class Buff extends AlterationEtat{
             activable = false;
             tourRestant-=1;
         }
+    }
+
+    public void Tower(){
+        unite.setAttaque(unite.getAttInit() + 100);
     }
 
 }

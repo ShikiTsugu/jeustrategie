@@ -421,6 +421,8 @@ public class Vue extends JFrame{
     public JButton setBorder(JButton bt, int x, int y){
         if (terrain.plateau[x][y] instanceof CaseGold) {
             bt.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        } else if (terrain.plateau[x][y] instanceof Tower){
+            bt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/platform.png"));
         }
         return bt;
     }

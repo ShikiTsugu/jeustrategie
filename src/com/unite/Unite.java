@@ -11,6 +11,7 @@ public abstract class Unite {
     protected int santeMax;
     protected int santeCourante;
     protected int attaque;
+    protected int attInit;
     protected int coutUnite;
     protected int porteeDeplacement;
     protected int porteeAttaque;
@@ -46,6 +47,8 @@ public abstract class Unite {
     public int getAttaque(){
         return attaque;
     }
+
+    public int getAttInit() { return attInit; }
     
     public int getCoutUnite(){
         return coutUnite;
@@ -223,6 +226,7 @@ public abstract class Unite {
 
     public abstract String toString();
     public abstract boolean isHero();
+    public abstract void setComp();
     
     public void deplaceUnite(Terrain t, int xPast, int yPast, int xApres, int yApres){
         Case avant = t.getPlateau()[yPast][xPast];
@@ -405,4 +409,5 @@ public abstract class Unite {
     }
 
     public void resetPointAction(){pointAction = pointActionMax; }
+
 }
