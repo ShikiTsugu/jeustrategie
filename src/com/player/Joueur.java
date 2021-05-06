@@ -3,6 +3,7 @@ package com.player;
 import com.launcher.Jeu;
 import com.unite.Hero;
 import com.unite.Unite;
+import com.unite.Mouton;
 import com.plateau.Terrain;
 
 public class Joueur {
@@ -119,5 +120,25 @@ public class Joueur {
             }
         }
         return false;
+    }
+
+
+
+    public void detransformationPremierMouton(){
+        System.out.println("fin de mouton");
+        for(Unite un : unites){
+            Mouton m ;
+            if(un instanceof Mouton){
+                m = (Mouton)un;
+                m.getUnite().setCurrentX(m.getCurrentX());
+                m.getUnite().setCurrentY(m.getCurrentY());
+                Unite un1 = m.getUnite();
+                jeu.getTerrain().getPlateau()[un1.getCurrentY()][un1.getCurrentX()].setUnite(un1);
+                un1.setPositionUnite(m.getPositionUnite());
+                annuleAjout(m);
+                ajouteUnite(un1);
+                return;
+            }
+        }
     }
 }

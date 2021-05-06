@@ -23,9 +23,9 @@ public class Mage extends Unite{
                 new Evenement("infligeDegats",0,1,attaque,joueur),
                 new Evenement("infligeDegats",0,-1,attaque,joueur),
         };
-        competences[1] = new Competence("météore","fait tomber un météore devastateur du ciel pour l'abatre sur ces ennemis",event2, 4,2, 4);
-        Evenement[] event3 = {new Evenement("transformationMouton", 0, 0, 2,joueur)};
-        competences[2] = new Competence("transformation en mouton", "transforme son adversaire en mouton temporairement", event3, 4, 2, 6);
+        competences[1] = new Competence("météore","fait tomber un météore devastateur du ciel pour l'abatre sur ces ennemis",event2, 4,1, 4);
+        Evenement[] event3 = {new Evenement("transformationMouton", 0, 0, 3,joueur)};
+        competences[2] = new Competence("transformation en mouton", "transforme son adversaire en mouton temporairement", event3, 4, 1, 6);
     }
     
     public String toString(){

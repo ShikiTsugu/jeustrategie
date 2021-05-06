@@ -69,10 +69,8 @@ public class Debuff extends AlterationEtat {
     }
 
     public void mouton(){
-        unite = new Mouton(unite.getJoueur());
-        if (tourRestant == 0 && unite.toString().equals("Mouton")){
-            unite = unite.getListUniteTransforme().get(0);
-            unite.getListUniteTransforme().remove(0);
+        if (tourRestant <= 1 && unite.toString().equals("Mouton")){
+            unite.getJoueur().detransformationPremierMouton();
         }
         tourRestant-=1;
     }
