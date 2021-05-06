@@ -351,13 +351,13 @@ public class Controlleur {
     }
 
     public void attackUniteRob(Joueur j, Unite u){
-        int[] coordTarget = ((Robot)j).getCoordTarget().getFirst();
+        int[] coordTarget = u.getCoordTarget().getFirst();
         ActionJoueur aj = new ActionJoueur(j);
         aj.attaqueUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordTarget[0], coordTarget[1]);
     }
 
     public void moveUntilAtRange(Joueur j, Unite u){
-        int[] coordTarget = ((Robot)j).getCoordTarget().getFirst();
+        int[] coordTarget = u.getCoordTarget().getFirst();
         Unite target = vue.terrain.getPlateau()[coordTarget[1]][coordTarget[0]].getUnite();
         ActionJoueur aj = new ActionJoueur(j);
         LinkedList<int[]> coords = ((Robot)j).availableSpaceAroundTarget(vue.terrain, target);
@@ -370,7 +370,15 @@ public class Controlleur {
             }
         }
         if(moved==false){
-            u.setPointAction(0);
+            LinkedList<Case> casesDispo = getCaseDispo(u);
+            Random rand = new Random();
+            int randInd = rand.nextInt(casesDispo.size());
+            Case randCase = casesDispo.get(randInd);
+            int xF = randCase.casePos(vue.terrain)[0];
+            int yF = randCase.casePos(vue.terrain)[1];
+            if(u.getPointAction()>0) {
+                u.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), xF, yF);
+            }
         }
     }
 
@@ -386,12 +394,12 @@ public class Controlleur {
                     } else {
                         moveUntilAtRange(j, u);
                     }
-                    ((Robot)j).getCoordTarget().clear();
                     return;
                 }
             }catch(NullPointerException ex){
-                ((Robot)j).getCoordTarget().clear();
+                u.getCoordTarget().removeFirst();
                 ((Robot) j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j);
+                return;
             }
             Random rand = new Random();
             int randInd = rand.nextInt(casesDispo.size());
