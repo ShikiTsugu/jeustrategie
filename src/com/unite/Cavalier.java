@@ -70,6 +70,10 @@ public class Cavalier extends Unite{
                                     e++;
                                 }
                             }
+                            if(t.getPlateau()[yA+i][xA].estVide()){
+                                eventCharge[e] = new Evenement("deplacementUniteSpecifique",this,0,1,0);
+                                e++;
+                            }
                             competences[1].setEffets(eventCharge);
 
                             competences[1].useSkill(xA, yA, xD, yD, t);
@@ -110,6 +114,10 @@ public class Cavalier extends Unite{
                                     eventCharge[e] = new Evenement("deplacementUniteSpecifique",cible,0,-1,0);
                                     e++;
                                 }
+                            }
+                            if(t.getPlateau()[yA-i][xA].estVide()){
+                                eventCharge[e] = new Evenement("deplacementUniteSpecifique",this,0,-1,0);
+                                e++;
                             }
                             competences[1].setEffets(eventCharge);
                             competences[1].useSkill(xA, yA, xD, yD, t);
@@ -153,6 +161,10 @@ public class Cavalier extends Unite{
                                     e++;
                                 }
                             }
+                            if(t.getPlateau()[yA][xA+i].estVide()){
+                                eventCharge[e] = new Evenement("deplacementUniteSpecifique",this,1,0,0);
+                                e++;
+                            }
                             competences[1].setEffets(eventCharge);
                             competences[1].useSkill(xA, yA, xD, yD, t);
                             return;
@@ -188,6 +200,10 @@ public class Cavalier extends Unite{
                                     eventCharge[e] = new Evenement("deplacementUniteSpecifique",cible,-1,0,0);
                                     e++;
                                 }
+                            }
+                            if(t.getPlateau()[yA][xA-i].estVide()){
+                                eventCharge[e] = new Evenement("deplacementUniteSpecifique",this,-1,0,0);
+                                e++;
                             }
                             competences[1].setEffets(eventCharge);
                             competences[1].useSkill(xA, yA, xD, yD, t);
