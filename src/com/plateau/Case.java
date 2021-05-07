@@ -105,7 +105,7 @@ public class Case {
                 }
             }
         }
-        return coord;
+        return null;
     }
 
     public String toString(){

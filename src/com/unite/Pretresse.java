@@ -51,10 +51,10 @@ public class Pretresse extends Unite{
 
     public void setComp() {
         Evenement[] event = {new Evenement("soin",0,0,50,joueur)};
-        competences[0] = new Competence("soin","soigne une unité",event, 5,1, 0);
+        competences[0] = new Competence("soin","soigne une unité",event, 5,1, 0,this);
         Evenement[] event2 = {new Evenement("appliqueAveugle",0,0,3,joueur)};
-        competences[1] = new Competence("lumière aveuglante","aveugle les ennemis , ce qui les empêchent d'attaquer",event2, 5,1, 0);
+        competences[1] = new Competence("lumière aveuglante","aveugle les ennemis , ce qui les empêchent d'attaquer",event2, 5,1, 0,this);
         Evenement[] event3 = {new Evenement("invocation Prophete",0,0,0,joueur)};
-        competences[2] = new Competence("implorer Le Seigneur","prie les cieux pour qu'ils offrent leur assitsance",event3,5 ,1,99);
+        competences[2] = new Competence("implorer Le Seigneur","prie les cieux pour qu'ils offrent leur assitsance",event3,5 ,1,99,this);
     }
 }

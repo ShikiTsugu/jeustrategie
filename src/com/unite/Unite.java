@@ -277,6 +277,20 @@ public abstract class Unite {
         return false;
     }
 
+    public boolean estMort(Terrain t, Unite u){
+        Unite defenseur = u;
+        if (defenseur.getSanteCourante() <= 0) {
+            if(defenseur.toString().equals("Mouton")){
+                defenseur.getListUniteTransforme().remove(0);
+            }
+            gagnerArgentApresMort(defenseur);
+            joueur.annuleAjout(defenseur);
+            t.getPlateau()[defenseur.getCurrentY()][defenseur.getCurrentX()].supprimerUniteCase(t.getPlateau()[defenseur.getCurrentY()][defenseur.getCurrentX()]);
+            return true;
+        }
+        return false;
+    }
+
     public boolean estDecede(){
         return santeCourante <= 0;
     }

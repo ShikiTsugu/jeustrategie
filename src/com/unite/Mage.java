@@ -29,15 +29,15 @@ public class Mage extends Unite{
 
     public void setComp() {
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
-        competences[0] = new Competence("tir maquique","lancer un projectile magique",event, 5,1, 0);
+        competences[0] = new Competence("tir maquique","lancer un projectile magique",event, 5,1, 0,this);
         Evenement[] event2 = {new Evenement("infligeDegats",0,0,attaque,joueur),
                 new Evenement("infligeDegats",1,0,attaque,joueur),
                 new Evenement("infligeDegats",-1,0,attaque,joueur),
                 new Evenement("infligeDegats",0,1,attaque,joueur),
                 new Evenement("infligeDegats",0,-1,attaque,joueur),
         };
-        competences[1] = new Competence("météore","fait tomber un météore devastateur du ciel pour l'abatre sur ces ennemis",event2, 4,1, 4);
+        competences[1] = new Competence("météore","fait tomber un météore devastateur du ciel pour l'abatre sur ces ennemis",event2, 4,1, 4,this);
         Evenement[] event3 = {new Evenement("transformationMouton", 0, 0, 3,joueur)};
-        competences[2] = new Competence("transformation en mouton", "transforme son adversaire en mouton temporairement", event3, 4, 1, 6);
+        competences[2] = new Competence("transformation en mouton", "transforme son adversaire en mouton temporairement", event3, 4, 1, 6,this);
     }
 }

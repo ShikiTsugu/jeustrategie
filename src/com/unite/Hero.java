@@ -29,6 +29,6 @@ public class Hero extends Unite{
 
     public void setComp(){
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
-        competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1, 0);
+        competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1, 0,this);
     }
 }
