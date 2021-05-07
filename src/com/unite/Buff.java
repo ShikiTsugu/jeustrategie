@@ -1,5 +1,7 @@
 package com.unite;
 
+import com.plateau.Map;
+
 public class Buff extends AlterationEtat{
     public Buff(String nom, int tourRestant, Unite u){
         super(nom, tourRestant, u);
@@ -79,7 +81,9 @@ public class Buff extends AlterationEtat{
     }
 
     public void Tower(){
-        unite.setAttaque(unite.getAttInit() + 100);
+        if (unite instanceof Archer || unite instanceof Mage) {
+            unite.setAttaque(unite.getAttInit() + 100);
+        }
     }
 
 }

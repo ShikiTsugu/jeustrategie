@@ -165,6 +165,21 @@ public class Vue extends JFrame{
             imagePane.add(TaskBar,BorderLayout.SOUTH);
         });
 
+        JButton Map14x6Gold = new JButton("Map 14x6 Gold");
+        Map14x6Gold.setFont(new Font("Monospaced",Font.BOLD,20));
+        Map14x6Gold.setBackground(new Color(37, 150, 131));
+        Map14x6Gold.setForeground(Color.WHITE);
+        Map14x6Gold.addActionListener((ActionEvent e) -> {
+            controlleur.getMap().Map14x6Gold();
+            controlleur.getJeu().getMapTerrain();
+            controlleur.getJeu().AjouteHero();
+            controlleur.getJeu().setStartingMoney(2000);
+            terrain = controlleur.getMap().getTerrain();
+            AfficheTerrain();
+            imagePane.add(TerrainPanel,BorderLayout.CENTER);
+            imagePane.add(TaskBar,BorderLayout.SOUTH);
+        });
+
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);
         titre.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -177,6 +192,9 @@ public class Vue extends JFrame{
         Map14x6.setAlignmentX(Component.CENTER_ALIGNMENT);
         imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
         imagePane.add(Map14x6);
+        Map14x6Gold.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
+        imagePane.add(Map14x6Gold);
 
         imagePane.updateUI();
     }
