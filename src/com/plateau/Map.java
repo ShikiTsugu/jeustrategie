@@ -37,6 +37,16 @@ public class Map {
         map.getPlateau()[map.getPlateau().length-1][(map.getPlateau()[0].length-1)-4].setObstacle(true);
         map.getPlateau()[map.getPlateau().length-2][(map.getPlateau()[0].length-1)-4].setObstacle(true);
         map.getPlateau()[map.getPlateau().length-2][(map.getPlateau()[0].length-1)-5].setObstacle(true);
+        map.setEffectCase(map.getPlateau()[0].length/2,map.getPlateau().length/2, new CaseGold());
+        map.setEffectCase(map.getPlateau()[0].length/2-1,map.getPlateau().length/2-1, new Tower());
+    }
+
+    public void Map14x6Gold(){
+        createTerrain(14, 6, 4);
+        map.setEffectCase(0,0, new CaseGold());
+        map.setEffectCase(0,map.getPlateau().length-1, new CaseGold());
+        map.setEffectCase(map.getPlateau()[0].length-1,0, new CaseGold());
+        map.setEffectCase(map.getPlateau()[0].length-1,map.getPlateau().length-1, new CaseGold());
     }
 
     public void printSpawnable1(){

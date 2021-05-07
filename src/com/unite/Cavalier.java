@@ -10,16 +10,14 @@ public class Cavalier extends Unite{
         santeMax = 300; //discussion en cours
         santeCourante = 300;
         attaque = 150; //discussion en cours
+        attInit = 150; //discussion en cours
         coutUnite = 600; //discussion en cours
         porteeDeplacement = 6; //discussion en cours
         porteeAttaque = 1; //discussion en cours
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
         competences = new Competence[2];
-        Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
-        competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1, 0,this);
-        Evenement[] event2 = {new Evenement("charge", this, 0, 0, attaque-50)};
-        competences[1] = new Competence("charge", "charge en ligne droite pour infliger des dégats", event2, porteeDeplacement, 2, 4,this);
+        setComp();
     }
     
     public String toString(){
@@ -220,5 +218,12 @@ public class Cavalier extends Unite{
     
     public final boolean isHero(){
         return false;
+    }
+
+    public void setComp(){
+        Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
+        competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1, 0,this);
+        Evenement[] event2 = {new Evenement("charge", this, 0, 0, attaque-50)};
+        competences[1] = new Competence("charge", "charge en ligne droite pour infliger des dégats", event2, porteeDeplacement, 2, 4,this);
     }
 }

@@ -9,12 +9,25 @@ public class Mage extends Unite{
         santeMax = 125; //discussion en cours
         santeCourante = 125;
         attaque = 125; //discussion en cours
+        attInit = 125; //discussion en cours
         coutUnite = 250; //discussion en cours
         porteeDeplacement = 4; //discussion en cours
         porteeAttaque = 4; //discussion en cours
         pointActionMax = 1; //discussion en cours
         pointAction = 1; //discussion en cours
         competences = new Competence[3];
+        setComp();
+    }
+    
+    public String toString(){
+        return "Mage";
+    }
+    
+    public final boolean isHero(){
+        return false;
+    }
+
+    public void setComp() {
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
         competences[0] = new Competence("tir maquique","lancer un projectile magique",event, 5,1, 0,this);
         Evenement[] event2 = {new Evenement("infligeDegats",0,0,attaque,joueur),
@@ -26,13 +39,5 @@ public class Mage extends Unite{
         competences[1] = new Competence("météore","fait tomber un météore devastateur du ciel pour l'abatre sur ces ennemis",event2, 4,1, 4,this);
         Evenement[] event3 = {new Evenement("transformationMouton", 0, 0, 3,joueur)};
         competences[2] = new Competence("transformation en mouton", "transforme son adversaire en mouton temporairement", event3, 4, 1, 6,this);
-    }
-    
-    public String toString(){
-        return "Mage";
-    }
-    
-    public final boolean isHero(){
-        return false;
     }
 }

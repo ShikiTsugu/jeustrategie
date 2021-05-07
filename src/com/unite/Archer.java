@@ -14,17 +14,14 @@ public class Archer extends Unite{
         santeMax = 200; //discussion en cours
         santeCourante = 200;
         attaque = 100; //discussion en cours
+        attInit = 100; //discussion en cours
         coutUnite = 300; //discussion en cours
         porteeDeplacement = 4; //discussion en cours
         porteeAttaque = 4; //discussion en cours
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
         competences = new Competence[2];
-        Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
-        competences[0] = new Competence("tir à l'arc","tire une flèche",event, porteeAttaque+1,pointAction-1, 0,this);
-        Evenement[] event2 = {};
-        competences[1] = new Competence("prédateur","1 fois par tour, gagne 1 PA lorsqu'il tue un ennemi",event2, -1,999, 1,this);
-
+        setComp();
     }
     
     public String toString(){
@@ -45,5 +42,12 @@ public class Archer extends Unite{
     
     public final boolean isHero(){
         return false;
+    }
+
+    public void setComp() {
+        Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
+        competences[0] = new Competence("tir à l'arc","tire une flèche",event, porteeAttaque+1,pointAction-1, 0,this);
+        Evenement[] event2 = {};
+        competences[1] = new Competence("prédateur","1 fois par tour, gagne 1 PA lorsqu'il tue un ennemi",event2, -1,999, 1,this);
     }
 }

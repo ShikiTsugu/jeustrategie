@@ -13,6 +13,7 @@ public class Pretresse extends Unite{
         santeMax = 150; //discussion en cours
         santeCourante = 150;
         attaque = 25; //discussion en cours
+        attInit = 25; //discussion en cours
         coutUnite = 400; //discussion en cours
         porteeDeplacement = 5; //discussion en cours
         porteeAttaque = 3; //discussion en cours
@@ -20,13 +21,7 @@ public class Pretresse extends Unite{
         pointAction = 1; //discussion en cours
         suiviSoins = 0 ;
         competences = new Competence[3];
-        Evenement[] event = {new Evenement("soin",0,0,50,joueur)};
-        competences[0] = new Competence("soin","soigne une unité",event, 5,1, 0,this);
-        Evenement[] event2 = {new Evenement("appliqueAveugle",0,0,3,joueur)};
-        competences[1] = new Competence("lumière aveuglante","aveugle les ennemis , ce qui les empêchent d'attaquer",event2, 5,1, 0,this);
-        Evenement[] event3 = {new Evenement("invocation Prophete",0,0,0,joueur)};
-        competences[2] = new Competence("implorer Le Seigneur","prie les cieux pour qu'ils offrent leur assitsance",event3,5 ,1,99,this);
-
+        setComp();
     }
 
     public void utiliseCompetence(int xA, int yA, int xD,int yD,int c, Terrain t){
@@ -52,5 +47,14 @@ public class Pretresse extends Unite{
 
     public final boolean isHero(){
         return false;
+    }
+
+    public void setComp() {
+        Evenement[] event = {new Evenement("soin",0,0,50,joueur)};
+        competences[0] = new Competence("soin","soigne une unité",event, 5,1, 0,this);
+        Evenement[] event2 = {new Evenement("appliqueAveugle",0,0,3,joueur)};
+        competences[1] = new Competence("lumière aveuglante","aveugle les ennemis , ce qui les empêchent d'attaquer",event2, 5,1, 0,this);
+        Evenement[] event3 = {new Evenement("invocation Prophete",0,0,0,joueur)};
+        competences[2] = new Competence("implorer Le Seigneur","prie les cieux pour qu'ils offrent leur assitsance",event3,5 ,1,99,this);
     }
 }

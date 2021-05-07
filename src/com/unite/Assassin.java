@@ -9,12 +9,25 @@ public class Assassin extends Unite{
         santeMax = 100; //discussion en cours
         santeCourante = 100;
         attaque = 200; //discussion en cours
+        attInit = 200; //discussion en cours
         coutUnite = 500; //discussion en cours
         porteeDeplacement = 5; //discussion en cours
         porteeAttaque = 1; //discussion en cours
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
         competences = new Competence[4];
+        setComp();
+    }
+
+    public String toString(){
+        return "Assassin";
+    }
+
+    public final boolean isHero(){
+        return false;
+    }
+
+    public void setComp() {
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
         competences[0] = new Competence("poignarder","effectue un coup de dague",event, porteeAttaque,pointAction-1, 0,this);
         Evenement[] event2 = {new Evenement("infligeDegats",0,0,attaque-150,joueur),
@@ -24,14 +37,5 @@ public class Assassin extends Unite{
         competences[2] = new Competence("camouflage", "ne peut plus se faire attaquer par des ennemis", event3, 0, pointActionMax, 3,this);
         Evenement[] event4 = {new Evenement("appliqueMort", 0, 0, 0,joueur)};
         competences[3] = new Competence("assassinat", "achève de manière vicieuse un ennemi en dessous de 100 pv où qu'il soit", event4, 99, pointAction-1, 4,this);
-
-    }
-
-    public String toString(){
-        return "Assassin";
-    }
-
-    public final boolean isHero(){
-        return false;
     }
 }
