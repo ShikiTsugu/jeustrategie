@@ -30,7 +30,7 @@ public class Debuff extends AlterationEtat {
 
     public void etourdissement(){
         if (tourRestant > 0) {
-            unite.setPointAction(0);
+            unite.setPointAction(-10);
             tourRestant -= 1;
 
         }
@@ -49,7 +49,7 @@ public class Debuff extends AlterationEtat {
 
     public void immobilise(){
         if (tourRestant > 0){
-            unite.setPorteeDeplacement(-1);
+            unite.setPorteeDeplacement(-10);
             tourRestant-=1;
         }
     }
@@ -63,7 +63,7 @@ public class Debuff extends AlterationEtat {
 
     public void aveugle(){
         if (tourRestant > 0){
-            unite.setPorteeAttaque(-1);
+            unite.setPorteeAttaque(-10);
             tourRestant-=1;
         }
     }
