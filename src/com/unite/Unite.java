@@ -1,11 +1,11 @@
 package com.unite;
 
-import com.plateau.*;
+import com.plateau.Case;
+import com.plateau.Terrain;
 import com.player.Joueur;
-import java.lang.*;
-import java.util.*;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 
 public abstract class Unite {
     protected int santeMax;
