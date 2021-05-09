@@ -115,21 +115,17 @@ public class Robot extends Joueur{
             return true;
         }
         if (portee >= 0 && u.estDansTableau(t, x, y)){
-            if (canAttack(t, x -1, y, portee -1, u, j)
-                    && u.estDansTableau(t, x -1, y)){
-                return true;
+            if (u.estDansTableau(t, x -1, y)){
+                return canAttack(t, x -1, y, portee -1, u, j);
             }
-            if (canAttack(t, x + 1, y, portee -1, u, j)
-                    && u.estDansTableau(t, x +1, y)){
-                return true;
+            if (u.estDansTableau(t, x +1, y)){
+                return canAttack(t, x + 1, y, portee -1, u, j);
             }
-            if (canAttack(t, x, y-1, portee -1, u, j)
-                    && u.estDansTableau(t, x, y-1)){
-                return true;
+            if (u.estDansTableau(t, x, y-1)){
+                return canAttack(t, x, y-1, portee -1, u, j);
             }
-            if (canAttack(t, x, y +1, portee -1, u, j)
-                    && u.estDansTableau(t, x, y+1)){
-                return true;
+            if (u.estDansTableau(t, x, y+1)){
+                return canAttack(t, x, y+1, portee -1, u, j);
             }
         }
         return false;
@@ -146,21 +142,17 @@ public class Robot extends Joueur{
             return true;
         }
         if (portee >= 0 && u.estDansTableau(t, x, y)){
-            if (targetDetected(t, x -1, y, portee -1, u, j)
-                    && u.estDansTableau(t, x -1, y)){
-                return true;
+            if (u.estDansTableau(t, x -1, y)){
+                return targetDetected(t, x -1, y, portee -1, u, j);
             }
-            if (targetDetected(t, x + 1, y, portee -1, u, j)
-                    && u.estDansTableau(t, x +1, y)){
-                return true;
+            if (u.estDansTableau(t, x +1, y)){
+                return targetDetected(t, x + 1, y, portee -1, u, j);
             }
-            if (targetDetected(t, x, y-1, portee -1, u, j)
-                    && u.estDansTableau(t, x, y-1)){
-                return true;
+            if (u.estDansTableau(t, x, y-1)){
+                return targetDetected(t, x, y-1, portee -1, u, j);
             }
-            if (targetDetected(t, x, y +1, portee -1, u, j)
-                    && u.estDansTableau(t, x, y+1)){
-                return true;
+            if (u.estDansTableau(t, x, y+1)){
+                return targetDetected(t, x, y +1, portee -1, u, j);
             }
         }
         return false;
