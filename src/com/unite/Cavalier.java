@@ -222,7 +222,7 @@ public class Cavalier extends Unite{
 
     public void setComp(){
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
-        competences[0] = new Competence("coup d'épée","lancer un violent coup d'épée",event, 1,1, 0,this);
+        competences[0] = new Competence("coup d'épée","inflige "+attaque+" points de dégâts à l'unité ciblée",event, porteeAttaque,pointAction-1, 0,this);
         Evenement[] event2 = {new Evenement("charge", this, 0, 0, attaque-50)};
         competences[1] = new Competence("charge", "charge en ligne droite pour infliger des dégats", event2, porteeDeplacement, 2, 4,this);
     }
