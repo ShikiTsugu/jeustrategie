@@ -1,11 +1,11 @@
 package com.unite;
 
-import com.plateau.*;
+import com.plateau.Case;
+import com.plateau.Terrain;
 import com.player.Joueur;
-import java.lang.*;
-import java.util.*;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 
 public abstract class Unite {
     protected int santeMax;
@@ -29,12 +29,15 @@ public abstract class Unite {
     protected boolean peutEtreAttaque= true;
     protected ArrayList<Unite> listUniteTransforme;
     protected int direction;
+    private LinkedList<int[]> coordTarget = new LinkedList<>();
 
     public Unite(Joueur joueur){
         this.joueur = joueur;
         buffs = new ArrayList<Buff>();
         debuffs = new ArrayList<Debuff>();
     }
+
+    public LinkedList<int[]> getCoordTarget(){return coordTarget;}
     
     public int getSanteMax(){
         return santeMax;
@@ -255,7 +258,7 @@ public abstract class Unite {
                 defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
                 if (defenseur.getSanteCourante() <= 0){
                     gagnerArgentApresMort(defenseur);
-                    joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
+                    defenseur.getJoueur().annuleAjout(t.getPlateau()[yD][xD].getUnite());
                     t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
                 }
                 else if (t.getPlateau()[yD][xD].estObstacle() || t.getPlateau()[yD][xD].estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
