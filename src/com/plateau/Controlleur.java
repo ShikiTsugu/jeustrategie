@@ -367,7 +367,7 @@ public class Controlleur {
         boolean moved = false;
         for(int[] coord : coords){
             if(u.casesDisponibleDeplacement(vue.terrain, u, u.getCurrentX(), u.getCurrentY(), coord[0], coord[1])){
-                System.out.println(u.getDeplacementDisponible());
+                System.out.println("liste déplacement : "+u.getDeplacementDisponible());
                 int[] destination = u.getDeplacementDisponible().get(0).casePos(vue.terrain);
                 aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), destination[0], destination[1]);
                 moved = true;
