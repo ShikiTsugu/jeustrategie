@@ -2,12 +2,13 @@ package com.unite;
 
 import com.plateau.*;
 import com.player.Joueur;
+
 import java.lang.*;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Unite {
+public abstract class Unite{
     protected int santeMax;
     protected int santeCourante;
     protected int attaque;

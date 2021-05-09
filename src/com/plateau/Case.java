@@ -2,7 +2,9 @@ package com.plateau;
 
 import com.unite.*;
 
-public class Case {
+import java.io.Serializable;
+
+public class Case implements Serializable {
     protected boolean obstacle;
     protected Unite unit;
     protected boolean J1Buyable ;

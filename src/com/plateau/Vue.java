@@ -25,7 +25,7 @@ public class Vue extends JFrame{
     private JPanel TaskBar = new JPanel();
     Terrain terrain;
     ArrayList<JButton> terrainBt;
-    private Controlleur controlleur = new Controlleur(this);
+    private Controlleur controlleur;
     private Joueur tourJoueur;
     private String[] listeUnit = {"Templier","Cavalier","Mage","Archer","Pretresse","Lancier","Assassin"};
     private JButton btStats = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/stats.png"));
@@ -50,6 +50,7 @@ public class Vue extends JFrame{
 
         setVisible(true);
         setLocationRelativeTo(null);
+        controlleur = new Controlleur(this);
     }
 
     //affichage initial
@@ -140,8 +141,7 @@ public class Vue extends JFrame{
         Map5x5.setBackground(new Color(37, 150, 131));
         Map5x5.setForeground(Color.WHITE);
         Map5x5.addActionListener((ActionEvent e) -> {
-            controlleur.getMap().Map5x5();
-            controlleur.getJeu().getMapTerrain();
+            controlleur.SetSmallAsMap();
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(500);
             terrain = controlleur.getMap().getTerrain();
@@ -155,8 +155,7 @@ public class Vue extends JFrame{
         Map14x6.setBackground(new Color(37, 150, 131));
         Map14x6.setForeground(Color.WHITE);
         Map14x6.addActionListener((ActionEvent e) -> {
-            controlleur.getMap().Map14x6();
-            controlleur.getJeu().getMapTerrain();
+            controlleur.SetBigAsMap();
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(1000);
             terrain = controlleur.getMap().getTerrain();
@@ -170,8 +169,7 @@ public class Vue extends JFrame{
         Map14x6Gold.setBackground(new Color(37, 150, 131));
         Map14x6Gold.setForeground(Color.WHITE);
         Map14x6Gold.addActionListener((ActionEvent e) -> {
-            controlleur.getMap().Map14x6Gold();
-            controlleur.getJeu().getMapTerrain();
+            controlleur.SetBigGoldAsMap();
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(2000);
             terrain = controlleur.getMap().getTerrain();

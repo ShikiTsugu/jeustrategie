@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -18,13 +19,20 @@ public class Controlleur {
     private Jeu jeu;
     private int nbTour;
     private Map map;
+    private MapSerialized mapSave;
 
     public Controlleur(Vue v){
         jeu = new Jeu();
         vue = v;
         nbTour = 1;
         map = new Map();
+        mapSave = new MapSerialized();
+        //GenerateSaveMap();
+        //SaveMap();
+        LoadMap();
     }
+
+    public MapSerialized getMapSave() { return mapSave; }
 
     public Map getMap() {
         return map;
@@ -431,5 +439,57 @@ public class Controlleur {
             achatUniteRob(j);
         }
         finDeTour();
+    }
+
+    public void SaveMap(){
+        try{
+
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Map.ser"));
+
+            oos.writeObject(mapSave);
+
+        } catch (IOException IE){
+            System.out.println(IE);
+        }
+    }
+
+    public void LoadMap(){
+        try{
+
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Map.ser"));
+
+            mapSave = (MapSerialized)ois.readObject();
+
+        } catch (FileNotFoundException FE){
+            System.out.println("Pas de Map Serialiser");
+        } catch (ClassNotFoundException CE){
+            System.out.println(CE);
+        } catch (IOException IO){
+            System.out.println(IO);
+        }
+    }
+
+    public void GenerateSaveMap(){
+        getMap().Map5x5();
+        getMapSave().getMapList().add(getMap().getTerrain());
+        getMap().Map14x6();
+        getMapSave().getMapList().add(getMap().getTerrain());
+        getMap().Map14x6Gold();
+        getMapSave().getMapList().add(getMap().getTerrain());
+    }
+
+    public void SetSmallAsMap(){
+        getJeu().setTerrain(getMapSave().getMapList().get(0));
+        getMap().setMap(getMapSave().getMapList().get(0));
+    }
+
+    public void SetBigAsMap(){
+        getJeu().setTerrain(getMapSave().getMapList().get(1));
+        getMap().setMap(getMapSave().getMapList().get(1));
+    }
+
+    public void SetBigGoldAsMap(){
+        getJeu().setTerrain(getMapSave().getMapList().get(2));
+        getMap().setMap(getMapSave().getMapList().get(2));
     }
 }

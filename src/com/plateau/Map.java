@@ -1,6 +1,8 @@
 package com.plateau;
 
-public class Map {
+import java.io.*;
+
+public class Map{
 
     protected Terrain map;
     protected boolean b1[][];
@@ -49,33 +51,7 @@ public class Map {
         map.setEffectCase(map.getPlateau()[0].length-1,map.getPlateau().length-1, new CaseGold());
     }
 
-    public void printSpawnable1(){
-        for (int i = 0; i < b1.length; i++){
-            for (int j = 0; j < b1[i].length; j++){
-                System.out.print(b1[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
+    public Terrain getTerrain(){ return map; }
 
-    public void printSpawnable2(){
-        for (int i = 0; i < b2.length; i++){
-            for (int j = 0; j < b2[i].length; j++){
-                System.out.print(b2[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    public boolean[][] getB1(){
-        return b1;
-    }
-
-    public boolean[][] getB2() {
-        return b2;
-    }
-
-    public Terrain getTerrain(){
-        return map;
-    }
+    public void setMap(Terrain map) { this.map = map; }
 }

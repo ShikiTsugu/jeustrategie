@@ -2,7 +2,9 @@ package com.plateau;
 
 import com.unite.Unite;
 
-public class Terrain {
+import java.io.Serializable;
+
+public class Terrain implements Serializable {
     protected Case[][] plateau;
     protected int maxUnits;
     protected int nbUnits;
