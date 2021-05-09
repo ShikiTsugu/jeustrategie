@@ -254,7 +254,7 @@ public abstract class Unite {
                 defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
                 if (defenseur.getSanteCourante() <= 0){
                     gagnerArgentApresMort(defenseur);
-                    joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
+                    defenseur.getJoueur().annuleAjout(t.getPlateau()[yD][xD].getUnite());
                     t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
                 }
                 else if (t.getPlateau()[yD][xD].estObstacle() || t.getPlateau()[yD][xD].estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
