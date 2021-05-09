@@ -128,56 +128,6 @@ public class Controlleur {
         }
     }
 
-    public void attaque(Joueur j, JButton attaquant){
-        ActionJoueur aj = new ActionJoueur(j);
-        int[]coordI = {attaquant.getX()/attaquant.getWidth(), attaquant.getY()/attaquant.getHeight()};
-        int[]coordF = new int[2];
-        Unite atq = vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit;
-        for (JButton b : vue.terrainBt) {
-            b.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    b.setContentAreaFilled(true);
-                    if(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].estUnit() && ((Math.abs(b.getY()/b.getHeight() - coordI[1])+Math.abs(b.getX()/b.getWidth() - coordI[0])) <= atq.getPorteeAttaque())
-                            && vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit!=atq && vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.getJoueur()!=j) {
-                        b.setBackground(new Color(0, 150, 0));
-                    }else{
-                        b.setBackground(new Color(150, 0, 0));
-                    }
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    b.setContentAreaFilled(false);
-                }
-            });
-            b.addActionListener((ActionEvent e) -> {
-                coordF[0] = b.getX()/b.getWidth();
-                coordF[1] = b.getY()/b.getHeight();
-                try {
-                    int hpMax = vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.getSanteCourante();
-                    if (aj.attaqueUnite(vue.terrain, coordI[0], coordI[1], coordF[0], coordF[1])) {
-                        int hpLost = hpMax - vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.getSanteCourante();
-                        JOptionPane.showMessageDialog(vue.getTerrainPanel(), "PV perdus : " + hpLost,
-                                vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.toString() +
-                                        (vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit.getJoueur() == j ? " Adverse" : " Allié"),
-                                JOptionPane.PLAIN_MESSAGE,
-                                vue.generateImage(vue.terrain.getPlateau()[coordF[1]][coordF[0]].unit.toString()));
-                    }
-                }catch (NullPointerException ex){
-                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Vous attaquez dans le vide.", "", JOptionPane.PLAIN_MESSAGE);
-                }
-                vue.generateTerrain();
-                vue.generateTaskBar();
-                if (jeu.getJoueur1().getHero().getSanteCourante() <= 0){
-                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 2 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
-                }   else if (jeu.getJoueur2().getHero().getSanteCourante() <= 0){
-                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 1 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
-                }
-            });
-        }
-    }
-
     public void useSkill(Joueur j, JButton cast,int c) {
         ActionJoueur aj = new ActionJoueur(j);
         int[] coordI = {cast.getX() / cast.getWidth(), cast.getY() / cast.getHeight()};
@@ -206,7 +156,7 @@ public class Controlleur {
                 coordF[1] = b.getY() / b.getHeight();
                 try {
                     vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit.utiliseCompetence(coordI[0], coordI[1], coordF[0], coordF[1], c, vue.terrain);
-                } catch (NullPointerException ex) {
+                }catch (NullPointerException ex){
                     JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Vous attaquez dans le vide.", "", JOptionPane.PLAIN_MESSAGE);
                 }
                 vue.generateTerrain();
@@ -359,26 +309,39 @@ public class Controlleur {
     }
 
     public void attackUniteRob(Joueur j, Unite u){
-        int[] coordTarget = ((Robot)j).getCoordTarget().getFirst();
+        System.out.println("liste des cibles : "+vue.terrain.getPlateau()[u.getCoordTarget().getFirst()[1]][u.getCoordTarget().getFirst()[0]].unit);
+        int[] coordTarget = u.getCoordTarget().getFirst();
+        System.out.println("Cible à attaquer : "+ vue.terrain.getPlateau()[coordTarget[1]][coordTarget[0]].unit);
         ActionJoueur aj = new ActionJoueur(j);
         aj.attaqueUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordTarget[0], coordTarget[1]);
     }
 
     public void moveUntilAtRange(Joueur j, Unite u){
-        int[] coordTarget = ((Robot)j).getCoordTarget().getFirst();
+        int[] coordTarget = u.getCoordTarget().getFirst();
         Unite target = vue.terrain.getPlateau()[coordTarget[1]][coordTarget[0]].getUnite();
+        System.out.println("cible : "+target);
         ActionJoueur aj = new ActionJoueur(j);
         LinkedList<int[]> coords = ((Robot)j).availableSpaceAroundTarget(vue.terrain, target);
         boolean moved = false;
         for(int[] coord : coords){
-            if((Math.abs(coord[1]-u.getCurrentY())+Math.abs(coord[0]-u.getCurrentX()))<=u.getPorteeDeplacement()){
-                aj.deplaceUnite(vue.terrain, u.getCurrentX(),u.getCurrentY(),coord[0],coord[1]);
+            if(u.casesDisponibleDeplacement(vue.terrain, u, u.getCurrentX(), u.getCurrentY(), coord[0], coord[1])){
+                System.out.println("liste déplacement : "+u.getDeplacementDisponible());
+                int[] destination = u.getDeplacementDisponible().get(0).casePos(vue.terrain);
+                aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), destination[0], destination[1]);
                 moved = true;
                 break;
             }
         }
         if(moved==false){
-            u.setPointAction(0);
+            LinkedList<Case> casesDispo = getCaseDispo(u);
+            Random rand = new Random();
+            int randInd = rand.nextInt(casesDispo.size());
+            Case randCase = casesDispo.get(randInd);
+            int xF = randCase.casePos(vue.terrain)[0];
+            int yF = randCase.casePos(vue.terrain)[1];
+            if(u.getPointAction()>0) {
+                u.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), xF, yF);
+            }
         }
     }
 
@@ -389,17 +352,22 @@ public class Controlleur {
             LinkedList<Case> casesDispo = getCaseDispo(u);
             try {
                 if (((Robot) j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j)) {
-                    if (((Robot) j).canAttack(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeAttaque(), u, j)) {
+                    if (((Robot) j).canAttack(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeAttaque(), u, j)
+                    && u.getPointAction()>0) {
+                        System.out.println("Attacking");
                         attackUniteRob(j, u);
+                        u.getCoordTarget().clear();
                     } else {
+                        System.out.println("Moving");
                         moveUntilAtRange(j, u);
+                        u.getCoordTarget().clear();
                     }
-                    ((Robot)j).getCoordTarget().clear();
                     return;
                 }
             }catch(NullPointerException ex){
-                ((Robot)j).getCoordTarget().clear();
+                u.getCoordTarget().clear();
                 ((Robot) j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j);
+                return;
             }
             Random rand = new Random();
             int randInd = rand.nextInt(casesDispo.size());
@@ -412,19 +380,19 @@ public class Controlleur {
         }
     }
 
-    public void achatUniteRob(Joueur j){
+    public void achatUniteRob(Joueur j) {
         Random rand = new Random();
         int uniteRandom = rand.nextInt(vue.getListeUnit().length);
         Unite u = vue.createUnite(vue.getListeUnit()[uniteRandom]);
         ActionJoueur aj = new ActionJoueur(j);
-        int randPosLibre = rand.nextInt(((Robot)j).availableSpace(vue.terrain).size());
-        int[] pos = (int[]) ((Robot)j).availableSpace(vue.terrain).get(randPosLibre);
-        if (j.getArgent()>=u.getCoutUnite() && !j.maxUnit()){
-            aj.acheteUnite(u,vue.getTerrainPanel());
+        int randPosLibre = rand.nextInt(((Robot) j).availableSpace(vue.terrain).size());
+        int[] pos = (int[]) ((Robot) j).availableSpace(vue.terrain).get(randPosLibre);
+        if (j.getArgent() >= u.getCoutUnite() && !j.maxUnit()) {
+            aj.acheteUnite(u, vue.getTerrainPanel());
             j.ajouteUnite(u);
-            if(pos!=null){
-                aj.placeUnite(vue.terrain,u,pos[1],pos[0],false);
-            }else{
+            if (pos != null) {
+                aj.placeUnite(vue.terrain, u, pos[1], pos[0], false);
+            } else {
                 j.annuleAjout(u);
                 j.setArgent(j.getArgent() + u.getCoutUnite());
             }

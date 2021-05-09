@@ -13,15 +13,21 @@ public class Competence {
     protected int portee;
     protected int cooldown;
     protected  int cooldownActuel;
+    protected Unite unite;
 
 
-    public Competence(String n,String d, Evenement[] e,int p,int c, int cooldown){
+    public Competence(String n,String d, Evenement[] e,int p,int c, int cooldown, Unite u){
         name = n;
         description = d;
         effets = e;
         cout = c;
         portee = p;
         this.cooldown = cooldown;
+        unite = u;
+    }
+
+    public void setEffets(Evenement[] effets) {
+        this.effets = effets;
     }
 
     public int getCooldown(){return cooldown;}
@@ -51,9 +57,10 @@ public class Competence {
     public HashMap<String, Integer> useSkill(int xA , int yA, int xD, int yD, Terrain terrain){
         HashMap<String,Integer> resultat = new HashMap<String,Integer>();
         if(terrain.getPlateau()[yA][xA].getUnite().getPointAction()>=cout && ((Math.abs(yA - yD)+Math.abs(xA - xD)) <= portee + terrain.getPlateau()[yA][xA].getUnite().modifPortee()) &&  cooldownActuel<= 0) {
-
+            unite.setPointAction(unite.getPointAction()-cout);
+            cooldownActuel = cooldown;
             for (int i = 0; i < effets.length; i++) {
-
+                System.out.println(effets[i].getEvent());
                 HashMap<String,Integer> recap = effets[i].readEvent(xD,yD,terrain);
 
                 for(String j : recap.keySet()){
@@ -66,8 +73,7 @@ public class Competence {
                     }
                 }
             }
-            terrain.getPlateau()[yA][xA].getUnite().setPointAction(terrain.getPlateau()[yA][xA].getUnite().getPointAction()-cout);
-            cooldownActuel = cooldown;
+
             return resultat;
         }
         return resultat;

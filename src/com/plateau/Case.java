@@ -107,7 +107,7 @@ public class Case implements Serializable {
                 }
             }
         }
-        return coord;
+        return null;
     }
 
     public String toString(){

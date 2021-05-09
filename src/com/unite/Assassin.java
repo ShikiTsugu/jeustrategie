@@ -29,13 +29,13 @@ public class Assassin extends Unite{
 
     public void setComp() {
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
-        competences[0] = new Competence("poignarder","effectue un coup de dague",event, porteeAttaque,pointAction-1, 0);
+        competences[0] = new Competence("poignarder","inflige "+attaque+" points de dégâts à l'unité ciblée",event, porteeAttaque,pointAction-1, 0,this);
         Evenement[] event2 = {new Evenement("infligeDegats",0,0,attaque-150,joueur),
-                new Evenement("appliquePoison",0,0,3,joueur)};
-        competences[1] = new Competence("poignard empoisoné","empoisonne un ennemi pendant 3 tours",event2, porteeAttaque,pointAction-1, 1);
+        new Evenement("appliquePoison",0,0,3,joueur)};
+        competences[1] = new Competence("poignard empoisoné","applique poison à l'unité ciblée pendant 3 tours (50 points de dégâts par tour)",event2, porteeAttaque,pointAction-1, 1,this);
         Evenement[] event3 = {new Evenement("appliqueCamouflage", 0, 0, 2,joueur)};
-        competences[2] = new Competence("camouflage", "ne peut plus se faire attaquer par des ennemis", event3, 0, pointActionMax, 3);
+        competences[2] = new Competence("camouflage", "camouflage: ne peut plus se faire attaquer par des ennemis pendant 2 tours", event3, 0, pointAction, 3,this);
         Evenement[] event4 = {new Evenement("appliqueMort", 0, 0, 0,joueur)};
-        competences[3] = new Competence("assassinat", "achève de manière vicieuse un ennemi en dessous de 100 pv où qu'il soit", event4, 99, pointAction-1, 4);
+        competences[3] = new Competence("assassinat", "assassinat: achève de manière vicieuse un ennemi en dessous de 100 pv où qu'il soit", event4, 99, pointAction-1, 4,this);
     }
 }

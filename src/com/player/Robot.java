@@ -9,14 +9,11 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class Robot extends Joueur{
-    private LinkedList<int[]> coordTarget = new LinkedList<>();
     private int[] coord = new int[2];
     public Robot(int a, Jeu jeu){
         super(a,jeu);
         isHuman = false;
     }
-
-    public LinkedList<int[]> getCoordTarget(){return coordTarget;}
 
     public int[] getCoord(){return coord;}
 
@@ -118,21 +115,17 @@ public class Robot extends Joueur{
             return true;
         }
         if (portee >= 0 && u.estDansTableau(t, x, y)){
-            if (canAttack(t, x -1, y, portee -1, u, j)
-                    && u.estDansTableau(t, x -1, y)){
-                return true;
+            if (u.estDansTableau(t, x -1, y)){
+                return canAttack(t, x -1, y, portee -1, u, j);
             }
-            if (canAttack(t, x + 1, y, portee -1, u, j)
-                    && u.estDansTableau(t, x +1, y)){
-                return true;
+            if (u.estDansTableau(t, x +1, y)){
+                return canAttack(t, x + 1, y, portee -1, u, j);
             }
-            if (canAttack(t, x, y-1, portee -1, u, j)
-                    && u.estDansTableau(t, x, y-1)){
-                return true;
+            if (u.estDansTableau(t, x, y-1)){
+                return canAttack(t, x, y-1, portee -1, u, j);
             }
-            if (canAttack(t, x, y +1, portee -1, u, j)
-                    && u.estDansTableau(t, x, y+1)){
-                return true;
+            if (u.estDansTableau(t, x, y+1)){
+                return canAttack(t, x, y+1, portee -1, u, j);
             }
         }
         return false;
@@ -144,26 +137,22 @@ public class Robot extends Joueur{
                 && t.getPlateau()[y][x].getUnite().getJoueur() != j
                 && portee>=0) {
             int[] tmp = {x,y};
-            coordTarget.add(tmp);
+            u.getCoordTarget().add(tmp);
             System.out.println("caught "+t.getPlateau()[y][x].getUnite());
             return true;
         }
         if (portee >= 0 && u.estDansTableau(t, x, y)){
-            if (targetDetected(t, x -1, y, portee -1, u, j)
-                    && u.estDansTableau(t, x -1, y)){
-                return true;
+            if (u.estDansTableau(t, x -1, y)){
+                return targetDetected(t, x -1, y, portee -1, u, j);
             }
-            if (targetDetected(t, x + 1, y, portee -1, u, j)
-                    && u.estDansTableau(t, x +1, y)){
-                return true;
+            if (u.estDansTableau(t, x +1, y)){
+                return targetDetected(t, x + 1, y, portee -1, u, j);
             }
-            if (targetDetected(t, x, y-1, portee -1, u, j)
-                    && u.estDansTableau(t, x, y-1)){
-                return true;
+            if (u.estDansTableau(t, x, y-1)){
+                return targetDetected(t, x, y-1, portee -1, u, j);
             }
-            if (targetDetected(t, x, y +1, portee -1, u, j)
-                    && u.estDansTableau(t, x, y+1)){
-                return true;
+            if (u.estDansTableau(t, x, y+1)){
+                return targetDetected(t, x, y +1, portee -1, u, j);
             }
         }
         return false;
