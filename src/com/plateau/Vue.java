@@ -36,6 +36,7 @@ public class Vue extends JFrame{
     private JButton btSkill3 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills.png"));
     private JButton btSkill4 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills.png"));
     private JLabel taskbarbg = new JLabel(new ImageIcon(Jeu.selectGoodPath()+"/assets/taskbarbg.png"));
+    private JButton btStatsSkill = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/stats.png"));
 
     public String[] getListeUnit(){return listeUnit;}
 
@@ -318,6 +319,7 @@ public class Vue extends JFrame{
             initialiseSkill3(b);
             initialiseSkill4(b);
             generateSkills(b);
+            initialiseBtStatsSkill(b);
         });
     }
 
@@ -358,6 +360,13 @@ public class Vue extends JFrame{
         btSkill4.setEnabled(true);
         btSkill4.addActionListener((ActionEvent useSkill1) ->{
             controlleur.useSkill(tourJoueur,b,3);
+        });
+    }
+
+    public void initialiseBtStatsSkill(JButton b){
+        resetButton(btStatsSkill);
+        btStatsSkill.addActionListener((ActionEvent useSkill1) ->{
+            viewStatsCompetence(b);
         });
     }
 
@@ -533,6 +542,7 @@ public class Vue extends JFrame{
             TerrainPanel.updateUI();
         });
         taskbarbg.add(btFdt);
+        btFdt.setToolTipText("fin du tour");
         taskbarbg.updateUI();
     }
 
@@ -714,6 +724,7 @@ public class Vue extends JFrame{
                 taskbarbg.add(btSkill4);
             }
         }
+        btStatsSkill.setToolTipText("liste des compétences");
         btSkill1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -758,6 +769,18 @@ public class Vue extends JFrame{
                 btSkill4.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills.png"));
             }
         });
+        btStatsSkill.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btStatsSkill.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/stats2.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btStatsSkill.setIcon(new ImageIcon(Jeu.selectGoodPath()+"/assets/stats.png"));
+            }
+        });
+        taskbarbg.add(btStatsSkill);
         btSkill1.setContentAreaFilled(false);
         btSkill1.setBorderPainted(false);
         btSkill1.setFocusable(false);
@@ -770,6 +793,9 @@ public class Vue extends JFrame{
         btSkill4.setContentAreaFilled(false);
         btSkill4.setBorderPainted(false);
         btSkill4.setFocusable(false);
+        btStatsSkill.setContentAreaFilled(false);
+        btStatsSkill.setBorderPainted(false);
+        btStatsSkill.setFocusable(false);
         JButton retour = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/retour.png"));
         retour.setPreferredSize(new Dimension(100,125));
         retour.addMouseListener(new MouseAdapter() {
@@ -790,7 +816,40 @@ public class Vue extends JFrame{
             generateTaskBar();
         });
         taskbarbg.add(retour);
+        retour.setToolTipText("retour");
         taskbarbg.updateUI();
+    }
+
+    public void viewStatsCompetence(JButton b){
+        Unite u = terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit;
+        JFrame stats = new JFrame(terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString());
+        stats.setVisible(true);
+        stats.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        stats.setLocationRelativeTo(getContentPane());
+
+        JPanel statsPanel = new JPanel(new BorderLayout());
+        JLabel unite = new JLabel(generateImage(terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString()));
+        statsPanel.add(unite,BorderLayout.WEST);
+
+        JPanel allCompetence = new JPanel();
+        allCompetence.setPreferredSize(new Dimension(300,400));
+        allCompetence.setLayout(new BoxLayout(allCompetence,BoxLayout.Y_AXIS));
+        for(int i = 0; i < u.getCompetences().length; i++){
+            allCompetence.add(new JLabel("Nom de la compétence "+i+": "+u.getCompetences()[i].getName()));
+            allCompetence.add(new JLabel("Description: "+u.getCompetences()[i].getDescription()));
+            allCompetence.add(new JLabel("Coup en PA: "+u.getCompetences()[i].getCout()));
+            allCompetence.add(new JLabel("Temps de recharge (en tour): "+u.getCompetences()[i].getCooldown()));
+            allCompetence.add(new JLabel("Temps de recharge actuel (en tour): "+u.getCompetences()[i].getCooldownActuel()));
+            allCompetence.add(new JLabel("--------------"));
+        }
+
+        JScrollPane scrollStats = new JScrollPane(allCompetence);
+        scrollStats.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollStats.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        statsPanel.add(scrollStats,BorderLayout.CENTER);
+        stats.setSize(650,250);
+        stats.setResizable(false);
+        stats.add(statsPanel);
     }
 
     public void generateAction(JButton unite){
@@ -813,6 +872,7 @@ public class Vue extends JFrame{
             }
         });
         taskbarbg.add(btStats);
+        btStats.setToolTipText("Statistiques de l'unité");
         btAtk.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -825,6 +885,7 @@ public class Vue extends JFrame{
             }
         });
         taskbarbg.add(btAtk);
+        btAtk.setToolTipText("Attaquer/Compétences");
         btDep.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -846,6 +907,7 @@ public class Vue extends JFrame{
         btDep.setBorderPainted(false);
         btDep.setFocusable(false);
         taskbarbg.add(btDep);
+        btDep.setToolTipText("Se déplacer");
         JButton retour = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/retour.png"));
         retour.setPreferredSize(new Dimension(100,125));
         retour.addMouseListener(new MouseAdapter() {
@@ -866,6 +928,7 @@ public class Vue extends JFrame{
             generateTaskBar();
         });
         taskbarbg.add(retour);
+        retour.setToolTipText("retour");
         taskbarbg.updateUI();
     }
 
