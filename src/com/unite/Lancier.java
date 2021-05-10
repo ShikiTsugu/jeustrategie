@@ -6,6 +6,8 @@ import java.util.concurrent.CompletionException;
 
 public class Lancier extends Unite{
 
+
+
     public Lancier(Joueur joueur){
         super(joueur);
         santeMax = 200; //discussion en cours
@@ -17,7 +19,9 @@ public class Lancier extends Unite{
         porteeAttaque = 1; //discussion en cours
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
+
         competences = new Competence[3];
+
         setComp();
     }
 
@@ -29,6 +33,10 @@ public class Lancier extends Unite{
         return false;
     }
 
+
+
+
+
     public void setComp() {
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
         competences[0] = new Competence("coup de lance","inflige "+attaque+" points de dégâts à l'unité ciblée",event, porteeAttaque,pointAction-1, 0,this);
@@ -36,7 +44,7 @@ public class Lancier extends Unite{
                 new Evenement("appliqueEtourdissement",0,0,3,joueur)
         };
         competences[1] = new Competence("maniement agile","inflige "+(attaque-25)+" points de dégâts à l'unité ciblée et étourdit l'unité ciblée",event2, porteeAttaque,pointAction-1, 0,this);
-        Evenement[] event3 = {new Evenement("mettreBarricade", 0, 0, 6,joueur)};
-        competences[2] = new Competence("Barricade", "pose une barriacade temporaire pour vous sauver temporaiement de la bataille", event3, porteeAttaque, pointAction, 0,this);
+        Evenement[] event3 = {new Evenement("mettreBarricade", 0, 0, 8,joueur)};
+        competences[2] = new Competence("Barricade", "pose une barriacade temporaire pour vous sauver temporaiement de la bataille", event3, porteeAttaque, pointAction, 12,this);
     }
 }

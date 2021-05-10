@@ -5,7 +5,7 @@ import com.unite.*;
 import java.io.Serializable;
 
 public class Case implements Serializable {
-    protected Obstacle obstacle;
+    protected boolean obstacle;
     protected Unite unit;
     protected boolean J1Buyable ;
     protected boolean J2Buyable ;
@@ -15,17 +15,17 @@ public class Case implements Serializable {
 
     public Case(){
         unit = null;
-        obstacle = null;
+        obstacle = false;
         id=incremente++;
     }
 
     public Case(Unite u){
         unit = u;
-        obstacle = null;
+        obstacle = false;
         id=incremente++;
     }
 
-    public Case(Obstacle o){
+    public Case(boolean o){
         obstacle = o;
         id=incremente++;
     }
@@ -45,8 +45,8 @@ public class Case implements Serializable {
         this.unit = unit;
     }
 
-    public Obstacle getObstacle(){return obstacle;}
-    public void setObstacle(Obstacle obstacle){this.obstacle = obstacle;}
+    public boolean getObstacle(){return obstacle;}
+    public void setObstacle(boolean obstacle){this.obstacle = obstacle;}
 
     public void setJ1Buyable(boolean j1Buyable) {
         J1Buyable = j1Buyable;
@@ -65,7 +65,7 @@ public class Case implements Serializable {
     }
     
     public boolean estObstacle(){
-        return obstacle!=null;
+        return obstacle;
     }
     
     public boolean estUnit(){

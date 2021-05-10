@@ -28,6 +28,7 @@ public abstract class Unite {
     protected ArrayList<Debuff> debuffs;
     protected boolean peutEtreAttaque= true;
     protected ArrayList<Unite> listUniteTransforme;
+    protected ArrayList<Barricade> objetPlace;
     protected int direction;
     private LinkedList<int[]> coordTarget = new LinkedList<>();
 
@@ -101,6 +102,10 @@ public abstract class Unite {
         return debuffs;
     }
 
+    public ArrayList<Barricade> getObjetPlace() {
+        return objetPlace;
+    }
+
     public void setSanteMax(int santeMax){
         this.santeMax = santeMax;
     }
@@ -163,6 +168,10 @@ public abstract class Unite {
 
     public void setDirection(int direction){this.direction = direction;}
 
+    public void setObjetPlace(ArrayList<Barricade> objetPlace) {
+        this.objetPlace = objetPlace;
+    }
+
     public void readAlterationEtats(){
         updateAlterationEtats();
         activeAlterationEtats();
@@ -187,6 +196,11 @@ public abstract class Unite {
                 debuffs.remove(i);
             }
         }
+        for(int i =0; i< objetPlace.size();i++){
+            if(objetPlace.get(i).getNbTour() <= 0){
+                objetPlace.remove(i);
+            }
+        }
     }
 
     public void activeAlterationEtats(){
@@ -198,6 +212,11 @@ public abstract class Unite {
         for(int i =0; i< debuffs.size();i++){
             if(debuffs.get(i).getTourRestant() > 0){
                 debuffs.get(i).readDebuff();
+            }
+        }
+        for(int i =0; i< objetPlace.size();i++){
+            if(objetPlace.get(i).getNbTour() > 0){
+                objetPlace.get(i).setNbTour( objetPlace.get(i).getNbTour()-1);
             }
         }
 

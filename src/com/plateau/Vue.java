@@ -414,7 +414,7 @@ public class Vue extends JFrame{
                     terrainBt.add(bt);
                 } else {
                     if(terrain.plateau[x][y].estObstacle()){
-                        if(terrain.plateau[x][y].getObstacle().getNom().equals("Rocher")) {
+                        if(terrain.plateau[x][y].getObstacle()) {
                             JButton bt = new JButton(new ImageIcon(Jeu.selectGoodPath() + "/assets/obstacle1.png"));
                             bt = setBorder(bt, x, y);
                             TerrainPanel.add(bt);

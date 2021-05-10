@@ -134,7 +134,7 @@ public class Evenement {
         if(event.equals("mettreBarricade")){
             if (t.getPlateau()[y+this.y][x+this.x].estVide() && value > 0){
                 t.getPlateau()[y+this.y][x+this.x].setObstacle(true);
-                value-=1;
+
                 return resultat;
             }
             else if(value == 0) t.getPlateau()[y+this.y][x+this.x].setObstacle(false);
