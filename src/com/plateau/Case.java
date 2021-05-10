@@ -5,7 +5,7 @@ import com.unite.*;
 import java.io.Serializable;
 
 public class Case implements Serializable {
-    protected boolean obstacle;
+    protected Obstacle obstacle;
     protected Unite unit;
     protected boolean J1Buyable ;
     protected boolean J2Buyable ;
@@ -15,21 +15,23 @@ public class Case implements Serializable {
 
     public Case(){
         unit = null;
-        obstacle = false;
+        obstacle = null;
         id=incremente++;
     }
 
     public Case(Unite u){
         unit = u;
-        obstacle = false;
+        obstacle = null;
+        id=incremente++;
+    }
+
+    public Case(Obstacle o){
+        obstacle = o;
         id=incremente++;
     }
 
     public int getId(){return id;}
 
-    public Case(boolean o){
-        obstacle = o;
-    }
 
     public boolean estVide(){
         return !estObstacle() && !estUnit();
@@ -43,7 +45,8 @@ public class Case implements Serializable {
         this.unit = unit;
     }
 
-    public void setObstacle(boolean obstacle){this.obstacle = obstacle;}
+    public Obstacle getObstacle(){return obstacle;}
+    public void setObstacle(Obstacle obstacle){this.obstacle = obstacle;}
 
     public void setJ1Buyable(boolean j1Buyable) {
         J1Buyable = j1Buyable;
@@ -62,7 +65,7 @@ public class Case implements Serializable {
     }
     
     public boolean estObstacle(){
-        return obstacle;
+        return obstacle!=null;
     }
     
     public boolean estUnit(){
@@ -113,7 +116,7 @@ public class Case implements Serializable {
     public String toString(){
         if(estVide()) return Integer.toString(id);
         if(estUnit()) return  afficheContenu();
-        return !obstacle?unit.toString():"obstacle";
+        return !estObstacle()?unit.toString():"obstacle";
     }
 
 }
