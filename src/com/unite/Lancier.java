@@ -37,6 +37,6 @@ public class Lancier extends Unite{
         };
         competences[1] = new Competence("maniement agile","inflige "+(attaque-25)+" points de dégâts à l'unité ciblée et étourdit l'unité ciblée",event2, porteeAttaque,pointAction-1, 0,this);
         Evenement[] event3 = {new Evenement("mettreBarricade", 0, 0, 6,joueur)};
-        competences[2] = new Competence("Barricade", "pose une barriacade temporaire pour vous sauver temporaiement de la bataille", event3, porteeAttaque, pointAction, 0,this);
+        competences[2] = new Competence("Barricade", "pose une barriacade temporaire", event3, porteeAttaque, pointAction, 0,this);
     }
 }
