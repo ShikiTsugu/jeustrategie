@@ -159,14 +159,21 @@ public class Controlleur {
                 }
                 vue.generateTerrain();
                 vue.generateTaskBar();
-                if (jeu.getJoueur1().getHero().getSanteCourante() <= 0) {
-                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 2 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
-                } else if (jeu.getJoueur2().getHero().getSanteCourante() <= 0) {
-                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 1 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
-                }
+                DetectWin();
             });
 
         }
+    }
+
+    public void DetectWin(){
+        if (jeu.getJoueur1().getHero().getSanteCourante() <= 0) {
+            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 2 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
+            vue.afficheIni();
+        } else if (jeu.getJoueur2().getHero().getSanteCourante() <= 0) {
+            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 1 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
+            vue.afficheIni();
+        }
+        LoadMap();
     }
 
     public void deplaceUnite(Joueur j, JButton posIni){
@@ -352,6 +359,7 @@ public class Controlleur {
         System.out.println("Cible à attaquer : "+ vue.terrain.getPlateau()[coordTarget[1]][coordTarget[0]].unit);
         ActionJoueur aj = new ActionJoueur(j);
         aj.attaqueUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordTarget[0], coordTarget[1]);
+        DetectWin();
     }
 
     public void moveUntilAtRange(Joueur j, Unite u){

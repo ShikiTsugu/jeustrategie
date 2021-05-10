@@ -36,8 +36,8 @@ public class Mage extends Unite{
                 new Evenement("infligeDegats",0,1,attaque,joueur),
                 new Evenement("infligeDegats",0,-1,attaque,joueur),
         };
-        competences[1] = new Competence("météore","inflige "+attaque+" points de dégâts à l'unité ciblée et dans les alentours de l'unité ciblée",event2, porteeAttaque-1,pointAction, 4,this);
+        competences[1] = new Competence("météore","inflige "+attaque+" points de dégâts à l'unité ciblée et dans ses alentours",event2, porteeAttaque-1,pointAction, 4,this);
         Evenement[] event3 = {new Evenement("transformationMouton", 0, 0, 3,joueur)};
-        competences[2] = new Competence("transformation en mouton", "transforme l'unité ciblée en mouton pendant 3 tours", event3, porteeAttaque, pointAction, 6,this);
+        competences[2] = new Competence("transformation en mouton", "transforme l'unité ciblée temporairement en mouton", event3, porteeAttaque, pointAction, 6,this);
     }
 }
