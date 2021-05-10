@@ -825,14 +825,14 @@ public class Vue extends JFrame{
         JFrame stats = new JFrame(terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString());
         stats.setVisible(true);
         stats.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        stats.setLocationRelativeTo(getContentPane());
+        stats.setLocationRelativeTo(getTerrainPanel());
 
         JPanel statsPanel = new JPanel(new BorderLayout());
         JLabel unite = new JLabel(generateImage(terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString()));
         statsPanel.add(unite,BorderLayout.WEST);
 
         JPanel allCompetence = new JPanel();
-        allCompetence.setPreferredSize(new Dimension(300,400));
+        allCompetence.setPreferredSize(new Dimension(600,400));
         allCompetence.setLayout(new BoxLayout(allCompetence,BoxLayout.Y_AXIS));
         for(int i = 0; i < u.getCompetences().length; i++){
             allCompetence.add(new JLabel("Nom de la compétence "+i+": "+u.getCompetences()[i].getName()));
