@@ -27,11 +27,11 @@ public abstract class Unite {
     protected ArrayList<Buff> buffs;
     protected ArrayList<Debuff> debuffs;
     protected boolean peutEtreAttaque= true;
-    protected ArrayList<Unite> listUniteTransforme;
-    protected int direction;
+    protected ArrayList<Unite> listUniteTransforme; //pour la transformation en mouton
+    protected int direction; //direction du déplacement (nord/sud/est/ouest)
     private LinkedList<int[]> coordTarget = new LinkedList<>();
 
-    public Unite(Joueur joueur){
+    public Unite(Joueur joueur){ //constructeur d'unité
         this.joueur = joueur;
         buffs = new ArrayList<Buff>();
         debuffs = new ArrayList<Debuff>();
@@ -39,47 +39,29 @@ public abstract class Unite {
 
     public LinkedList<int[]> getCoordTarget(){return coordTarget;}
     
-    public int getSanteMax(){
-        return santeMax;
-    }
-    
-    public int getSanteCourante(){
-	    return santeCourante;
-    }
-    
-    public int getAttaque(){
-        return attaque;
-    }
+    public int getSanteMax(){ return santeMax; }
+
+    public int getSanteCourante(){ return santeCourante; }
+
+    public int getAttaque(){ return attaque; }
 
     public int getAttInit() { return attInit; }
     
-    public int getCoutUnite(){
-        return coutUnite;
-    }
+    public int getCoutUnite(){ return coutUnite; }
     
-    public int getPorteeDeplacement(){
-        return porteeDeplacement;
-    }
+    public int getPorteeDeplacement(){ return porteeDeplacement; }
     
-    public int getPorteeAttaque(){
-        return porteeAttaque;
-    }
+    public int getPorteeAttaque(){ return porteeAttaque; }
 
     public int getPointActionMax() { return pointActionMax; }
     
-    public int getPointAction(){
-        return pointAction;
-    }
+    public int getPointAction(){ return pointAction; }
     
-    public Joueur getJoueur(){
-        return joueur;
-    }
+    public Joueur getJoueur(){ return joueur; }
 
     public Terrain getTerrain() { return terrain;  }
 
-    public Case getPositionUnite(){
-        return positionUnite;
-    }
+    public Case getPositionUnite(){ return positionUnite; }
     
     public ArrayList<Case> getDeplacementDisponible(){return deplacementDisponible;}
 
@@ -93,53 +75,31 @@ public abstract class Unite {
 
     public ArrayList<Unite> getListUniteTransforme(){return listUniteTransforme;}
 
-    public ArrayList<Buff> getBuffs() {
-        return buffs;
-    }
+    public ArrayList<Buff> getBuffs() { return buffs; }
 
-    public ArrayList<Debuff> getDebuffs() {
-        return debuffs;
-    }
+    public ArrayList<Debuff> getDebuffs() { return debuffs; }
 
-    public void setSanteMax(int santeMax){
-        this.santeMax = santeMax;
-    }
+    public void setSanteMax(int santeMax){ this.santeMax = santeMax; }
     
-    public void setSanteCourante(int santeCourante){
-	    this.santeCourante = santeCourante;
-    }
+    public void setSanteCourante(int santeCourante){ this.santeCourante = santeCourante; }
     
-    public void setAttaque(int attaque){
-        this.attaque = attaque;
-    }
+    public void setAttaque(int attaque){ this.attaque = attaque; }
     
-    public void setCoutUnite(int coutUnite){
-        this.coutUnite = coutUnite;
-    }
+    public void setCoutUnite(int coutUnite){ this.coutUnite = coutUnite; }
     
-    public void setPorteeDeplacement(int porteeDeplacement){
-        this.porteeDeplacement = porteeDeplacement;
-    }
+    public void setPorteeDeplacement(int porteeDeplacement){ this.porteeDeplacement = porteeDeplacement; }
     
-    public void setPorteeAttaque(int porteeAttaque){
-        this.porteeAttaque = porteeAttaque;
-    }
+    public void setPorteeAttaque(int porteeAttaque){ this.porteeAttaque = porteeAttaque; }
 
     public void setPointActionMax(int pointActionMax){ this.pointActionMax = pointActionMax; }
     
-    public void setPointAction(int pointAction){
-        this.pointAction = pointAction;
-    }
+    public void setPointAction(int pointAction){ this.pointAction = pointAction; }
     
-    public void setJoueur(Joueur joueur){
-	    this.joueur = joueur;
-    }
+    public void setJoueur(Joueur joueur){ this.joueur = joueur; }
 
     public void setTerrain(Terrain terrain) { this.terrain = terrain;  }
 
-    public void setPositionUnite(Case positionUnite){
-        this.positionUnite = positionUnite;
-    }
+    public void setPositionUnite(Case positionUnite){ this.positionUnite = positionUnite; }
 
     public void setCurrentX(int currentX) { this.currentX = currentX; }
 
@@ -149,121 +109,104 @@ public abstract class Unite {
 
     public void setDeplacementDisponible(ArrayList<Case> deplacementDisponible){this.deplacementDisponible = deplacementDisponible;}
 
-    public void addBuff(String a,int n){
-        buffs.add(new Buff(a,n,this));
-    }
+    public void addBuff(String a,int n){ buffs.add(new Buff(a,n,this)); }
 
-    public void addDebuff(String a,int n){
-        debuffs.add(new Debuff(a,n,this));
-    }
+    public void addDebuff(String a,int n){ debuffs.add(new Debuff(a,n,this)); }
 
     public void setPeutEtreAttaque(boolean peutEtreAttaque){this.peutEtreAttaque = peutEtreAttaque;}
 
-    public void setListUniteTransforme(ArrayList<Unite> listUniteTransforme){this.listUniteTransforme = listUniteTransforme;}
-
     public void setDirection(int direction){this.direction = direction;}
 
-    public void readAlterationEtats(){
+    public void readAlterationEtats(){ //permet d'actualiser et appliquer la liste d'altération d'état pour chaque unité
         updateAlterationEtats();
         activeAlterationEtats();
     }
 
-    public void checkCooldowns(){
-        for(int i =0 ; i<competences.length ;i++){
-            if(competences[i].getCooldownActuel() > 0 ){
-                competences[i].setCooldownActuel(competences[i].getCooldownActuel()-1);
+    public void checkCooldowns(){ //actulise le cooldown de chaque compétence de l'unité
+        for(int i =0 ; i<competences.length ;i++){ //pour chaque compétence de l'unité
+            if(competences[i].getCooldownActuel() > 0 ){ //si le cooldown d'une compétence est supérieur à 0
+                competences[i].setCooldownActuel(competences[i].getCooldownActuel()-1); //on baisse le cooldown de 1
             }
         }
     }
 
-    public void updateAlterationEtats(){
-        for(int i =0; i< buffs.size();i++){
-            if(buffs.get(i).getTourRestant() <= 0){
-                buffs.remove(i);
+    public void updateAlterationEtats(){ //actualise les altérations d'états de l'unité
+        for(int i =0; i< buffs.size();i++){ //pour chaque buff possible
+            if(buffs.get(i).getTourRestant() <= 0){ //si le buff est terminé
+                buffs.remove(i); //retire le buff
             }
         }
-        for(int i =0; i< debuffs.size();i++){
-            if(debuffs.get(i).getTourRestant() <= 0){
-                debuffs.remove(i);
+        for(int i =0; i< debuffs.size();i++){ //pour chaque débuff possible
+            if(debuffs.get(i).getTourRestant() <= 0){ //si le débuff est terminé
+                debuffs.remove(i); //retire le débuff
             }
         }
     }
 
-    public void activeAlterationEtats(){
-        for(int i =0; i< buffs.size();i++){
-            if(buffs.get(i).getTourRestant() > 0){
-                buffs.get(i).readBuff();
+    public void activeAlterationEtats(){ //applique les altérations d'états de l'unité
+        for(int i =0; i< buffs.size();i++){ //pour chaque buff possible
+            if(buffs.get(i).getTourRestant() > 0){ //si le buff n'est pas fini
+                buffs.get(i).readBuff(); //applique le buff
             }
         }
-        for(int i =0; i< debuffs.size();i++){
-            if(debuffs.get(i).getTourRestant() > 0){
-                debuffs.get(i).readDebuff();
+        for(int i =0; i< debuffs.size();i++){ //pour chaque débuff possible
+            if(debuffs.get(i).getTourRestant() > 0){ //si le débuff n'est pas fini
+                debuffs.get(i).readDebuff(); //applique le débuff
             }
         }
-
     }
 
-    public boolean possedeBuff(String s){
-        for(int i =0 ; i< buffs.size();i++){
-            if(buffs.get(i).getNom().equals(s)){
-                System.out.println("true");
-                return true;
+    public boolean possedeBuff(String s){ //retourne un boolean permettant de savoir si l'unité possède un buff
+        for(int i =0 ; i< buffs.size();i++){ //pour chaque buff possible
+            if(buffs.get(i).getNom().equals(s)){ //si le nom du buff correspond au buff donné à la fonction
+                return true; //renvoie vrai
             }
         }
-        System.out.println("false");
-
-        return false;
+        return false; //renvoie faux sinon
     }
 
-    public int modifPortee(){
+    public int modifPortee(){ //renvoie la nouvelle portée de déplacement et d'attaque en cas du débuff "aveugle"
         int modif = 0;
-        for(int i =0; i< debuffs.size();i++){
-            if(debuffs.get(i).getNom().equals("aveugle")){
+        for(int i =0; i< debuffs.size();i++){ //pour chaque débuff possible
+            if(debuffs.get(i).getNom().equals("aveugle")){ //si le nom du débuff est "aveugle"
                 return -99;
-
             }
         }
-        return modif ;
-
+        return modif;
     }
-
-    public abstract String toString();
-    public abstract boolean isHero();
-    public abstract void setComp();
     
-    public void deplaceUnite(Terrain t, int xPast, int yPast, int xApres, int yApres){
-        Case avant = t.getPlateau()[yPast][xPast];
-        if (t.getPlateau()[yPast][xPast].estUnit()) {
-            Case destination = t.getPlateau()[yApres][xApres];
-            if (destination.estVide() && (casesDisponibleDeplacement(t, avant.getUnite(), xPast, yPast, xApres, yApres)) && avant.getUnite().getPointAction() > 0) {
-                avant.getUnite().setPointAction(avant.getUnite().getPointAction() -1);
-                Case positionInitial = avant.getUnite().getPositionUnite();
-                destination.setUnite(avant.getUnite());
-                avant.getUnite().setPositionUnite(destination);
-                positionInitial.supprimerUniteCase(positionInitial);
+    public void deplaceUnite(Terrain t, int xPast, int yPast, int xApres, int yApres){ //déplace l'unité aux coordonnées d'arrivées
+        Case initiale= t.getPlateau()[yPast][xPast]; //case actuelle de l'unité
+        if (t.getPlateau()[yPast][xPast].estUnit()) { //vérification qu'on a une unité dans cette case
+            Case destination = t.getPlateau()[yApres][xApres]; //case destination à laquelle on veut déplacer l'unité
+            if (destination.estVide() && (casesDisponibleDeplacement(t, initiale.getUnite(), xPast, yPast, xApres, yApres)) && initiale.getUnite().getPointAction() > 0) {
+                //si la destination est vide, si il existe un chemin permettant d'y aller et que l'unité a assez de point d'action pour se déplacer
+                initiale.getUnite().setPointAction(initiale.getUnite().getPointAction() -1); //l'unité perd 1 PA pour se déplacer
+                Case positionInitial = initiale.getUnite().getPositionUnite(); //récupère la case de l'unité qu'on veut déplacer
+                destination.setUnite(initiale.getUnite()); //défini l'unité dans la case destination
+                initiale.getUnite().setPositionUnite(destination); //défini la nouvelle position de l'unité
+                positionInitial.supprimerUniteCase(positionInitial); //la case initiale ne possède plus d'unité
                 currentX = xApres;
                 currentY = yApres;
-                System.out.println(deplacementDisponible);
             }
         }
     }
     
-    public void attaqueUnite(Terrain t, int xA, int yA, int xD, int yD){
+    public void attaqueUnite(Terrain t, int xA, int yA, int xD, int yD){ //pour le robot, permet à une unité d'attaquer
         Unite attaquant = t.getPlateau()[yA][xA].getUnite();
         Unite defenseur = t.getPlateau()[yD][xD].getUnite();
-        System.out.println("def pv avant : "+defenseur.santeCourante);
-        if (t.getPlateau()[yA][xA].estUnit() && attaquant.getPointAction() > 0) {
+        if (t.getPlateau()[yA][xA].estUnit() && attaquant.getPointAction() > 0) { //si l'attaquant est une unité existante et qu'elle a assez de point d'action
             if (t.getPlateau()[yD][xD].estUnit() && ((Math.abs(yD - yA)+Math.abs(xD - xA)) <= attaquant.getPorteeAttaque())){
-                attaquant.setPointAction(attaquant.getPointAction() -1);
-                defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque());
-                if (defenseur.getSanteCourante() <= 0){
-                    gagnerArgentApresMort(defenseur);
-                    defenseur.getJoueur().annuleAjout(t.getPlateau()[yD][xD].getUnite());
-                    t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
+                //si le défenseur est une unité existante et que la distance entre l'attaquant et le défenseur correspond à la portée d'attaque de l'attaquant
+                attaquant.setPointAction(attaquant.getPointAction() -1); //l'unité perd 1PA pour attaquer
+                defenseur.setSanteCourante(defenseur.getSanteCourante()- attaquant.getAttaque()); //le défenseur perd des points de vie par rapport à l'attaque de l'attaquant
+                if (defenseur.getSanteCourante() <= 0){ //si le défenseur n'a plus de point de vie
+                    gagnerArgentApresMort(defenseur); //l'attaquant gagne de l'argent
+                    defenseur.getJoueur().annuleAjout(t.getPlateau()[yD][xD].getUnite()); //retire le défenseur de la liste des unités du joueur possédant le défenseur
+                    t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]); //retire l'unité du terrain
                 }
-                else if (t.getPlateau()[yD][xD].estObstacle() || t.getPlateau()[yD][xD].estVide()) attaquant.setPointAction(attaquant.getPointAction() -1);
             }
-        } System.out.println("def pv avant : "+defenseur.santeCourante);
+        }
     }
 
     public boolean estMort(Terrain t, int xD, int yD){
@@ -297,8 +240,6 @@ public abstract class Unite {
     public boolean estDecede(){
         return santeCourante <= 0;
     }
-
-
 
     public void gagnerArgentApresMort(Unite uniteD){
         Joueur j;
@@ -424,7 +365,9 @@ public abstract class Unite {
         }
         return false;
     }
-
     public void resetPointAction(){pointAction = pointActionMax; }
+    public abstract String toString();
+    public abstract boolean isHero();
+    public abstract void setComp();
 
 }
