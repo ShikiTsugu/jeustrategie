@@ -7,9 +7,7 @@ import com.unite.Unite;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.Random;
@@ -203,7 +201,7 @@ public class Controlleur {
         JFrame stats = new JFrame(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString());
         stats.setVisible(true);
         stats.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        stats.setLocationRelativeTo(vue.getContentPane());
+        stats.setLocationRelativeTo(vue.getTerrainPanel());
 
         JPanel statsPanel = new JPanel(new BorderLayout());
         JLabel unite = new JLabel(vue.generateImage(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString()));
@@ -300,6 +298,46 @@ public class Controlleur {
         vue.generateTaskBar();
     }
 
+    public void escapeAction(){
+        JFrame esc = new JFrame("Exit");
+        esc.setVisible(true);
+        esc.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        esc.setSize(new Dimension(250, 100));
+        esc.setLocationRelativeTo(null);
+        esc.setResizable(false);
+
+        JPanel choice = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JButton resume = new JButton("Continuer");
+        JButton quit = new JButton("Quitter");
+        resume.addActionListener((ActionEvent e) -> {
+            esc.dispose();
+        });
+        quit.addActionListener((ActionEvent e) -> {
+            esc.dispose();
+            vue.afficheIni();
+        });
+        choice.add(resume);
+        choice.add(quit);
+        esc.add(choice);
+    }
+
+    class escButtonAction implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            int key = e.getKeyCode();
+            if (key == KeyEvent.VK_ESCAPE) {
+                escapeAction();
+            }
+        }
+    }
 
     //Méthodes concernant le robot
 

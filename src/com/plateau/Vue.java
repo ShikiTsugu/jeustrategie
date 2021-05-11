@@ -9,10 +9,7 @@ import com.unite.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +34,7 @@ public class Vue extends JFrame{
     private JButton btSkill4 = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/skills.png"));
     private JLabel taskbarbg = new JLabel(new ImageIcon(Jeu.selectGoodPath()+"/assets/taskbarbg.png"));
     private JButton btStatsSkill = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/stats.png"));
+    private KeyListener k;
 
     public String[] getListeUnit(){return listeUnit;}
 
@@ -52,10 +50,13 @@ public class Vue extends JFrame{
         setVisible(true);
         setLocationRelativeTo(null);
         controlleur = new Controlleur(this);
+        k = controlleur.new escButtonAction();
+        TerrainPanel.setFocusable(true);
     }
 
     //affichage initial
     public void afficheIni(){
+        TerrainPanel.removeKeyListener(k);
         try {
             imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/titlescreen.png")));
         }catch(IOException e){
@@ -149,7 +150,9 @@ public class Vue extends JFrame{
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
             imagePane.add(TaskBar,BorderLayout.SOUTH);
+            Map5x5.setFocusable(false);
         });
+        Map5x5.setFocusable(false);
 
         JButton Map14x6 = new JButton("Map 14x6");
         Map14x6.setFont(new Font("Monospaced",Font.BOLD,20));
@@ -163,7 +166,9 @@ public class Vue extends JFrame{
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
             imagePane.add(TaskBar,BorderLayout.SOUTH);
+            Map14x6.setFocusable(false);
         });
+        Map14x6.setFocusable(false);
 
         JButton Map14x6Gold = new JButton("Map 14x6 Gold");
         Map14x6Gold.setFont(new Font("Monospaced",Font.BOLD,20));
@@ -177,7 +182,9 @@ public class Vue extends JFrame{
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
             imagePane.add(TaskBar,BorderLayout.SOUTH);
+            Map14x6Gold.setFocusable(false);
         });
+        Map14x6Gold.setFocusable(false);
 
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);
@@ -203,7 +210,7 @@ public class Vue extends JFrame{
         try {
             imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/plaine.png")));
         }catch(IOException e){
-            System.out.println("Fichier non trouv�, chemin incorrecte.");
+            System.out.println("Fichier non trouvé, chemin incorrecte.");
         }
         imagePane.removeAll();
         imagePane.setLayout(new BorderLayout());
@@ -371,6 +378,8 @@ public class Vue extends JFrame{
     }
 
     public void generateTerrain(){
+        TerrainPanel.removeKeyListener(k);
+        TerrainPanel.addKeyListener(k);
         terrainBt = new ArrayList<>();
         TerrainPanel.removeAll();
         boolean b;
@@ -420,6 +429,7 @@ public class Vue extends JFrame{
                         controlleur.robotPlay(tourJoueur);
                     }
                     bt.setPreferredSize(new Dimension(150,125));
+                    bt.setFocusable(false);
                     terrainBt.add(bt);
                 } else {
                     if(terrain.plateau[x][y].estObstacle()){
@@ -429,6 +439,7 @@ public class Vue extends JFrame{
                         bt.setOpaque(false);
                         bt.setContentAreaFilled(false);
                         bt.setPreferredSize(new Dimension(150,125));
+                        bt.setFocusable(false);
                         terrainBt.add(bt);
                     }else {
                         JButton bt = new JButton();
@@ -437,6 +448,7 @@ public class Vue extends JFrame{
                         bt.setOpaque(false);
                         bt.setContentAreaFilled(false);
                         bt.setPreferredSize(new Dimension(150, 125));
+                        bt.setFocusable(false);
                         terrainBt.add(bt);
                     }
                 }
@@ -550,7 +562,6 @@ public class Vue extends JFrame{
         JFrame units = new JFrame("Units");
         units.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         units.setVisible(true);
-        units.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         units.setSize(400,475);
         units.setLocationRelativeTo(imagePane);
         units.setResizable(false);
