@@ -28,13 +28,12 @@ public abstract class Unite {
     protected ArrayList<Debuff> debuffs;
     protected boolean peutEtreAttaque= true;
     protected ArrayList<Unite> listUniteTransforme; //pour la transformation en mouton
-    protected int direction; //direction du déplacement (nord/sud/est/ouest)
-    private LinkedList<int[]> coordTarget = new LinkedList<>();
+    private final LinkedList<int[]> coordTarget = new LinkedList<>();
 
     public Unite(Joueur joueur){ //constructeur d'unité
         this.joueur = joueur;
-        buffs = new ArrayList<Buff>();
-        debuffs = new ArrayList<Debuff>();
+        buffs = new ArrayList<>();
+        debuffs = new ArrayList<>();
     }
 
     public LinkedList<int[]> getCoordTarget(){return coordTarget;}
@@ -114,8 +113,6 @@ public abstract class Unite {
     public void addDebuff(String a,int n){ debuffs.add(new Debuff(a,n,this)); }
 
     public void setPeutEtreAttaque(boolean peutEtreAttaque){this.peutEtreAttaque = peutEtreAttaque;}
-
-    public void setDirection(int direction){this.direction = direction;}
 
     public void readAlterationEtats(){ //permet d'actualiser et appliquer la liste d'altération d'état pour chaque unité
         updateAlterationEtats();
@@ -209,29 +206,28 @@ public abstract class Unite {
         }
     }
 
-    public boolean estMort(Terrain t, int xD, int yD){
-        Unite defenseur = t.getPlateau()[yD][xD].getUnite();
-        if (defenseur.getSanteCourante() <= 0) {
-            if(defenseur.toString().equals("Mouton")){
-                defenseur.getListUniteTransforme().remove(0);
+    public boolean estMort(Terrain t, int xD, int yD){ //vérifie si l'unité (en prenant ses coordonnées) est morte, si oui, donne l'argent correspondant, et supprime l'unité tuée
+        Unite defenseur = t.getPlateau()[yD][xD].getUnite(); //unité défenseur
+        if (defenseur.getSanteCourante() <= 0) { //si le défenseur n'a plus de vie
+            if(defenseur.toString().equals("Mouton")){ //cas particulier du mouton
+                defenseur.getListUniteTransforme().remove(0); //supprime l'unité qui a été transformé en mouton
             }
-            gagnerArgentApresMort(defenseur);
-            joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());
-            t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);
+            gagnerArgentApresMort(defenseur);//l'attaquant gagne de l'argent
+            joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());//retire le défenseur de la liste des unités du joueur possédant le défenseur
+            t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);//retire l'unité du terrain
             return true;
         }
         return false;
     }
 
-    public boolean estMort(Terrain t, Unite u){
-        Unite defenseur = u;
-        if (defenseur.getSanteCourante() <= 0) {
-            if(defenseur.toString().equals("Mouton")){
-                defenseur.getListUniteTransforme().remove(0);
+    public boolean estMort(Terrain t, Unite u){//vérifie si l'unité (lors de la compétence "Charge" du cavalier) est morte, si oui, donne l'argent correspondant, et supprime l'unité tuée
+        if (u.getSanteCourante() <= 0) { //si l'unité défenseur n'a plus de vie
+            if(u.toString().equals("Mouton")){ //cas particulier du mouton
+                u.getListUniteTransforme().remove(0); //supprime l'unité qui a été transformé en mouton
             }
-            gagnerArgentApresMort(defenseur);
-            joueur.annuleAjout(defenseur);
-            t.getPlateau()[defenseur.getCurrentY()][defenseur.getCurrentX()].supprimerUniteCase(t.getPlateau()[defenseur.getCurrentY()][defenseur.getCurrentX()]);
+            gagnerArgentApresMort(u); //l'attaquant gagne de l'argent
+            joueur.annuleAjout(u); //retire le défenseur de la liste des unités du joueur possédant le défenseur
+            t.getPlateau()[u.getCurrentY()][u.getCurrentX()].supprimerUniteCase(t.getPlateau()[u.getCurrentY()][u.getCurrentX()]); //retire l'unité du terrain
             return true;
         }
         return false;
@@ -241,14 +237,14 @@ public abstract class Unite {
         return santeCourante <= 0;
     }
 
-    public void gagnerArgentApresMort(Unite uniteD){
+    public void gagnerArgentApresMort(Unite uniteD){ //permet de récupérer une certaine somme d'argent suite à une mort d'une unité adversaire (depuis une attaque normale ou une compétence)
         Joueur j;
-        if(uniteD.getJoueur() == uniteD.getJoueur().getJeu().getJoueur1()) {
-            j = uniteD.getJoueur().getJeu().getJoueur2();
+        if(uniteD.getJoueur() == uniteD.getJoueur().getJeu().getJoueur1()) { //si l'unité tuée appartient au joueur 1
+            j = uniteD.getJoueur().getJeu().getJoueur2(); //le joueur reçevant l'argent est le joueur 2
         }else{
-            j = uniteD.getJoueur().getJeu().getJoueur1();
+            j = uniteD.getJoueur().getJeu().getJoueur1(); //sinon c'est le joueur 2 qui reçoit l'argent
         }
-        j.setArgent(j.getArgent() + (uniteD.getCoutUnite()/3));
+        j.setArgent(j.getArgent() + (uniteD.getCoutUnite()/3)); //attribue au joueur désigné, un tier de la valeur (en argent) de l'unité tuée
     }
 
     public void utiliseCompetence(int xA, int yA, int xD,int yD,int c, Terrain t){
@@ -256,115 +252,52 @@ public abstract class Unite {
             competences[c].useSkill(xA,yA,xD,yD,t);
     }
 
-    public boolean casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){
-        int portee = unite.getPorteeDeplacement();
-        ArrayList<Case> test = new ArrayList<>();
-        return cheminTrouver(test, t, xPast, yPast, xApres, yApres, portee);
+    public boolean casesDisponibleDeplacement (Terrain t, Unite unite, int xPast, int yPast, int xApres, int yApres){ //fonction auxiliaire pour le pathfinding de déplacement
+        int portee = unite.getPorteeDeplacement(); //récupère la portée de déplacement de l'unité
+        ArrayList<Case> chemin = new ArrayList<>(); //crée une arraylist de case (pour récupérer le chemin existant)
+        return cheminTrouver(chemin, t, xPast, yPast, xApres, yApres, portee); //appelle la fonction de pathfinding
     }
 
-    public boolean cheminTrouver (ArrayList<Case> test, Terrain t, int xPast, int yPast, int xApres, int yApres, int portee){
-        if (xPast == xApres && yPast == yApres && portee >= 0 && estDansTableau(t, xPast, yPast)){
-            test.add(t.getPlateau()[yPast][xPast]);
-            setDeplacementDisponible(test);
+    public boolean cheminTrouver (ArrayList<Case> chemin, Terrain t, int xPast, int yPast, int xApres, int yApres, int portee){ //fonction récursive de pathfinding de déplacement
+        if (xPast == xApres && yPast == yApres && portee >= 0 && estDansTableau(t, xPast, yPast)){ //si les coordonnées actuelles sont celles d'arrivées
+            chemin.add(t.getPlateau()[yPast][xPast]); //enregistre la case finale dans l'arraylist
+            setDeplacementDisponible(chemin); //défini cette arraylist à l'unité
             return true;
         }
-        if (portee >= 0 && estDansTableau(t, xPast, yPast)){
-            if (cheminTrouver(test, t, xPast -1, yPast, xApres, yApres, portee -1) && estDansTableau(t, xPast -1, yPast)
+        //on appelle récursivement cheminTrouver, en diminuant à chaque fois "portee" de 1, qui nous sert de compteur, permettant de vérifier les cases alentours de la case actuelle
+        if (portee >= 0 && estDansTableau(t, xPast, yPast)){ //si la portée de l'unité est supérieur ou égale à 0, et que la case qu'on regarde est toujours dans le tableau
+            if (cheminTrouver(chemin, t, xPast -1, yPast, xApres, yApres, portee -1) && estDansTableau(t, xPast -1, yPast)
             && t.getPlateau()[yPast][xPast-1].estVide()){
-                test.add(t.getPlateau()[yPast][xPast]);
+            //si l'appel de cheminTrouver avec la case x-1 renvoie vrai, et si cette case x-1 est toujours dans le tableau, et que cette case x-1 n'est pas vide
+                chemin.add(t.getPlateau()[yPast][xPast]); //enregistre la case actuelle dans l'arraylist
                 return true;
             }
-            if (cheminTrouver(test, t, xPast + 1, yPast, xApres, yApres, portee -1) && estDansTableau(t, xPast +1, yPast)
+            if (cheminTrouver(chemin, t, xPast + 1, yPast, xApres, yApres, portee -1) && estDansTableau(t, xPast +1, yPast)
             && t.getPlateau()[yPast][xPast+1].estVide()){
-                test.add(t.getPlateau()[yPast][xPast]);
+            //si l'appel de cheminTrouver avec la case x+1 renvoie vrai, et si cette case x+1 est toujours dans le tableau, et que cette case x+1 n'est pas vide
+                chemin.add(t.getPlateau()[yPast][xPast]); //enregistre la case actuelle dans l'arraylist
                 return true;
             }
-            if (cheminTrouver(test, t, xPast, yPast-1, xApres, yApres, portee -1) && estDansTableau(t, xPast, yPast-1)
+            if (cheminTrouver(chemin, t, xPast, yPast-1, xApres, yApres, portee -1) && estDansTableau(t, xPast, yPast-1)
             && t.getPlateau()[yPast-1][xPast].estVide()){
-                test.add(t.getPlateau()[yPast][xPast]);
+            //si l'appel de cheminTrouver avec la case y-1 renvoie vrai, et si cette case y-1 est toujours dans le tableau, et que cette case y-1 n'est pas vide
+                chemin.add(t.getPlateau()[yPast][xPast]);//enregistre la case actuelle dans l'arraylist
                 return true;
             }
-            if (cheminTrouver(test, t, xPast, yPast +1, xApres, yApres, portee -1) && estDansTableau(t, xPast, yPast+1)
+            if (cheminTrouver(chemin, t, xPast, yPast +1, xApres, yApres, portee -1) && estDansTableau(t, xPast, yPast+1)
             && t.getPlateau()[yPast+1][xPast].estVide()){
-                test.add(t.getPlateau()[yPast][xPast]);
+            //si l'appel de cheminTrouver avec la case y+1 renvoie vrai, et si cette case y+1 est toujours dans le tableau, et que cette case y+1 n'est pas vide
+                chemin.add(t.getPlateau()[yPast][xPast]);//enregistre la case actuelle dans l'arraylist
                 return true;
             }
         }
         return false;
     }
 
-    public boolean estDansTableau(Terrain t, int xPast, int yPast) {
+    public boolean estDansTableau(Terrain t, int xPast, int yPast) { //renvoie vrai, si les coordonnées de la case ne sortent pas du tableau
         return (yPast < t.getPlateau().length && xPast < t.getPlateau()[0].length && yPast >= 0 && xPast >= 0);
     }
 
-    public void chargeCavalier(Terrain t, int xPast, int yPast, int xApres, int yApres){
-        Case avant = t.getPlateau()[yPast][xPast];
-        if (t.getPlateau()[yPast][xPast].estUnit()) {
-            if ((casesDisponibleDeplacementCavalier(t, avant.getUnite(), xPast, yPast, xApres, yApres)) && avant.getUnite().getPointAction() > 0) {
-                System.out.println("yolo");
-                Case positionInitial = avant.getUnite().getPositionUnite();
-                Case destination = positionInitial.getUnite().getDeplacementDisponible().get(positionInitial.getUnite().getDeplacementDisponible().size()-3);
-                destination.setUnite(avant.getUnite());
-                avant.getUnite().setPositionUnite(destination);
-                positionInitial.supprimerUniteCase(positionInitial);
-                currentX = xApres;
-                currentY = yApres;
-                System.out.println(deplacementDisponible);
-            }
-        }
-    }
-
-    public boolean casesDisponibleDeplacementCavalier (Terrain t, Unite unite, int xA, int yA, int xD, int yD){
-        int portee = unite.getPorteeDeplacement();
-        ArrayList<Case> test = new ArrayList<>();
-        return cheminTrouverCavalier(test, t, xA, yA, xD, yD, portee);
-    }
-
-    public boolean cheminTrouverCavalier (ArrayList<Case> test, Terrain t, int xA, int yA, int xD, int yD, int portee){
-        if ((xA == xD && yA == yD && portee >= 0)){
-            test.add(t.getPlateau()[yA][xA]);
-            if(direction ==1) test.add(t.getPlateau()[yA-1][xA]);
-            if(direction ==2) test.add(t.getPlateau()[yA+1][xA]);
-            if(direction ==3) test.add(t.getPlateau()[yA][xA-1]);
-            if(direction ==4) test.add(t.getPlateau()[yA][xA+1]);
-            setDeplacementDisponible(test);
-            System.out.println(test);
-            return true;
-        }
-        if (xA == xD && portee >= 0){
-            if (yA > yD){
-                if (cheminTrouverCavalier(test, t, xA, yA-1, xD, yD, portee -1) && t.getPlateau()[yA-1][xA].estVide() && estDansTableau(t, xA, yA-1)){
-                test.add(t.getPlateau()[yA][xA]);
-                setDirection(1);
-                return true;
-                }
-            }
-            else if (yA < yD){
-                if (cheminTrouverCavalier(test, t, xA, yA+1, xD, yD, portee -1) && t.getPlateau()[yA+1][xA].estVide() && estDansTableau(t, xA, yA+1)){
-                test.add(t.getPlateau()[yA][xA]);
-                setDirection(2);
-                return true;
-                }
-            }
-        }
-        else if (yA == yD && portee >= 0){
-            if (xA > xD){
-                if (cheminTrouverCavalier(test, t, xA-1, yA, xD, yD, portee -1) && t.getPlateau()[yA][xA-1].estVide() && estDansTableau(t, xA-1, yA)){
-                test.add(t.getPlateau()[yA][xA]);
-                setDirection(3);
-                return true;
-                }
-            }
-            else if (xA < xD){
-                if (cheminTrouverCavalier(test, t, xA+1, yA, xD, yD, portee -1) && t.getPlateau()[yA][xA+1].estVide() && estDansTableau(t, xA+1, yA)){
-                test.add(t.getPlateau()[yA][xA]);
-                setDirection(4);
-                return true;
-                }
-            }
-        }
-        return false;
-    }
     public void resetPointAction(){pointAction = pointActionMax; }
     public abstract String toString();
     public abstract boolean isHero();
