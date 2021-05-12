@@ -109,7 +109,7 @@ condition d'avoir soigner avec 500 points de vie, avec une même prétresse. Cet
 actives. La première compétence est une attaque classique. La deuxième compétence "donationPA" permet de redonner à une unité
 ciblée, 1PA. La troisième compétence "La voie du seigneur" permet de donner un effet spécial à une unité ciblée. Cet effet ne peut 
 être appliqué qu'à une seule unité, tant que cette unité ciblée est encore en vie. Cet effet double les points de vie actuels,
-la portée de déplacement et la portée d'attaque.
+la portée de déplacement, la portée d'attaque et les dégâts infligés.
 
 -Templier: possède deux compétences actives et une compétence passive. La premiere compétence active est une attaque classique.
 La deuxièeme compétence active permet d'appliquer une immunité contre l'immobilisation, l'étourdissement, le ralentissement, et 
