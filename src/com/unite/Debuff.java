@@ -2,6 +2,7 @@ package com.unite;
 
 import java.lang.*;
 
+//Class héritant de AlterationEtat, contenant les fonctions de debuff pour les unités
 public class Debuff extends AlterationEtat {
     public Debuff(String nom, int tourRestant, Unite u){
         super(nom, tourRestant, u);
