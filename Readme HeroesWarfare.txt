@@ -100,8 +100,7 @@ mouton" permet de transformer une unité ciblée en mouton temporairement.
 attaque classique.
 
 -Prétresse: possède trois compétences actives. La première compétence permet de soigner de 50 point de vie, une unité ciblée.
-La deuxième compétence "lumière aveuglante" permet d'appliquer "aveugle" à une unité ciblée (lui empèchant de se déplacer, ou 
-d'attaquer). La troisième compétence "implorer le seigneur" est utilisable une fois par partie, et par joueur, et sous la 
+La deuxième compétence "lumière aveuglante" permet d'appliquer "aveugle" à une unité ciblée (lui empêchant d'attaquer). La troisième compétence "implorer le seigneur" est utilisable une fois par partie, et par joueur, et sous la 
 condition d'avoir soigner avec 500 points de vie, avec une même prétresse. Cette compétence lui permet d'invoquer l'unité
 "Prophête" sur le terrain. Le prophète ne peut être invoqué qu'une seule fois par partie, et par joueur.
 
