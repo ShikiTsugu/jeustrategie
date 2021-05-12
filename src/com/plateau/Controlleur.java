@@ -261,15 +261,13 @@ public class Controlleur {
     }
 
     public void TerrrainEffect(){
-        try {
-            for (int x = 0; x < vue.terrain.plateau.length; x++) {
-                for (int y = 0; y < vue.terrain.plateau[x].length; y++) {
-                    if (vue.terrain.plateau[x][y] instanceof CaseEffect){
-                        ((CaseEffect) vue.terrain.plateau[x][y]).Effect();
-                    }
+        for (int x = 0; x < vue.terrain.plateau.length; x++) {
+            for (int y = 0; y < vue.terrain.plateau[x].length; y++) {
+                if (vue.terrain.plateau[x][y] instanceof CaseEffect){
+                    ((CaseEffect) vue.terrain.plateau[x][y]).Effect();
                 }
             }
-        } catch (NullPointerException e) {}
+        }
     }
 
     public void finDeTour(){
