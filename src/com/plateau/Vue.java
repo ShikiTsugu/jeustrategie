@@ -13,6 +13,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Vue extends JFrame{
 
@@ -147,6 +148,11 @@ public class Vue extends JFrame{
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(500);
             terrain = controlleur.getMap().getTerrain();
+            try {
+                imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/map2.png")));
+            }catch(IOException ex){
+                System.out.println("Fichier non trouvé, chemin incorrecte.");
+            }
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
             imagePane.add(TaskBar,BorderLayout.SOUTH);
@@ -161,6 +167,11 @@ public class Vue extends JFrame{
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(1000);
             terrain = controlleur.getMap().getTerrain();
+            try {
+                imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/plaine.png")));
+            }catch(IOException ex){
+                System.out.println("Fichier non trouvé, chemin incorrecte.");
+            }
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
             imagePane.add(TaskBar,BorderLayout.SOUTH);
@@ -175,6 +186,11 @@ public class Vue extends JFrame{
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(2000);
             terrain = controlleur.getMap().getTerrain();
+            try {
+                imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/map3.png")));
+            }catch(IOException ex){
+                System.out.println("Fichier non trouvé, chemin incorrecte.");
+            }
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
             imagePane.add(TaskBar,BorderLayout.SOUTH);
@@ -201,11 +217,6 @@ public class Vue extends JFrame{
 
     /*Affichage d'un terrain*/
     public void AfficheTerrain(){
-        try {
-            imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/plaine.png")));
-        }catch(IOException e){
-            System.out.println("Fichier non trouvé, chemin incorrecte.");
-        }
         imagePane.removeAll();
         imagePane.setLayout(new BorderLayout());
         generateTerrain();
@@ -427,7 +438,9 @@ public class Vue extends JFrame{
                     terrainBt.add(bt);
                 } else {
                     if(terrain.plateau[x][y].estObstacle()){
-                        JButton bt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/obstacle1.png"));
+                        Random rand = new Random();
+                        int num = 1+rand.nextInt(4-1);
+                        JButton bt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/obstacle"+num+".png"));
                         bt = setBorder(bt, x, y);
                         TerrainPanel.add(bt);
                         bt.setOpaque(false);
