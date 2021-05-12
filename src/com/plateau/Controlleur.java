@@ -136,13 +136,11 @@ public class Controlleur {
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     b.setContentAreaFilled(true);
-                    for (int i = 0; i < atq.getCompetences().length; i++){
-                        if (vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estUnit() && ((Math.abs(b.getY() / b.getHeight() - coordI[1]) + Math.abs(b.getX() / b.getWidth() - coordI[0])) <= atq.getCompetences()[i].getPortee())
-                                && vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].unit != atq) {
-                            b.setBackground(new Color(0, 150, 0));
-                        } else {
-                            b.setBackground(new Color(150, 0, 0));
-                        }
+                    if (vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estUnit() && ((Math.abs(b.getY() / b.getHeight() - coordI[1]) + Math.abs(b.getX() / b.getWidth() - coordI[0])) <= atq.getCompetences()[c].getPortee())
+                            && vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].unit != atq) {
+                        b.setBackground(new Color(0, 150, 0));
+                    } else {
+                        b.setBackground(new Color(150, 0, 0));
                     }
                 }
 
@@ -157,7 +155,7 @@ public class Controlleur {
                 try {
                     vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit.utiliseCompetence(coordI[0], coordI[1], coordF[0], coordF[1], c, vue.terrain);
                 }catch (NullPointerException ex){
-                    JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Vous attaquez dans le vide.", "", JOptionPane.PLAIN_MESSAGE);
+                    if(atq.toString().equals("Cavalier"))JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Vous venez de charger droit devant vous", "", JOptionPane.PLAIN_MESSAGE);
                 }
                 vue.generateTerrain();
                 vue.generateTaskBar();
