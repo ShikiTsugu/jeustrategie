@@ -382,6 +382,7 @@ public class Vue extends JFrame{
         //tourJoueur.displayList();
         for (int x = 0; x < terrain.plateau.length; x++){
             for (int y = 0; y < terrain.plateau[x].length; y++){
+                terrain.plateau[x][y].setDeathCount(false);
                 if (terrain.plateau[x][y].unit != null) {
                     JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
                     setBorder(bt, x, y);

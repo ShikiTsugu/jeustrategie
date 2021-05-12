@@ -26,8 +26,8 @@ public class Controlleur {
         nbTour = 1;
         map = new Map();
         mapSave = new MapSerialized();
-        //GenerateSaveMap();
-        //SaveMap();
+        GenerateSaveMap();
+        SaveMap();
         LoadMap();
     }
 
