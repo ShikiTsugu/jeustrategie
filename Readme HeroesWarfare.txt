@@ -100,8 +100,7 @@ mouton" permet de transformer une unité ciblée en mouton temporairement.
 attaque classique.
 
 -Prétresse: possède trois compétences actives. La première compétence permet de soigner de 50 point de vie, une unité ciblée.
-La deuxième compétence "lumière aveuglante" permet d'appliquer "aveugle" à une unité ciblée (lui empèchant de se déplacer, ou 
-d'attaquer). La troisième compétence "implorer le seigneur" est utilisable une fois par partie, et par joueur, et sous la 
+La deuxième compétence "lumière aveuglante" permet d'appliquer "aveugle" à une unité ciblée (lui empêchant d'attaquer). La troisième compétence "implorer le seigneur" est utilisable une fois par partie, et par joueur, et sous la 
 condition d'avoir soigner avec 500 points de vie, avec une même prétresse. Cette compétence lui permet d'invoquer l'unité
 "Prophête" sur le terrain. Le prophète ne peut être invoqué qu'une seule fois par partie, et par joueur.
 
@@ -109,7 +108,7 @@ condition d'avoir soigner avec 500 points de vie, avec une même prétresse. Cet
 actives. La première compétence est une attaque classique. La deuxième compétence "donationPA" permet de redonner à une unité
 ciblée, 1PA. La troisième compétence "La voie du seigneur" permet de donner un effet spécial à une unité ciblée. Cet effet ne peut 
 être appliqué qu'à une seule unité, tant que cette unité ciblée est encore en vie. Cet effet double les points de vie actuels,
-la portée de déplacement et la portée d'attaque.
+la portée de déplacement, la portée d'attaque et les dégâts infligés.
 
 -Templier: possède deux compétences actives et une compétence passive. La premiere compétence active est une attaque classique.
 La deuxièeme compétence active permet d'appliquer une immunité contre l'immobilisation, l'étourdissement, le ralentissement, et 
