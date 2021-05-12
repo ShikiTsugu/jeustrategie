@@ -12,6 +12,7 @@ import java.io.*;
 import java.util.LinkedList;
 import java.util.Random;
 
+//Classe de "controle" permettant de gérer les boutons sur l'interface graphique, le déplacement, l'attaque, l'achat etc..
 public class Controlleur {
     private Vue vue;
     private Jeu jeu;
@@ -44,10 +45,14 @@ public class Controlleur {
         jeu = j;
     }
 
+    //Regarde si l'unité choisit a bien été acheté ou non, va être utile pour ensuite la placer.
     public boolean acheteUnite(Joueur j, Unite u){
+        //Si on ne peut pas ajouter d'unité c'est que la liste est déjà pleine.
         if (!j.ajouteUnite(u)) {
-            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le max d'unité a été atteint.", "", JOptionPane.PLAIN_MESSAGE);
-            System.out.println("Achat impossible");
+            JOptionPane.showMessageDialog(vue.getTerrainPanel(),
+                    "Le max d'unité a été atteint.",
+                    "",
+                    JOptionPane.PLAIN_MESSAGE);
             return false;
         } else {
             ActionJoueur aj = new ActionJoueur(j);
@@ -58,8 +63,11 @@ public class Controlleur {
         }
     }
 
+    //Place l'unité achetée sur la case cliqué.
     public void placeUniteApresAchat(Unite u, ActionJoueur j, boolean J1){
         for (JButton b : vue.terrainBt) {
+            //Regarde toutes les cases sur le terrain, si c'est une zone possible d'achat selon le joueur,
+            //on la marque en vert pour faciliter le placement, sinon la case est rouge.
             if(j.getJoueur()==jeu.getJoueur1()){
                 if(vue.terrain.getB1()[b.getY() / b.getHeight()][b.getX() / b.getWidth()]==true) {
                     if (vue.getTerrain().getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estVide()) {
@@ -88,7 +96,8 @@ public class Controlleur {
                     b.setBackground(new Color(150, 0, 0));
                 }
             }
-
+            //Affecte à tous les boutons sur le terrain la possibilité d'accueillir une unité lorsqu'on clique dessus.
+            //L'unité est ajouté seulement si la case est vide et si c'est bien dans la zone de placement du joueur.
             b.addActionListener((ActionEvent e) -> {
                 if (j.getJoueur()==jeu.getJoueur1()) {
                     if (vue.terrain.getB1()[b.getY() / b.getHeight()][b.getX() / b.getWidth()] == true) {
@@ -97,12 +106,18 @@ public class Controlleur {
                         } else {
                             j.getJoueur().annuleAjout(u);
                             j.getJoueur().setArgent(j.getJoueur().getArgent() + u.getCoutUnite());
-                            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Il y a déjà une unité.", "", JOptionPane.PLAIN_MESSAGE);
+                            JOptionPane.showMessageDialog(vue.getTerrainPanel(),
+                                    "Il y a déjà une unité.",
+                                    "",
+                                    JOptionPane.PLAIN_MESSAGE);
                         }
                     } else {
                         j.getJoueur().annuleAjout(u);
                         j.getJoueur().setArgent(j.getJoueur().getArgent() + u.getCoutUnite());
-                        JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Impossible, en dehors de la zone d'achat.", "", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(vue.getTerrainPanel(),
+                                "Impossible, en dehors de la zone d'achat.",
+                                "",
+                                JOptionPane.PLAIN_MESSAGE);
                     }
                 }
                 if (j.getJoueur()==jeu.getJoueur2()) {
@@ -112,14 +127,21 @@ public class Controlleur {
                         } else {
                             j.getJoueur().annuleAjout(u);
                             j.getJoueur().setArgent(j.getJoueur().getArgent() + u.getCoutUnite());
-                            JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Il y a déjà une unité.", "", JOptionPane.PLAIN_MESSAGE);
+                            JOptionPane.showMessageDialog(vue.getTerrainPanel(),
+                                    "Il y a déjà une unité.",
+                                    "",
+                                    JOptionPane.PLAIN_MESSAGE);
                         }
                     } else {
                         j.getJoueur().annuleAjout(u);
                         j.getJoueur().setArgent(j.getJoueur().getArgent() + u.getCoutUnite());
-                        JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Impossible, en dehors de la zone d'achat.", "", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(vue.getTerrainPanel(),
+                                "Impossible, en dehors de la zone d'achat.",
+                                "",
+                                JOptionPane.PLAIN_MESSAGE);
                     }
                 }
+                //On actualise l'interface graphique
                 vue.generateTerrain();
                 vue.generateTaskBar();
             });
@@ -176,16 +198,19 @@ public class Controlleur {
         LoadMap();
     }
 
+    //Déplacement d'unité en cliquant sur une case.
     public void deplaceUnite(Joueur j, JButton posIni){
         ActionJoueur aj = new ActionJoueur(j);
         int[]coordI = {posIni.getX()/posIni.getWidth(), posIni.getY()/posIni.getHeight()};
         int[]coordF = new int[2];
         Unite u = vue.terrain.plateau[coordI[1]][coordI[0]].unit;
         for (JButton b : vue.terrainBt) {
+            //Marque en vert toutes les cases où l'unité peut se déplacer.
             if(u.casesDisponibleDeplacement(vue.terrain, u, coordI[0], coordI[1], b.getX()/b.getWidth(), b.getY()/b.getHeight())) {
                 b.setContentAreaFilled(true);
                 b.setBackground(new Color(0, 150, 0));
             }
+            //Affecte à toutes les cases la possibilité d'accueillir l'unité si elle peut s'y déplacer.
             b.addActionListener((ActionEvent e) -> {
                 coordF[0] = b.getX()/b.getWidth();
                 coordF[1] = b.getY()/b.getHeight();
@@ -196,6 +221,7 @@ public class Controlleur {
         }
     }
 
+    //Affiche les différents statistiques d'une unité en cliquant sur elle puis en sélectionnant l'icone de stats.
     public void viewStats(JButton b){
         Unite u = vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit;
         JFrame stats = new JFrame(vue.terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString());
@@ -298,6 +324,7 @@ public class Controlleur {
         vue.generateTaskBar();
     }
 
+    //Implémentation d'une fenêtre proposant de quitter ou de continuer une partie lorsqu'on appuie sur échap.
     public void escapeAction(){
         JFrame esc = new JFrame("Exit");
         esc.setVisible(true);
@@ -309,9 +336,11 @@ public class Controlleur {
         JPanel choice = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton resume = new JButton("Continuer");
         JButton quit = new JButton("Quitter");
+        //Si on souhaite continuer on ferme juste la fenetre.
         resume.addActionListener((ActionEvent e) -> {
             esc.dispose();
         });
+        //Sinon on retourne au menu principal.
         quit.addActionListener((ActionEvent e) -> {
             esc.dispose();
             vue.afficheIni();
@@ -321,6 +350,7 @@ public class Controlleur {
         esc.add(choice);
     }
 
+    //Sous classe permettant de détecter l'appuie sur un bouton du clavier.
     class escButtonAction implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
@@ -330,6 +360,7 @@ public class Controlleur {
         public void keyPressed(KeyEvent e) {
         }
 
+        //Plus précisémment on s'intéresse au cas lorsque le bouton échap est relaché.
         @Override
         public void keyReleased(KeyEvent e) {
             int key = e.getKeyCode();
@@ -341,6 +372,7 @@ public class Controlleur {
 
     //Méthodes concernant le robot
 
+    //Permet de stocker dans une liste toutes les cases disponibles là où une unité peut se déplacer.
     public LinkedList<Case> getCaseDispo(Unite u){
         LinkedList<Case> casesDispo = new LinkedList<>();
         for(int y = 0; y<vue.terrain.getPlateau().length; y++) {
@@ -353,31 +385,33 @@ public class Controlleur {
         return casesDispo;
     }
 
+    //Attaque l'unité détecté par l'unité choisit par le robot, et détecte la condition de victoire aussi si l'unité détectée
+    //était le héro adverse et si il est mort.
     public void attackUniteRob(Joueur j, Unite u){
-        System.out.println("liste des cibles : "+vue.terrain.getPlateau()[u.getCoordTarget().getFirst()[1]][u.getCoordTarget().getFirst()[0]].unit);
         int[] coordTarget = u.getCoordTarget().getFirst();
-        System.out.println("Cible à attaquer : "+ vue.terrain.getPlateau()[coordTarget[1]][coordTarget[0]].unit);
         ActionJoueur aj = new ActionJoueur(j);
         aj.attaqueUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), coordTarget[0], coordTarget[1]);
         DetectWin();
     }
 
+    //Bouge l'unité vers sa cible si elle n'est pas dans sa portée d'attaque.
     public void moveUntilAtRange(Joueur j, Unite u){
         int[] coordTarget = u.getCoordTarget().getFirst();
         Unite target = vue.terrain.getPlateau()[coordTarget[1]][coordTarget[0]].getUnite();
-        System.out.println("cible : "+target);
         ActionJoueur aj = new ActionJoueur(j);
         LinkedList<int[]> coords = ((Robot)j).availableSpaceAroundTarget(vue.terrain, target);
         boolean moved = false;
         for(int[] coord : coords){
+            //Gère le déplacement de l'unité, si c'est dans sa portée etc..
             if(u.casesDisponibleDeplacement(vue.terrain, u, u.getCurrentX(), u.getCurrentY(), coord[0], coord[1])){
-                System.out.println("liste déplacement : "+u.getDeplacementDisponible());
                 int[] destination = u.getDeplacementDisponible().get(0).casePos(vue.terrain);
                 aj.deplaceUnite(vue.terrain, u.getCurrentX(), u.getCurrentY(), destination[0], destination[1]);
                 moved = true;
                 break;
             }
         }
+        //Si l'unité n'a pas été déplacé vers sa cible, donc que ce n'est pas à portée ou qu'il n'y a pas de place
+        // on continue de la faire se déplacer à une case possible aléatoire, notamment pour détecter une autre cible possible.
         if(moved==false){
             LinkedList<Case> casesDispo = getCaseDispo(u);
             Random rand = new Random();
@@ -391,20 +425,21 @@ public class Controlleur {
         }
     }
 
+    //Déplace l'unité choisit par le robot dans des cases aléatoires à sa portée.
     public void deplaceUniteRob(Joueur j){
         if(((Robot) j).pickUnit(vue.terrain)) {
             int[] coordI = ((Robot) j).getCoord();
             Unite u = vue.terrain.plateau[coordI[0]][coordI[1]].unit;
             LinkedList<Case> casesDispo = getCaseDispo(u);
+            //Si l'unité lors de son déplacement à détecter une cible, on arrête tout et on regarde si elle peut attaquer
+            //directement ou non, si elle peut on attaque, sinon on se déplace vers la cible.
             try {
                 if (((Robot) j).targetDetected(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeDeplacement(), u, j)) {
                     if (((Robot) j).canAttack(vue.terrain, u.getCurrentX(), u.getCurrentY(), u.getPorteeAttaque(), u, j)
                     && u.getPointAction()>0) {
-                        System.out.println("Attacking");
                         attackUniteRob(j, u);
                         u.getCoordTarget().clear();
                     } else {
-                        System.out.println("Moving");
                         moveUntilAtRange(j, u);
                         u.getCoordTarget().clear();
                     }
@@ -426,6 +461,7 @@ public class Controlleur {
         }
     }
 
+    //Le robot choisit une unité au hasard dans la boutique, l'achète puis la place.
     public void achatUniteRob(Joueur j) {
         Random rand = new Random();
         int uniteRandom = rand.nextInt(vue.getListeUnit().length);
@@ -433,6 +469,7 @@ public class Controlleur {
         ActionJoueur aj = new ActionJoueur(j);
         int randPosLibre = rand.nextInt(((Robot) j).availableSpace(vue.terrain).size());
         int[] pos = (int[]) ((Robot) j).availableSpace(vue.terrain).get(randPosLibre);
+        //Vérifie que le robot possède l'argent nécessaire à l'achat, le cas échéant on retire l'unité.
         if (j.getArgent() >= u.getCoutUnite() && !j.maxUnit()) {
             aj.acheteUnite(u, vue.getTerrainPanel());
             j.ajouteUnite(u);
@@ -445,13 +482,17 @@ public class Controlleur {
         }
     }
 
+    //Système de gameplay du robot
     public void robotPlay(Joueur j){
+        //Tant que les unités du robot ont des PA à dépenser, il les déplace/attaque
         while(!((Robot)j).allPAused()){
             deplaceUniteRob(j);
         }
+        //Tant que le robot à suffisamment d'argent il achète une unité et la place.
         if(j.getArgent()>=100) {
             achatUniteRob(j);
         }
+        //Une fois que tout a été fait, il passe son tour.
         finDeTour();
     }
 
