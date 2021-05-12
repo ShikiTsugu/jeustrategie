@@ -344,6 +344,7 @@ public class Controlleur {
         quit.addActionListener((ActionEvent e) -> {
             esc.dispose();
             vue.afficheIni();
+            LoadMap();
         });
         choice.add(resume);
         choice.add(quit);
