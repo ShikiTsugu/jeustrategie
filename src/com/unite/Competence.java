@@ -54,6 +54,8 @@ public class Competence {
         return cout;
     }
 
+    public int getPortee(){return portee;}
+
     public HashMap<String, Integer> useSkill(int xA , int yA, int xD, int yD, Terrain terrain){
         HashMap<String,Integer> resultat = new HashMap<String,Integer>();
         if(terrain.getPlateau()[yA][xA].getUnite().getPointAction()>=cout && ((Math.abs(yA - yD)+Math.abs(xA - xD)) <= portee + terrain.getPlateau()[yA][xA].getUnite().modifPortee()) &&  cooldownActuel<= 0) {

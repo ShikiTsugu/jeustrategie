@@ -136,11 +136,13 @@ public class Controlleur {
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     b.setContentAreaFilled(true);
-                    if (vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estUnit() && ((Math.abs(b.getY() / b.getHeight() - coordI[1]) + Math.abs(b.getX() / b.getWidth() - coordI[0])) <= atq.getPorteeAttaque())
-                            && vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].unit != atq && vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].unit.getJoueur() != j) {
-                        b.setBackground(new Color(0, 150, 0));
-                    } else {
-                        b.setBackground(new Color(150, 0, 0));
+                    for (int i = 0; i < atq.getCompetences().length; i++){
+                        if (vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estUnit() && ((Math.abs(b.getY() / b.getHeight() - coordI[1]) + Math.abs(b.getX() / b.getWidth() - coordI[0])) <= atq.getCompetences()[i].getPortee())
+                                && vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].unit != atq) {
+                            b.setBackground(new Color(0, 150, 0));
+                        } else {
+                            b.setBackground(new Color(150, 0, 0));
+                        }
                     }
                 }
 
