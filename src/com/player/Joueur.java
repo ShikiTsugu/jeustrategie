@@ -6,6 +6,7 @@ import com.unite.Unite;
 import com.unite.Mouton;
 import com.plateau.Terrain;
 
+//Classe regroupant toutes les méthodes liés au joueur, remplissage de sa liste d'unité, système d'achat lié à son argent etc..
 public class Joueur {
     protected int argent;
     protected Jeu jeu ;
@@ -37,16 +38,17 @@ public class Joueur {
 
     public boolean getIsHuman(){return isHuman;}
 
+    //Initialise la liste d'unité du joueur selon le nombre fixé d'unité possible sur un terrain spécifique.
+    //Chaque joueur a le droit à la moitié du nombre possible d'unité.
     public void initialiseListeUnites(Terrain t){
         unites = new Unite[t.getMaxUnits()/2];
     }
-
-    public boolean getAdded(){return added;}
 
     public boolean getPropheteInvoc(){
         return propheteInvoc;
     }
 
+    //Permet d'actualiser l'argent du joueur selon si le joueur possède suffisamment d'argent par rapport au cout d'une unité.
     public int achat(int cout){
         if(argent==0 || argent<cout){
             return argent;
@@ -55,12 +57,12 @@ public class Joueur {
         }
     }
 
+    //Ajoute ou non une unité à la liste du joueur après qu'elle ait été achetée.
     public boolean ajouteUnite(Unite u){
         //si la liste d'unite est vide, ajoute l'unite en première position
         if(unites[0]==null&&(u instanceof Hero)){
             unites[0]=u;
             u.setPointAction(0);
-            System.out.println("Hero ajouté");
             return true;
         }
         //sinon parcourt le tableau et cherche une position vide pour y ajouter l'unite
@@ -68,17 +70,16 @@ public class Joueur {
             if (unites[i]==null) {
                 u.setPointAction(0);
                 unites[i] = u;
-                System.out.println(u+" Ajouté");
                 added = true;
                 return true;
             }
         }
         //s'il n'y a plus de place, retourne faux
-        System.out.println("Plus de place");
         added = false;
         return false;
     }
 
+    //Compte le nombre d'unité dans la liste d'unité du joueur (différent de la taille du tableau).
     public int countUnits(){
         int units=0;
         for(int i = 0; i<unites.length; i++){
@@ -89,6 +90,7 @@ public class Joueur {
         return units;
     }
 
+    //Enlève une unité de la liste d'unité du joueur.
     public void annuleAjout(Unite u){
         for (int i = 1; i<unites.length; i++) {
             if (unites[i] == u) {
@@ -97,6 +99,7 @@ public class Joueur {
         }
     }
 
+    //Reset les points d'actions de TOUTES les unités que le joueur possède.
     public void resetPointAction(){
         for (Unite u : unites) {
             try {
@@ -105,29 +108,22 @@ public class Joueur {
         }
     }
 
+    //Regarde si le joueur possède ou non le nombre max d'unité possible.
     public boolean maxUnit(){
         for (Unite u : unites){
+            //Si une place dans la liste est null, c'est qu'il reste de la place, donc le max n'est pas atteint.
             if(u == null){
                 return false;
             }
         }
         return true;
     }
-    public boolean possedeUnite(Unite u){
-        for(Unite un : unites){
-            if(u == un){
-                return true;
-            }
-        }
-        return false;
-    }
 
-
-
+    //Cherche dans les unités du joueur si une unité est un mouton ou non.
     public void detransformationPremierMouton(){
-        System.out.println("fin de mouton");
         for(Unite un : unites){
             Mouton m ;
+            //Si c'est le cas, on lui redonne son apparence normale
             if(un instanceof Mouton){
                 m = (Mouton)un;
                 m.getUnite().setCurrentX(m.getCurrentX());
