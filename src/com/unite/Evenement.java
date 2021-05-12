@@ -6,6 +6,7 @@ import com.player.Joueur;
 
 import java.util.HashMap;
 
+//Permet d'effectuer un changement sur le plateau, plus particulièrement sur les unités qui s'y trouvent.
 public class Evenement {
     protected String event;
     protected Joueur j;
@@ -15,7 +16,7 @@ public class Evenement {
     protected Unite unite;
 
 
-    public Evenement(String e, int x,int y,int v,Joueur j){
+    public Evenement(String e, int x,int y,int v,Joueur j){//constructeur Evenement (utilisé généralement lorsqu'une position est donné)
         event = e;
         this.x=x;
         this.y=y;
@@ -23,7 +24,7 @@ public class Evenement {
         this.j = j;
     }
 
-    public Evenement(String e, Unite unite, int x,int y,int v){
+    public Evenement(String e, Unite unite, int x,int y,int v){//constructeur utilisé généralement lorsqu'une unité est directement spécifiée
         event = e;
         this.unite = unite;
         this.x=x;
@@ -39,11 +40,11 @@ public class Evenement {
 
     public void setValue(int value){this.value = value;}
 
+    //Fonction qui effectue l'action de l'evenement
     public HashMap<String,Integer> readEvent(int x, int y, Terrain t){
         HashMap<String, Integer> resultat = new HashMap<String,Integer>();
 
         if(event.equals("invocation Prophete")){
-            System.out.println("Check");
             ActionJoueur a = new ActionJoueur(j);
             Prophete p = new Prophete(j);
             if(a.acheteUnite(p,j.getJeu().getV().getTerrainPanel()) && j.ajouteUnite(p)){
@@ -84,7 +85,6 @@ public class Evenement {
             return resultat;
         }
         if(event.equals("infligeDegatsUniteSpecifique") && unite.getPeutEtreAttaque()){
-            System.out.println("dégatsInfligé");
             int res = unite.getSanteCourante()-value;
             unite.setSanteCourante(res);
             if(unite.estMort(t, unite))
@@ -192,7 +192,6 @@ public class Evenement {
             t.getPlateau()[y+this.y][x+this.x].getUnite().addBuff("immuniteAveugle",value);
             return resultat;
         }
-        System.out.println("Nada");
         return resultat;
     }
 

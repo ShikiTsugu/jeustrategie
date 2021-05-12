@@ -27,7 +27,6 @@ public abstract class Unite {
     protected ArrayList<Buff> buffs;
     protected ArrayList<Debuff> debuffs;
     protected boolean peutEtreAttaque= true;
-    protected ArrayList<Unite> listUniteTransforme; //pour la transformation en mouton
     private final LinkedList<int[]> coordTarget = new LinkedList<>();
 
     public Unite(Joueur joueur){ //constructeur d'unité
@@ -71,8 +70,6 @@ public abstract class Unite {
     public Competence[] getCompetences() { return competences; }
 
     public boolean getPeutEtreAttaque(){return peutEtreAttaque;}
-
-    public ArrayList<Unite> getListUniteTransforme(){return listUniteTransforme;}
 
     public ArrayList<Buff> getBuffs() { return buffs; }
 
@@ -209,9 +206,6 @@ public abstract class Unite {
     public boolean estMort(Terrain t, int xD, int yD){ //vérifie si l'unité (en prenant ses coordonnées) est morte, si oui, donne l'argent correspondant, et supprime l'unité tuée
         Unite defenseur = t.getPlateau()[yD][xD].getUnite(); //unité défenseur
         if (defenseur.getSanteCourante() <= 0) { //si le défenseur n'a plus de vie
-            if(defenseur.toString().equals("Mouton")){ //cas particulier du mouton
-                defenseur.getListUniteTransforme().remove(0); //supprime l'unité qui a été transformé en mouton
-            }
             gagnerArgentApresMort(defenseur);//l'attaquant gagne de l'argent
             joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());//retire le défenseur de la liste des unités du joueur possédant le défenseur
             t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);//retire l'unité du terrain
@@ -222,9 +216,6 @@ public abstract class Unite {
 
     public boolean estMort(Terrain t, Unite u){//vérifie si l'unité (lors de la compétence "Charge" du cavalier) est morte, si oui, donne l'argent correspondant, et supprime l'unité tuée
         if (u.getSanteCourante() <= 0) { //si l'unité défenseur n'a plus de vie
-            if(u.toString().equals("Mouton")){ //cas particulier du mouton
-                u.getListUniteTransforme().remove(0); //supprime l'unité qui a été transformé en mouton
-            }
             gagnerArgentApresMort(u); //l'attaquant gagne de l'argent
             joueur.annuleAjout(u); //retire le défenseur de la liste des unités du joueur possédant le défenseur
             t.getPlateau()[u.getCurrentY()][u.getCurrentX()].supprimerUniteCase(t.getPlateau()[u.getCurrentY()][u.getCurrentX()]); //retire l'unité du terrain
@@ -247,7 +238,7 @@ public abstract class Unite {
         j.setArgent(j.getArgent() + (uniteD.getCoutUnite()/3)); //attribue au joueur désigné, un tier de la valeur (en argent) de l'unité tuée
     }
 
-    public void utiliseCompetence(int xA, int yA, int xD,int yD,int c, Terrain t){
+    public void utiliseCompetence(int xA, int yA, int xD,int yD,int c, Terrain t){//Fonction qui fait utiliser une compétence à une unité
         if (c >=0 && c < competences.length)
             competences[c].useSkill(xA,yA,xD,yD,t);
     }
