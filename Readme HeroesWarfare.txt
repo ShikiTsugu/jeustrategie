@@ -76,3 +76,43 @@ de la flèche.
 
 
 Guide des unités : 
+-Archer: possède une compétence active, et une compétence passive. La compétence active est une attaque classique 
+et la compétence passive est que l'archer peut récupérer 1PA par tour, lorsqu'il tue une unité.
+
+-Assassin: possède quatre compétences actives. La première compétence est une attaque classique. La deuxième
+compétence "poignard empoisoné" applique l'effet poison à une unité ciblée. La troisième compétence "camouflage" permet
+d'appliquer l'effet camouflage à soi-même. La quatrième compétence "assassinat" permet d'achever une unité qui
+possède moins de 100 point de vie.
+
+-Cavalier: possède deux compétences actives. La première compétence est une attaque classique, et la suivante est
+compétence de charge (permettant de foncer en ligne droite vers une direction).
+
+-Hero: possède seulement une attaque classique. 
+
+-Lancier: possède deux compétences actives. La première compétence est une attaque classique et la deuxieme compétence
+"maniement agile" permet d'infliger moins de dégâts, mais permet d'étourdir une unité ciblée.
+
+-Mage: possède trois compétences actives. La première compétence est une attaque classique. La deuxième compétence
+"météore" permettant de faire des dégâts de zone depuis une unité ciblée. La troisième compétence "transformation en
+mouton" permet de transformer une unité ciblée en mouton temporairement.
+
+-Mouton: unité invocable seulement depuis la compétence "transformation en mouton" du mage. Possède seulement une 
+attaque classique.
+
+-Prétresse: possède trois compétences actives. La première compétence permet de soigner de 50 point de vie, une unité ciblée.
+La deuxième compétence "lumière aveuglante" permet d'appliquer "aveugle" à une unité ciblée (lui empèchant de se déplacer, ou 
+d'attaquer). La troisième compétence "implorer le seigneur" est utilisable une fois par partie, et par joueur, et sous la 
+condition d'avoir soigner avec 500 points de vie, avec une même prétresse. Cette compétence lui permet d'invoquer l'unité
+"Prophête" sur le terrain. Le prophète ne peut être invoqué qu'une seule fois par partie, et par joueur.
+
+-Prophête: unité invocable seulement depuis la compétence "implorer le seigneur" de la prétresse. Il possède trois compétences
+actives. La première compétence est une attaque classique. La deuxième compétence "donationPA" permet de redonner à une unité
+ciblée, 1PA. La troisième compétence "La voie du seigneur" permet de donner un effet spécial à une unité ciblée. Cet effet ne peut 
+être appliqué qu'à une seule unité, tant que cette unité ciblée est encore en vie. Cet effet double les points de vie actuels,
+la portée de déplacement et la portée d'attaque.
+
+-Templier: possède deux compétences actives et une compétence passive. La premiere compétence active est une attaque classique.
+La deuxièeme compétence active permet d'appliquer une immunité contre l'immobilisation, l'étourdissement, le ralentissement, et 
+l'aveuglement temporairement, à soi-même. La compétence passive permet de récupérer le double d'argent, lorsque le templier se
+trouve dans une case "gold" du terrain.
+
