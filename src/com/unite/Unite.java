@@ -215,6 +215,7 @@ public abstract class Unite {
             gagnerArgentApresMort(defenseur);//l'attaquant gagne de l'argent
             joueur.annuleAjout(t.getPlateau()[yD][xD].getUnite());//retire le défenseur de la liste des unités du joueur possédant le défenseur
             t.getPlateau()[yD][xD].supprimerUniteCase(t.getPlateau()[yD][xD]);//retire l'unité du terrain
+            t.getPlateau()[yD][xD].setDeathCount(true);//si l'unité meurt sur cette case, on marque cette case
             return true;
         }
         return false;

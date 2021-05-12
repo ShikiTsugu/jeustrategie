@@ -288,12 +288,10 @@ public class Jeu {
 
     public void setPlayer(boolean b){
         if (b){
-            setJoueur1(new Joueur(0, this));
             setActionjoueur1(new ActionJoueur(joueur1));
-            setJoueur2(new Joueur(0, this));
             setActionjoueur2(new ActionJoueur(joueur2));
         } else {
-            setJoueur1(new Joueur(0, this));
+            setJoueur1(joueur1);
             setActionjoueur1(new ActionJoueur(joueur1));
             setJoueur2(new Robot(0, this));
             setActionjoueur2(new ActionJoueur(joueur2));
