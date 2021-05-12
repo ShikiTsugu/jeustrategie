@@ -29,6 +29,6 @@ public class Hero extends Unite{
 
     public void setComp(){
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
-        competences[0] = new Competence("coup d'épée","inflige "+attaque+" points de dégâts à l'unité ciblée",event, pointAction-1,1, 0,this);
+        competences[0] = new Competence("coup d'épée","inflige "+attaque+" points de dégâts à l'unité ciblée",event, porteeAttaque, pointAction, 0,this);
     }
 }
