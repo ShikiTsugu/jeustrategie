@@ -17,7 +17,7 @@ public class Lancier extends Unite{
         porteeAttaque = 1; //discussion en cours
         pointActionMax = 2; //discussion en cours
         pointAction = 2; //discussion en cours
-        competences = new Competence[3];
+        competences = new Competence[2];
         setComp();
     }
 
