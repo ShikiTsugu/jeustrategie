@@ -134,7 +134,9 @@ trouve dans une case "gold" du terrain.
 - L'architecture du projet peut être retrouver dans le fichier "Architecture.png"
 
 **Répartition des tâches :**
-- Cintero François :
+- Cintero François : Gestion/utilisation des compétences qui utilisent une suite d'événement à effectuer,
+  sytème d'évenement pour application des soin/dégats aux unités ainsi que les altérations d'états et autres,
+  système d'altération d'état(Buff/Debuff).
 - Hou Maxime : Gestion du package player regroupant les classes ActionJoueur, Joueur et Robot. Implémentation de leurs différentes méthodes etc..
   Principale gestion de la classe Controlleur permettant l'activation des différents boutons afin d'exécuter des actions comme l'attaque, le déplacement etc..
   Gestion de quelques méthodes au sein de la classe Vue, principalement pour ce qui est du visuel 
