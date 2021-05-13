@@ -139,6 +139,6 @@ trouve dans une case "gold" du terrain.
   Principale gestion de la classe Controlleur permettant l'activation des différents boutons afin d'exécuter des actions comme l'attaque, le déplacement etc..
   Gestion de quelques méthodes au sein de la classe Vue, principalement pour ce qui est du visuel 
   mais aussi afin d'implémenter ce que j'ai introduit dans Controlleur, comme par exemple la sous classe escButtonAction dans Controlleur.
-- Quach Kévin : Gestion principale des unités, la création d'unité, le fonctionnement d'attaque, du déplacement (pathfinding), suppression des unités, etc.
-Gestion sur les altérations d'états (buff/débuff), les compétences des unités, etc. Affichage des différentes compétences en jeu. 
+- Quach Kévin : Gestion principale des unités, la création d'unité (archer, templier, cavalier, etc) , le fonctionnement d'attaque, du déplacement (pathfinding), suppression des unités, etc.
+Gestion sur les altérations d'états (buff/débuff), les compétences des unités, etc. Affichage des différentes compétences en jeu (les boutons des compétences, et la liste des compétence de chaque unité)
 - Zhang Sébastien :
