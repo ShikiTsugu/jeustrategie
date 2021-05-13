@@ -12,10 +12,9 @@ public class Tower extends CaseEffect{
         if  (unit == null){
             return;
         }
-        if (!unit.possedeBuff("Tower")){
-            unit.setPointAction(0);
-        }
-        unit.addBuff("Tower", 1);
+        Buff buff = new Buff("Tower",1,unit);
+        unit.getBuffs().add(buff);
+        buff.readBuff();
         unit.setComp();
     }
 

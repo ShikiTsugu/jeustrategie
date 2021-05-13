@@ -42,6 +42,7 @@ public class Buff extends AlterationEtat{
     public void Tower(){
         if (unite instanceof Archer || unite instanceof Mage) { //si c'est une unité pouvant attaquer à distance
             unite.setAttaque(unite.getAttInit() + 100); //augmente l'attaque de l'archer ou du mage de 100, tant qu'il se trouve dans une tour
+            tourRestant -=1;
         }
     }
 }
