@@ -9,6 +9,9 @@ public class Tower extends CaseEffect{
     }
 
     public void Effect(){
+        if  (unit == null){
+            return;
+        }
         if (!unit.possedeBuff("Tower")){
             unit.setPointAction(0);
         }
