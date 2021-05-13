@@ -131,7 +131,10 @@ trouve dans une case "gold" du terrain.
 
 **Répartition des tâches :**
 - Cintero François :
-- Hou Maxime :
+- Hou Maxime : Gestion du package player regroupant les classes ActionJoueur, Joueur et Robot. Implémentation de leurs différentes méthodes etc..
+  Principale gestion de la classe Controlleur permettant l'activation des différents boutons afin d'exécuter des actions comme l'attaque, le déplacement etc..
+  Gestion de quelques méthodes au sein de la classe Vue, principalement pour ce qui est du visuel 
+  mais aussi afin d'implémenter ce que j'ai introduit dans Controlleur, comme par exemple la sous classe escButtonAction dans Controlleur.
 - Quach Kévin : Gestion principale des unités, la création d'unité, le fonctionnement d'attaque, du déplacement (pathfinding), suppression des unités, etc.
 Gestion sur les altérations d'états (buff/débuff), les compétences des unités, etc. Affichage des différentes compétences en jeu. 
 - Zhang Sébastien :
