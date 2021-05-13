@@ -1,5 +1,6 @@
 package com.unite;
 
+//Class permettant de créer les altérations d'états pour buff et débuff
 public class AlterationEtat {
     protected String nom;
     protected Unite unite;

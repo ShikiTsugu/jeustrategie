@@ -1,5 +1,6 @@
 package com.unite;
 
+//Class héritant de AlterationEtat, contenant les fonctions de buff pour les unités
 public class Buff extends AlterationEtat{
     public Buff(String nom, int tourRestant, Unite u){
         super(nom, tourRestant, u);

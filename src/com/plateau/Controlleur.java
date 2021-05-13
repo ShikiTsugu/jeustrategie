@@ -14,10 +14,10 @@ import java.util.Random;
 
 //Classe de "controle" permettant de gérer les boutons sur l'interface graphique, le déplacement, l'attaque, l'achat etc..
 public class Controlleur {
-    private Vue vue;
+    private final Vue vue;
     private Jeu jeu;
     private int nbTour;
-    private Map map;
+    private final Map map;
     private MapSerialized mapSave;
 
     public Controlleur(Vue v){
@@ -32,18 +32,9 @@ public class Controlleur {
     }
 
     public MapSerialized getMapSave() { return mapSave; }
-
-    public Map getMap() {
-        return map;
-    }
-
-    public Jeu getJeu(){
-        return jeu;
-    }
-
-    public void setJeu(Jeu j){
-        jeu = j;
-    }
+    public Map getMap() { return map; }
+    public Jeu getJeu(){ return jeu; }
+    public void setJeu(Jeu j){ jeu = j; }
 
     //Regarde si l'unité choisit a bien été acheté ou non, va être utile pour ensuite la placer.
     public boolean acheteUnite(Joueur j, Unite u){
@@ -69,7 +60,7 @@ public class Controlleur {
             //Regarde toutes les cases sur le terrain, si c'est une zone possible d'achat selon le joueur,
             //on la marque en vert pour faciliter le placement, sinon la case est rouge.
             if(j.getJoueur()==jeu.getJoueur1()){
-                if(vue.terrain.getB1()[b.getY() / b.getHeight()][b.getX() / b.getWidth()]==true) {
+                if(vue.terrain.getB1()[b.getY() / b.getHeight()][b.getX() / b.getWidth()]) {
                     if (vue.getTerrain().getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estVide()) {
                         b.setContentAreaFilled(true);
                         b.setBackground(new Color(0, 150, 0));
@@ -83,7 +74,7 @@ public class Controlleur {
                 }
             }
             if(j.getJoueur()==jeu.getJoueur2()){
-                if(vue.terrain.getB2()[b.getY() / b.getHeight()][b.getX() / b.getWidth()]==true) {
+                if(vue.terrain.getB2()[b.getY() / b.getHeight()][b.getX() / b.getWidth()]) {
                     if (vue.getTerrain().getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estVide()) {
                         b.setContentAreaFilled(true);
                         b.setBackground(new Color(0, 150, 0));
@@ -100,7 +91,7 @@ public class Controlleur {
             //L'unité est ajouté seulement si la case est vide et si c'est bien dans la zone de placement du joueur.
             b.addActionListener((ActionEvent e) -> {
                 if (j.getJoueur()==jeu.getJoueur1()) {
-                    if (vue.terrain.getB1()[b.getY() / b.getHeight()][b.getX() / b.getWidth()] == true) {
+                    if (vue.terrain.getB1()[b.getY() / b.getHeight()][b.getX() / b.getWidth()]) {
                         if (vue.getTerrain().getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estVide()) {
                             j.placeUnite(vue.terrain, u, b.getX() / b.getWidth(), b.getY() / b.getHeight(), J1);
                         } else {
@@ -121,7 +112,7 @@ public class Controlleur {
                     }
                 }
                 if (j.getJoueur()==jeu.getJoueur2()) {
-                    if (vue.terrain.getB2()[b.getY() / b.getHeight()][b.getX() / b.getWidth()] == true) {
+                    if (vue.terrain.getB2()[b.getY() / b.getHeight()][b.getX() / b.getWidth()]) {
                         if (vue.getTerrain().getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estVide()) {
                             j.placeUnite(vue.terrain, u, b.getX() / b.getWidth(), b.getY() / b.getHeight(), J1);
                         } else {
@@ -198,7 +189,7 @@ public class Controlleur {
         }
     }
 
-    public void DetectWin(){
+    public void DetectWin(){ //permet d'afficher le joueur gagnant
         if (jeu.getJoueur1().getHero().getSanteCourante() <= 0) {
             JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 2 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
             vue.afficheIni();
@@ -281,10 +272,11 @@ public class Controlleur {
         }
     }
 
-    public void finDeTour(){
+    public void finDeTour(){ //fonction pour déterminer un fin de tour, d'un joueur "humain" ou du robot
         jeu.finDeTour();
         nbTour++;
-        if(jeu.getJoueur2().getIsHuman()) {
+        if(jeu.getJoueur2().getIsHuman()) { //si c'est un fin de tour d'un joueur humain
+            //affiche un popup pour indiquer le compteur de tour, et le tour du joueur
             JFrame findeTour = new JFrame();
             findeTour.setVisible(true);
             findeTour.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -297,15 +289,15 @@ public class Controlleur {
             panelFindeTour.setPreferredSize(new Dimension(200, 100));
             JLabel nTour = new JLabel("Tour " + nbTour);
             JLabel jTour = new JLabel("Tour du joueur");
-            if (jeu.getTourDuJoueur() == jeu.getJoueur1()) {
+            if (jeu.getTourDuJoueur() == jeu.getJoueur1()) { //à la fin du tour du joueur, réinitialisation des PA des unités du joueur venant de passer son tour
                 jeu.getJoueur1().resetPointAction();
                 jTour = new JLabel("Tour du joueur 1");
             } else if (jeu.getTourDuJoueur() == jeu.getJoueur2()) {
-                if (nbTour == 2) jeu.getJoueur2().getHero().setPointAction(0);
-                else jeu.getJoueur2().resetPointAction();
+                if (nbTour == 2) jeu.getJoueur2().getHero().setPointAction(0); //cas particulier
+                else jeu.getJoueur2().resetPointAction(); //à la fin du tour du joueur, réinitialisation des PA des unités du joueur venant de passer son tour
                 jTour = new JLabel("Tour du joueur 2");
             }
-            jeu.activateAlterationEtats();
+            jeu.activateAlterationEtats(); //applique et actualise les altérations d'états
 
             nTour.setPreferredSize(new Dimension(50, 25));
             jTour.setPreferredSize(new Dimension(50, 25));
@@ -317,18 +309,18 @@ public class Controlleur {
             panelFindeTour.add(jTour);
             findeTour.add(panelFindeTour);
             findeTour.pack();
-        }else{
+        }else{ //si l'adversaire est un robot
             if (jeu.getTourDuJoueur() == jeu.getJoueur1()) {
-                jeu.getJoueur1().resetPointAction();
-                JOptionPane.showMessageDialog(vue.getTerrainPanel(), "A votre tour, le robot a joué.", "Tour "+nbTour, JOptionPane.PLAIN_MESSAGE);
+                jeu.getJoueur1().resetPointAction(); //à la fin du tour du joueur, réinitialisation des PA des unités du joueur venant de passer son tour
+                JOptionPane.showMessageDialog(vue.getTerrainPanel(), "A votre tour, le robot a joué.", "Tour "+nbTour, JOptionPane.PLAIN_MESSAGE); //affiche que le robot a joué
             } else if (jeu.getTourDuJoueur() == jeu.getJoueur2()) {
-                if (nbTour == 2) jeu.getJoueur2().getHero().setPointAction(0);
-                else jeu.getJoueur2().resetPointAction();
+                if (nbTour == 2) jeu.getJoueur2().getHero().setPointAction(0); //cas particulier
+                else jeu.getJoueur2().resetPointAction(); //à la fin du tour du robot, réinitialisation des PA des unités du robot
             }
-            jeu.activateAlterationEtats();
+            jeu.activateAlterationEtats(); //applique et actualise les altérations d'états
         }
         vue.setTourJoueur(jeu.getTourDuJoueur());
-        TerrrainEffect();
+        TerrrainEffect(); 
         vue.generateTerrain();
         vue.generateTaskBar();
     }
@@ -422,7 +414,7 @@ public class Controlleur {
         }
         //Si l'unité n'a pas été déplacé vers sa cible, donc que ce n'est pas à portée ou qu'il n'y a pas de place
         // on continue de la faire se déplacer à une case possible aléatoire, notamment pour détecter une autre cible possible.
-        if(moved==false){
+        if(!moved){
             LinkedList<Case> casesDispo = getCaseDispo(u);
             Random rand = new Random();
             int randInd = rand.nextInt(casesDispo.size());

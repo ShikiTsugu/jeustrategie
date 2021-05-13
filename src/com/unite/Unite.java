@@ -7,6 +7,7 @@ import com.player.Joueur;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+//Class regroupant les fonctiosn liées aux unités, comme le déplacement (pathfnding), l'application d'altération d'état, l'application des compétences, etc
 public abstract class Unite {
     protected int santeMax;
     protected int santeCourante;
@@ -38,77 +39,42 @@ public abstract class Unite {
     public LinkedList<int[]> getCoordTarget(){return coordTarget;}
     
     public int getSanteMax(){ return santeMax; }
-
     public int getSanteCourante(){ return santeCourante; }
-
     public int getAttaque(){ return attaque; }
-
     public int getAttInit() { return attInit; }
-    
     public int getCoutUnite(){ return coutUnite; }
-    
     public int getPorteeDeplacement(){ return porteeDeplacement; }
-    
     public int getPorteeAttaque(){ return porteeAttaque; }
-
     public int getPointActionMax() { return pointActionMax; }
-    
     public int getPointAction(){ return pointAction; }
-    
     public Joueur getJoueur(){ return joueur; }
-
     public Terrain getTerrain() { return terrain;  }
-
     public Case getPositionUnite(){ return positionUnite; }
-    
     public ArrayList<Case> getDeplacementDisponible(){return deplacementDisponible;}
-
     public int getCurrentX() { return currentX; }
-
     public int getCurrentY() { return currentY; }
-
     public Competence[] getCompetences() { return competences; }
-
     public boolean getPeutEtreAttaque(){return peutEtreAttaque;}
-
+    public ArrayList<Unite> getListUniteTransforme(){return listUniteTransforme;}
     public ArrayList<Buff> getBuffs() { return buffs; }
-
     public ArrayList<Debuff> getDebuffs() { return debuffs; }
-
     public void setSanteMax(int santeMax){ this.santeMax = santeMax; }
-    
     public void setSanteCourante(int santeCourante){ this.santeCourante = santeCourante; }
-    
     public void setAttaque(int attaque){ this.attaque = attaque; }
-    
     public void setCoutUnite(int coutUnite){ this.coutUnite = coutUnite; }
-    
     public void setPorteeDeplacement(int porteeDeplacement){ this.porteeDeplacement = porteeDeplacement; }
-    
     public void setPorteeAttaque(int porteeAttaque){ this.porteeAttaque = porteeAttaque; }
-
     public void setPointActionMax(int pointActionMax){ this.pointActionMax = pointActionMax; }
-    
     public void setPointAction(int pointAction){ this.pointAction = pointAction; }
-    
     public void setJoueur(Joueur joueur){ this.joueur = joueur; }
-
     public void setTerrain(Terrain terrain) { this.terrain = terrain;  }
-
     public void setPositionUnite(Case positionUnite){ this.positionUnite = positionUnite; }
-
     public void setCurrentX(int currentX) { this.currentX = currentX; }
-
     public void setCurrentY(int currentY) { this.currentY = currentY; }
-
     public void setCompetences(Competence[] competences) { this.competences = competences; }
-
     public void setDeplacementDisponible(ArrayList<Case> deplacementDisponible){this.deplacementDisponible = deplacementDisponible;}
-
     public void addBuff(String a,int n){ buffs.add(new Buff(a,n,this)); }
-
     public void addDebuff(String a,int n){ debuffs.add(new Debuff(a,n,this)); }
-
     public void setPeutEtreAttaque(boolean peutEtreAttaque){this.peutEtreAttaque = peutEtreAttaque;}
 
     public void readAlterationEtats(){ //permet d'actualiser et appliquer la liste d'altération d'état pour chaque unité
