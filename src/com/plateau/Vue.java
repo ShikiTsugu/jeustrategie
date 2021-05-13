@@ -474,7 +474,7 @@ public class Vue extends JFrame{
         TerrainPanel.updateUI();
     }
 
-
+    //Applique le visuel pour les cases Spéciaux
     public JButton setBorder(JButton bt, int x, int y){
         if (terrain.plateau[x][y] instanceof CaseGold) {
             bt.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
