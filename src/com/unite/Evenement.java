@@ -123,7 +123,9 @@ public class Evenement {
 
 
         if(event.equals("appliqueBuffProphete") && t.getPlateau()[y+this.y][x+this.x].getUnite().isHero() == false){
-            t.getPlateau()[y+this.y][x+this.x].getUnite().addBuff("buffProphete", value);
+            Buff buff = new Buff("buffProphete",value,t.getPlateau()[y+this.y][x+this.x].getUnite());
+            t.getPlateau()[y+this.y][x+this.x].getUnite().getBuffs().add(buff);
+            buff.readBuff();
             resultat.put("success",1);
             return resultat;
         }
