@@ -40,6 +40,11 @@ public class Map{
 
     public void Map5x5(){
         createTerrain(5, 5, 2);
+        map.getPlateau()[0][1].setObstacle(true);
+        map.getPlateau()[0][map.getPlateau()[0].length-2].setObstacle(true);
+        map.getPlateau()[0][1].setObstacle(true);
+        map.getPlateau()[map.getPlateau()[0].length-1][1].setObstacle(true);
+        map.getPlateau()[map.getPlateau()[0].length-1][map.getPlateau()[0].length-2].setObstacle(true);
     }
 
     public void Map14x6(){
@@ -47,9 +52,11 @@ public class Map{
         map.getPlateau()[0][4].setObstacle(true);
         map.getPlateau()[1][4].setObstacle(true);
         map.getPlateau()[1][5].setObstacle(true);
+        map.getPlateau()[map.getPlateau().length-1][0].setObstacle(true);
         map.getPlateau()[map.getPlateau().length-1][(map.getPlateau()[0].length-1)-4].setObstacle(true);
         map.getPlateau()[map.getPlateau().length-2][(map.getPlateau()[0].length-1)-4].setObstacle(true);
         map.getPlateau()[map.getPlateau().length-2][(map.getPlateau()[0].length-1)-5].setObstacle(true);
+        map.getPlateau()[0][map.getPlateau()[0].length-1].setObstacle(true);
         map.setEffectCase(map.getPlateau()[0].length/2,map.getPlateau().length/2, new CaseGold());
         map.setEffectCase(map.getPlateau()[0].length/2-1,map.getPlateau().length/2-1, new Tower());
         CheckSpecialSpawnable();
@@ -61,6 +68,14 @@ public class Map{
         map.setEffectCase(0,map.getPlateau().length-1, new CaseGold());
         map.setEffectCase(map.getPlateau()[0].length-1,0, new CaseGold());
         map.setEffectCase(map.getPlateau()[0].length-1,map.getPlateau().length-1, new CaseGold());
+        map.getPlateau()[0][4].setObstacle(true);
+        map.getPlateau()[1][4].setObstacle(true);
+        map.getPlateau()[1][5].setObstacle(true);
+        map.getPlateau()[2][5].setObstacle(true);
+        map.getPlateau()[map.getPlateau().length-1][(map.getPlateau()[0].length-1)-4].setObstacle(true);
+        map.getPlateau()[map.getPlateau().length-2][(map.getPlateau()[0].length-1)-4].setObstacle(true);
+        map.getPlateau()[map.getPlateau().length-2][(map.getPlateau()[0].length-1)-5].setObstacle(true);
+        map.getPlateau()[map.getPlateau().length-3][(map.getPlateau()[0].length-1)-5].setObstacle(true);
         CheckSpecialSpawnable();
     }
 
