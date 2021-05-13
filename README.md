@@ -16,11 +16,11 @@ Puis, clonez le projet avec la commande :
 
 	git clone https://gaufre.informatique.univ-paris-diderot.fr/zhangs/jeu-de-strat.git
 
-Veillez à ce que vous soyez bien sur la branche master, le cas échéant faites :
+Une fois le projet cloné, veillez à ce que vous soyez bien sur la branche master en ouvrant un terminal depuis le dossier, le cas échéant faites :
     
     git checkout master
 
-Une fois le projet cloné, ouvrir un terminal dans le dossier du projet puis saisir la commande :
+Une fois tout en ordre, utilisez cette commande dans le dossier sur la branche master afin de compiler le jeu :
 	
 	./gradlew run
 
