@@ -132,5 +132,6 @@ trouve dans une case "gold" du terrain.
 **Répartition des tâches :**
 - Cintero François :
 - Hou Maxime :
-- Quach Kévin :
+- Quach Kévin : Gestion principale des unités, la création d'unité, le fonctionnement d'attaque, du déplacement (pathfinding), suppression des unités, etc.
+Gestion sur les altérations d'états (buff/débuff), les compétences des unités, etc. Affichage des différentes compétences en jeu. 
 - Zhang Sébastien :
