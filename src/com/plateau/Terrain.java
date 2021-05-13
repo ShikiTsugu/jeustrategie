@@ -34,6 +34,10 @@ public class Terrain implements Serializable {
         return b2;
     }
 
+    public void setB1(boolean[][] b1) { this.b1 = b1; }
+
+    public void setB2(boolean[][] b2) { this.b2 = b2; }
+
     public void setBuyableArea(boolean[][] b1, boolean[][] b2){
         for(int i=0;i<b1.length;i++){
             for(int j=0;j<b1[i].length;j++){
