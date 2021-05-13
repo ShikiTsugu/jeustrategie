@@ -64,9 +64,7 @@ public class Competence {
             unite.setPointAction(unite.getPointAction()-cout);
             cooldownActuel = cooldown;
             for (int i = 0; i < effets.length; i++) {
-                System.out.println(effets[i].getEvent());
                 HashMap<String,Integer> recap = effets[i].readEvent(xD,yD,terrain);
-
                 //récupère les informations d'un évenement
                 for(String j : recap.keySet()){
                     if(recap.get(j) >= 1) {

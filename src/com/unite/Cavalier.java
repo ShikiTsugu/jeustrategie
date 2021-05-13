@@ -7,15 +7,15 @@ public class Cavalier extends Unite{
     
     public Cavalier(Joueur joueur){//constructeur du Cavalier
         super(joueur);
-        santeMax = 300; //discussion en cours
+        santeMax = 300;
         santeCourante = 300;
-        attaque = 150; //discussion en cours
-        attInit = 150; //discussion en cours
-        coutUnite = 600; //discussion en cours
-        porteeDeplacement = 6; //discussion en cours
-        porteeAttaque = 1; //discussion en cours
-        pointActionMax = 2; //discussion en cours
-        pointAction = 2; //discussion en cours
+        attaque = 150;
+        attInit = 150;
+        coutUnite = 600;
+        porteeDeplacement = 6;
+        porteeAttaque = 1;
+        pointActionMax = 2;
+        pointAction = 2;
         competences = new Competence[2];
         setComp();
     }
