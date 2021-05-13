@@ -16,6 +16,10 @@ Puis, clonez le projet avec la commande :
 
 	git clone https://gaufre.informatique.univ-paris-diderot.fr/zhangs/jeu-de-strat.git
 
+Veillez à ce que vous soyez bien sur la branche master, le cas échéant faites :
+    
+    git checkout master
+
 Une fois le projet cloné, ouvrir un terminal dans le dossier du projet puis saisir la commande :
 	
 	./gradlew run
