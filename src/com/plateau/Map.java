@@ -27,6 +27,17 @@ public class Map{
         }
     }
 
+    public void CheckSpecialSpawnable(){
+        for (int i = 0; i < b1.length; i++){
+            for (int j = 0; j < b1[i].length; j++){
+                if (map.getPlateau()[i][j] instanceof CaseEffect){
+                    b1[i][j] = false;
+                    b2[i][j] = false;
+                }
+            }
+        }
+    }
+
     public void Map5x5(){
         createTerrain(5, 5, 2);
     }
@@ -41,6 +52,7 @@ public class Map{
         map.getPlateau()[map.getPlateau().length-2][(map.getPlateau()[0].length-1)-5].setObstacle(true);
         map.setEffectCase(map.getPlateau()[0].length/2,map.getPlateau().length/2, new CaseGold());
         map.setEffectCase(map.getPlateau()[0].length/2-1,map.getPlateau().length/2-1, new Tower());
+        CheckSpecialSpawnable();
     }
 
     public void Map14x6Gold(){
@@ -49,6 +61,7 @@ public class Map{
         map.setEffectCase(0,map.getPlateau().length-1, new CaseGold());
         map.setEffectCase(map.getPlateau()[0].length-1,0, new CaseGold());
         map.setEffectCase(map.getPlateau()[0].length-1,map.getPlateau().length-1, new CaseGold());
+        CheckSpecialSpawnable();
     }
 
     public Terrain getTerrain(){ return map; }
