@@ -55,7 +55,6 @@ public abstract class Unite {
     public int getCurrentY() { return currentY; }
     public Competence[] getCompetences() { return competences; }
     public boolean getPeutEtreAttaque(){return peutEtreAttaque;}
-    public ArrayList<Unite> getListUniteTransforme(){return listUniteTransforme;}
     public ArrayList<Buff> getBuffs() { return buffs; }
     public ArrayList<Debuff> getDebuffs() { return debuffs; }
     public void setSanteMax(int santeMax){ this.santeMax = santeMax; }

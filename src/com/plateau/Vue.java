@@ -438,9 +438,7 @@ public class Vue extends JFrame{
                     terrainBt.add(bt);
                 } else {
                     if(terrain.plateau[x][y].estObstacle()){
-                        Random rand = new Random();
-                        int num = 1+rand.nextInt(4-1);
-                        JButton bt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/obstacle"+num+".png"));
+                        JButton bt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/obstacle2.png"));
                         bt = setBorder(bt, x, y);
                         TerrainPanel.add(bt);
                         bt.setOpaque(false);
