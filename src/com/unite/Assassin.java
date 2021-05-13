@@ -4,17 +4,17 @@ import com.player.Joueur;
 
 public class Assassin extends Unite{
 
-    public Assassin(Joueur joueur){
+    public Assassin(Joueur joueur){//constructeur d'Assassin
         super(joueur);
-        santeMax = 100; //discussion en cours
+        santeMax = 100;
         santeCourante = 100;
-        attaque = 200; //discussion en cours
-        attInit = 200; //discussion en cours
-        coutUnite = 500; //discussion en cours
-        porteeDeplacement = 5; //discussion en cours
-        porteeAttaque = 1; //discussion en cours
-        pointActionMax = 2; //discussion en cours
-        pointAction = 2; //discussion en cours
+        attaque = 200;
+        attInit = 200;
+        coutUnite = 500;
+        porteeDeplacement = 5;
+        porteeAttaque = 1;
+        pointActionMax = 2;
+        pointAction = 2;
         competences = new Competence[4];
         setComp();
     }
@@ -27,7 +27,7 @@ public class Assassin extends Unite{
         return false;
     }
 
-    public void setComp() {
+    public void setComp() {//fonction qui initialise les compétences
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
         competences[0] = new Competence("poignarder","inflige "+attaque+" points de dégâts à l'unité ciblée",event, porteeAttaque,pointAction-1, 0,this);
         Evenement[] event2 = {new Evenement("infligeDegats",0,0,attaque-150,joueur),

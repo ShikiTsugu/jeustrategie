@@ -7,18 +7,18 @@ import java.util.HashMap;
 
 public class Prophete extends Unite{
 
-    protected Unite unite_buffed;
-    public Prophete(Joueur joueur){
+    protected Unite unite_buffed;//contient l'unité qui a été amélioré par le BuffProphète
+    public Prophete(Joueur joueur){//constructeur de Prophete
         super(joueur);
-        santeMax = 500; //discussion en cours
+        santeMax = 500;
         santeCourante = 500;
-        attaque = 150; //discussion en cours
-        attInit = 150; //discussion en cours
-        coutUnite = 0; //discussion en cours
-        porteeDeplacement = 4; //discussion en cours
-        porteeAttaque = 4; //discussion en cours
-        pointActionMax = 2; //discussion en cours
-        pointAction = 2; //discussion en cours
+        attaque = 150;
+        attInit = 150;
+        coutUnite = 0;
+        porteeDeplacement = 4;
+        porteeAttaque = 4;
+        pointActionMax = 2;
+        pointAction = 2;
         competences = new Competence[3];
         setComp();
     }
@@ -28,7 +28,7 @@ public class Prophete extends Unite{
         return "Prophete";
     }
 
-    public void utiliseCompetence(int xA, int yA, int xD,int yD,int c, Terrain t){
+    public void utiliseCompetence(int xA, int yA, int xD,int yD,int c, Terrain t){//Modification de la fonction pour ajouter les restriction d'utilisation de appliqueBuffProphete
         HashMap<String,Integer> recap = new HashMap<String,Integer>();
         if (c >=0 && c < competences.length) {
             if(unite_buffed != null && c ==2 && unite_buffed.estDecede() == false){
@@ -47,7 +47,7 @@ public class Prophete extends Unite{
         return false;
     }
 
-    public void setComp() {
+    public void setComp() {//fonction qui initialise les compétences
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
         competences[0] = new Competence("tir maquique","inflige "+attaque+ " points de dégâts à l'unité ciblée",event, porteeAttaque+1,pointAction-1, 0,this);
         Evenement[] event2 = {new Evenement("donnePa",0,0,150,joueur)};

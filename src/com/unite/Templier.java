@@ -4,17 +4,17 @@ import com.player.Joueur;
 
 public class Templier extends Unite{
     
-    public Templier(Joueur joueur){
+    public Templier(Joueur joueur){//constructeur de Templier
         super(joueur);
-        santeMax = 150; //discussion en cours
+        santeMax = 150;
         santeCourante = 150;
-        attaque = 50; //discussion en cours
-        attInit = 50; //discussion en cours
-        coutUnite = 100; //discussion en cours
-        porteeDeplacement = 4; //discussion en cours
-        porteeAttaque = 1; //discussion en cours
-        pointActionMax = 2; //discussion en cours
-        pointAction = 2; //discussion en cours
+        attaque = 50;
+        attInit = 50;
+        coutUnite = 100;
+        porteeDeplacement = 4;
+        porteeAttaque = 1;
+        pointActionMax = 2;
+        pointAction = 2;
         competences = new Competence[3];
         setComp();
     }
@@ -27,7 +27,7 @@ public class Templier extends Unite{
         return false;
     }
 
-    public void setComp() {
+    public void setComp() {//fonction qui initialise les compétences
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
         competences[0] = new Competence("coup d'épée","inflige "+attaque+" points de dégâts à l'unité ciblée",event, porteeAttaque,pointAction-1, 0,this);
         Evenement[] event2 = {new Evenement("appliqueResistEtourdissement",0,0,5,joueur),

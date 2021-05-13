@@ -3,18 +3,18 @@ package com.unite;
 import com.player.Joueur;
 
 public class Mouton extends Unite{
-    protected Unite unite;
-    public Mouton(Joueur joueur) {
+    protected Unite unite;//contient l'unité transformé
+    public Mouton(Joueur joueur) {//constructeur de Mouton
         super(joueur);
-        santeMax = 50; //discussion en cours
-        santeCourante = 50; //discusssion en cours
-        attaque = 50; //discussion en cours
-        attInit = 50; //discussion en cours
-        coutUnite = 0; //discussion en cours
-        porteeDeplacement = 4; //discussion en cours
-        porteeAttaque = 1; //discussion en cours
-        pointActionMax = 2; //discussion en cours
-        pointAction = 2; //discussion en cours
+        santeMax = 50;
+        santeCourante = 50;
+        attaque = 50;
+        attInit = 50;
+        coutUnite = 0;
+        porteeDeplacement = 4;
+        porteeAttaque = 1;
+        pointActionMax = 2;
+        pointAction = 2;
         competences = new Competence[1];
         setComp();
     }
@@ -35,7 +35,7 @@ public class Mouton extends Unite{
         return false;
     }
 
-    public void setComp() {
+    public void setComp() {//fonction qui initialise les compétences
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
         competences[0] = new Competence("Attaque du mouton","inflige "+attaque+" points de dégâts à l'unité ciblée",event, porteeAttaque,pointAction-1, 0,this);
     }

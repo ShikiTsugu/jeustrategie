@@ -6,15 +6,15 @@ public class Mage extends Unite{
     
     public Mage(Joueur joueur){
         super(joueur);
-        santeMax = 125; //discussion en cours
+        santeMax = 125;
         santeCourante = 125;
-        attaque = 125; //discussion en cours
-        attInit = 125; //discussion en cours
-        coutUnite = 250; //discussion en cours
-        porteeDeplacement = 4; //discussion en cours
-        porteeAttaque = 4; //discussion en cours
-        pointActionMax = 1; //discussion en cours
-        pointAction = 1; //discussion en cours
+        attaque = 125;
+        attInit = 125;
+        coutUnite = 250;
+        porteeDeplacement = 4;
+        porteeAttaque = 4;
+        pointActionMax = 1;
+        pointAction = 1;
         competences = new Competence[3];
         setComp();
     }
@@ -27,7 +27,7 @@ public class Mage extends Unite{
         return false;
     }
 
-    public void setComp() {
+    public void setComp() {//fonction qui initialise les compétences
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
         competences[0] = new Competence("tir maquique","inflige "+attaque+" points de dégâts à l'unité ciblée",event, porteeAttaque,pointAction, 0,this);
         Evenement[] event2 = {new Evenement("infligeDegats",0,0,attaque,joueur),
