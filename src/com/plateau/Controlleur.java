@@ -139,7 +139,7 @@ public class Controlleur {
         }
     }
 
-    public void useSkill(Joueur j, JButton cast,int c) {
+    public void useSkill(JButton cast, int c) {
         int[] coordI = {cast.getX() / cast.getWidth(), cast.getY() / cast.getHeight()};
         int[] coordF = new int[2];
         Unite atq = vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit;
@@ -166,8 +166,20 @@ public class Controlleur {
                 coordF[1] = b.getY() / b.getHeight();
                 try {
                     vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit.utiliseCompetence(coordI[0], coordI[1], coordF[0], coordF[1], c, vue.terrain);
+                    if(vue.terrain.getPlateau()[coordF[1]][coordF[0]].estVide()
+                            && !vue.terrain.getPlateau()[coordF[1]][coordF[0]].getDeathCount()){
+                        JOptionPane.showMessageDialog(vue.getTerrainPanel(),
+                                "Vous attaquez dans le vide",
+                                "",
+                                JOptionPane.PLAIN_MESSAGE);
+                    }
                 }catch (NullPointerException ex){
-                    if(atq.toString().equals("Cavalier"))JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Vous venez de charger droit devant vous", "", JOptionPane.PLAIN_MESSAGE);
+                    if(atq.getCompetences()[c].getName().equals("charge")){
+                        JOptionPane.showMessageDialog(vue.getTerrainPanel(),
+                                "Vous venez de charger droit devant vous",
+                                "",
+                                JOptionPane.PLAIN_MESSAGE);
+                    }
                 }
                 vue.generateTerrain();
                 vue.generateTaskBar();
@@ -251,15 +263,13 @@ public class Controlleur {
     }
 
     public void TerrrainEffect(){
-        try {
-            for (int x = 0; x < vue.terrain.plateau.length; x++) {
-                for (int y = 0; y < vue.terrain.plateau[x].length; y++) {
-                    if (vue.terrain.plateau[x][y] instanceof CaseEffect){
-                        ((CaseEffect) vue.terrain.plateau[x][y]).Effect();
-                    }
+        for (int x = 0; x < vue.terrain.plateau.length; x++) {
+            for (int y = 0; y < vue.terrain.plateau[x].length; y++) {
+                if (vue.terrain.plateau[x][y] instanceof CaseEffect){
+                    ((CaseEffect) vue.terrain.plateau[x][y]).Effect();
                 }
             }
-        } catch (NullPointerException e) {}
+        }
     }
 
     public void finDeTour(){ //fonction pour déterminer un fin de tour, d'un joueur "humain" ou du robot
@@ -335,6 +345,7 @@ public class Controlleur {
         quit.addActionListener((ActionEvent e) -> {
             esc.dispose();
             vue.afficheIni();
+            LoadMap();
         });
         choice.add(resume);
         choice.add(quit);

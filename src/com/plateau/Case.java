@@ -12,18 +12,25 @@ public class Case implements Serializable {
     protected int id;
     protected static int incremente;
     protected int hauteur;
+    protected boolean deathCount;
 
     public Case(){
         unit = null;
         obstacle = false;
         id=incremente++;
+        deathCount=false;
     }
 
     public Case(Unite u){
         unit = u;
         obstacle = false;
         id=incremente++;
+        deathCount=false;
     }
+
+    public boolean getDeathCount(){return deathCount;}
+
+    public void setDeathCount(boolean b){deathCount=b;}
 
     public int getId(){return id;}
 
@@ -41,6 +48,7 @@ public class Case implements Serializable {
     
     public void setUnite(Unite unit){
         this.unit = unit;
+        deathCount=false;
     }
 
     public void setObstacle(boolean obstacle){this.obstacle = obstacle;}

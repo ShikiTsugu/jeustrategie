@@ -13,6 +13,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Vue extends JFrame{
 
@@ -147,12 +148,15 @@ public class Vue extends JFrame{
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(500);
             terrain = controlleur.getMap().getTerrain();
+            try {
+                imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/map2.png")));
+            }catch(IOException ex){
+                System.out.println("Fichier non trouvé, chemin incorrecte.");
+            }
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
             imagePane.add(TaskBar,BorderLayout.SOUTH);
-            Map5x5.setFocusable(false);
         });
-        Map5x5.setFocusable(false);
 
         JButton Map14x6 = new JButton("Map 14x6");
         Map14x6.setFont(new Font("Monospaced",Font.BOLD,20));
@@ -163,12 +167,15 @@ public class Vue extends JFrame{
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(1000);
             terrain = controlleur.getMap().getTerrain();
+            try {
+                imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/plaine.png")));
+            }catch(IOException ex){
+                System.out.println("Fichier non trouvé, chemin incorrecte.");
+            }
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
             imagePane.add(TaskBar,BorderLayout.SOUTH);
-            Map14x6.setFocusable(false);
         });
-        Map14x6.setFocusable(false);
 
         JButton Map14x6Gold = new JButton("Map 14x6 Gold");
         Map14x6Gold.setFont(new Font("Monospaced",Font.BOLD,20));
@@ -179,12 +186,15 @@ public class Vue extends JFrame{
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(2000);
             terrain = controlleur.getMap().getTerrain();
+            try {
+                imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/map3.png")));
+            }catch(IOException ex){
+                System.out.println("Fichier non trouvé, chemin incorrecte.");
+            }
             AfficheTerrain();
             imagePane.add(TerrainPanel,BorderLayout.CENTER);
             imagePane.add(TaskBar,BorderLayout.SOUTH);
-            Map14x6Gold.setFocusable(false);
         });
-        Map14x6Gold.setFocusable(false);
 
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);
@@ -207,11 +217,6 @@ public class Vue extends JFrame{
 
     /*Affichage d'un terrain*/
     public void AfficheTerrain(){
-        try {
-            imagePane.imModel.setImage(ImageIO.read(new File(Jeu.selectGoodPath() + "/assets/plaine.png")));
-        }catch(IOException e){
-            System.out.println("Fichier non trouvé, chemin incorrecte.");
-        }
         imagePane.removeAll();
         imagePane.setLayout(new BorderLayout());
         generateTerrain();
@@ -342,7 +347,7 @@ public class Vue extends JFrame{
         resetButton(btSkill1);
         btSkill1.setEnabled(true);
         btSkill1.addActionListener((ActionEvent useSkill1) ->{
-            controlleur.useSkill(tourJoueur,b,0);
+            controlleur.useSkill(b,0);
         });
     }
 
@@ -350,7 +355,7 @@ public class Vue extends JFrame{
         resetButton(btSkill2);
         btSkill2.setEnabled(true);
         btSkill2.addActionListener((ActionEvent useSkill1) ->{
-            controlleur.useSkill(tourJoueur,b,1);
+            controlleur.useSkill(b,1);
         });
     }
 
@@ -358,7 +363,7 @@ public class Vue extends JFrame{
         resetButton(btSkill3);
         btSkill3.setEnabled(true);
         btSkill3.addActionListener((ActionEvent useSkill1) ->{
-            controlleur.useSkill(tourJoueur,b,2);
+            controlleur.useSkill(b,2);
         });
     }
 
@@ -366,7 +371,7 @@ public class Vue extends JFrame{
         resetButton(btSkill4);
         btSkill4.setEnabled(true);
         btSkill4.addActionListener((ActionEvent useSkill1) ->{
-            controlleur.useSkill(tourJoueur,b,3);
+            controlleur.useSkill(b,3);
         });
     }
 
@@ -388,6 +393,7 @@ public class Vue extends JFrame{
         //tourJoueur.displayList();
         for (int x = 0; x < terrain.plateau.length; x++){
             for (int y = 0; y < terrain.plateau[x].length; y++){
+                terrain.plateau[x][y].setDeathCount(false);
                 if (terrain.plateau[x][y].unit != null) {
                     JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
                     setBorder(bt, x, y);
@@ -404,7 +410,6 @@ public class Vue extends JFrame{
                     bt.setToolTipText(pv.getText());
                     TerrainPanel.add(bt);
                     bt.addActionListener((ActionEvent e) -> {
-                        System.out.println(terrain.plateau[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].unit);
                         try {
                             if (terrain.getPlateau()[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].getUnite().getPointAction() > 0) {
                                 initialiseStats(bt);
@@ -433,7 +438,9 @@ public class Vue extends JFrame{
                     terrainBt.add(bt);
                 } else {
                     if(terrain.plateau[x][y].estObstacle()){
-                        JButton bt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/obstacle1.png"));
+                        Random rand = new Random();
+                        int num = 1+rand.nextInt(4-1);
+                        JButton bt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/obstacle"+num+".png"));
                         bt = setBorder(bt, x, y);
                         TerrainPanel.add(bt);
                         bt.setOpaque(false);
