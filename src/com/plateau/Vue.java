@@ -36,6 +36,7 @@ public class Vue extends JFrame{
     private JLabel taskbarbg = new JLabel(new ImageIcon(Jeu.selectGoodPath()+"/assets/taskbarbg.png"));
     private JButton btStatsSkill = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/stats.png"));
     private KeyListener k;
+    private int currentMap = 0;
 
     public String[] getListeUnit(){return listeUnit;}
 
@@ -144,6 +145,7 @@ public class Vue extends JFrame{
         Map5x5.setBackground(new Color(37, 150, 131));
         Map5x5.setForeground(Color.WHITE);
         Map5x5.addActionListener((ActionEvent e) -> {
+            currentMap = 1;
             controlleur.SetSmallAsMap();
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(500);
@@ -163,6 +165,7 @@ public class Vue extends JFrame{
         Map14x6.setBackground(new Color(37, 150, 131));
         Map14x6.setForeground(Color.WHITE);
         Map14x6.addActionListener((ActionEvent e) -> {
+            currentMap = 2;
             controlleur.SetBigAsMap();
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(1000);
@@ -182,6 +185,7 @@ public class Vue extends JFrame{
         Map14x6Gold.setBackground(new Color(37, 150, 131));
         Map14x6Gold.setForeground(Color.WHITE);
         Map14x6Gold.addActionListener((ActionEvent e) -> {
+            currentMap = 3;
             controlleur.SetBigGoldAsMap();
             controlleur.getJeu().AjouteHero();
             controlleur.getJeu().setStartingMoney(2000);
@@ -438,7 +442,14 @@ public class Vue extends JFrame{
                     terrainBt.add(bt);
                 } else {
                     if(terrain.plateau[x][y].estObstacle()){
-                        JButton bt = new JButton(new ImageIcon(Jeu.selectGoodPath()+"/assets/obstacle2.png"));
+                        JButton bt = new JButton();
+                        if (currentMap==1){
+                            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/obstacle1.png"));
+                        }else if (currentMap==2){
+                            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/obstacle2.png"));
+                        }else if (currentMap==3){
+                            bt.setIcon(new ImageIcon(Jeu.selectGoodPath() + "/assets/obstacle3.png"));
+                        }
                         bt = setBorder(bt, x, y);
                         TerrainPanel.add(bt);
                         bt.setOpaque(false);
