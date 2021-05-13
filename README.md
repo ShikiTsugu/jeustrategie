@@ -1,4 +1,8 @@
 **Heroes Warfare guide :**
+-
+**Qu'est ce que Heroes Warfare ?**
+- Heroes Warfare est un jeu de stratégie dans lequel vous combattez en achetant des unités.
+Le but du jeu est de protéger votre héro et de tuer le héro adverse.
 
 **Pré-requis :**
 
@@ -20,6 +24,8 @@ Gradle devrait être entrain de s'installer puis le jeu devrait se lancer à la 
 
 
 **Comment jouer ?**
+-
+
 
 **Interface :**
 - Au menu principal, cliquez sur jouer pour passer à l'écran suivant, ou quitter pour quitter le jeu.
@@ -40,7 +46,7 @@ si vous quittez, vous retournerez au menu principal.
 
 
 **Règle du jeu :**
-
+-
 **Condition de victoire :**
 - Eliminer le héro adverse.
 
@@ -118,3 +124,13 @@ La deuxièeme compétence active permet d'appliquer une immunité contre l'immob
 l'aveuglement temporairement, à soi-même. La compétence passive permet de récupérer le double d'argent, lorsque le templier se
 trouve dans une case "gold" du terrain.
 
+**Comment a été codé le projet ?**
+-
+- Vous trouverez une explication en détail de toutes les méthodes et classes au sein du code en lui même, sous forme de commentaires.
+- L'architecture du projet peut être retrouver dans le fichier "Architecture.png"
+
+**Répartition des tâches :**
+- Cintero François :
+- Hou Maxime :
+- Quach Kévin :
+- Zhang Sébastien :
