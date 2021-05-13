@@ -141,4 +141,4 @@ trouve dans une case "gold" du terrain.
   mais aussi afin d'implémenter ce que j'ai introduit dans Controlleur, comme par exemple la sous classe escButtonAction dans Controlleur.
 - Quach Kévin : Gestion principale des unités, la création d'unité (archer, templier, cavalier, etc) , le fonctionnement d'attaque, du déplacement (pathfinding), suppression des unités, etc.
 Gestion sur les altérations d'états (buff/débuff), les compétences des unités, etc. Affichage des différentes compétences en jeu (les boutons des compétences, et la liste des compétence de chaque unité)
-- Zhang Sébastien :
+- Zhang Sébastien : Visuel du Jeu (Les menus, le Terrain de jeu, la barre d'action), Creation du terrain de jeu et des cases à effet (Les Map, CaseGold et Tower), Gestion de la sérialisation des maps 
