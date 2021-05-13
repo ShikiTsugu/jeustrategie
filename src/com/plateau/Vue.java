@@ -379,7 +379,7 @@ public class Vue extends JFrame{
         });
     }
 
-    public void initialiseBtStatsSkill(JButton b){
+    public void initialiseBtStatsSkill(JButton b){ //initialise le bouton pour afficher la liste des compétences de l'unité
         resetButton(btStatsSkill);
         btStatsSkill.addActionListener((ActionEvent useSkill1) ->{
             viewStatsCompetence(b);
@@ -725,7 +725,7 @@ public class Vue extends JFrame{
         return unit;
     }
 
-    public void generateSkills(JButton unite){
+    public void generateSkills(JButton unite){ //génère le nombre de bouton des compétences en fonction de la liste des compétences de l'unité
         TaskBar.setBackground(Color.black);
         TaskBar.add(taskbarbg);
         taskbarbg.removeAll();
@@ -847,7 +847,7 @@ public class Vue extends JFrame{
         taskbarbg.updateUI();
     }
 
-    public void viewStatsCompetence(JButton b){
+    public void viewStatsCompetence(JButton b){ //création d'une fenêtre affichant la liste des compétences de l'unité (en détail)
         Unite u = terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit;
         JFrame stats = new JFrame(terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()].unit.toString());
         stats.setVisible(true);

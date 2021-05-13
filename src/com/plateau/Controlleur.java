@@ -139,7 +139,7 @@ public class Controlleur {
         }
     }
 
-    public void useSkill(JButton cast, int c) {
+    public void useSkill(JButton cast, int c) { //permet l'affichage si on peut attaquer ou pas avec une compétence de l'unité, et également afficher des popup en cas d'attaque dans le vide, ou en cas de victoire par exemple
         int[] coordI = {cast.getX() / cast.getWidth(), cast.getY() / cast.getHeight()};
         int[] coordF = new int[2];
         Unite atq = vue.terrain.getPlateau()[coordI[1]][coordI[0]].unit;
@@ -150,9 +150,9 @@ public class Controlleur {
                     b.setContentAreaFilled(true);
                     if (vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].estUnit() && ((Math.abs(b.getY() / b.getHeight() - coordI[1]) + Math.abs(b.getX() / b.getWidth() - coordI[0])) <= atq.getCompetences()[c].getPortee())
                             && vue.terrain.getPlateau()[b.getY() / b.getHeight()][b.getX() / b.getWidth()].unit != atq) {
-                        b.setBackground(new Color(0, 150, 0));
+                        b.setBackground(new Color(0, 150, 0)); //affiche en vert si on peut utiliser la compétence
                     } else {
-                        b.setBackground(new Color(150, 0, 0));
+                        b.setBackground(new Color(150, 0, 0)); //sinon affiche en rouge, ce qui signifique qu'on ne remplis pas les conditions pour utiliser la compétence
                     }
                 }
 
@@ -174,7 +174,7 @@ public class Controlleur {
                                 JOptionPane.PLAIN_MESSAGE);
                     }
                 }catch (NullPointerException ex){
-                    if(atq.getCompetences()[c].getName().equals("charge")){
+                    if(atq.getCompetences()[c].getName().equals("charge")){ //cas particulier
                         JOptionPane.showMessageDialog(vue.getTerrainPanel(),
                                 "Vous venez de charger droit devant vous",
                                 "",
@@ -189,7 +189,7 @@ public class Controlleur {
         }
     }
 
-    public void DetectWin(){ //permet d'afficher le joueur gagnant
+    public void DetectWin(){ //permet d'afficher le joueur gagnant lors de la mort d'un héro
         if (jeu.getJoueur1().getHero().getSanteCourante() <= 0) {
             JOptionPane.showMessageDialog(vue.getTerrainPanel(), "Le Joueur 2 à gagné.", "", JOptionPane.PLAIN_MESSAGE);
             vue.afficheIni();
@@ -262,7 +262,7 @@ public class Controlleur {
         stats.add(statsPanel);
     }
 
-    public void TerrrainEffect(){
+    public void TerrrainEffect(){ //applique les effets des cases spéciales sur le terrain
         for (int x = 0; x < vue.terrain.plateau.length; x++) {
             for (int y = 0; y < vue.terrain.plateau[x].length; y++) {
                 if (vue.terrain.plateau[x][y] instanceof CaseEffect){
