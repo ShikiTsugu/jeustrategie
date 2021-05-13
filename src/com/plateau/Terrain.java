@@ -12,6 +12,7 @@ public class Terrain implements Serializable {
     protected int xH2,yH2;
     protected boolean[][] b1,b2;
 
+
     public Terrain(int largeur, int hauteur, int max,int x1,int y1, int x2, int y2, boolean[][] b1, boolean[][] b2){
         plateau = new Case[hauteur][largeur];
         maxUnits = max;
@@ -34,6 +35,7 @@ public class Terrain implements Serializable {
         return b2;
     }
 
+    //Délimite la zone où le joueur peut acheter des unités
     public void setBuyableArea(boolean[][] b1, boolean[][] b2){
         for(int i=0;i<b1.length;i++){
             for(int j=0;j<b1[i].length;j++){
@@ -48,6 +50,7 @@ public class Terrain implements Serializable {
         maxUnits = max;
     }
 
+    //Ajoute l'unité sur le plateau
     public boolean ajouteUnite(Unite u, int x, int y){
         try{
             if(plateau[y][x].unit==null){
@@ -56,17 +59,15 @@ public class Terrain implements Serializable {
                 u.setCurrentX(x);
                 u.setCurrentY(y);
                 u.setTerrain(this);
-                System.out.println("unite placé");
                 return true;
             }
         }catch(ArrayIndexOutOfBoundsException e){
             return false;
         }
-        System.out.println("impossible");
         return false;
     }
 
-
+    //initialise chaque case du plateau
     public void initialiseTerrain(){
         for (int x = 0; x < plateau.length; x++){
             for (int y = 0; y < plateau[x].length; y++){
@@ -81,6 +82,7 @@ public class Terrain implements Serializable {
         return plateau;
     }
 
+    //Ajoute une case spécial sur le plateau
     public void setEffectCase(int x, int y, CaseEffect ce){
         plateau[y][x] = ce;
     }
