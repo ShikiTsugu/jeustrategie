@@ -3,7 +3,6 @@ package com.plateau;
 import com.launcher.Jeu;
 import com.player.ActionJoueur;
 import com.player.Joueur;
-import com.player.Robot;
 import com.unite.*;
 
 import javax.imageio.ImageIO;
@@ -13,8 +12,8 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
+//Classe qui permet de gérer tout ce qui est visuel.
 public class Vue extends JFrame{
 
     private ImagePane imagePane;
@@ -56,7 +55,7 @@ public class Vue extends JFrame{
         TerrainPanel.setFocusable(true);
     }
 
-    //affichage initial
+    //affichage initial (menu principal)
     public void afficheIni(){
         TerrainPanel.removeKeyListener(k);
         try {
@@ -65,12 +64,14 @@ public class Vue extends JFrame{
             System.out.println("Fichier non trouv�, chemin incorrecte.");
         }
         imagePane.removeAll();
+        //Création et activation du bouton jouer.
         JButton jouer = new JButton("Jouer");
         jouer.setFont(new Font("Monospaced",Font.BOLD,20));
         jouer.setBackground(new Color(83, 214, 191));
         jouer.setForeground(Color.WHITE);
         jouer.addActionListener((ActionEvent e) -> AfficheMenuRobot());
 
+        //Création et activation du bouton quitter.
         JButton quitter = new JButton("Quitter");
         quitter.setFont(new Font("Monospaced",Font.BOLD,20));
         quitter.setBackground(new Color(37, 150, 131));
@@ -96,11 +97,13 @@ public class Vue extends JFrame{
         imagePane.updateUI();
     }
 
+    //Affichage du menu pour le choix des joueurs, joueur contre joueur ou joueur contre robot.
     public void AfficheMenuRobot(){
         imagePane.removeAll();
 
         JLabel titre = new JLabel("Select Mode");
 
+        //Bouton joueur contre joueur qui set les 2 joueurs en tant que "joueur"
         JButton JcJ = new JButton("Joueur vs Joueur");
         JcJ.setFont(new Font("Monospaced",Font.BOLD,20));
         JcJ.setBackground(new Color(37, 150, 131));
@@ -110,6 +113,7 @@ public class Vue extends JFrame{
             AfficheMenuLevel();
         });
 
+        //Bouton joueur contre robot qui set le joueur 2 en tant que robot
         JButton JcI = new JButton("Joueur vs IA");
         JcI.setFont(new Font("Monospaced",Font.BOLD,20));
         JcI.setBackground(new Color(37, 150, 131));
@@ -135,10 +139,13 @@ public class Vue extends JFrame{
         imagePane.updateUI();
     }
 
+    //Affiche le menu avec le choix des différentes maps
     public void AfficheMenuLevel(){
         imagePane.removeAll();
 
         JLabel titre = new JLabel("Map Select");
+
+        //Création des boutons pour les différents maps
 
         JButton Map5x5 = new JButton("Map 5x5");
         Map5x5.setFont(new Font("Monospaced",Font.BOLD,20));
@@ -241,6 +248,7 @@ public class Vue extends JFrame{
         }
     }
 
+    //Génère un bouton avec l'image correspondante selon le nom de l'unité
     public JButton generateButton(String s){
         JButton bt = new JButton();
         bt.setContentAreaFilled(false);
@@ -278,6 +286,7 @@ public class Vue extends JFrame{
         return bt;
     }
 
+    //Change l'image d'un bouton selon le nom de l'unité, et selon un boolean pour savoir si on doit changer ou non
     public void flippedImages(JButton bt, String s, boolean b){
         if(b) {
             if (s.equals("Hero")) {
@@ -313,12 +322,14 @@ public class Vue extends JFrame{
         }
     }
 
+    //Enlève tous les listeners d'un bouton
     public void resetButton(JButton b){
         for(ActionListener al : b.getActionListeners() ) {
             b.removeActionListener(al);
         }
     }
 
+    //Initalise le bouton des stats
     public void initialiseStats(JButton b){
         resetButton(btStats);
         btStats.addActionListener((ActionEvent stats) -> {
@@ -326,6 +337,7 @@ public class Vue extends JFrame{
         });
     }
 
+    //Initalise le bouton d'attaque et initialise les boutons pour les compétences
     public void initialiseAtk(JButton b){
         resetButton(btAtk);
         btAtk.setEnabled(true);
@@ -339,6 +351,7 @@ public class Vue extends JFrame{
         });
     }
 
+    //Initalise le bouton de déplacement
     public void initialiseDep(JButton b){
         resetButton(btDep);
         btDep.setEnabled(true);
@@ -355,6 +368,8 @@ public class Vue extends JFrame{
         });
     }
 
+    //Begin :
+    //Initialise tous les boutons de compétence
     public void initialiseSkill2(JButton b){
         resetButton(btSkill2);
         btSkill2.setEnabled(true);
@@ -385,26 +400,32 @@ public class Vue extends JFrame{
             viewStatsCompetence(b);
         });
     }
+    //End
 
+    //Génère le terrain en parcourant les différentes cases du plateau et en leur affectant l'aspect visuel adapté.
     public void generateTerrain(){
+        //reset le keylistener pour le bouton échap
         TerrainPanel.removeKeyListener(k);
+        //puis l'active
         TerrainPanel.addKeyListener(k);
         terrainBt = new ArrayList<>();
         TerrainPanel.removeAll();
         boolean b;
         GridLayout grid = new GridLayout(terrain.plateau.length,terrain.plateau[0].length);
         TerrainPanel.setLayout(grid);
-        //tourJoueur.displayList();
         for (int x = 0; x < terrain.plateau.length; x++){
             for (int y = 0; y < terrain.plateau[x].length; y++){
                 terrain.plateau[x][y].setDeathCount(false);
+                //Si la case contient une unité, on crée un bouton correspondant avec la bonne image
                 if (terrain.plateau[x][y].unit != null) {
                     JButton bt = generateButton(terrain.plateau[x][y].unit.toString());
                     setBorder(bt, x, y);
+                    //Si l'unité appartient à l'autre joueur qui est différent du joueur courant on "renverse" l'image
                     if(terrain.plateau[x][y].unit.getJoueur()!=controlleur.getJeu().getJoueur1()) {
                         b = true;
                         flippedImages(bt, terrain.plateau[x][y].unit.toString(), b);
                     }
+                    //Permet d'afficher les PV en vert sur le plateau pour chaque unité
                     JLabel pv = new JLabel(terrain.plateau[x][y].unit.getSanteCourante()+"/"+terrain.plateau[x][y].unit.getSanteMax());
                     pv.setFont(new Font("SansSerif",Font.BOLD,14));
                     pv.setForeground(new Color(0,200,0));
@@ -413,6 +434,8 @@ public class Vue extends JFrame{
                     bt.add(pv);
                     bt.setToolTipText(pv.getText());
                     TerrainPanel.add(bt);
+                    //Active tous les boutons (attaque, déplacement etc..) pour toutes les unités si elles ont des PA, sinon active seulement
+                    //le bouton pour les stats.
                     bt.addActionListener((ActionEvent e) -> {
                         try {
                             if (terrain.getPlateau()[bt.getY() / bt.getHeight()][bt.getX() / bt.getWidth()].getUnite().getPointAction() > 0) {
@@ -426,21 +449,23 @@ public class Vue extends JFrame{
                                 btAtk.setEnabled(false);
                                 btDep.setEnabled(false);
                             }
-                        }catch (NullPointerException exception){
-                            System.out.println("impossible de trouver l'unité");
-                        }
+                        }catch (NullPointerException exception){}
                     });
+                    //Si l'unité n'appartient pas au joueur courant on affiche ses PV en rouge
                     if (!(tourJoueur == terrain.plateau[x][y].unit.getJoueur())) {
                         resetButton(bt);
                         pv.setForeground(new Color(200,0,0));
                     }
+                    //Activation des méthodes nécessaires au robot si le joueur adverse est un robot
                     if(!tourJoueur.getIsHuman()) {
                         controlleur.robotPlay(tourJoueur);
                     }
                     bt.setPreferredSize(new Dimension(150,125));
                     bt.setFocusable(false);
                     terrainBt.add(bt);
+                    //Sinon si la case n'a pas d'unité, mais pas forcément vide
                 } else {
+                    //Si la case est un obstacle on affecte une image correspondante à l'obstacle selon le design de la map dans laquelle on est
                     if(terrain.plateau[x][y].estObstacle()){
                         JButton bt = new JButton();
                         if (currentMap==1){
@@ -457,6 +482,7 @@ public class Vue extends JFrame{
                         bt.setPreferredSize(new Dimension(150,125));
                         bt.setFocusable(false);
                         terrainBt.add(bt);
+                        //Sinon si la case est vide on la rend invisible à l'écran mais on garde une bordure visible
                     }else {
                         JButton bt = new JButton();
                         bt = setBorder(bt, x, y);
@@ -471,6 +497,7 @@ public class Vue extends JFrame{
             }
         }
         TerrainPanel.setOpaque(false);
+        //On update la vue
         TerrainPanel.updateUI();
     }
 
@@ -484,6 +511,7 @@ public class Vue extends JFrame{
         return bt;
     }
 
+    //Initialise la barre de tâches avec les boutons nécessaires pour le joueur : Boutique, Liste d'unité, Fin de tour.
     public void generateTaskBar(){
         TaskBar.setBackground(Color.black);
         TaskBar.add(taskbarbg);
@@ -497,6 +525,7 @@ public class Vue extends JFrame{
         shop.setFont(new Font("SansSerif",Font.BOLD,14));
         shop.setForeground(Color.black);
         btBuy.setPreferredSize(new Dimension(200,125));
+        //Les mouse listener permettent de donner un effet de focus lorsqu'on passe la souris sur un bouton
         btBuy.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -574,6 +603,7 @@ public class Vue extends JFrame{
         taskbarbg.updateUI();
     }
 
+    //Initialisation de l'aspect visuel de la liste d'unité
     private void generateList(Joueur j) {
         JFrame units = new JFrame("Units");
         units.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -596,6 +626,7 @@ public class Vue extends JFrame{
         JPanel liste = new JPanel(new FlowLayout());
         liste.setOpaque(false);
         for (int i = 0; i<j.getUnites().length; i++){
+            //Si il y a une unité dans la liste on crée un bouton avec son image en lui donnant aussi son nom en visuel ainsi que ses PV.
             if(j.getUnites()[i]!=null) {
                 JButton bt = generateButton(j.getUnites()[i].toString());
                 bt.setFocusable(false);
@@ -615,6 +646,7 @@ public class Vue extends JFrame{
                 bt.setPreferredSize(new Dimension(100, 120));
                 liste.add(bt);
             }else{
+                //Sinon on crée juste un bouton vide
                 JButton bt = new JButton();
                 bt.setFocusable(false);
                 bt.setOpaque(false);
@@ -626,6 +658,7 @@ public class Vue extends JFrame{
         bg.add(liste,BorderLayout.CENTER);
     }
 
+    //Initialisation de la boutique avec des boutons pour les unités, ainsi que l'argent que possède le joueur.
     public void generateAchat(){
         JFrame shop = new JFrame("Shop");
         shop.setVisible(true);
@@ -662,7 +695,6 @@ public class Vue extends JFrame{
                     controlleur.acheteUnite(tourJoueur, unit);
                     shop.dispose();
                 }
-                //boutonAnnul();
                 generateTaskBar();
             });
             bt.setPreferredSize(new Dimension(100,120));
@@ -671,6 +703,7 @@ public class Vue extends JFrame{
         bg.add(liste,BorderLayout.CENTER);
     }
 
+    //Crée une image correspondant à un string (ici le nom de l'unité)
     public ImageIcon generateImage(String s){
         ImageIcon i = new ImageIcon();
         if(s.equals("Hero")){
@@ -700,6 +733,7 @@ public class Vue extends JFrame{
         return i;
     }
 
+    //Crée une image de l'unité qu'on a choisit avec ses PA actuel ainsi que ses PV
     public JButton displayUnit(JButton b){
         JButton unit = new JButton(generateImage(terrain.getPlateau()[b.getY()/b.getHeight()][b.getX()/b.getWidth()]
                 .unit.toString()));
@@ -879,6 +913,7 @@ public class Vue extends JFrame{
         stats.add(statsPanel);
     }
 
+    //Initialise la barre d'action pour l'unité choisit en activant tous les boutons etc..
     public void generateAction(JButton unite){
         TaskBar.setBackground(Color.black);
         TaskBar.add(taskbarbg);
@@ -959,6 +994,7 @@ public class Vue extends JFrame{
         taskbarbg.updateUI();
     }
 
+    //Crée une unité correspondant à son nom
     public Unite createUnite(String s){
         Unite u=null;
         if(s.equals("Templier")){
