@@ -1,7 +1,6 @@
 package com.plateau;
 
-import java.io.*;
-
+//Map génère les différents Terrains disponible pour le jeu
 public class Map{
 
     protected Terrain map;
@@ -10,11 +9,13 @@ public class Map{
 
     public Map(){}
 
+    //Genere un terrain selon la taille donnée en argument
     public void createTerrain(int x, int y, int z){
         generateSpawnable(y, x, z);
         map = new Terrain(x,y,12,0,3,13,3,b1,b2);
     }
 
+    //Génère les zones d'achat d'unité pour les joueurs
     public void generateSpawnable(int x, int y, int s){
         b1 = new boolean[x][y];
         b2 = new boolean[x][y];
@@ -27,6 +28,7 @@ public class Map{
         }
     }
 
+    //Vérifie les zones d'achat et empêche le spawn sur les cases spéciaux
     public void CheckSpecialSpawnable(){
         for (int i = 0; i < b1.length; i++){
             for (int j = 0; j < b1[i].length; j++){
@@ -38,6 +40,7 @@ public class Map{
         }
     }
 
+    // Génère le Terrain 5x5
     public void Map5x5(){
         createTerrain(5, 5, 2);
         map.getPlateau()[0][1].setObstacle(true);
@@ -47,6 +50,7 @@ public class Map{
         map.getPlateau()[map.getPlateau()[0].length-1][map.getPlateau()[0].length-2].setObstacle(true);
     }
 
+    // Génère le Terrain 14x6
     public void Map14x6(){
         createTerrain(14, 6, 4);
         map.getPlateau()[0][4].setObstacle(true);
@@ -62,6 +66,7 @@ public class Map{
         CheckSpecialSpawnable();
     }
 
+    // Génère le Terrain 14x6Gold
     public void Map14x6Gold(){
         createTerrain(14, 6, 4);
         map.setEffectCase(0,0, new CaseGold());

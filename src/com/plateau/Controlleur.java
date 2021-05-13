@@ -498,6 +498,7 @@ public class Controlleur {
         finDeTour();
     }
 
+    //Sérialise les maps
     public void SaveMap(){
         try{
 
@@ -510,6 +511,7 @@ public class Controlleur {
         }
     }
 
+    //Désérialise les maps
     public void LoadMap(){
         try{
 
@@ -526,6 +528,7 @@ public class Controlleur {
         }
     }
 
+    //Genère tout les maps et les ajoutes a la classe MapSerialized
     public void GenerateSaveMap(){
         getMap().Map5x5();
         getMapSave().getMapList().add(getMap().getTerrain());

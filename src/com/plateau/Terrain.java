@@ -4,6 +4,7 @@ import com.unite.Unite;
 
 import java.io.Serializable;
 
+// Terrain contient tout le plateau de jeu (les cases, les obstacles et les cases spéciaux) ainsi que tout les unité qui sont sur le plateau
 public class Terrain implements Serializable {
     protected Case[][] plateau;
     protected int maxUnits;
