@@ -360,6 +360,8 @@ public class Vue extends JFrame{
         });
     }
 
+    //Begin :
+    //Initialise tous les boutons de compétence
     public void initialiseSkill1(JButton b){
         resetButton(btSkill1);
         btSkill1.setEnabled(true);
@@ -368,8 +370,6 @@ public class Vue extends JFrame{
         });
     }
 
-    //Begin :
-    //Initialise tous les boutons de compétence
     public void initialiseSkill2(JButton b){
         resetButton(btSkill2);
         btSkill2.setEnabled(true);
@@ -393,6 +393,7 @@ public class Vue extends JFrame{
             controlleur.useSkill(b,3);
         });
     }
+    //End
 
     public void initialiseBtStatsSkill(JButton b){ //initialise le bouton pour afficher la liste des compétences de l'unité
         resetButton(btStatsSkill);
@@ -400,7 +401,6 @@ public class Vue extends JFrame{
             viewStatsCompetence(b);
         });
     }
-    //End
 
     //Génère le terrain en parcourant les différentes cases du plateau et en leur affectant l'aspect visuel adapté.
     public void generateTerrain(){
@@ -1019,27 +1019,6 @@ public class Vue extends JFrame{
             u = new Assassin(tourJoueur);
         }
         return u;
-    }
-
-    // bouton pour annuler l'achat d'unité (ne marche pas encore)
-    public void boutonAnnul(Unite u){
-        TaskBar.removeAll();
-        JButton Annul = new JButton("retour");
-        Annul.addActionListener((ActionEvent e) -> {
-            generateTaskBar();
-            tourJoueur.annuleAjout(u);
-        });
-        Annul.setPreferredSize(new Dimension(800,150));
-        TaskBar.add(Annul);
-    }
-
-    
-    public ArrayList<JButton> getTerrainBt(){
-        return terrainBt;
-    }
-
-    public Joueur getTourJoueur(){
-        return tourJoueur;
     }
 
     public void setTourJoueur(Joueur j){
