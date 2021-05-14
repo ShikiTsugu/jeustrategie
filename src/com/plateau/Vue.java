@@ -123,6 +123,14 @@ public class Vue extends JFrame{
             AfficheMenuLevel();
         });
 
+        JButton retour = new JButton("Retour");
+        retour.setFont(new Font("Monospaced",Font.BOLD,20));
+        retour.setBackground(new Color(37, 150, 131));
+        retour.setForeground(Color.WHITE);
+        retour.addActionListener((ActionEvent e) -> {
+            afficheIni();
+        });
+
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);
         titre.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -135,6 +143,9 @@ public class Vue extends JFrame{
         JcI.setAlignmentX(Component.CENTER_ALIGNMENT);
         imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
         imagePane.add(JcI);
+        retour.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
+        imagePane.add(retour);
 
         imagePane.updateUI();
     }
@@ -207,6 +218,14 @@ public class Vue extends JFrame{
             imagePane.add(TaskBar,BorderLayout.SOUTH);
         });
 
+        JButton retour = new JButton("Retour");
+        retour.setFont(new Font("Monospaced",Font.BOLD,20));
+        retour.setBackground(new Color(37, 150, 131));
+        retour.setForeground(Color.WHITE);
+        retour.addActionListener((ActionEvent e) -> {
+            AfficheMenuRobot();
+        });
+
         BoxLayout boxlayout = new BoxLayout(imagePane, BoxLayout.Y_AXIS);
         imagePane.setLayout(boxlayout);
         titre.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -222,6 +241,9 @@ public class Vue extends JFrame{
         Map14x6Gold.setAlignmentX(Component.CENTER_ALIGNMENT);
         imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
         imagePane.add(Map14x6Gold);
+        retour.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imagePane.add(Box.createRigidArea(new Dimension(0, 50 )));
+        imagePane.add(retour);
 
         imagePane.updateUI();
     }
