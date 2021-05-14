@@ -4,6 +4,7 @@ import com.unite.*;
 
 import java.io.Serializable;
 
+//Classe pour les cases du plateau, permet de d'y ajouter des unités, des obstacles etc..
 public class Case implements Serializable {
     protected boolean obstacle;
     protected Unite unit;
@@ -11,9 +12,9 @@ public class Case implements Serializable {
     protected boolean J2Buyable ;
     protected int id;
     protected static int incremente;
-    protected int hauteur;
     protected boolean deathCount;
 
+    //Case vide
     public Case(){
         unit = null;
         obstacle = false;
@@ -21,6 +22,7 @@ public class Case implements Serializable {
         deathCount=false;
     }
 
+    //Case avec unité
     public Case(Unite u){
         unit = u;
         obstacle = false;
@@ -31,8 +33,6 @@ public class Case implements Serializable {
     public boolean getDeathCount(){return deathCount;}
 
     public void setDeathCount(boolean b){deathCount=b;}
-
-    public int getId(){return id;}
 
     public Case(boolean o){
         obstacle = o;
@@ -76,14 +76,11 @@ public class Case implements Serializable {
     public boolean estUnit(){
         return unit != null;
     }
-    
+
+    //Enlève l'unité présente sur la case
     public void supprimerUniteCase(Case c){
         c.setUnite(null);
     }
-
-    public int getHauteur(){ return hauteur; }
-
-    public void setHauteur(int h){ hauteur = h; }
 
     public String afficheContenu(){
         if(unit instanceof Hero){
@@ -104,6 +101,7 @@ public class Case implements Serializable {
         return Integer.toString(id);
     }
 
+    //Permet d'obtenir les coordonnées d'une case précise sur le terrain
     public int[] casePos(Terrain t){
         int[] coord = new int[2];
         for (int i = 0; i<t.getPlateau().length; i++){

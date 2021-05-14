@@ -1,7 +1,5 @@
 package com.plateau;
 
-import com.player.Joueur;
-
 public class CaseGold extends CaseEffect{
 
     public CaseGold(){

@@ -3,7 +3,7 @@ package com.plateau;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-//MapSerialized contient tout les maps, et peut être Sérailisé
+//MapSerialized contient toutes les maps, et peut être sérialisé
 public class MapSerialized implements Serializable {
 
     protected ArrayList<Terrain> MapList;
