@@ -24,3 +24,12 @@ sourceSets {
 dependencies {
     compile 'junit:junit:4.12'
 }
+
+tasks {
+    compileJava {
+        options.encoding = "UTF-8"
+    }
+    compileTestJava {
+        options.encoding = "UTF-8"
+    }
+}
