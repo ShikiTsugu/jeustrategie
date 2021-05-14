@@ -99,18 +99,24 @@ public class Evenement {
         }
         if(event.equals("appliqueEtourdissement")){
             if(t.getPlateau()[y+this.y][x+this.x].getUnite().possedeBuff("immuniteEtourdissement")==false) {
-                t.getPlateau()[y + this.y][x + this.x].getUnite().addDebuff("etourdissement", value);
+                Debuff debuff = new Debuff("etourdissement",value,t.getPlateau()[y+this.y][x+this.x].getUnite());
+                t.getPlateau()[y+this.y][x+this.x].getUnite().getDebuffs().add(debuff);
+                debuff.readDebuff();
             }
             return resultat;
         }
         if(event.equals("appliqueEtourdissementUniteSpecifique")){
             if(unite.possedeBuff("immuniteEtourdissement")==false) {
-                unite.addDebuff("etourdissement", value);
+                Debuff debuff = new Debuff("etourdissement",value,unite);
+                unite.getDebuffs().add(debuff);
+                debuff.readDebuff();
             }
             return resultat;
         }
         if (event.equals("appliqueCamouflage")) {
-            t.getPlateau()[y + this.y][x + this.x].getUnite().addBuff("camouflage", value);
+            Buff buff = new Buff("camouflage",value,t.getPlateau()[y+this.y][x+this.x].getUnite());
+            t.getPlateau()[y+this.y][x+this.x].getUnite().getBuffs().add(buff);
+            buff.readBuff();
             return resultat;
         }
         if(event.equals("appliqueMort") && t.getPlateau()[y+this.y][x+this.x].getUnite().isHero() == false){
@@ -166,8 +172,11 @@ public class Evenement {
         }
         if(event.equals("appliqueImmobilise")){
             if(t.getPlateau()[y+this.y][x+this.x].getUnite().possedeBuff("immuniteImmobilise")==false) {
-                t.getPlateau()[y + this.y][x + this.x].getUnite().addDebuff("immobilise", value);
+                Debuff debuff = new Debuff("immobilise",value,t.getPlateau()[y+this.y][x+this.x].getUnite());
+                t.getPlateau()[y+this.y][x+this.x].getUnite().getDebuffs().add(debuff);
+                debuff.readDebuff();
             }
+
             return resultat;
         }
         if(event.equals("appliqueResistImmobilise")){
@@ -176,7 +185,9 @@ public class Evenement {
         }
         if(event.equals("appliqueRalentissement")){
             if(t.getPlateau()[y+this.y][x+this.x].getUnite().possedeBuff("immuniteRalentissement")==false) {
-                t.getPlateau()[y + this.y][x + this.x].getUnite().addDebuff("ralentissement", value);
+                Debuff debuff = new Debuff("ralentissement",value,t.getPlateau()[y+this.y][x+this.x].getUnite());
+                t.getPlateau()[y+this.y][x+this.x].getUnite().getDebuffs().add(debuff);
+                debuff.readDebuff();
             }
             return resultat;
         }
@@ -186,7 +197,9 @@ public class Evenement {
         }
         if(event.equals("appliqueAveugle")){
             if(t.getPlateau()[y+this.y][x+this.x].getUnite().possedeBuff("immuniteAveugle")==false) {
-                t.getPlateau()[y + this.y][x + this.x].getUnite().addDebuff("aveugle", value);
+                Debuff debuff = new Debuff("aveugle",value,t.getPlateau()[y+this.y][x+this.x].getUnite());
+                t.getPlateau()[y+this.y][x+this.x].getUnite().getDebuffs().add(debuff);
+                debuff.readDebuff();
             }
             return resultat;
         }

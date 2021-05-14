@@ -33,7 +33,7 @@ public class Lancier extends Unite{
         Evenement[] event = {new Evenement("infligeDegats",0,0,attaque,joueur)};
         competences[0] = new Competence("coup de lance","inflige "+attaque+" points de dégâts à l'unité ciblée",event, porteeAttaque,pointAction-1, 0,this);
         Evenement[] event2 = {new Evenement("infligeDegats",0,0,50,joueur),
-                new Evenement("appliqueEtourdissement",0,0,3,joueur)
+                new Evenement("appliqueEtourdissement",0,0,4,joueur)
         };
         competences[1] = new Competence("maniement agile","inflige "+(attaque-25)+" points de dégâts à l'unité ciblée et étourdit l'unité ciblée",event2, porteeAttaque,pointAction-1, 0,this);
     }

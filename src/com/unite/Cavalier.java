@@ -53,7 +53,7 @@ public class Cavalier extends Unite{
                                 //regarde la case derrière
                                 //si elle est occupé ,on étourdit la cible
                                 if((yA+i+1) >=t.getPlateau().length || t.getPlateau()[yA+i+1][xA].estVide()==false){
-                                    eventCharge[e] = new Evenement("appliqueEtourdissementUniteSpecifique",cible,0,0,2);
+                                    eventCharge[e] = new Evenement("appliqueEtourdissementUniteSpecifique",cible,0,0,3);
                                     e++;
                                     //sinon on la déplace d'une case en arrière
                                 }else{
@@ -89,7 +89,7 @@ public class Cavalier extends Unite{
                                 //regarde la case derrière
                                 //si elle est occupé ,on étourdit la cible
                                 if((yA-i-1) < 0 || t.getPlateau()[yA-i-1][xA].estVide()==false ){
-                                    eventCharge[e] = new Evenement("appliqueEtourdissementUniteSpecifique",cible,0,0,2);
+                                    eventCharge[e] = new Evenement("appliqueEtourdissementUniteSpecifique",cible,0,0,3);
                                     e++;
                                     //sinon on la déplace d'une case en arrière
                                 }else{
@@ -128,7 +128,7 @@ public class Cavalier extends Unite{
                                 //regarde la case derrière
                                 //si elle est occupé ,on étourdit la cible
                                 if( (xA+i+1) >=t.getPlateau()[yA].length  ||t.getPlateau()[yA][xA+i+1].estVide()==false ){
-                                    eventCharge[e] = new Evenement("appliqueEtourdissementUniteSpecifique",cible,0,0,2);
+                                    eventCharge[e] = new Evenement("appliqueEtourdissementUniteSpecifique",cible,0,0,3);
                                     e++;
                                     //sinon on la déplace d'une case en arrière
                                 }else{
@@ -164,7 +164,7 @@ public class Cavalier extends Unite{
                                 //regarde la case derrière
                                 //si elle est occupé ,on étourdit la cible
                                 if((xA-i-1) < 0 || t.getPlateau()[yA][xA-i-1].estVide()==false ){
-                                    eventCharge[e] = new Evenement("appliqueEtourdissementUniteSpecifique",cible,0,0,2);
+                                    eventCharge[e] = new Evenement("appliqueEtourdissementUniteSpecifique",cible,0,0,3);
                                     e++;
                                     //sinon on la déplace d'une case en arrière
                                 }else{
