@@ -79,6 +79,7 @@ public abstract class Unite {
     public void readAlterationEtats(){ //permet d'actualiser et appliquer la liste d'altération d'état pour chaque unité
         updateAlterationEtats();
         activeAlterationEtats();
+        updateAlterationEtats();
     }
 
     public void checkCooldowns(){ //actulise le cooldown de chaque compétence de l'unité
